@@ -27,6 +27,7 @@ Build the project in ".next/build" director
 
 Runs the app in the background.
 Server is located on port 3000.
+
 ---
 ## __Project Installation Guide__
 
