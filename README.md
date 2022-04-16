@@ -3,6 +3,7 @@
 
 ## Description
 Web application for Entangle
+
 Framework: Next.JS
 
 PRODCREATORS team
