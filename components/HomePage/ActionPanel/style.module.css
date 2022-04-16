@@ -1,0 +1,35 @@
+.wrapper {
+    margin: 56px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filterWrapper {
+  max-width: 271px;
+  display: flex;
+  width: 100%;
+}
+
+.searchWrapper {
+  max-width: 368px;
+  width: 100%;
+}
+
+.searchIcon {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 660px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .filterWrapper, .searchWrapper {
+    max-width: initial;
+    margin: 16px 0;
+  }
+
+  .filterWrapper {
+    order: 1;
+  }
+}

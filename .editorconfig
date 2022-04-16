@@ -1,0 +1,24 @@
+root = true
+
+# All files
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+# HTML
+[*.{html,html,cshtml}]
+indent_style = space
+indent_size  = 4
+
+# CSS
+[*.css]
+indent_style = space
+indent_size  = 2
+quote_type = single
+
+
+# JAVASCRIPT | TYPESCRIPT
+[*.{js,jsx,ts,tsx,.json}]
+indent_style = space
+indent_size  = 4

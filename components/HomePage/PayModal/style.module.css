@@ -1,0 +1,176 @@
+.wrapper {
+    padding: 50px 33px 33px;
+    min-width: 404px;
+    width: 100%;
+    border-radius: 12px;
+    position: relative;
+    background: rgba(30, 30, 30, 0.1);
+    border: 1px solid #121212;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+        inset 0px -4px 4px rgba(255, 255, 255, 0.25),
+        inset 0px 0px 68px rgba(255, 255, 255, 0.05),
+        inset 0px 4px 4px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(62px);
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    right: 0;
+    transform: translate(-110%, 110%);
+}
+
+.tabsBg {
+    background: linear-gradient(145deg, #191a1d 0%, #373c42 100%);
+    --border-radius: 12px;
+    border-radius: var(--border-radius);
+    padding: 2px;
+    box-shadow: inset 0px 3px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    margin-bottom: 27px;
+}
+
+.tabsWrapper {
+    width: 100%;
+    display: flex;
+    background: var(--color-7);
+    box-shadow: inset 0px 3px 20px rgba(0, 0, 0, 0.15);
+    border-radius: var(--border-radius);
+}
+
+.tabWrapper {
+    width: 100%;
+    display: flex;
+}
+
+.tabWrapper.active {
+    padding: 2px;
+    margin: -2px;
+    border-radius: var(--border-radius);
+    background: linear-gradient(180deg, #484e56 17.71%, #3b4048 90.44%);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+}
+
+.tabWrapper.active > .tab {
+    cursor: default;
+    background: linear-gradient(180deg, #484e56 17.71%, #3b4048 90.44%);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+    border-radius: var(--border-radius);
+    color: var(--color-8);
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+}
+
+.tab {
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 9px 20px;
+    font-size: 16px;
+    color: #5f6265;
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.8);
+}
+
+.inputWrapper {
+    margin-bottom: 25px;
+}
+
+.inputWrapperError {
+    margin-bottom: 0;
+}
+
+.inputWrapper > div, .inputWrapperError > div {
+    padding: 14px;
+}
+
+.gradientText {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(
+            90deg,
+            #ff5eba 1.27%,
+            rgba(104, 49, 214, 0.87) 51.2%,
+            #0094ff 103.24%
+        ),
+        #ececec;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    cursor: pointer;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.sectionTitle {
+    font-size: 16px;
+    color: var(--gray);
+    margin-bottom: 4px;
+}
+
+.sectionRow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 100%;
+    gap: 10px;
+}
+
+.sectionAvailable {
+    gap: 20px;
+}
+
+.sectionValue {
+    color: var(--color-6);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1em;
+}
+
+.sectionSubValue {
+    font-size: 12px;
+    color: var(--color-6);
+    font-weight: 300;
+}
+
+.sectionGraySubValue {
+    color: var(--gray);
+    margin-left: auto;
+}
+
+.section {
+    margin-bottom: 27px;
+}
+
+.rowGradient {
+    margin-top: 9px;
+    height: 5px;
+    width: 100%;
+    background: rgb(42 42 42);
+    background: linear-gradient(90deg, #0f598e 0%, rgba(15, 89, 142, 0) 100%);
+    border-radius: 2.5px;
+}
+
+.networkIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.networkIconWrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 3px;
+}

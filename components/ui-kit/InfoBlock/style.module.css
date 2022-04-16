@@ -1,0 +1,67 @@
+.blockValue {
+  font-weight: 600;
+  font-size: 24px;
+  color: #FFFFFF;
+  padding-top: 8px;
+}
+
+.blockValueGood {
+  color: #5BC15F;
+}
+
+.bordered {
+  border-radius: 18px;
+  padding: 4px 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  font-size: 14px;
+}
+
+.smallText {
+  font-size: 16px;
+}
+
+.smallImg {
+  padding-right: 8px;
+  display: flex;
+}
+
+.smallImg img {
+  height: 32px;
+}
+
+.linedValue {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.horisontalWrapper {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.verticalWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.blockValueBad {
+  color: #C8534F;
+}
+
+.blockInfo {
+  font-size: 16px;
+  color: #A3A3A3;
+  font-weight: 400;
+}
+
+.blockWrapper {
+  flex: 1;
+  padding: 24px 12px 24px 32px;
+  background: #1E1E1E;
+  border-radius: 18px;
+}

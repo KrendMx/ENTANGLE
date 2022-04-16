@@ -1,0 +1,36 @@
+.wrapper {
+    padding: 1px;
+    border-radius: 12px;
+    width: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+}
+
+.titleElement {
+  background-color: #121212;
+  color: #FFFFFF;
+  text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
+  border-radius: inherit;
+}
+
+.title {
+  text-align: center;
+  background-color: #121212;
+  border-radius: inherit;
+  padding: 14px 30px;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
+}
+
+.wrapper:not(.disabled):hover .title {
+    background-color: rgba(18, 18, 18, 0.75);
+}
+
+.wrapper.disabled {
+    opacity: .4;
+    cursor: no-drop;
+}

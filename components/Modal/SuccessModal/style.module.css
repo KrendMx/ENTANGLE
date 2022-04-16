@@ -1,0 +1,97 @@
+.closeWrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .closeImg {
+    width: 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+  
+  .wrapper {
+    padding: 16px 16px 32px 32px;
+    min-width: 404px;
+    width: 100%;
+    border-radius: 12px;
+    position: relative;
+    background: rgba(30, 30, 30, 0.1);
+    border: 1px solid #121212;
+    box-sizing: border-box;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25),
+    inset 0 -4px 4px rgba(255, 255, 255, 0.25),
+    inset 0 0 68px rgba(255, 255, 255, 0.05),
+    inset 0 4px 4px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(62px);
+  }
+
+.btnWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.flex2 {
+  flex: 2;
+}
+
+.btnActionWrapper {
+  display: flex;
+}
+
+.gradientBtnWrapper {
+  padding-top: 16px;
+}
+
+.metamaskBtnImg {
+  height: 32px;
+}
+
+.copyWrapper {
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.metamaskBtnWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  align-items: center;
+}
+
+.errorText {
+  color: var(--color-6);
+  font-weight: 600;
+  padding: 0 16px;
+  font-size: 24px;
+  line-height: 1em;
+  text-align: center;
+}
+
+.valueText {
+  color: var(--color-6);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1em;
+}
+
+.valueTextWrapper {
+  padding: 0 16px;
+  font-size: 12px;
+  color: var(--color-6);
+  font-weight: 300;
+}
+
+.errorTextContent {
+  margin: 16px 0;
+  text-align: left;
+  font-weight: inherit;
+  color: var(--gray);
+  font-size: 16px;
+}
+
