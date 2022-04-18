@@ -30,7 +30,7 @@ const Header = () => {
             <ChangeNetwork />
             {!account ? (
                 <div
-                    // onClick={connect}
+                    onClick={connect}
                     className={classNames(
                         styles.dashboardItem,
                         styles.connectButton

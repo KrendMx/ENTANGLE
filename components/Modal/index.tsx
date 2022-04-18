@@ -5,6 +5,7 @@ import ScrollLock from 'react-scrolllock';
 import styles from './style.module.css';
 
 type ModalProps = {
+    children: JSX.Element
     handleClose: () => void;
 };
 
@@ -20,7 +21,6 @@ const Modal: React.FC<ModalProps> = ({ children, handleClose }) => {
 
     return ReactDOM.createPortal(
         <div className={styles.wrapper} ref={modal}>
-            {/* @ts-ignore */}
             <ScrollLock>
                 <div>{children}</div>
             </ScrollLock>

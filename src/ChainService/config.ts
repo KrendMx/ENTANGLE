@@ -89,7 +89,6 @@ export const AdditionalConfig = {
             PAIR: {
                 address: '0x2A8A315e82F85D1f0658C5D66A452Bbdd9356783',
                 abi: joePair,
-
             },
             ROUTER: {
                 address: '0x60aE616a2155Ee3d9A68541Ba4544862310933d4',
