@@ -22,18 +22,18 @@ const InvestCard: React.FC<IProps> = ({ ftmState, avaxState }) => (
                 positions={avaxState?.positions!}
             />
         ) : undefined}
-        {Number(avaxState?.positions) <= 0 &&
-        Number(ftmState?.positions) <= 0 ? (
+        {Number(avaxState?.positions) <= 0
+        && Number(ftmState?.positions) <= 0 ? (
             <h2
                 style={{
-                    textAlign: 'center',
-                    fontSize: '3rem',
-                    margin: '100px 0',
+                  textAlign: 'center',
+                  fontSize: '3rem',
+                  margin: '100px 0',
                 }}
             >
                 You do not have purchased synth
             </h2>
-        ) : undefined}
+          ) : undefined}
     </div>
 );
 

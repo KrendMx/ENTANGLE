@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import type { NextPage } from 'next';
 
 const NotFound: NextPage = () => (
     <div style={{ marginTop: '200px', marginBottom: '200px' }}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import ScrollLock from 'react-scrolllock';
 
@@ -10,23 +10,23 @@ type ModalProps = {
 };
 
 const Modal: React.FC<ModalProps> = ({ children, handleClose }) => {
-    const modal = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        const handleClick = (e: MouseEvent) => e.target === modal.current && handleClose()
+  const modal = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => e.target === modal.current && handleClose();
 
-        window.addEventListener('mousedown', handleClick);
+    window.addEventListener('mousedown', handleClick);
 
-        return () => window.removeEventListener('mousedown', handleClick);
-    }, []);
+    return () => window.removeEventListener('mousedown', handleClick);
+  }, []);
 
-    return ReactDOM.createPortal(
-        <div className={styles.wrapper} ref={modal}>
-            <ScrollLock>
-                <div>{children}</div>
-            </ScrollLock>
-        </div>,
-        document.body
-    );
+  return ReactDOM.createPortal(
+      <div className={styles.wrapper} ref={modal}>
+          <ScrollLock>
+              <div>{children}</div>
+          </ScrollLock>
+      </div>,
+      document.body,
+  );
 };
 
 export default Modal;

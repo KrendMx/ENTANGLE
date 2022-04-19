@@ -14,8 +14,8 @@ type ServiceConfigOptions = {
 }
 
 export type {
-    iService,
-    ServiceConfigOptions,
-    TotalValueLockedData,
-    GetTotalValueLockedResponse
-}
+  iService,
+  ServiceConfigOptions,
+  TotalValueLockedData,
+  GetTotalValueLockedResponse,
+};

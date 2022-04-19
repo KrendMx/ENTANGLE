@@ -11,10 +11,10 @@ const Dashboard = () => (
     <div className={styles.wrapper}>
         <FantomContainer />
         <AvalancheContainer />
-        <ETHContainer/> 
-        <SolanaContainer/>
-        <USDContainer/>
-        <BUSDContainer/>
+        <ETHContainer />
+        <SolanaContainer />
+        <USDContainer />
+        <BUSDContainer />
     </div>
 );
 

@@ -1,4 +1,4 @@
-import type {InfoBlockTypes} from './SummaryInfoBoard.constants';
+import type { InfoBlockTypes } from './SummaryInfoBoard.constants';
 // TODO MIGRATE TO INFO BLOCK
 type InfoBlockProps = {
     info: string;
@@ -7,4 +7,4 @@ type InfoBlockProps = {
     isShort?: boolean;
 };
 
-export type {InfoBlockProps};
+export type { InfoBlockProps };

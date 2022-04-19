@@ -1,5 +1,5 @@
-import type {Web3Provider} from '@ethersproject/providers/src.ts/web3-provider';
-import type {TransactionInfo} from '../components/Modal/SuccessModal/SuccessModal.interface';
+import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
+import type { TransactionInfo } from '../components/Modal/SuccessModal/SuccessModal.interface';
 
 export interface IAccountState {
     walletKey: string | null;

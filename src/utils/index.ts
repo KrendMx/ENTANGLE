@@ -1,1 +1,1 @@
-export {default as toChainId} from './toChainId'
+export { default as toChainId } from './toChainId';

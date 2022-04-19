@@ -12,12 +12,12 @@ type InputProps = {
 };
 
 const Input: React.FC<InputProps> = ({
-    value,
-    onChange,
-    placeholder,
-    children,
-    type,
-    otherProps,
+  value,
+  onChange,
+  placeholder,
+  children,
+  type,
+  otherProps,
 }) => (
     <div className={styles.wrapper}>
         <input

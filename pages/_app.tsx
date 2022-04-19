@@ -1,24 +1,20 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import Layout from '../src/HOC/Layout';
 
 import { createStore } from 'redux';
-import ProviderContextWrapper from '../context/ProviderContext';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import ProviderContextWrapper from '../context/ProviderContext';
+import Layout from '../src/HOC/Layout';
 
-// const store = createStore(rootReducer, composeWithDevTools());
-
-function MyApp({ Component, pageProps }: AppProps) {
-    return (
-        // <Provider store={store}>
+const MyApp = ({ Component, pageProps }: AppProps) => (
+    <Provider store={store}>
         <ProviderContextWrapper>
             <Layout>
                 <Component {...pageProps} />
             </Layout>
         </ProviderContextWrapper>
-        // </Provider>
-    );
-}
+    </Provider>
+);
 
 export default MyApp;

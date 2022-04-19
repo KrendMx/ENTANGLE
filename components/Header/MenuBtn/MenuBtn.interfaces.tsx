@@ -3,4 +3,4 @@ type MenuBtnProps = {
     onClose?: () => any
     onChange?: () => any
 }
-export type {MenuBtnProps};
+export type { MenuBtnProps };

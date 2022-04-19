@@ -4,4 +4,4 @@ type SuccessModalProps = {
     handleClose: () => any;
 };
 
-export type {SuccessModalProps, TransactionInfo}
+export type { SuccessModalProps, TransactionInfo };
