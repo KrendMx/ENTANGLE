@@ -30,55 +30,31 @@ class ChainService implements IChainService {
         this.name = Chain;
         this.OppositeToken = Chain === 'AVAX' ? 'FTM' : 'AVAX';
 
-        this.PairContract = useMemo(
-            () =>
-                new Contract(
-                    AdditionalConfig.CONTRACTS[this.name].PAIR.address,
-                    AdditionalConfig.CONTRACTS[this.name].PAIR.abi,
-                    new providers.JsonRpcProvider(ChainConfig[this.name].RPC)
-                ),
-            []
+        this.PairContract = new Contract(
+            AdditionalConfig.CONTRACTS[this.name].PAIR.address,
+            AdditionalConfig.CONTRACTS[this.name].PAIR.abi,
+            new providers.JsonRpcProvider(ChainConfig[this.name].RPC)
         );
-        this.ChefContract = useMemo(
-            () =>
-                new Contract(
-                    AdditionalConfig.CONTRACTS[this.name].CHEF.address,
-                    AdditionalConfig.CONTRACTS[this.name].CHEF.abi,
-                    new providers.JsonRpcProvider(ChainConfig[this.name].RPC)
-                ),
-            []
+        this.ChefContract = new Contract(
+            AdditionalConfig.CONTRACTS[this.name].CHEF.address,
+            AdditionalConfig.CONTRACTS[this.name].CHEF.abi,
+            new providers.JsonRpcProvider(ChainConfig[this.name].RPC)
         );
-        this.RouterContract = useMemo(
-            () =>
-                new Contract(
-                    AdditionalConfig.CONTRACTS[this.name].ROUTER.address,
-                    AdditionalConfig.CONTRACTS[this.name].ROUTER.abi,
-                    new providers.JsonRpcProvider(ChainConfig[this.name].RPC)
-                ),
-            []
+        this.RouterContract = new Contract(
+            AdditionalConfig.CONTRACTS[this.name].ROUTER.address,
+            AdditionalConfig.CONTRACTS[this.name].ROUTER.abi,
+            new providers.JsonRpcProvider(ChainConfig[this.name].RPC)
         );
-        this.SynthContract = useMemo(
-            () =>
-                new Contract(
-                    ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.address,
-                    ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.abi,
-                    new providers.JsonRpcProvider(
-                        ChainConfig[this.OppositeToken].RPC
-                    )
-                ),
-            []
+        this.SynthContract = new Contract(
+            ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.address,
+            ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.abi,
+            new providers.JsonRpcProvider(ChainConfig[this.OppositeToken].RPC)
         );
 
-        this.DEXContract = useMemo(
-            () =>
-                new Contract(
-                    ChainConfig[this.OppositeToken].CONTRACTS.DEX.address,
-                    ChainConfig[this.OppositeToken].CONTRACTS.DEX.abi,
-                    new providers.JsonRpcProvider(
-                        ChainConfig[this.OppositeToken].RPC
-                    )
-                ),
-            []
+        this.DEXContract = new Contract(
+            ChainConfig[this.OppositeToken].CONTRACTS.DEX.address,
+            ChainConfig[this.OppositeToken].CONTRACTS.DEX.abi,
+            new providers.JsonRpcProvider(ChainConfig[this.OppositeToken].RPC)
         );
     }
 
@@ -126,12 +102,13 @@ class ChainService implements IChainService {
             const totalSupply = await this.PairContract.totalSupply();
             const [reserve0, reserve1] = await this.PairContract.getReserves();
             const generalLiquidity = reserve0.add(reserve1).div(10 ** 6);
-            
+
             let totalLpSupply: any;
 
-            const pointers =
-                await this.ChefContract.poolInfo(ChainConfig[this.name].net);
-                const {allocPoint} = pointers
+            const pointers = await this.ChefContract.poolInfo(
+                ChainConfig[this.name].net
+            );
+            const { allocPoint } = pointers;
 
             if (this.name === 'AVAX') {
                 totalLpSupply = pointers.totalLpSupply;
@@ -283,8 +260,7 @@ class ChainService implements IChainService {
         } catch (e) {
             // Намутить обработку
             console.log(e);
-            throw new Error()
-            
+            throw new Error();
         }
     };
 

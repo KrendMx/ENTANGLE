@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useReducer, useState, useMemo} from 'react';
 import {ProviderContext} from '../../../../../context/ProviderContext';
 import DashboardItem from '../index';
 import type {ContainerStateType} from './types';
@@ -31,7 +31,7 @@ const FantomContainer = () => {
         }
     );
 
-    const FtmService = new ChainService('FTM');
+    const FtmService = useMemo(() => new ChainService('AVAX'), []);
 
     useEffect(() => {
         (async () => {
