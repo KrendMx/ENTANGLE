@@ -6,7 +6,8 @@ module.exports = {
   globals: {
       JSX: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'prettier', "next/core-web-vitals"],
+    // нужно вернуть конфиги
+  extends: ['plugin:react/recommended', "next/core-web-vitals"],
   parser: '@typescript-eslint/parser',
   parserOptions: {
       ecmaFeatures: {
