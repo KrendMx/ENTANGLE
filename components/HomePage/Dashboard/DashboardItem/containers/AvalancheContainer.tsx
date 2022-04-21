@@ -1,9 +1,9 @@
 import React, {
   useContext,
-  useEffect,
-  useReducer,
-  useState,
-  useMemo,
+    useEffect,
+    useReducer,
+    useState,
+    useMemo,
 } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
@@ -43,7 +43,11 @@ const AvalancheContainer = () => {
   const closeModal = () => setIsOpenModal(false);
   const openModal = () => setIsOpenModal(true);
 
+<<<<<<< HEAD
   const AvaxService = useMemo(() => new ChainService('AVAX'), []);
+=======
+    const AvaxService = useMemo(() => new ChainService('AVAX'), []);
+>>>>>>> d9c209c3ab87d896cc1883c9761c3e6379d6207a
 
   useEffect(() => {
     (async () => {
