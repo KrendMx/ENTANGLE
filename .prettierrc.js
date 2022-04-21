@@ -1,7 +1,7 @@
 module.exports = {
-  "singleQuote": true,
-  "arrowParens": "always",
-  "tabWidth": 4,
-  "useTabs": false,
-  "comma-dangle": "always"
-}
+  singleQuote: true,
+  arrowParens: 'always',
+  tabWidth: 4,
+  useTabs: false,
+  'comma-dangle': 'always',
+};
