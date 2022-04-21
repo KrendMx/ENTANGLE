@@ -1,5 +1,4 @@
 // React Deps
-// eslint-ignore-entire-file react-hooks/rules-of-hooks
 
 import React, { useMemo, useEffect, useContext } from 'react';
 import { Contract, providers, BigNumber } from 'ethers';
@@ -38,51 +37,31 @@ class ChainService implements IChainService {
     this.name = Chain;
     this.OppositeToken = Chain === 'AVAX' ? 'FTM' : 'AVAX';
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    this.PairContract = useMemo(
-      () => new Contract(
-        AdditionalConfig.CONTRACTS[this.name].PAIR.address,
-        AdditionalConfig.CONTRACTS[this.name].PAIR.abi,
-        new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
-      ),
-      [],
+    this.PairContract = new Contract(
+      AdditionalConfig.CONTRACTS[this.name].PAIR.address,
+      AdditionalConfig.CONTRACTS[this.name].PAIR.abi,
+      new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
     );
-    this.ChefContract = useMemo(
-      () => new Contract(
-        AdditionalConfig.CONTRACTS[this.name].CHEF.address,
-        AdditionalConfig.CONTRACTS[this.name].CHEF.abi,
-        new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
-      ),
-      [],
+    this.ChefContract = new Contract(
+      AdditionalConfig.CONTRACTS[this.name].CHEF.address,
+      AdditionalConfig.CONTRACTS[this.name].CHEF.abi,
+      new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
     );
-    this.RouterContract = useMemo(
-      () => new Contract(
-        AdditionalConfig.CONTRACTS[this.name].ROUTER.address,
-        AdditionalConfig.CONTRACTS[this.name].ROUTER.abi,
-        new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
-      ),
-      [],
+    this.RouterContract = new Contract(
+      AdditionalConfig.CONTRACTS[this.name].ROUTER.address,
+      AdditionalConfig.CONTRACTS[this.name].ROUTER.abi,
+      new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
     );
-    this.SynthContract = useMemo(
-      () => new Contract(
-        ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.address,
-        ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.abi,
-        new providers.JsonRpcProvider(
-          ChainConfig[this.OppositeToken].RPC,
-        ),
-      ),
-      [],
+    this.SynthContract = new Contract(
+      ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.address,
+      ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.abi,
+      new providers.JsonRpcProvider(ChainConfig[this.OppositeToken].RPC),
     );
 
-    this.DEXContract = useMemo(
-      () => new Contract(
-        ChainConfig[this.OppositeToken].CONTRACTS.DEX.address,
-        ChainConfig[this.OppositeToken].CONTRACTS.DEX.abi,
-        new providers.JsonRpcProvider(
-          ChainConfig[this.OppositeToken].RPC,
-        ),
-      ),
-      [],
+    this.DEXContract = new Contract(
+      ChainConfig[this.OppositeToken].CONTRACTS.DEX.address,
+      ChainConfig[this.OppositeToken].CONTRACTS.DEX.abi,
+      new providers.JsonRpcProvider(ChainConfig[this.OppositeToken].RPC),
     );
   }
 
@@ -133,7 +112,9 @@ class ChainService implements IChainService {
 
       let totalLpSupply: any;
 
-      const pointers = await this.ChefContract.poolInfo(ChainConfig[this.name].net);
+      const pointers = await this.ChefContract.poolInfo(
+        ChainConfig[this.name].net,
+      );
       const { allocPoint } = pointers;
 
       if (this.name === 'AVAX') {
@@ -161,6 +142,11 @@ class ChainService implements IChainService {
         ChainConfig[this.name].forAmount,
       );
 
+      const tokenApr = (BigNumber.from(
+        Math.floor(Number(volumeUSD) * 0.003),
+      ).toNumber()
+        / generalLiquidity.toNumber())
+        * 100;
       let perSec: any;
       let n: number;
       let r0: number;
@@ -171,11 +157,6 @@ class ChainService implements IChainService {
 
       switch (this.name) {
         case 'AVAX':
-          const tokenApr = (BigNumber.from(
-            Math.floor(Number(volumeUSD) * 0.003),
-          ).toNumber()
-                            / generalLiquidity.toNumber())
-                        * 100;
           perSec = await this.ChefContract.joePerSec();
           n = +(
             (perSec.div(BigInt(1e18)).toNumber()
@@ -337,7 +318,7 @@ class ChainService implements IChainService {
         (provider as Web3Provider).getSigner(),
       );
       // eslint-disable-next-line
-            const amount = BigInt(Math.floor(Number(value * Math.pow(10, 18))));
+      const amount = BigInt(Math.floor(Number(value * Math.pow(10, 18))));
       return await sellContract.sell(amount);
     } catch (e) {
       throw new Error();

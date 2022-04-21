@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useReducer,
   useState,
+  useMemo,
 } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
@@ -42,7 +43,7 @@ const AvalancheContainer = () => {
   const closeModal = () => setIsOpenModal(false);
   const openModal = () => setIsOpenModal(true);
 
-  const AvaxService = new ChainService('AVAX');
+  const AvaxService = useMemo(() => new ChainService('AVAX'), []);
 
   useEffect(() => {
     (async () => {

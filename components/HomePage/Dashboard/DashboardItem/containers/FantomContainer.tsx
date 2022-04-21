@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useReducer, useState,
+  useContext, useEffect, useReducer, useState, useMemo,
 } from 'react';
 import { ProviderContext } from '../../../../../context/ProviderContext';
 import DashboardItem from '../index';
@@ -35,7 +35,7 @@ const FantomContainer = () => {
     },
   );
 
-  const FtmService = new ChainService('FTM');
+  const FtmService = useMemo(() => new ChainService('FTM'), []);
 
   useEffect(() => {
     (async () => {
