@@ -17,6 +17,7 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint'],
     rules: {
+        'max-len': ['error', { code: 120 }],
         indent: ['error', 4],
         'no-unused-vars': 'warn',
         'react/no-unused-prop-types': ['off'],

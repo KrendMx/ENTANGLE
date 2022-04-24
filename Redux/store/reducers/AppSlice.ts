@@ -2,13 +2,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
 type AppState = {
-    isLoaded: boolean,
-    isWalletConnected: boolean
+    isLoaded: boolean
 }
 
 const initialState: AppState = {
     isLoaded: false,
-    isWalletConnected: false,
 };
 
 export const appSlice = createSlice({

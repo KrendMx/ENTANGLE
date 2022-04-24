@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import React, { useEffect } from 'react';
 
 import {
@@ -20,29 +19,15 @@ type ILayoutProps = {
 const Layout: React.FC<ILayoutProps> = ({ children }) => {
     const { isLoaded } = useAppSelector((state) => state.appReducer);
     const { appLoaded } = appSlice.actions;
-    const dispatch = useAppDispatch;
+    const dispatch = useAppDispatch();
 
-    const { t } = useTranslation();
+    useEffect(() => {
+        dispatch(appLoaded(true));
+    }, []);
 
     return (
         <div className={styles.wrapper}>
-            {console.log(isLoaded)}
-
-            <button
-                style={{
-                    position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    zIndex: '1000',
-                    width: '100px',
-                    height: '100px',
-                    background: 'red',
-                }}
-                onClick={() => dispatch(appLoaded(true))}
-            >
-                click
-            </button>
-            <Preloader isVisible={isLoaded} />
+            <Preloader isVisible={!isLoaded} />
             <Header />
             <div className={styles.layout}>
                 <main>{children}</main>
