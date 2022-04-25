@@ -46,11 +46,12 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         }),
         initState,
     );
-
+    // userSlice +
     const setPositionSum = (n: number, key: string) => {
         setState({ positionSum: new Map(state.positionSum.set(key, n)) });
     };
-
+    // userSlice
+    //+
     const getPositionSum = (key?: string): number => {
         if (key && state.positionSum.has(key)) {
             return state.positionSum.get(key) || 0;
@@ -61,7 +62,9 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         });
         return sum;
     };
+    //+
     const changeAccount = (accounts: string[]) => setState({ account: accounts[0] });
+    //+
     const chainChange = (chainId: string) => setState({
         chainId: parseInt(
             chainId,
@@ -69,7 +72,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         ).toString() as IAccountState['chainId'],
     });
     const disconnect = () => console.log('wallet disconnect');
-
+    // ++
     const changeNetwork = async (
         chainId: IAccountState['chainId'],
         provider: IAccountState['provider'],
@@ -92,7 +95,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
             }
         }
     };
-
+    // ++
     const importToken = async () => {
         if (state.provider) {
             const options = {
@@ -120,6 +123,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         }
     };
 
+    // bcSlice
     // eslint-disable-next-line consistent-return
     const approve = async (tokenAddress: string, dexAddress: string) => {
         if (state.provider) {
@@ -154,12 +158,12 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
             return data;
         }
     };
-
-    const removeWallet = async () => {
+    //++
+    const removeWallet = () => {
         setState({ ...initState, chainId: state.chainId });
         localStorage.removeItem('wallet');
     };
-
+    //++
     const setWallet = async (walletKey: string) => {
         const errorHandler = (e: ErrorI, returnValue: any) => {
             setError(e);
@@ -204,7 +208,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         });
         localStorage.setItem('wallet', '1');
     };
-
+    // wallSli++
     const setChainID = async (chainId: IAccountState['chainId']) => {
         await changeNetwork(chainId, state.provider);
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -214,7 +218,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
             provider,
         });
     };
-
+    // wallSli дубль
     const setChainIDAsync = async (
         chainId: IAccountState['chainId'],
     ): Promise<any> => changeNetwork(chainId, state.provider).then(() => {
@@ -225,7 +229,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
             provider,
         });
     });
-
+    // +
     const changeLoadingTx = async (value: boolean) => {
         setState({
             ...state,

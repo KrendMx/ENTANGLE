@@ -1,17 +1,17 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import userReducer from './reducers/UserSlice';
 import appReducer from './reducers/AppSlice';
-import { api } from './api';
+import walletReducer from './reducers/WalletSlice';
 
 const rootReducer = combineReducers({
     appReducer,
-    [api.reducerPath]: api.reducer,
+    userReducer,
+    walletReducer,
 });
 
 export const setupStore = () => configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware)
-    ,
 });
 
 export type RootState = ReturnType<typeof rootReducer>
