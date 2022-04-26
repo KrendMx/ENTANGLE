@@ -9,19 +9,19 @@ type ILayoutProps = {
 }
 
 const Layout: React.FC<ILayoutProps> = ({ children }) => {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  return (
-      <div className={styles.wrapper}>
-          <Header />
-          <div className={styles.layout}>
-              <main>
-                  {children}
-              </main>
-              <Footer />
-          </div>
-      </div>
-  );
+    return (
+        <div className={styles.wrapper}>
+            <Header />
+            <div className={styles.layout}>
+                <main>
+                    {children}
+                </main>
+                <Footer />
+            </div>
+        </div>
+    );
 };
 
 export default Layout;

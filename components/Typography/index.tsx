@@ -13,24 +13,24 @@ type TypographyProps = {
 }
 
 const Typography: React.FC<TypographyProps> = ({
-  type,
-  children,
-  underline,
-  classNameModifier,
+    type,
+    children,
+    underline,
+    classNameModifier,
 }) => {
-  const className = React.useMemo(
-    () => classNames(styles[type], classNameModifier, { [styles.underline]: underline }),
-    [underline, type],
-  );
+    const className = React.useMemo(
+        () => classNames(styles[type], classNameModifier, { [styles.underline]: underline }),
+        [underline, type],
+    );
 
-  switch (type) {
+    switch (type) {
     case 'title':
-      return <h2 className={className}>{children}</h2>;
+        return <h2 className={className}>{children}</h2>;
     case 'textBody':
-      return <p className={className}>{children}</p>;
+        return <p className={className}>{children}</p>;
     default:
-      return null;
-  }
+        return null;
+    }
 };
 
 export default Typography;
