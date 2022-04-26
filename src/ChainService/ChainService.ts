@@ -316,7 +316,8 @@ class ChainService implements IChainService {
                 ChainConfig[this.name].CONTRACTS.DEX.abi,
                 (provider as Web3Provider).getSigner(),
             );
-            const amount = BigInt(Math.floor(Number(value * 10 ** 18)));
+            // eslint-disable-next-line
+      const amount = BigInt(Math.floor(Number(value * Math.pow(10, 18))));
             return await sellContract.sell(amount);
         } catch (e) {
             throw new Error();
