@@ -1,6 +1,5 @@
 // React Deps
-
-import React, { useMemo, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Contract, providers, BigNumber } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import { ProviderContext } from '../../context/ProviderContext';

@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import styles from './style.module.css';
+
 import { ProviderContext } from '../../../context/ProviderContext';
 import { networks } from '../../../src/utils/GlobalConst';
+
+import styles from './style.module.css';
 
 const ChangeNetwork = () => {
     const [openList, setOpenList] = useState(false);

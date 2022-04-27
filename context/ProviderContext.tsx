@@ -1,13 +1,18 @@
 import { Contract, ethers } from 'ethers';
 import type { ReactNode } from 'react';
 import React, {
-    createContext, useEffect, useMemo, useReducer, useState,
+    createContext,
+    useEffect,
+    useMemo,
+    useReducer,
+    useState,
 } from 'react';
 import type { IAccountState, IProviderContext } from './types';
 import { toChainId } from '../src/utils';
 import ethereumNetworksConfig from './ethereumNetworksConfig';
 import type { ErrorI } from '../components/Modal/ErrorModal/ErrorModal.interfaces';
 import ErrorModal from '../components/Modal/ErrorModal/ErrorModal';
+// eslint-disable-next-line import/no-cycle
 import SuccessModal from '../components/Modal/SuccessModal/SuccessModal';
 import { ServiceProvider } from './ServiceContext';
 import { MainService, MockService } from '../components/Service';
@@ -15,9 +20,13 @@ import { opToken } from '../components/HomePage/Dashboard/DashboardItem/containe
 import { networks } from '../src/utils/GlobalConst';
 import type { TransactionInfo } from '../components/Modal/SuccessModal/SuccessModal.interface';
 
-export const ProviderContext = createContext<IProviderContext>({} as IProviderContext);
+export const ProviderContext = createContext<IProviderContext>(
+    {} as IProviderContext,
+);
 
-const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
+const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
+    children,
+}) => {
     const [error, setError] = useState<null | ErrorI>(null);
     const [sucInfo, setSucInfo] = useState<null | TransactionInfo>(null);
 
@@ -30,12 +39,19 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
         txLoading: false,
     } as const;
 
-    const [state, setState] = useReducer((stateAcc: IAccountState, newState: Partial<IAccountState>) => ({ ...stateAcc, ...newState }), initState);
-
+    const [state, setState] = useReducer(
+        (stateAcc: IAccountState, newState: Partial<IAccountState>) => ({
+            ...stateAcc,
+            ...newState,
+        }),
+        initState,
+    );
+    // userSlice +
     const setPositionSum = (n: number, key: string) => {
         setState({ positionSum: new Map(state.positionSum.set(key, n)) });
     };
-
+    // userSlice
+    //+
     const getPositionSum = (key?: string): number => {
         if (key && state.positionSum.has(key)) {
             return state.positionSum.get(key) || 0;
@@ -46,18 +62,32 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
         });
         return sum;
     };
+    //+
     const changeAccount = (accounts: string[]) => setState({ account: accounts[0] });
-    const chainChange = (chainId: string) => setState({ chainId: parseInt(chainId, 16).toString() as IAccountState['chainId'] });
+    //+
+    const chainChange = (chainId: string) => setState({
+        chainId: parseInt(
+            chainId,
+            16,
+        ).toString() as IAccountState['chainId'],
+    });
     const disconnect = () => console.log('wallet disconnect');
-
-    const changeNetwork = async (chainId: IAccountState['chainId'], provider: IAccountState['provider']) => {
+    // ++
+    const changeNetwork = async (
+        chainId: IAccountState['chainId'],
+        provider: IAccountState['provider'],
+    ) => {
         if (provider) {
             try {
-                await provider.send('wallet_switchEthereumChain', [{ chainId: toChainId(chainId) }]);
+                await provider.send('wallet_switchEthereumChain', [
+                    { chainId: toChainId(chainId) },
+                ]);
             } catch (switchError: any) {
                 if (switchError.code === 4902) {
                     try {
-                        await provider.send('wallet_addEthereumChain', [ethereumNetworksConfig[chainId]]);
+                        await provider.send('wallet_addEthereumChain', [
+                            ethereumNetworksConfig[chainId],
+                        ]);
                     } catch (addError) {
                         console.log(switchError);
                     }
@@ -65,7 +95,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
             }
         }
     };
-
+    // ++
     const importToken = async () => {
         if (state.provider) {
             const options = {
@@ -82,7 +112,9 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
             } catch (switchError: any) {
                 if (switchError.code === 4902) {
                     try {
-                        await state.provider.send('wallet_addEthereumChain', [ethereumNetworksConfig[state.chainId]]);
+                        await state.provider.send('wallet_addEthereumChain', [
+                            ethereumNetworksConfig[state.chainId],
+                        ]);
                     } catch (addError) {
                         console.log(switchError);
                     }
@@ -91,6 +123,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
         }
     };
 
+    // bcSlice
     // eslint-disable-next-line consistent-return
     const approve = async (tokenAddress: string, dexAddress: string) => {
         if (state.provider) {
@@ -100,13 +133,19 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
                 state.provider.getSigner(),
             );
 
-            const data = await contract.approve(dexAddress, '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
+            const data = await contract.approve(
+                dexAddress,
+                '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+            );
             return data;
         }
     };
 
-    // eslint-disable-next-line consistent-return
-    const getAllowance = async (contractAddress: string, dexAddress: string) => {
+    const getAllowance = async (
+        contractAddress: string,
+        dexAddress: string,
+        // eslint-disable-next-line consistent-return
+    ) => {
         if (state.provider) {
             const contract = new Contract(
                 contractAddress,
@@ -119,12 +158,12 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
             return data;
         }
     };
-
-    const removeWallet = async () => {
+    //++
+    const removeWallet = () => {
         setState({ ...initState, chainId: state.chainId });
         localStorage.removeItem('wallet');
     };
-
+    //++
     const setWallet = async (walletKey: string) => {
         const errorHandler = (e: ErrorI, returnValue: any) => {
             setError(e);
@@ -135,28 +174,41 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
 
         if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
         if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
-        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) return;
+        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) {
+            return;
+        }
 
-        const account = (await provider.send('eth_requestAccounts', []).catch((e: ErrorI) => errorHandler(e, [])))[0] || null;
+        const account = (
+            await provider
+                .send('eth_requestAccounts', [])
+                .catch((e: ErrorI) => errorHandler(e, []))
+        )[0] || null;
         if (!account) {
             return;
         }
 
-        const networkData = await provider.getNetwork().catch((e: ErrorI) => errorHandler(e, null));
+        const networkData = await provider
+            .getNetwork()
+            .catch((e: ErrorI) => errorHandler(e, null));
         if (!networkData) {
             return;
         }
 
-        await changeNetwork(state.chainId, provider)
-            .finally(() => {
-                const chainId = parseInt(networkData.chainId.toString(), 10).toString() as IAccountState['chainId'];
-                setState({
-                    provider, account, chainId, walletKey,
-                });
+        await changeNetwork(state.chainId, provider).finally(() => {
+            const chainId = parseInt(
+                networkData.chainId.toString(),
+                10,
+            ).toString() as IAccountState['chainId'];
+            setState({
+                provider,
+                account,
+                chainId,
+                walletKey,
             });
+        });
         localStorage.setItem('wallet', '1');
     };
-
+    // wallSli++
     const setChainID = async (chainId: IAccountState['chainId']) => {
         await changeNetwork(chainId, state.provider);
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -166,8 +218,10 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
             provider,
         });
     };
-
-    const setChainIDAsync = async (chainId: IAccountState['chainId']): Promise<any> => changeNetwork(chainId, state.provider).then(() => {
+    // wallSli дубль
+    const setChainIDAsync = async (
+        chainId: IAccountState['chainId'],
+    ): Promise<any> => changeNetwork(chainId, state.provider).then(() => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         setState({
             ...state,
@@ -175,7 +229,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
             provider,
         });
     });
-
+    // +
     const changeLoadingTx = async (value: boolean) => {
         setState({
             ...state,
@@ -215,7 +269,12 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({ children })
         setSucInfo,
     };
 
-    const service = useMemo(() => ((Number(process.env.REACT_APP_IS_MOCK_API) === 1) ? new MockService() : new MainService()), []);
+    const service = useMemo(
+        () => (Number(process.env.REACT_APP_IS_MOCK_API) === 1
+            ? new MockService()
+            : new MainService()),
+        [],
+    );
 
     return (
         <ProviderContext.Provider value={providerValue}>

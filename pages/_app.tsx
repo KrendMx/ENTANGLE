@@ -1,11 +1,14 @@
-import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { setupStore } from '../Redux/store/store';
 import ProviderContextWrapper from '../context/ProviderContext';
 import Layout from '../src/HOC/Layout';
+
+import '../styles/globals.css';
+
+const store = setupStore();
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
     <Provider store={store}>

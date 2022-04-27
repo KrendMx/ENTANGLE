@@ -9,8 +9,10 @@ export default class MainService extends Service implements iService {
         });
     }
 
-    getTotalValueLocked = async (): Promise<GetTotalValueLockedResponse> => await this.getJson<GetTotalValueLockedResponse>('metrics/tvl').then((data) => {
-        const { change, ...other } = data;
-        return { change: change * 100, ...other };
-    });
+    getTotalValueLocked = async (): Promise<GetTotalValueLockedResponse> => (
+        await this.getJson<GetTotalValueLockedResponse>('metrics/tvl').then((data) => {
+            const { change, ...other } = data;
+            return { change: change * 100, ...other };
+        })
+    );
 }

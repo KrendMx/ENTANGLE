@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 import Dropout from './Dropout';
 import { ProviderContext } from '../../context/ProviderContext';
 import ChangeNetwork from './ChangeNetwork';
-import { MenuBtn } from './MenuBtn/MenuBtn';
+import { MenuBtn } from './MenuBtn';
 
 const Header = () => {
     const { account, setWallet, removeWallet } = useContext(ProviderContext);
