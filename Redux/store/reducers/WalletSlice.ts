@@ -1,18 +1,15 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ethers } from 'ethers';
+import { createSlice } from '@reduxjs/toolkit';
 
-import type { ChainIdType, ProviderType } from '../../types';
-import { toChainId } from '../../../src/utils';
-import ethereumNetworksConfig from '../../../context/ethereumNetworksConfig';
-
-type walletKeyType = 'MetaMask' | 'Coin98' | 'CoinBase' | null;
+import type { ChainIdType, ProviderType, walletKeyType } from '../../types';
+import { changeNetwork, setChainId, setWallet } from './ActionCreators';
 
 type initialStateType = {
     walletKey: walletKeyType,
     provider: ProviderType,
     account: string | null,
     chainId: ChainIdType,
+    error: boolean;
 }
 
 const initialState: initialStateType = {
@@ -20,77 +17,8 @@ const initialState: initialStateType = {
     provider: null,
     account: null,
     chainId: '250',
+    error: false,
 };
-
-const changeNetwork = createAsyncThunk(
-    'wallet/changeNetwork',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<ChainIdType> => {
-        if (provider) {
-            try {
-                await provider.send('wallet_switchEthereumChain', [
-                    { chainId: toChainId(chainId) },
-                ]);
-            } catch (switchError: any) {
-                if (switchError.code === 4902) {
-                    try {
-                        await provider.send('wallet_addEthereumChain', [
-                            ethereumNetworksConfig[chainId],
-                        ]);
-                    } catch (addError) {
-                        console.log(switchError);
-                    }
-                }
-            }
-        }
-        return chainId;
-    },
-);
-
-const setWallet = createAsyncThunk(
-    'wallet/setWallet',
-    async ({ walletKey, chainId }: { walletKey: walletKeyType, chainId: ChainIdType }) => {
-        const errorHandler = (e: any, returnValue: any) => returnValue;
-
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-        if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
-        if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
-        // eslint-disable-next-line no-useless-return
-        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) return;
-
-        const account = (
-            await provider
-                .send('eth_requestAccounts', [])
-                .catch((e: any) => errorHandler(e, []))
-        )[0] || null;
-        if (!account) return;
-
-        const networkData = await provider
-            .getNetwork()
-            .catch((e: any) => errorHandler(e, null));
-        if (!networkData) return;
-        // @ts-ignore ругается на finally
-        const response = await changeNetwork({ chainId, provider }).finally(() => {
-            const newChainId = parseInt(
-                networkData.chainId.toString(),
-                16,
-            ).toString() as initialStateType['chainId'];
-            return newChainId;
-        });
-        localStorage.setItem('wallet', '1');
-        // eslint-disable-next-line consistent-return
-        return response;
-    },
-);
-
-const setChainId = createAsyncThunk(
-    'wallet/setChainId',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }) => {
-        await changeNetwork({ chainId, provider });
-        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-        return newProvider;
-    },
-);
 
 const walletSlice = createSlice({
     name: 'wallet',
@@ -118,7 +46,11 @@ const walletSlice = createSlice({
         builder.addCase(setWallet.fulfilled, (state, action) => {
             state.walletKey = action.payload;
         });
+        builder.addCase(setWallet.rejected, (state, action) => {
+            console.log(state.provider);
+        });
     },
 });
 
+export const { chainChange, changeAccount, removeWallet } = walletSlice.actions;
 export default walletSlice.reducer;

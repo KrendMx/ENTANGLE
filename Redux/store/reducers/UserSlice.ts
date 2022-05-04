@@ -1,9 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import type { ChainIdType, ProviderType } from '../../types';
-import { networks } from '../../../src/utils/GlobalConst';
-import ethereumNetworksConfig from '../../ethereumNetworksConfig';
+import type { ChainIdType } from '../../types';
+import { importToken } from './ActionCreators';
 
 type initStateType = {
     positionSumObj: Map<string, number>,
@@ -21,36 +20,6 @@ const initialState: initStateType = {
     txLoading: false,
     positionSum: 0,
 };
-
-const importToken = createAsyncThunk(
-    'user/import-token',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<any> => {
-        if (provider) {
-            const options = {
-                type: 'ERC20',
-                options: {
-                    address: networks[chainId].synth,
-                    symbol: 'SYNTH',
-                    decimals: 18,
-                },
-            };
-            try {
-                // @ts-ignore
-                await provider.send('wallet_watchAsset', options);
-            } catch (switchError: any) {
-                if (switchError.code === 4902) {
-                    try {
-                        await provider.send('wallet_addEthereumChain', [
-                            ethereumNetworksConfig[chainId],
-                        ]);
-                    } catch (addError) {
-                        console.log(switchError);
-                    }
-                }
-            }
-        }
-    },
-);
 
 const userSlice = createSlice({
     name: 'user',
@@ -70,4 +39,5 @@ const userSlice = createSlice({
     },
 });
 
+export const { changeLoadingTx, setPositionSum } = userSlice.actions;
 export default userSlice.reducer;

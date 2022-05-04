@@ -13,11 +13,12 @@ export const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-        appLoaded(state, action:PayloadAction<boolean>) {
+        appLoaded(state, action: PayloadAction<boolean>) {
             // eslint-disable-next-line no-param-reassign
             state.isLoaded = action.payload;
         },
     },
 });
 
+export const { appLoaded } = appSlice.actions;
 export default appSlice.reducer;

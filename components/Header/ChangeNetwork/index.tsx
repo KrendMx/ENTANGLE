@@ -1,14 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import { ProviderContext } from '../../../context/ProviderContext';
 import { networks } from '../../../src/utils/GlobalConst';
+import { setChainId } from '../../../Redux/store/reducers/WalletSlice';
 
 import styles from './style.module.css';
+import { useAppSelector } from '../../../Redux/store/hooks/redux';
+import type { ChainIdType } from '../../../Redux/types';
 
 const ChangeNetwork = () => {
     const [openList, setOpenList] = useState(false);
-    const { setChainID, chainId, account } = useContext(ProviderContext);
+    const { provider, chainId } = useAppSelector((state) => state.walletReducer);
+
+    useEffect(() => {
+    }, []);
+
+    const handleClick = (chainIdEl: ChainIdType) => {
+        setChainId({ chainId: chainIdEl, provider });
+        console.log({ chainId: chainIdEl, provider });
+    };
 
     return (
         <div className={styles.wrapper}>
@@ -33,10 +43,10 @@ const ChangeNetwork = () => {
                 })}
             >
                 {(Object.keys(networks) as Array<keyof typeof networks>).map(
-                    (chainIdEl) => (
+                    (chainIdEl: keyof typeof networks) => (
                         <div
                             className={styles.network}
-                            onClick={() => setChainID(chainIdEl)}
+                            onClick={() => handleClick(chainIdEl)}
                             key={chainIdEl}
                         >
                             <p>{networks[chainIdEl].title}</p>

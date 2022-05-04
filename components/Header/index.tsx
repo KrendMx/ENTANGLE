@@ -4,17 +4,21 @@ import Link from 'next/link';
 import ScrollLock from 'react-scrolllock';
 import styles from './styles.module.css';
 import Dropout from './Dropout';
-import { ProviderContext } from '../../context/ProviderContext';
+// import { ProviderContext } from '../../context/ProviderContext';
 import ChangeNetwork from './ChangeNetwork';
 import { MenuBtn } from './MenuBtn';
+import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
+import { setWallet } from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const { account, setWallet, removeWallet } = useContext(ProviderContext);
+    // const { account, setWallet, removeWallet } = useContext(ProviderContext);
+    const { account, chainId } = useAppSelector((state) => state.walletReducer);
+    const dispatch = useAppDispatch();
 
-    const connect = () => account || setWallet('MetaMask');
-    const disconnect = () => removeWallet();
+    const connect = () => account || dispatch(setWallet({ walletKey: 'MetaMask', chainId }));
+    const disconnect = () => console.log('disconnect');
 
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const wallet = localStorage.getItem('wallet');
