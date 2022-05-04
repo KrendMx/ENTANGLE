@@ -146,12 +146,14 @@
 }
 
 .rowGradient {
-    margin-top: 9px;
-    height: 5px;
-    width: 100%;
-    background: rgb(42 42 42);
-    background: linear-gradient(90deg, #0f598e 0%, rgba(15, 89, 142, 0) 100%);
-    border-radius: 2.5px;
+  --colorFrom: #0f598e;
+  --percentage: 1%;
+  margin-top: 9px;
+  height: 5px;
+  width: 100%;
+  background: rgb(42 42 42);
+  background: linear-gradient(90deg, var(--colorFrom) 0%, rgba(0, 0, 0, 0) var(--percentage));
+  border-radius: 2.5px;
 }
 
 .networkIcon {

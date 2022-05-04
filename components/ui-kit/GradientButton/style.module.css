@@ -1,10 +1,14 @@
 .wrapper {
-    padding: 1px;
-    border-radius: 12px;
-    width: 100%;
-    overflow: hidden;
-    cursor: pointer;
-    user-select: none;
+  padding: 1px;
+  border-radius: 12px;
+  width: 100%;
+  display: flex;
+  cursor: pointer;
+  user-select: none;
+}
+
+.wrapper > * {
+  flex: 1;
 }
 
 .titleElement {
@@ -12,6 +16,9 @@
   color: #FFFFFF;
   text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
   border-radius: inherit;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .title {

@@ -9,3 +9,6 @@ export { default as avaSynth } from './avaSynth.json';
 export { default as spiritChef } from './spiritChef.json';
 export { default as spiritPair } from './spiritPair.json';
 export { default as spiritRouter } from './spiritRouter.json';
+export { default as feeAbi } from './fee.json';
+export { default as dexOnDemand } from './dexOnDemand.json';
+export { default as synthChef } from './synthChef.json';

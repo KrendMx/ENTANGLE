@@ -8,4 +8,5 @@ export type ContainerStateType = {
     positions: string | null;
     totalPositions: string | null;
     rowGradient: string;
+    yieldTime: string | null;
 }

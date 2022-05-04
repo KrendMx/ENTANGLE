@@ -1,17 +1,18 @@
 import type { Contract } from 'ethers';
+import type { ChainConfig } from './config';
 
 interface ICardData {
-    apr: string;
-    totalDeposits: string;
-    currentDeposits: string;
-    available: string;
-    totalAvailable: string;
-    price: string;
+    apr: number;
+    totalDeposits: number;
+    currentDeposits: number;
+    available: number;
+    totalAvailable: number;
+    price: number;
 }
 
 interface IPersonalData {
     positions: number;
-    totalPositions: string;
+    totalPositions: number;
 }
 
 interface IResult {
@@ -22,12 +23,25 @@ interface ITX {
     wait: () => Promise<IResult>;
 }
 
+type SynthContracts = {
+    SYNTH: Contract,
+    DEX: Contract,
+    STABLE: Contract,
+    FEE: Contract,
+    SYNTHCHEF: Contract,
+    STABLESYNTCHEF: Contract,
+    CHEF: Contract,
+    PAIR: Contract,
+    ROUTER: Contract,
+};
+
+type keyType = ('9' & '67') | ('8' & '68');
+
 interface IChainServiceVars {
     readonly name: IChain;
-    readonly PairContract: Contract;
     readonly ChefContract: Contract;
     readonly RouterContract: Contract;
-    readonly SynthContract: Contract;
+    readonly SynthsContractsArray: {[key: string]: Contract};
     readonly DEXContract: Contract;
     readonly OppositeToken: IChain;
 }
@@ -41,4 +55,6 @@ interface IChainService extends IChainServiceVars {
 
 type IChain = 'FTM' | 'AVAX';
 
-export type { IChainService, IChain };
+export type {
+    IChainService, IChain, keyType, SynthContracts,
+};

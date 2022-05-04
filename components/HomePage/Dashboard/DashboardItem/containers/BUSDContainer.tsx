@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
-import { Contract, providers, BigNumber } from 'ethers';
+import React, { useReducer } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 
-const BUSDContainer = () => {
+const BUSDContainer = ({ isFiltered = false }) => {
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -20,6 +19,8 @@ const BUSDContainer = () => {
             totalPositions: 'UST/BUSD Synthetic LP',
             rowGradient:
                 'linear-gradient(90deg, rgba(255, 149, 1, 1) 0%, rgba(255, 153, 1, 0) 96.87%)',
+            yieldTime: '$0',
+
         },
     );
 
@@ -32,11 +33,11 @@ const BUSDContainer = () => {
         priceCurrency: 'UST/BUSD Synthetic LP',
         description:
             'Generates yield by running an autocompound UST/BUSD strategy on pancakeswap.finance',
-        disabled: true,
+        disabled: false,
         ...state,
     } as const;
 
-    return <DashboardItem {...data} />;
+    return <DashboardItem {...data} isFiltered={isFiltered} />;
 };
 
 export default BUSDContainer;

@@ -11,6 +11,11 @@ type initStateType = {
     positionSum: string | number,
 }
 
+type ImportTypes = {
+    chainId: ChainIdType;
+    provider: ProviderType;
+}
+
 type positionSumType = {
     n: number,
     key: ChainIdType,
@@ -24,7 +29,7 @@ const initialState: initStateType = {
 
 const importToken = createAsyncThunk(
     'user/import-token',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<any> => {
+    async ({ chainId, provider }: ImportTypes): Promise<any> => {
         if (provider) {
             const options = {
                 type: 'ERC20',

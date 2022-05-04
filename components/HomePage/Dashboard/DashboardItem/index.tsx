@@ -2,13 +2,15 @@ import React, {
     useContext, useEffect, useMemo, useState,
 } from 'react';
 import classNames from 'classnames';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
 import { ProviderContext } from '../../../../context/ProviderContext';
 import type { ContainerStateType } from './containers/types';
 import { networks } from '../../../../src/utils/GlobalConst';
+import CopyBtn from '../../../ui-kit/CopyBtn/CopyBtn';
+import HoverTooltip from '../../../ui-kit/HoverTooltip/HoverTooltip';
+import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
 
 type DashboardItemProps = {
     chainId: '250' | '43114';
@@ -18,6 +20,7 @@ type DashboardItemProps = {
     description: string;
     priceCurrency: string;
     disabled: boolean;
+    isFiltered: boolean;
     openModal?: () => void;
 } & ContainerStateType;
 
@@ -40,20 +43,37 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
         disabled,
         chainId,
         openModal,
+        yieldTime,
+        isFiltered = false,
     } = props;
     const {
+        provider,
         account,
         chainId: selectedChainId,
         setChainID,
         importToken,
         setChainIDAsync,
-        setWallet,
+        setIsOpenSelectWalletModal,
     } = useContext(ProviderContext);
 
     const localChain = chainId === '43114' ? '250' : '43114';
 
-    const canAddToken = useMemo(() => (selectedChainId !== chainId), [selectedChainId]);
+    const canAddToken = useMemo(
+        () => selectedChainId !== chainId,
+        [selectedChainId],
+    );
     const [addingToken, setAddingToken] = useState(false);
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    useEffect(() => {
+        if (tooltipVisible) {
+            const timer = setTimeout(() => setTooltipVisible(false), 3000);
+            return () => {
+                clearTimeout(timer);
+            };
+        }
+        return () => {
+        };
+    }, [tooltipVisible]);
 
     useEffect(() => {
         if (canAddToken && addingToken) {
@@ -65,8 +85,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
     const buttonValue = useMemo(() => {
         if (disabled) return 'Not available';
         if (!account) return 'Connect wallet';
-        if (selectedChainId !== '43114' && selectedChainId !== '250') return 'Change network';
-        if (selectedChainId !== chainId) return 'Select';
+        if (selectedChainId === '250' || selectedChainId === '43114') return 'Select';
         return 'Change network';
     }, [account, selectedChainId]);
 
@@ -81,6 +100,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
             importToken();
         }
     };
+
     const handleSelectClick = () => {
         switch (buttonValue) {
         case 'Select':
@@ -90,7 +110,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
             setChainID(localChain);
             break;
         case 'Connect wallet':
-            setWallet('MetaMask');
+            setIsOpenSelectWalletModal(true);
             break;
         default:
             break;
@@ -98,7 +118,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
     };
 
     return (
-        <div className={styles.overlayWrapper}>
+        <div className={classNames(styles.overlayWrapper, { [styles.hidden]: isFiltered })}>
             {disabled && <div className={styles.overlayDisabled} />}
             <div className={styles.wrapper}>
                 <div className={styles.topBg}>
@@ -116,13 +136,27 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                 <div className={styles.heading}>
                     {heading}
                     <div className={styles.addImgWrapper}>
-                        <CopyToClipboard text={networks[chainId].synth}>
-                            <img className={styles.metamaskBtnImg} src="./images/copy.svg" alt="Copy synth address" />
-                        </CopyToClipboard>
+                        <CopyBtn text={networks[chainId].synth} wrapperClassName={styles.metamaskBtnImg} />
                     </div>
-                    <div className={styles.addImgWrapper} onClick={handleMetamaskClick}>
-                        <img className={styles.metamaskBtnImg} src="./images/connectors/metamask.svg" alt="Add to MetaMask" />
-                    </div>
+                    {provider && account && (
+                        <div
+                            className={styles.addImgWrapper}
+                            onMouseEnter={() => {
+                                setTooltipVisible(true);
+                            }}
+                            onMouseLeave={() => {
+                                setTooltipVisible(false);
+                            }}
+                            onClick={handleMetamaskClick}
+                        >
+                            <img
+                                className={styles.metamaskBtnImg}
+                                src={`./images/connectors/${WalletProviderNames.MetaMask}.svg`}
+                                alt="Add to MetaMask"
+                            />
+                            <HoverTooltip isVisible={tooltipVisible} text="Add to MetaMask" />
+                        </div>
+                    )}
                 </div>
                 <p className={styles.description}>{description}</p>
                 <div className={styles.section}>
@@ -202,39 +236,48 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                         )}
                     </div>
                 </div>
-                <div className={styles.section}>
-                    <p className={styles.sectionTitle}>Your Position</p>
-                    {account ? (
-                        <div
-                            className={classNames(styles.sectionRow)}
-                        >
-                            <p className={styles.sectionValue}>
-                                {positions || (
+                {account ? (
+                    <>
+                        <div className={styles.section}>
+                            <p className={styles.sectionTitle}>Your Position</p>
+                            <div className={classNames(styles.sectionRow)}>
+                                <p className={styles.sectionValue}>
+                                    {positions || (
+                                        <TextLoader bgGradient={bgGradient} />
+                                    )}
+                                </p>
+                                <p className={styles.sectionSubValue}>
+                                    {totalPositions}
+                                </p>
+                            </div>
+                        </div>
+                        <div className={styles.section}>
+                            <p className={styles.sectionTitle}>
+                                Real Time Yield
+                            </p>
+                            <div className={styles.sectionRow}>
+                                {yieldTime ? (
+                                    <p className={styles.sectionValue}>
+                                        {yieldTime}
+                                    </p>
+                                ) : (
                                     <TextLoader bgGradient={bgGradient} />
                                 )}
-                            </p>
-                            <p className={styles.sectionSubValue}>
-                                {totalPositions}
-                            </p>
+                            </div>
                         </div>
-                    ) : (
+                    </>
+                ) : (
+                    <div className={styles.section}>
+                        <p className={styles.sectionTitle}>
+                            Your Position / Real Time Yield
+                        </p>
                         <div className={styles.section}>
                             <p className={styles.sectionError}>
                                 Connect Your Metamask wallet
                             </p>
                         </div>
-                    )}
-                </div>
-                <div className={styles.section}>
-                    <p className={styles.sectionTitle}>Real Time Yield</p>
-                    <div className={styles.sectionRow}>
-                        {price ? (
-                            <p className={styles.sectionValue}>+$15</p>
-                        ) : (
-                            <TextLoader bgGradient={bgGradient} />
-                        )}
                     </div>
-                </div>
+                )}
                 <div className={styles.buttonWrapper}>
                     <div className={styles.mt2}>
                         <GradientButton

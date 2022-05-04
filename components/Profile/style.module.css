@@ -16,23 +16,23 @@
 }
 
 .selects {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .horisontalWrapper {
-    display: flex;
-    gap: 16px;
-    flex-direction: column;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
 }
 
 .verticalWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .flex1 {
-    flex: 1;
+  flex: 1;
 }
 
 .flex {

@@ -1,26 +1,34 @@
 import React, {
     useContext,
     useEffect,
+    useMemo,
     useReducer,
     useState,
-    useMemo,
 } from 'react';
+import { BigNumber, Contract, providers } from 'ethers';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
+import {
+    avalancheChef,
+    ftmDex,
+    ftmSynth,
+    joePair,
+    joeRouter,
+    opToken,
+} from '../../../../../src/utils/abi/index';
+import ChainService from '../../../../../src/ChainService/ChainService';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import { ProviderContext } from '../../../../../context/ProviderContext';
 
-import ChainService from '../../../../../src/ChainService/ChainService';
-
-const AvalancheContainer = () => {
+const AvalancheContainer = ({ isFiltered = false }) => {
     const {
-        provider,
         account,
-        changeLoadingTx,
         txLoading,
-        setSucInfo,
         setPositionSum,
+        setDeposit,
+        setPayData,
+        payData,
     } = useContext(ProviderContext);
     const [state, setState] = useReducer(
         (
@@ -37,100 +45,17 @@ const AvalancheContainer = () => {
             positions: null,
             totalPositions: null,
             rowGradient: '',
+            yieldTime: null,
         },
     );
     const [isOpenModal, setIsOpenModal] = useState(false);
     const closeModal = () => setIsOpenModal(false);
     const openModal = () => setIsOpenModal(true);
 
-    const AvaxService = useMemo(() => new ChainService('AVAX'), []);
-
-    useEffect(() => {
-        (async () => {
-            const {
-                apr,
-                totalAvailable,
-                totalDeposits,
-                currentDeposits,
-                available,
-                price,
-            } = await AvaxService.getCardData();
-
-            setState({
-                apr,
-                totalDeposits,
-                currentDeposits,
-                available,
-                totalAvailable,
-                price,
-                rowGradient:
-                    'linear-gradient(90deg, #E93038 0%, rgba(239, 70, 78, 0) 100%)',
-            });
-        })();
-    }, [txLoading]);
-
-    useEffect(() => {
-        (async () => {
-            if (account) {
-                // eslint-disable-next-line operator-linebreak
-                const { positions, totalPositions } =
-                    await AvaxService.getPersonalData(account);
-                setPositionSum(positions, 'fantom');
-                setState({
-                    ...state,
-                    positions: `$${Number(positions.toFixed(2))}`,
-                    totalPositions,
-                });
-            }
-        })();
-    }, [account, txLoading]);
-
-    const buyToken = async (value: number) => {
-        try {
-            const data = await AvaxService.buyToken(value);
-            if (data) {
-                changeLoadingTx(true);
-            }
-            const res = await data.wait();
-            if (res?.status) {
-                changeLoadingTx(false);
-                setSucInfo({
-                    value,
-                    symbol: 'USDT/USDT Synthetic LP',
-                    isReceived: true,
-                });
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    const sellToken = async (value: number) => {
-        try {
-            const data = await AvaxService.sellToken(value);
-
-            if (data) {
-                changeLoadingTx(true);
-            }
-            const res = await data.wait();
-
-            if (res?.status) {
-                changeLoadingTx(false);
-                setSucInfo({
-                    value,
-                    symbol: 'USDT/USDT Synthetic LP',
-                    isReceived: false,
-                });
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     const data = {
         icon: 'avalancheDashboard.png',
         bgGradient:
-            'linear-gradient(90deg, rgba(233, 48, 56, 0.2) 0%, rgba(239, 70, 78, 0) 100%)',
+            'linear-gradient(90deg, rgba(233, 48, 56, 0.4) 0%, rgba(239, 70, 78, 0) 100%)',
         heading: 'USDT-USDT.e',
         chainId: '43114',
         priceCurrency: 'USDT/USDT.e Synthetic LP',
@@ -141,13 +66,59 @@ const AvalancheContainer = () => {
         ...state,
     } as const;
 
+    // const Service = useMemo(() => new ChainService('AVAX'), []);
+
+    useEffect(() => {
+        (async () => {
+            // Service.get();
+            // const {
+            //     apr,
+            //     available,
+            //     totalAvailable,
+            //     totalDeposits,
+            //     currentDeposits,
+            //     price,
+            // } = await Service.getCardData();
+            // const percentage = Math.ceil((available / currentDeposits) * 100);
+            // const oldData = payData;
+            // oldData[43114].available = `${Number(available.toFixed(5))}`;
+            // oldData[43114].price = `${Number(price.toFixed(6))}`;
+            // oldData[43114].totalAvailable = `$${totalAvailable}`;
+            // setPayData(oldData);
+            // setState({
+            //     apr: `${apr}%`,
+            //     totalDeposits: `${totalDeposits} USDT/USDT.e LP`,
+            //     currentDeposits: `$${currentDeposits.toFixed(3)}`,
+            //     available: `${Number(available.toFixed(5))}`,
+            //     totalAvailable: `$${totalAvailable.toFixed(5)}`,
+            //     price: `${Number(price.toFixed(6))}`,
+            //     rowGradient: `linear-gradient(90deg, #E93038 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
+            // });
+        })();
+    }, [txLoading]);
+
+    // useEffect(() => {
+    //     (async () => {
+    //         if (account) {
+    //             const { positions, totalPositions } = await Service.getPersonalData(account);
+    //             const yieldTime = await getProfit(account!, 67);
+    //             setPositionSum(positions, 'fantom');
+    //             setState({
+    //                 positions: `$${Number(positions.toFixed(2))}`,
+    //                 totalPositions: `${Number(
+    //                     totalPositions.toFixed(5),
+    //                 )} USDT/USDT.e Synthetic LP`,
+    //                 yieldTime: `$${Number(yieldTime.stable || 0).toFixed(4)}`,
+    //             });
+    //         }
+    //     })();
+    // }, [account, txLoading]);
+
     return (
         <>
             {isOpenModal && (
                 <Modal handleClose={closeModal}>
                     <PayModal
-                        buyToken={buyToken}
-                        sellToken={sellToken}
                         available={state.available}
                         totalAvailable={state.totalAvailable}
                         price={state.price}
@@ -155,7 +126,7 @@ const AvalancheContainer = () => {
                     />
                 </Modal>
             )}
-            <DashboardItem {...data} />
+            <DashboardItem {...data} isFiltered={isFiltered} />
         </>
     );
 };

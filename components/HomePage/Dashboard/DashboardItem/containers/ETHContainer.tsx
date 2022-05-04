@@ -1,14 +1,13 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
-import { Contract, providers, BigNumber } from 'ethers';
+import React, {useReducer} from 'react';
 import DashboardItem from '../index';
-import type { ContainerStateType } from './types';
+import type {ContainerStateType} from './types';
 
-const ETHContainer = () => {
+const ETHContainer = ({isFiltered = false}) => {
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
-            stateUpdate: Partial<ContainerStateType>,
-        ) => ({ ...containerState, ...stateUpdate }),
+            stateUpdate: Partial<ContainerStateType>
+        ) => ({...containerState, ...stateUpdate}),
         {
             apr: 'TBA',
             currentDeposits: '$0',
@@ -19,7 +18,8 @@ const ETHContainer = () => {
             positions: '$0',
             totalPositions: 'MIM/UST Synthetic LP',
             rowGradient: '',
-        },
+            yieldTime: '$0'
+        }
     );
 
     const data = {
@@ -35,7 +35,7 @@ const ETHContainer = () => {
         ...state,
     } as const;
 
-    return <DashboardItem {...data} />;
+    return <DashboardItem {...data} isFiltered={isFiltered}/>;
 };
 
 export default ETHContainer;

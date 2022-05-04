@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { ServiceConfigOptions } from '../../context/ServiceContext/ServiceContext.interfaces';
 
 export default class Service {
@@ -8,33 +9,36 @@ export default class Service {
     }
 
     protected get = async (url: string) => {
-        const res = await fetch(`${this._apiBase}${url}`, {
-            headers: await this.getHeaders(),
+        const { data } = await axios.get(`${this._apiBase}${url}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
-        if (!res.ok) {
+        if (!data) {
             throw new Error('Get request was failed');
         }
 
-        return res;
+        return data;
     };
 
     protected post = async (url: string, object: object) => {
         const dataRequest = {
             method: 'POST',
-            body: JSON.stringify(object),
-            headers: await this.getHeaders(),
+            headers: { 'Content-Type': 'application/json' },
         };
-        const res = await fetch(`${this._apiBase}${url}`, dataRequest);
-        if (!res.ok) {
+        const { data } = await axios.post(`${this._apiBase}${url}`, object, dataRequest);
+        if (!data) {
             throw new Error('Post request was failed');
         }
 
-        return res;
+        return data;
     };
 
-    protected getJson = async <T>(url: string) => (this.get(url).then((res) => res.json()) as unknown) as T;
+    protected getJson = async <T>(url: string) =>
+        this.get(url).then((res) => res) as unknown as T;
 
-    protected postJson = async <T>(url: string, object: object) => (this.post(url, object).then((res) => res.json()) as unknown) as T;
+    protected postJson = async <T>(url: string, object: object) =>
+        this.post(url, object).then((res) => res) as unknown as T;
 
     private getHeaders = async (): Promise<Headers> => {
         const headers: Headers = new Headers();

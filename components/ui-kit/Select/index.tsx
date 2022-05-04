@@ -28,7 +28,7 @@ const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
                 if (child.props.value === value && selected !== value) {
                     setSelected(child?.props?.children || '');
                 }
-            },
+            }
         );
     }, [value]);
 

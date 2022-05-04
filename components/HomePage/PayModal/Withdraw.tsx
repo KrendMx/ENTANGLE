@@ -5,7 +5,7 @@ import styles from './style.module.css';
 import Input from '../../ui-kit/Input';
 import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
-import { opToken } from '../Dashboard/DashboardItem/containers/abi';
+import { opToken } from '../../../src/utils/abi/index';
 import { ProviderContext } from '../../../context/ProviderContext';
 import { networks } from '../../../src/utils/GlobalConst';
 
@@ -24,6 +24,7 @@ const Withdraw: React.FC<propsType> = (props) => {
         account,
         txLoading,
         changeLoadingTx,
+        payData,
     } = useContext(ProviderContext);
     const [amount, setAmount] = useState<string>('');
     const [allowance, setAllowance] = useState(0);
@@ -87,7 +88,7 @@ const Withdraw: React.FC<propsType> = (props) => {
                         styles.sectionAvailable,
                     )}
                 >
-                    <p className={styles.sectionValue}>{available}</p>
+                    <p className={styles.sectionValue}>{payData[localChain]?.available}</p>
                     <p className={styles.sectionSubValue}>Synth-LP</p>
                     <p
                         className={classNames(
@@ -95,7 +96,7 @@ const Withdraw: React.FC<propsType> = (props) => {
                             styles.sectionGraySubValue,
                         )}
                     >
-                        {totalAvailable}
+                        {payData[localChain]?.totalAvailable}
                     </p>
                 </div>
                 <div
@@ -105,7 +106,7 @@ const Withdraw: React.FC<propsType> = (props) => {
             <div className={styles.section}>
                 <p className={styles.sectionTitle}>Price</p>
                 <div className={styles.sectionRow}>
-                    <p className={styles.sectionValue}>{price}</p>
+                    <p className={styles.sectionValue}>{payData[localChain]?.price}</p>
                     <p
                         className={classNames(
                             styles.sectionSubValue,
@@ -125,8 +126,9 @@ const Withdraw: React.FC<propsType> = (props) => {
                 <Input
                     value={amount}
                     onChange={(event) => {
-                        if (Number(event.target.value) >= 0) {
-                            setAmount(event.target.value);
+                        const value = event.target.value.replace(',', '.');
+                        if (Number(value) >= 0) {
+                            setAmount(value);
                         }
                     }}
                     placeholder="Enter amount"
@@ -145,15 +147,16 @@ const Withdraw: React.FC<propsType> = (props) => {
                 <p className={styles.sectionTitle}>You get</p>
                 <div className={styles.sectionRow}>
                     <p className={styles.sectionValue}>
-                        {(Number(amount) * Number(price)).toFixed(6)}
+                        {((amount && price) ? (Number(amount) / Number(price)) : 0).toFixed(6)}
                     </p>
                     <p className={styles.sectionValue}>$</p>
                 </div>
             </div>
             {txLoading || maxError ? (
                 <GradientButton
-                    title={maxError ? 'Receive funds' : 'Waiting'}
-                    onClick={() => {}}
+                    title={maxError ? 'Sell funds' : 'Waiting'}
+                    onClick={() => {
+                    }}
                     disabled
                     loader={
                         !maxError ? (
@@ -166,7 +169,7 @@ const Withdraw: React.FC<propsType> = (props) => {
                 />
             ) : (
                 <GradientButton
-                    title={allowance > 0 ? 'Receive funds' : 'Approve'}
+                    title={allowance > 0 ? 'Sell funds' : 'Approve'}
                     onClick={
                         allowance > 0
                             ? () => sellToken(parseFloat(amount))

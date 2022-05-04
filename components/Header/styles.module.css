@@ -41,12 +41,17 @@
 }
 
 .heading {
-    margin-left: auto;
-    min-width: 0 !important;
+  margin-left: auto;
+  min-width: 0 !important;
+}
+
+.displayNone {
+  display: none !important;
 }
 
 .soonText {
-    color: grey;
+  padding-left: 0.5rem;
+  color: grey;
 }
 
 .heading > p, .dropItem {
@@ -57,13 +62,19 @@
 
 
 .navigate {
-    display: flex;
-    justify-content: center;
-    margin-right: auto;
+  display: flex;
+  justify-content: center;
+  margin-right: auto;
 }
 
 .rightSideMenuWrappper {
   display: flex;
+}
+
+.langList {
+  left: initial !important;
+  right: 0 !important;
+  min-width: initial !important;
 }
 
 .langList p {
@@ -125,6 +136,13 @@ div.dashboardList {
     border: 1px solid #2c2f38;
 }
 
+.locationBar {
+  font-size: 14px;
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+}
+
 .locale {
     margin-left: 16px;
     font-weight: 500;
@@ -169,6 +187,10 @@ div.dashboardList {
 }
 
 @media screen and (max-width: 1024px) {
+  .langList {
+    left: 0;
+  }
+
   .langList p {
     text-align: left;
     padding-right: 0;
