@@ -52,17 +52,20 @@ export const setWallet = createAsyncThunk(
             .getNetwork()
             .catch((e: any) => errorHandler(e, null));
         if (!networkData) return;
-        // @ts-ignore ругается на finally
-        const response = await changeNetwork({ chainId, provider }).finally(() => {
-            const newChainId = parseInt(
-                networkData.chainId.toString(),
-                16,
-            ).toString() as ChainIdType;
-            return newChainId;
-        });
+
+        changeNetwork({ chainId, provider });
+        const newChainId = parseInt(
+            networkData.chainId.toString(),
+            10,
+        ).toString() as ChainIdType;
         localStorage.setItem('wallet', '1');
         // eslint-disable-next-line consistent-return
-        return response;
+        return {
+            walletKey,
+            newChainId,
+            provider,
+            account,
+        };
     },
 );
 

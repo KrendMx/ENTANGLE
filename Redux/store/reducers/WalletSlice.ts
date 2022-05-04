@@ -43,11 +43,14 @@ const walletSlice = createSlice({
         builder.addCase(setChainId.fulfilled, (state, action) => {
             state.provider = action.payload;
         });
-        builder.addCase(setWallet.fulfilled, (state, action) => {
-            state.walletKey = action.payload;
+        builder.addCase(setWallet.fulfilled, (state, action: any) => {
+            state.walletKey = action.payload.walletKey;
+            state.chainId = action.payload.newChainId;
+            state.provider = action.payload.provider;
+            state.account = action.payload.account;
         });
         builder.addCase(setWallet.rejected, (state, action) => {
-            console.log(state.provider);
+            console.log(action);
         });
     },
 });
