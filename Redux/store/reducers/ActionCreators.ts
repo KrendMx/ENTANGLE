@@ -68,15 +68,15 @@ export const setWallet = createAsyncThunk(
         };
     },
 );
-
+/*
 export const setChainId = createAsyncThunk(
     'wallet/setChainId',
     async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }) => {
-        await changeNetwork({ chainId, provider });
+        changeNetwork({ chainId, provider });
         const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-        return newProvider;
+        return { chainId, newProvider };
     },
-);
+); */
 
 export const importToken = createAsyncThunk(
     'user/import-token',

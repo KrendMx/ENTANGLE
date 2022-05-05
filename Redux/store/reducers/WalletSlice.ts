@@ -1,8 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { ethers } from 'ethers';
 
 import type { ChainIdType, ProviderType, walletKeyType } from '../../types';
-import { changeNetwork, setChainId, setWallet } from './ActionCreators';
+import { changeNetwork, setWallet } from './ActionCreators';
 
 type initialStateType = {
     walletKey: walletKeyType,
@@ -31,17 +32,25 @@ const walletSlice = createSlice({
             const [account] = action.payload.accounts;
             state.account = account;
         },
-        removeWallet(state, action) {
-            state.account = action.payload;
+        removeWallet(state) {
+            state.walletKey = initialState.walletKey;
+            state.provider = initialState.provider;
+            state.account = initialState.account;
+            state.chainId = initialState.chainId;
             localStorage.removeItem('wallet');
+        },
+        setChainId(state, action) {
+            const { provider } = state;
+            const newChainId = action.payload.chainId as ChainIdType;
+            // changeNetwork({ newChainId, provider });
+            const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+            state.chainId = newChainId;
+            state.provider = newProvider;
         },
     },
     extraReducers: (builder) => {
         builder.addCase(changeNetwork.fulfilled, (state, action) => {
             state.chainId = action.payload;
-        });
-        builder.addCase(setChainId.fulfilled, (state, action) => {
-            state.provider = action.payload;
         });
         builder.addCase(setWallet.fulfilled, (state, action: any) => {
             state.walletKey = action.payload.walletKey;
@@ -49,11 +58,10 @@ const walletSlice = createSlice({
             state.provider = action.payload.provider;
             state.account = action.payload.account;
         });
-        builder.addCase(setWallet.rejected, (state, action) => {
-            console.log(action);
-        });
     },
 });
 
-export const { chainChange, changeAccount, removeWallet } = walletSlice.actions;
+export const {
+    chainChange, changeAccount, removeWallet, setChainId,
+} = walletSlice.actions;
 export default walletSlice.reducer;

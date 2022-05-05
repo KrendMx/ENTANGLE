@@ -2,22 +2,20 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { networks } from '../../../src/utils/GlobalConst';
+import { useAppDispatch, useAppSelector } from '../../../Redux/store/hooks/redux';
+import type { ChainIdType } from '../../../Redux/types';
 import { setChainId } from '../../../Redux/store/reducers/WalletSlice';
 
 import styles from './style.module.css';
-import { useAppSelector } from '../../../Redux/store/hooks/redux';
-import type { ChainIdType } from '../../../Redux/types';
 
 const ChangeNetwork = () => {
     const [openList, setOpenList] = useState(false);
     const { provider, chainId } = useAppSelector((state) => state.walletReducer);
-
-    useEffect(() => {
-    }, []);
+    const dispatch = useAppDispatch();
 
     const handleClick = (chainIdEl: ChainIdType) => {
-        setChainId({ chainId: chainIdEl, provider });
-        console.log({ chainId: chainIdEl, provider });
+        dispatch(setChainId(chainIdEl));
+        console.log(chainIdEl);
     };
 
     return (

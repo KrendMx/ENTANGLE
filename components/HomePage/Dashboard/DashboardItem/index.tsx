@@ -6,9 +6,12 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
-import { ProviderContext } from '../../../../context/ProviderContext';
+import { setChainId } from '../../../../Redux/store/reducers/WalletSlice';
 import type { ContainerStateType } from './containers/types';
 import { networks } from '../../../../src/utils/GlobalConst';
+import { useAppDispatch, useAppSelector } from '../../../../Redux/store/hooks/redux';
+import { importToken, setWallet } from '../../../../Redux/store/reducers/ActionCreators';
+import type { ChainIdType } from '../../../../Redux/types';
 
 type DashboardItemProps = {
     chainId: '250' | '43114';
@@ -41,14 +44,16 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
         chainId,
         openModal,
     } = props;
-    const {
+    /* const {
         account,
         chainId: selectedChainId,
         setChainID,
         importToken,
         setChainIDAsync,
         setWallet,
-    } = useContext(ProviderContext);
+    } = useContext(ProviderContext); */
+    const { account, provider, chainId: selectedChainId } = useAppSelector((state) => state.walletReducer);
+    const dispatch = useAppDispatch();
 
     const localChain = chainId === '43114' ? '250' : '43114';
 
@@ -57,7 +62,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
 
     useEffect(() => {
         if (canAddToken && addingToken) {
-            importToken();
+            importToken({ chainId, provider });
             setAddingToken(false);
         }
     }, [selectedChainId, addingToken]);
@@ -72,13 +77,10 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
 
     const handleMetamaskClick = () => {
         if (!canAddToken) {
-            setChainIDAsync(localChain).then(() => {
-                setTimeout(() => {
-                    setAddingToken(true);
-                }, 1000);
-            });
+            setChainId(localChain);
+            setAddingToken(true);
         } else {
-            importToken();
+            importToken({ chainId: localChain, provider });
         }
     };
     const handleSelectClick = () => {
@@ -87,10 +89,10 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                 openModal!();
             break;
         case 'Change network':
-            setChainID(localChain);
+            setChainId(localChain);
             break;
         case 'Connect wallet':
-            setWallet('MetaMask');
+            setWallet({ walletKey: 'MetaMask', chainId });
             break;
         default:
             break;
@@ -121,7 +123,11 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                         </CopyToClipboard>
                     </div>
                     <div className={styles.addImgWrapper} onClick={handleMetamaskClick}>
-                        <img className={styles.metamaskBtnImg} src="./images/connectors/metamask.svg" alt="Add to MetaMask" />
+                        <img
+                            className={styles.metamaskBtnImg}
+                            src="./images/connectors/metamask.svg"
+                            alt="Add to MetaMask"
+                        />
                     </div>
                 </div>
                 <p className={styles.description}>{description}</p>

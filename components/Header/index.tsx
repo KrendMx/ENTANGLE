@@ -1,22 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import ScrollLock from 'react-scrolllock';
 import styles from './styles.module.css';
 import Dropout from './Dropout';
-// import { ProviderContext } from '../../context/ProviderContext';
 import ChangeNetwork from './ChangeNetwork';
 import { MenuBtn } from './MenuBtn';
 import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
 import { setWallet } from '../../Redux/store/reducers/ActionCreators';
+import { removeWallet } from '../../Redux/store/reducers/WalletSlice';
 
 const Header = () => {
-    // const { account, setWallet, removeWallet } = useContext(ProviderContext);
     const { account, chainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
 
     const connect = () => account || dispatch(setWallet({ walletKey: 'MetaMask', chainId }));
-    const disconnect = () => console.log('disconnect');
+    const disconnect = () => dispatch(removeWallet());
 
     const [isOpen, setIsOpen] = useState(false);
 
