@@ -14,8 +14,8 @@ const ChangeNetwork = () => {
     const dispatch = useAppDispatch();
 
     const handleClick = (chainIdEl: ChainIdType) => {
+        /* здесь данные есть */
         dispatch(setChainId(chainIdEl));
-        console.log(chainIdEl);
     };
 
     return (
