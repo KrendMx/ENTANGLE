@@ -1,5 +1,5 @@
 import React, {
-    useContext, useEffect, useMemo, useState,
+    useEffect, useMemo, useState,
 } from 'react';
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -14,7 +14,7 @@ import { importToken, setWallet } from '../../../../Redux/store/reducers/ActionC
 import type { ChainIdType } from '../../../../Redux/types';
 
 type DashboardItemProps = {
-    chainId: '250' | '43114';
+    chainId: ChainIdType;
     bgGradient: string;
     icon: string;
     heading: string;
@@ -24,34 +24,25 @@ type DashboardItemProps = {
     openModal?: () => void;
 } & ContainerStateType;
 
-const DashboardItem: React.FC<DashboardItemProps> = (props) => {
-    const {
-        icon,
-        bgGradient,
-        heading,
-        description,
-        apr,
-        currentDeposits,
-        totalDeposits,
-        available,
-        totalAvailable,
-        price,
-        positions,
-        totalPositions,
-        priceCurrency,
-        rowGradient,
-        disabled,
-        chainId,
-        openModal,
-    } = props;
-    /* const {
-        account,
-        chainId: selectedChainId,
-        setChainID,
-        importToken,
-        setChainIDAsync,
-        setWallet,
-    } = useContext(ProviderContext); */
+const DashboardItem: React.FC<DashboardItemProps> = ({
+    icon,
+    bgGradient,
+    heading,
+    description,
+    apr,
+    currentDeposits,
+    totalDeposits,
+    available,
+    totalAvailable,
+    price,
+    positions,
+    totalPositions,
+    priceCurrency,
+    rowGradient,
+    disabled,
+    chainId,
+    openModal,
+}) => {
     const { account, provider, chainId: selectedChainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
 
@@ -62,10 +53,14 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
 
     useEffect(() => {
         if (canAddToken && addingToken) {
-            importToken({ chainId, provider });
+            dispatch(importToken({ chainId, provider }));
             setAddingToken(false);
         }
     }, [selectedChainId, addingToken]);
+
+    useEffect(() => {
+        console.log('n', chainId);
+    }, []);
 
     const buttonValue = useMemo(() => {
         if (disabled) return 'Not available';
@@ -77,10 +72,10 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
 
     const handleMetamaskClick = () => {
         if (!canAddToken) {
-            setChainId(localChain);
+            dispatch(setChainId(localChain));
             setAddingToken(true);
         } else {
-            importToken({ chainId: localChain, provider });
+            dispatch(importToken({ chainId: localChain, provider }));
         }
     };
     const handleSelectClick = () => {
@@ -89,10 +84,10 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                 openModal!();
             break;
         case 'Change network':
-            setChainId(localChain);
+            dispatch(setChainId(localChain));
             break;
         case 'Connect wallet':
-            setWallet({ walletKey: 'MetaMask', chainId });
+            dispatch(setWallet({ walletKey: 'MetaMask', chainId }));
             break;
         default:
             break;

@@ -13,10 +13,7 @@ const ChangeNetwork = () => {
     const { provider, chainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
 
-    const handleClick = (chainIdEl: ChainIdType) => {
-        /* здесь данные есть */
-        dispatch(setChainId(chainIdEl));
-    };
+    const handleClick = (chainIdEl: ChainIdType) => dispatch(setChainId(chainIdEl));
 
     return (
         <div className={styles.wrapper}>

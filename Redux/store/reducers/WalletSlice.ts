@@ -40,16 +40,17 @@ const walletSlice = createSlice({
             localStorage.removeItem('wallet');
         },
         setChainId(state, action) {
-            const { provider, chainId } = state;
-            state.chainId = action.payload.chainId;
+            changeNetwork({
+                chainId: action.payload,
+                provider: state.provider,
+            });
+            state.chainId = action.payload;
             state.provider = new ethers.providers.Web3Provider(window.ethereum);
-            changeNetwork({ chainId, provider });
-            /* не приходят данные */
-            console.log(chainId);
         },
     },
     extraReducers: (builder) => {
         builder.addCase(changeNetwork.fulfilled, (state, action) => {
+            console.log(action.payload);
             state.chainId = action.payload;
         });
         builder.addCase(setWallet.fulfilled, (state, action: any) => {

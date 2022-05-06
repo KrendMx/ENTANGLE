@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
+import { opToken } from '../../../src/ChainService/abi';
 
 import { toChainId } from '../../../src/utils';
 import { networks } from '../../../src/utils/GlobalConst';
@@ -8,7 +9,7 @@ import type { ChainIdType, ProviderType, walletKeyType } from '../../types';
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<ChainIdType> => {
+    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<void> => {
         if (provider) {
             try {
                 await provider.send('wallet_switchEthereumChain', [
@@ -26,7 +27,6 @@ export const changeNetwork = createAsyncThunk(
                 }
             }
         }
-        return chainId;
     },
 );
 
@@ -68,15 +68,6 @@ export const setWallet = createAsyncThunk(
         };
     },
 );
-/*
-export const setChainId = createAsyncThunk(
-    'wallet/setChainId',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }) => {
-        changeNetwork({ chainId, provider });
-        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-        return { chainId, newProvider };
-    },
-); */
 
 export const importToken = createAsyncThunk(
     'user/import-token',
@@ -105,5 +96,30 @@ export const importToken = createAsyncThunk(
                 }
             }
         }
+    },
+);
+
+export const getAllowance = createAsyncThunk(
+    'user/get-allowance',
+    async ({
+        contractAddress,
+        dexAddress,
+        provider,
+        account,
+    }: {
+        contractAddress: string,
+        dexAddress: string,
+        provider: ProviderType,
+        account: string | null
+    }) => {
+        const contract = new Contract(
+            contractAddress,
+            opToken,
+            provider?.getSigner(),
+        );
+
+        const data = await contract.allowance(account, dexAddress);
+
+        return data;
     },
 );
