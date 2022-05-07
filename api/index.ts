@@ -27,6 +27,14 @@ class APIService {
 
         return data;
     };
+
+    getAVGPrice = async (user: string) => {
+        const { data } = await axios.post(`http://${'localhost:7000'}/metrics/avgBuy`, {
+            user,
+        });
+
+        return data;
+    };
 }
 
 export default new APIService();

@@ -21,7 +21,8 @@ export interface IAccountState {
     positionSum: Map<string, number>;
     profits: Map<string, { value: number, change: number }>;
     chainId: '43114' | '250';
-    txLoading: boolean
+    txLoading: boolean;
+    preLoader: boolean;
 }
 
 export interface IProviderContext extends IAccountState {
@@ -42,6 +43,7 @@ export interface IProviderContext extends IAccountState {
     getProfit: (key: string) => { value: number, change: number };
     getSameErrorsCountFromStack: (code: number) => number;
     importToken: () => void;
+    setPreloader: any;
     setPayData: any;
     payData: payDataType;
 }

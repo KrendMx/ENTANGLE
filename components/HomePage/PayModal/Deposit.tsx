@@ -7,7 +7,8 @@ import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
 import { opToken } from '../../../src/utils/abi/index';
 import { ProviderContext } from '../../../context/ProviderContext';
-import { networks } from '../../../src/utils/GlobalConst';
+import { networks, farms } from '../../../src/utils/GlobalConst';
+import { ChainConfig } from '../../../src/ChainService/config';
 
 type propsType = {
     buyToken: (value: number) => void;
@@ -33,13 +34,24 @@ const Deposit: React.FC<propsType> = (props) => {
     const [maxError, setMaxError] = useState<boolean>(false);
 
     const localChain = chainId === '43114' ? '250' : '43114';
+    const localName = chainId === '43114' ? 'FTM' : 'AVAX';
 
     useEffect(() => {
         (async function () {
+            const contracts = (
+                ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                    .SYNTH as any
+            ).find(
+                (el: any) =>
+                    el.ID
+                    === farms[chainId][
+                        sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                    ],
+            );
             getAllowance(
-                networks[chainId]?.fiat,
-                networks[localChain]?.dex,
-            ).then((awc: number) => setAllowance(awc));
+                contracts.CONTRACTS.STABLE.address,
+                contracts.CONTRACTS.FEE.address,
+            ).then((awc) => setAllowance(Number(awc.toBigInt())));
             const contract = new Contract(
                 networks[chainId]?.fiat,
                 opToken,
@@ -60,9 +72,19 @@ const Deposit: React.FC<propsType> = (props) => {
     }, [amount, chainId]);
 
     const handleApprove = async () => {
+        const contracts = (
+            ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                .SYNTH as any
+        ).find(
+            (el: any) =>
+                el.ID
+                === farms[chainId][
+                    sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                ],
+        );
         const data = await approve(
-            networks[chainId]?.fiat,
-            networks[localChain]?.dex,
+            contracts.CONTRACTS.STABLE.address,
+            contracts.CONTRACTS.FEE.address,
         );
         if (data) {
             changeLoadingTx(true);

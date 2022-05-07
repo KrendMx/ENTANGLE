@@ -7,7 +7,7 @@ import styles from './style.module.css';
 import APIService from '../../../api';
 import { ProviderContext } from '../../../context/ProviderContext';
 
-const InvestCardFantom: React.FC<IState> = ({ price, positions }) => {
+const InvestCardFantom: React.FC<IState> = ({ price, positions, avg }) => {
     const { setProfit: setProfitProvider, account } = useContext(ProviderContext);
     const [profit, setProfit] = useState<number>();
     const [profitChange, setProfitChange] = useState<number>();
@@ -62,7 +62,10 @@ const InvestCardFantom: React.FC<IState> = ({ price, positions }) => {
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Avg Buy Price</p>
-                    <p className={styles.itemValue}>$1</p>
+                    <p className={styles.itemValue}>
+                        $
+                        {avg?.toFixed(2)}
+                    </p>
                     <p className={styles.undertitle}>
                         {networks['250'].currency}
                     </p>

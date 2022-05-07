@@ -104,7 +104,8 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
     const handleSelectClick = () => {
         switch (buttonValue) {
         case 'Select':
-                openModal!();
+            openModal!();
+            sessionStorage.setItem('card', heading === 'MIM-USDC' ? 'FTM' : 'AVAX');
             break;
         case 'Change network':
             setChainID(localChain);

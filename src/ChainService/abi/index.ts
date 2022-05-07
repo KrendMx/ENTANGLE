@@ -12,3 +12,4 @@ export { default as spiritRouter } from './spiritRouter.json';
 export { default as feeAbi } from './fee.json';
 export { default as dexOnDemand } from './dexOnDemand.json';
 export { default as synthChef } from './synthChef.json';
+export { default as joeChef } from './joeChef.json';

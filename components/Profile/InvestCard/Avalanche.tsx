@@ -9,7 +9,7 @@ import styles from './style.module.css';
 import type { IState } from '../index';
 import { ProviderContext } from '../../../context/ProviderContext';
 
-const InvestCardAvax: React.FC<IState> = ({ positions, price }) => {
+const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
     const { setProfit: setProfitProvider, account } = useContext(ProviderContext);
     const [profit, setProfit] = useState<number>();
     const [profitChange, setProfitChange] = useState<number>();
@@ -62,7 +62,10 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price }) => {
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Avg Buy Price</p>
-                    <p className={styles.itemValue}>$1</p>
+                    <p className={styles.itemValue}>
+                        $
+                        {avg?.toFixed(2)}
+                    </p>
                     <p className={styles.undertitle}>fUSDT/USDC Synthetic LP</p>
                 </li>
             </ul>

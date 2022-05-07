@@ -22,6 +22,7 @@ import { networks } from '../../src/utils/GlobalConst';
 export interface IState {
     positions: string;
     price: string;
+    avg?: number;
 }
 
 const Profile = () => {
@@ -57,6 +58,10 @@ const Profile = () => {
     const [ftmState, setFtmState] = useState<IState>();
     const [cardLoaded, setCardLoaded] = useState<boolean>(false);
     const [change, setChange] = useState<number[]>([]);
+    const [avg, setAvg] = useState<{
+        fantomSynth: number,
+        avaxSynth: number
+    }>();
     const { account, txLoading } = useContext(ProviderContext);
 
     const [filter, setFilter] = React.useState('');
@@ -106,8 +111,10 @@ const Profile = () => {
     useEffect(() => {
         (async function () {
             if (account) {
-                const avaxChange = await APIService.getProfit(account!, 67);
-                const ftmChange = await APIService.getProfit(account!, 8);
+                const avaxChange = await APIService.getProfit(account, 67);
+                const ftmChange = await APIService.getProfit(account, 8);
+                const avgPrice = await APIService.getAVGPrice(account);
+                setAvg(avgPrice);
                 setChange([
                     avaxChange.stable + ftmChange.stable,
                     avaxChange.percentage + ftmChange.percentage,
@@ -268,6 +275,7 @@ const Profile = () => {
                 <InvestCard
                     ftmState={ftmState!}
                     avaxState={avaxState!}
+                    avgPrice={avg}
                     isLoaded={cardLoaded}
                 />
             </section>

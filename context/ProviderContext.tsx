@@ -34,6 +34,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
     const [errorStack, setErrorStack] = useState<ErrorI[]>([]);
     const [sucInfo, setSucInfo] = useState<null | TransactionInfo>(null);
     const [isOpenSelectWalletModal, setIsOpenSelectWalletModal] = useState<boolean>(false);
+    const [preLoader, setPreloader] = useState<boolean>(true);
 
     const getSameErrorsCountFromStack = useCallback(
         (code: number) => errorStack.slice(-3).reduce((a: number, errorStackItem: ErrorI) => {
@@ -54,6 +55,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         profits: new Map(),
         chainId: '250',
         txLoading: false,
+        preLoader: true,
     } as const;
 
     const initStatePayData = {
@@ -183,7 +185,6 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         }
     };
 
-    // eslint-disable-next-line consistent-return
     const approve = async (tokenAddress: string, dexAddress: string) => {
         if (state.provider) {
             const contract = new Contract(
@@ -198,9 +199,9 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
             );
             return data;
         }
+        return null;
     };
 
-    // eslint-disable-next-line consistent-return
     const getAllowance = async (
         contractAddress: string,
         dexAddress: string,
@@ -304,6 +305,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         } else {
             await changeNetwork(state.chainId, provider).finally(afterChange);
         }
+        setPreloader(false);
         localStorage.setItem('wallet', walletKey);
     };
 
@@ -383,6 +385,8 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         getSameErrorsCountFromStack,
         setSucInfo,
         setPayData,
+        setPreloader,
+        preLoader,
         payData,
     };
 

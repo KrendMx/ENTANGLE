@@ -33,11 +33,11 @@ export const networks = {
 
 export const farms = {
     '250': {
-        'FTM': '68',
-        'AVAX': '67',
+        'FTM': '9',
+        'AVAX': '8',
     },
     '43114': {
-        'FTM': '8',
-        'AVAX': '9',
+        'FTM': '67',
+        'AVAX': '68',
     },
 } as const;

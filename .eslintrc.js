@@ -74,6 +74,7 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': 'off',
         'no-plusplus': 'off',
         'implicit-arrow-linebreak': 'off',
+        'consistent-return': 'off',
     },
     settings: {
         'import/resolver': {

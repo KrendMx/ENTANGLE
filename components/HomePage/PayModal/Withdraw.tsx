@@ -7,7 +7,8 @@ import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
 import { opToken } from '../../../src/utils/abi/index';
 import { ProviderContext } from '../../../context/ProviderContext';
-import { networks } from '../../../src/utils/GlobalConst';
+import { networks, farms } from '../../../src/utils/GlobalConst';
+import { ChainConfig } from '../../../src/ChainService/config';
 
 type propsType = {
     sellToken: (value: number) => void;
@@ -35,10 +36,24 @@ const Withdraw: React.FC<propsType> = (props) => {
 
     useEffect(() => {
         (async function () {
-            getAllowance(
-                networks[chainId].synth,
-                networks[localChain].dex,
-            ).then((awc: number) => setAllowance(awc));
+            const contracts = (
+                ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                    .SYNTH as any
+            ).find(
+                (el: any) =>
+                    el.ID
+                    === farms[chainId][
+                        sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                    ],
+            );
+            if (contracts.CROSSCHAIN) {
+                getAllowance(
+                    contracts.CONTRACTS.SYNTH.address,
+                    contracts.CONTRACTS.FEE.address,
+                ).then((awc) => setAllowance(Number(awc.toBigInt())));
+            } else {
+                setAllowance(100000);
+            }
             const contract = new Contract(
                 networks[chainId].synth,
                 opToken,
@@ -60,9 +75,19 @@ const Withdraw: React.FC<propsType> = (props) => {
     }, [amount]);
 
     const handleApprove = async () => {
+        const contracts = (
+            ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                .SYNTH as any
+        ).find(
+            (el: any) =>
+                el.ID
+                === farms[chainId][
+                    sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                ],
+        );
         const data = await approve(
-            networks[chainId].synth,
-            networks[localChain].dex,
+            contracts.CONTRACTS.SYNTH.address,
+            contracts.CONTRACTS.FEE.address,
         );
         if (data) {
             changeLoadingTx(true);
@@ -88,7 +113,9 @@ const Withdraw: React.FC<propsType> = (props) => {
                         styles.sectionAvailable,
                     )}
                 >
-                    <p className={styles.sectionValue}>{payData[localChain]?.available}</p>
+                    <p className={styles.sectionValue}>
+                        {payData[localChain]?.available}
+                    </p>
                     <p className={styles.sectionSubValue}>Synth-LP</p>
                     <p
                         className={classNames(
@@ -106,7 +133,9 @@ const Withdraw: React.FC<propsType> = (props) => {
             <div className={styles.section}>
                 <p className={styles.sectionTitle}>Price</p>
                 <div className={styles.sectionRow}>
-                    <p className={styles.sectionValue}>{payData[localChain]?.price}</p>
+                    <p className={styles.sectionValue}>
+                        {payData[localChain]?.price}
+                    </p>
                     <p
                         className={classNames(
                             styles.sectionSubValue,
@@ -122,7 +151,11 @@ const Withdraw: React.FC<propsType> = (props) => {
                     </p>
                 </div>
             </div>
-            <div className={maxError ? styles.inputWrapperError : styles.inputWrapper}>
+            <div
+                className={
+                    maxError ? styles.inputWrapperError : styles.inputWrapper
+                }
+            >
                 <Input
                     value={amount}
                     onChange={(event) => {
@@ -147,7 +180,10 @@ const Withdraw: React.FC<propsType> = (props) => {
                 <p className={styles.sectionTitle}>You get</p>
                 <div className={styles.sectionRow}>
                     <p className={styles.sectionValue}>
-                        {((amount && price) ? (Number(amount) / Number(price)) : 0).toFixed(6)}
+                        {(amount && price
+                            ? Number(amount) / Number(price)
+                            : 0
+                        ).toFixed(6)}
                     </p>
                     <p className={styles.sectionValue}>$</p>
                 </div>
@@ -155,8 +191,7 @@ const Withdraw: React.FC<propsType> = (props) => {
             {txLoading || maxError ? (
                 <GradientButton
                     title={maxError ? 'Sell funds' : 'Waiting'}
-                    onClick={() => {
-                    }}
+                    onClick={() => {}}
                     disabled
                     loader={
                         !maxError ? (

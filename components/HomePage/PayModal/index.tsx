@@ -3,11 +3,12 @@ import { Contract } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import classNames from 'classnames';
 import styles from './style.module.css';
-import { networks } from '../../../src/utils/GlobalConst';
+import { networks, farms } from '../../../src/utils/GlobalConst';
 import { ProviderContext } from '../../../context/ProviderContext';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
 import Deposit from './Deposit';
 import Withdraw from './Withdraw';
+import { ChainConfig } from '../../../src/ChainService/config';
 
 type PayModalPropsType = {
     handleClose: () => void;
@@ -36,14 +37,25 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
     }, [chainId]);
 
     const buyToken = async (value: number) => {
+        const contracts = (
+            ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                .SYNTH as any
+        ).find(
+            (el: any) =>
+                el.ID
+                === farms[chainId][
+                    sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                ],
+        );
         const buyContract = new Contract(
-            networks[opositeId].dex,
-            networks[opositeId].dexAbi,
+            contracts.CONTRACTS.FEE.address,
+            contracts.CONTRACTS.FEE.abi,
             (provider as Web3Provider).getSigner(),
         );
+        console.log(buyContract);
 
         const amount = Math.floor(value * 10 ** 6);
-        const response = await buyContract.buy(amount);
+        const response = await buyContract.buyWithFee(amount);
         if (response) {
             changeLoadingTx(true);
         }
@@ -61,14 +73,24 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
 
     const sellToken = async (value: number) => {
         try {
+            const contracts = (
+                ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                    .SYNTH as any
+            ).find(
+                (el: any) =>
+                    el.ID
+                    === farms[chainId][
+                        sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                    ],
+            );
             const sellContract = new Contract(
-                networks[opositeId].dex,
-                networks[opositeId].dexAbi,
+                contracts.CONTRACTS.FEE.address,
+                contracts.CONTRACTS.FEE.abi,
                 (provider as Web3Provider).getSigner(),
             );
             // eslint-disable-next-line
             const amount = BigInt(Math.floor(Number(value * Math.pow(10, 18))));
-            const response = await sellContract.sell(amount);
+            const response = await sellContract.sellWithFee(amount);
             if (response) {
                 changeLoadingTx(true);
             }

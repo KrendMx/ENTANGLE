@@ -11,7 +11,7 @@ import type { WalletProviderNames } from '../Modal/SelectWalletModal/SelectWalle
 
 const Header = () => {
     const {
-        account, setIsOpenSelectWalletModal, setWallet, removeWallet,
+        account, setIsOpenSelectWalletModal, setWallet, removeWallet, setPreloader,
     } = useContext(ProviderContext);
 
     const connect = () => account || setIsOpenSelectWalletModal(true);
@@ -27,6 +27,8 @@ const Header = () => {
         const wallet = localStorage.getItem('wallet');
         if (wallet) {
             setWallet(wallet as keyof typeof WalletProviderNames);
+        } else {
+            setPreloader(false);
         }
     }, []);
 

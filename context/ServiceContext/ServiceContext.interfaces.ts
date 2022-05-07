@@ -32,6 +32,18 @@ interface iService {
     getBalanceChart: (userWallet: string) => Promise<BalanceChartTick[]>,
 }
 
+interface IResponsePrice {
+    price: {
+        avaxSynth: number,
+        fantomSynth: number,
+    },
+}
+
+interface IResponseProfit {
+    stable: number;
+    percentage: number;
+}
+
 type ServiceConfigOptions = {
     apiBase?: string
 }
@@ -44,4 +56,6 @@ export type {
     BalanceChartResponse,
     TotalValueLockedData,
     GetTotalValueLockedResponse,
+    IResponseProfit,
+    IResponsePrice,
 };
