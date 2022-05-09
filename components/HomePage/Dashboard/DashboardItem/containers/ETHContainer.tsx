@@ -1,13 +1,13 @@
-import React, {useReducer} from 'react';
+import React, { useReducer } from 'react';
 import DashboardItem from '../index';
-import type {ContainerStateType} from './types';
+import type { ContainerStateType } from './types';
 
-const ETHContainer = ({isFiltered = false}) => {
+const ETHContainer = ({ isFiltered = false }) => {
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
-            stateUpdate: Partial<ContainerStateType>
-        ) => ({...containerState, ...stateUpdate}),
+            stateUpdate: Partial<ContainerStateType>,
+        ) => ({ ...containerState, ...stateUpdate }),
         {
             apr: 'TBA',
             currentDeposits: '$0',
@@ -18,8 +18,8 @@ const ETHContainer = ({isFiltered = false}) => {
             positions: '$0',
             totalPositions: 'MIM/UST Synthetic LP',
             rowGradient: '',
-            yieldTime: '$0'
-        }
+            yieldTime: '$0',
+        },
     );
 
     const data = {
@@ -31,11 +31,11 @@ const ETHContainer = ({isFiltered = false}) => {
         priceCurrency: 'MIM/UST Synthetic LP',
         description:
             'Generates yield by running autocompounded mim/UST strategy on convexfinance.com',
-        disabled: true,
+        disabled: false,
         ...state,
     } as const;
 
-    return <DashboardItem {...data} isFiltered={isFiltered}/>;
+    return <DashboardItem {...data} isFiltered={isFiltered} />;
 };
 
 export default ETHContainer;

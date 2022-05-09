@@ -35,7 +35,7 @@ const ChangeNetwork = () => {
                     .map((chainIdEl) => (
                         <div
                             className={styles.network}
-                            onClick={() => setChainID(chainIdEl)}
+                            onClick={() => setChainID(chainIdEl as '43114' | '250')}
                             key={chainIdEl}
                         >
                             <p>{networks[chainIdEl].title}</p>

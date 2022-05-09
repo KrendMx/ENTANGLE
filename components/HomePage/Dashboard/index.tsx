@@ -19,14 +19,14 @@ const items = [
         element: (isFiltered: boolean) => <AvalancheContainer isFiltered={isFiltered} />,
     },
     {
-        filter: null,
-        query: ['ust-busd'],
-        element: (isFiltered: boolean) => <BUSDContainer isFiltered={isFiltered} />,
-    },
-    {
-        filter: null,
+        filter: 1,
         query: ['mim-ust'],
         element: (isFiltered: boolean) => <ETHContainer isFiltered={isFiltered} />,
+    },
+    {
+        filter: 56,
+        query: ['ust-busd'],
+        element: (isFiltered: boolean) => <BUSDContainer isFiltered={isFiltered} />,
     },
     {
         filter: null,

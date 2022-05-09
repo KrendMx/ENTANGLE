@@ -29,6 +29,34 @@ export const networks = {
         order: 0,
         mainIcon: '/images/networks/fantomDashboard.png',
     },
+    '1': {
+        title: 'Ethereum',
+        icon: 'ethereum.svg',
+        currency: 'MIM/USDC Synthetic LP',
+        currencyMin: 'MIM-UST',
+        dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8', // ?
+        fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // ?
+        rpc: 'https://rpc.ankr.com/fantom',
+        synth: '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71', // ?
+        dexAbi: ftmDex, // ?
+        mainColor: '#E93038',
+        order: 0,
+        mainIcon: '/images/networks/fantomDashboard.png',
+    },
+    '56': {
+        title: 'Binance',
+        icon: 'binance.svg',
+        currency: 'UST/BUSD Synthetic LP',
+        currencyMin: 'UST-BUSD',
+        dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8', // ?
+        fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // ?
+        rpc: 'https://rpc.ankr.com/fantom',
+        synth: '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71', // ?
+        dexAbi: ftmDex, // ?
+        mainColor: '#E93038',
+        order: 0,
+        mainIcon: '/images/networks/fantomDashboard.png',
+    },
 } as const;
 
 export const farms = {
