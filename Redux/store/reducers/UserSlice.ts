@@ -1,8 +1,8 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import type {PayloadAction} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
-import type { ChainIdType } from '../../types';
-import { importToken } from './ActionCreators';
+import type {ChainIdType} from '../../types';
+import {importToken} from './ActionCreators';
 
 type initStateType = {
     positionSumObj: Map<string, number>,
@@ -26,7 +26,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         changeLoadingTx(state, action: PayloadAction<boolean>) {
-            state.txLoading = action.payload;
+            state.txLoading = action.payload
         },
         setPositionSum(state, action: PayloadAction<positionSumType>) {
             state.positionSumObj = new Map(state.positionSumObj.set(action.payload.key, action.payload.n));
@@ -39,5 +39,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { changeLoadingTx, setPositionSum } = userSlice.actions;
+export const {changeLoadingTx, setPositionSum} = userSlice.actions;
 export default userSlice.reducer;

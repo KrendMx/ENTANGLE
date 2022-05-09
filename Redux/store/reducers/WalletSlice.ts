@@ -50,7 +50,6 @@ const walletSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(changeNetwork.fulfilled, (state, action) => {
-            console.log(action.payload);
             state.chainId = action.payload;
         });
         builder.addCase(setWallet.fulfilled, (state, action: any) => {

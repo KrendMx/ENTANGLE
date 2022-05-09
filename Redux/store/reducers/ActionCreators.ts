@@ -9,7 +9,7 @@ import type { ChainIdType, ProviderType, walletKeyType } from '../../types';
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<void> => {
+    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<ChainIdType> => {
         if (provider) {
             try {
                 await provider.send('wallet_switchEthereumChain', [
@@ -27,6 +27,7 @@ export const changeNetwork = createAsyncThunk(
                 }
             }
         }
+        return chainId;
     },
 );
 
