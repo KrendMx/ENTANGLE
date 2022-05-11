@@ -12,7 +12,7 @@ export default class Service {
         const { data } = await axios.get(`${this._apiBase}${url}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'https://app.entangle.fi',
+                'Access-Control-Allow-Origin': 'https://dev.entangle.fi',
             },
         });
         if (!data) {
@@ -27,7 +27,7 @@ export default class Service {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'https://app.entangle.fi',
+                'Access-Control-Allow-Origin': 'https://dev.entangle.fi',
             },
         };
         const { data } = await axios.post(`${this._apiBase}${url}`, object, dataRequest);

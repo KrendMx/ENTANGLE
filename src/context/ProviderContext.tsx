@@ -396,7 +396,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
     };
 
     const service = useMemo(
-        () => (Number(process.env.REACT_APP_IS_MOCK_API) === 1
+        () => (Number(process.env.NEXT_PUBLIC_REACT_APP_IS_MOCK_API) === 1
             ? new MockService()
             : new MainService()),
         [],

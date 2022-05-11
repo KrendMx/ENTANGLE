@@ -14,7 +14,7 @@ import type {
 export default class MainService extends Service implements iService {
     constructor() {
         super({
-            apiBase: `http://${process.env.REACT_APP_API_HOST}/`,
+            apiBase: `https://${process.env.NEXT_PUBLIC_REACT_APP_API_HOST}/`,
         });
     }
 
