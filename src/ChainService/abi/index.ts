@@ -13,3 +13,6 @@ export { default as feeAbi } from './fee.json';
 export { default as dexOnDemand } from './dexOnDemand.json';
 export { default as synthChef } from './synthChef.json';
 export { default as joeChef } from './joeChef.json';
+export { default as pancakeChef } from './pancakeChef.json';
+export { default as pancakeRouter } from './pancakeRouter.json';
+export { default as pancakePair } from './pancakePair.json';

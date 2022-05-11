@@ -18,4 +18,13 @@ export default {
         },
         rpcUrls: ['https://rpc.ftm.tools/'],
     },
+    '56': {
+        chainId: '0x38',
+        chainName: 'Binance Smart Chain',
+        nativeCurrency: {
+            symbol: 'BNB',
+            decimals: 18,
+        },
+        rpcUrls: ['https://rpc.ankr.com/bsc'],
+    },
 };

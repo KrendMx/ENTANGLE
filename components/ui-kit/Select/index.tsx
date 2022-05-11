@@ -10,10 +10,15 @@ type SelectProps = {
 type OptionProps = {
     value: string;
     children: string;
+    extraSymbol?: JSX.Element;
 };
 
-export const Option: React.FC<OptionProps> = ({ value, children }) => (
-    <li data-select-value={value}>{children}</li>
+export const Option: React.FC<OptionProps> = ({ value, children, extraSymbol }) => (
+    <li data-select-value={value}>
+        {children}
+        {' '}
+        {extraSymbol}
+    </li>
 );
 
 const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
@@ -28,7 +33,7 @@ const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
                 if (child.props.value === value && selected !== value) {
                     setSelected(child?.props?.children || '');
                 }
-            }
+            },
         );
     }, [value]);
 

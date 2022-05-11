@@ -6,7 +6,10 @@ import type {
     GetTotalValueLockedResponse,
     iService,
     TransactionHistoryEntity,
-} from '../../../context/ServiceContext/ServiceContext.interfaces';
+    IResponseAVG,
+    IResponsePrice,
+    IResponseProfit,
+} from '../../context/ServiceContext/ServiceContext.interfaces';
 
 export default class MockService extends Service implements iService {
     constructor() {
@@ -36,4 +39,18 @@ export default class MockService extends Service implements iService {
             label: moment().subtract(i, 'hours').toDate(),
             value: Math.floor(Math.random() * 1e3),
         }));
+
+    getChangeData = async () =>
+        await this.getJson<IResponsePrice[]>('metrics/price');
+
+    getProfit = async (userWallet: string, pid: number) =>
+        await this.postJson<IResponseProfit>('metrics/profit', {
+            user: userWallet,
+            pid,
+        });
+
+    getAVGPrice = async (userWallet: string): Promise<IResponseAVG> =>
+        await this.postJson<IResponseAVG>('metrics/avgBuy', {
+            user: userWallet,
+        });
 }

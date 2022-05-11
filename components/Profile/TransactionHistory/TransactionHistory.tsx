@@ -7,15 +7,15 @@ import styles from './style.module.css';
 import type {
     iService,
     TransactionHistoryEntity,
-} from '../../../context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '../../../context/ServiceContext/ServiceContext';
+} from '../../../src/context/ServiceContext/ServiceContext.interfaces';
+import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 import HistoryCard from './HistoryCard/HistoryCard';
 import type { networks } from '../../../src/utils/GlobalConst';
 import {
     TransactionFilters,
     TransactionOrder,
 } from './TransactionHistory.constants';
-import { ProviderContext } from '../../../context/ProviderContext';
+import { ProviderContext } from '../../../src/context/ProviderContext';
 
 const TransactionHistory: React.FC = () => {
     const loader = (
@@ -47,7 +47,6 @@ const TransactionHistory: React.FC = () => {
             .then(setTransactions)
             .then(() => setIsLoaded(true));
     };
-
     const updateData = () => {
         updateHistory();
     };

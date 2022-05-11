@@ -50,7 +50,7 @@ export const networks = {
         currencyMin: 'UST-BUSD',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8', // ?
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // ?
-        rpc: 'https://rpc.ankr.com/fantom',
+        rpc: 'https://rpc.ankr.com/bsc',
         synth: '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71', // ?
         dexAbi: ftmDex, // ?
         mainColor: '#E93038',
@@ -63,9 +63,22 @@ export const farms = {
     '250': {
         'FTM': '9',
         'AVAX': '8',
+        'BSC': '11',
     },
     '43114': {
         'FTM': '67',
         'AVAX': '68',
+        'BSC': '70',
+    },
+    '56': {
+        'FTM': '69',
+        'AVAX': '10',
+        'BSC': '7',
     },
 } as const;
+
+export const namesConfig = {
+    'BSC': '56',
+    'AVAX': '43114',
+    'FTM': '250',
+};

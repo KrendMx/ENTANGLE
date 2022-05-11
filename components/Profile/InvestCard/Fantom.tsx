@@ -4,11 +4,12 @@ import classNames from 'classnames';
 import { networks } from '../../../src/utils/GlobalConst';
 import type { IState } from '../index';
 import styles from './style.module.css';
-import APIService from '../../../api';
-import { ProviderContext } from '../../../context/ProviderContext';
+import { ProviderContext } from '../../../src/context/ProviderContext';
+import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 const InvestCardFantom: React.FC<IState> = ({ price, positions, avg }) => {
     const { setProfit: setProfitProvider, account } = useContext(ProviderContext);
+    const { getProfit } = useContext(ServiceContext);
     const [profit, setProfit] = useState<number>();
     const [profitChange, setProfitChange] = useState<number>();
     const isLoss = true;
@@ -17,7 +18,7 @@ const InvestCardFantom: React.FC<IState> = ({ price, positions, avg }) => {
     useEffect(() => {
         (async function () {
             if (account) {
-                const data = await APIService.getProfit(account, 8);
+                const data = await getProfit(account, 8);
                 setProfit(data.stable);
                 setProfitChange(data.percentage);
                 setProfitProvider(data.stable, data.percentage, '250');

@@ -1,14 +1,17 @@
 import classNames from 'classnames';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+    useContext, useEffect, useMemo, useState,
+} from 'react';
 import { Contract, providers } from 'ethers';
 import styles from './style.module.css';
 import Input from '../../ui-kit/Input';
 import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
 import { opToken } from '../../../src/utils/abi/index';
-import { ProviderContext } from '../../../context/ProviderContext';
-import { networks, farms } from '../../../src/utils/GlobalConst';
+import { ProviderContext } from '../../../src/context/ProviderContext';
+import { networks, farms, namesConfig } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
+import type { namesValues, chainsValues } from './index';
 
 type propsType = {
     buyToken: (value: number) => void;
@@ -33,32 +36,39 @@ const Deposit: React.FC<propsType> = (props) => {
     const [maxAmount, setMaxAmount] = useState<string>();
     const [maxError, setMaxError] = useState<boolean>(false);
 
-    const localChain = chainId === '43114' ? '250' : '43114';
-    const localName = chainId === '43114' ? 'FTM' : 'AVAX';
+    const localChain = useMemo(
+        () =>
+            namesConfig[
+                sessionStorage.getItem('card') as namesValues
+            ],
+        [chainId],
+    );
 
     useEffect(() => {
         (async function () {
             const contracts = (
-                ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
-                    .SYNTH as any
+                ChainConfig[
+                    sessionStorage.getItem('card') as namesValues
+                ].SYNTH as any
             ).find(
                 (el: any) =>
                     el.ID
                     === farms[chainId][
-                        sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                        sessionStorage.getItem('card') as namesValues
                     ],
             );
             getAllowance(
                 contracts.CONTRACTS.STABLE.address,
                 contracts.CONTRACTS.FEE.address,
             ).then((awc) => setAllowance(Number(awc.toBigInt())));
+            console.log(contracts);
             const contract = new Contract(
-                networks[chainId]?.fiat,
-                opToken,
+                contracts.CONTRACTS.STABLE.address,
+                contracts.CONTRACTS.STABLE.abi,
                 new providers.JsonRpcProvider(networks[chainId]?.rpc),
             );
-            const balance = (await contract.balanceOf(account)).toNumber()
-                / 10 ** (await contract.decimals());
+            const balance = Number((await contract.balanceOf(account)).toBigInt()
+                / BigInt(10 ** (await contract.decimals())));
             setMaxAmount(balance.toString());
         }());
     }, [chainId]);
@@ -73,13 +83,14 @@ const Deposit: React.FC<propsType> = (props) => {
 
     const handleApprove = async () => {
         const contracts = (
-            ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
-                .SYNTH as any
+            ChainConfig[
+                sessionStorage.getItem('card') as namesValues
+            ].SYNTH as any
         ).find(
             (el: any) =>
                 el.ID
                 === farms[chainId][
-                    sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                    sessionStorage.getItem('card') as namesValues
                 ],
         );
         const data = await approve(
@@ -114,7 +125,7 @@ const Deposit: React.FC<propsType> = (props) => {
                     )}
                 >
                     <p className={styles.sectionValue}>
-                        {payData[localChain]?.available}
+                        {payData[localChain as chainsValues]?.available}
                     </p>
                     <p className={styles.sectionSubValue}>Synth-LP</p>
                     <p
@@ -140,7 +151,7 @@ const Deposit: React.FC<propsType> = (props) => {
                 <p className={styles.sectionTitle}>Price</p>
                 <div className={styles.sectionRow}>
                     <p className={styles.sectionValue}>
-                        {payData[localChain]?.price}
+                        {payData[localChain as chainsValues]?.price}
                     </p>
                     <p
                         className={classNames(
@@ -150,10 +161,10 @@ const Deposit: React.FC<propsType> = (props) => {
                     >
                         <img
                             className={styles.networkIcon}
-                            src={`./images/networks/${networks[localChain]?.icon}`}
+                            src={`./images/networks/${networks[localChain as chainsValues]?.icon}`}
                             alt=""
                         />
-                        {networks[localChain]?.currency}
+                        {networks[localChain as chainsValues]?.currency}
                     </p>
                 </div>
             </div>
@@ -190,7 +201,7 @@ const Deposit: React.FC<propsType> = (props) => {
                         ).toFixed(6)}
                     </p>
                     <p className={styles.sectionSubValue}>
-                        {networks[localChain]?.currency}
+                        {networks[localChain as chainsValues]?.currency}
                     </p>
                 </div>
             </div>

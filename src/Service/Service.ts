@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { ServiceConfigOptions } from '../../context/ServiceContext/ServiceContext.interfaces';
+import type { ServiceConfigOptions } from '../context/ServiceContext/ServiceContext.interfaces';
 
 export default class Service {
     private readonly _apiBase: string;
@@ -12,6 +12,7 @@ export default class Service {
         const { data } = await axios.get(`${this._apiBase}${url}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'https://app.entangle.fi',
             },
         });
         if (!data) {
@@ -24,7 +25,10 @@ export default class Service {
     protected post = async (url: string, object: object) => {
         const dataRequest = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'https://app.entangle.fi',
+            },
         };
         const { data } = await axios.post(`${this._apiBase}${url}`, object, dataRequest);
         if (!data) {

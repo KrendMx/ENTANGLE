@@ -8,10 +8,10 @@ import styles from './style.module.css';
 import type {
     BalanceChartTick,
     iService,
-} from '../../../context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '../../../context/ServiceContext/ServiceContext';
+} from '../../../src/context/ServiceContext/ServiceContext.interfaces';
+import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 import LoadingChart from '../../ui-kit/NoDataChart/LoadingChart';
-import { ProviderContext } from '../../../context/ProviderContext';
+import { ProviderContext } from '../../../src/context/ProviderContext';
 
 const ProfileChart: React.FC = () => {
     const service = useContext<iService>(ServiceContext);

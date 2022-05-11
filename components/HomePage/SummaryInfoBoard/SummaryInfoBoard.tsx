@@ -6,8 +6,8 @@ import { InfoBlockTypes, numberFormatter } from './SummaryInfoBoard.constants';
 import type {
     iService,
     TotalValueLockedData,
-} from '../../../context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '../../../context/ServiceContext/ServiceContext';
+} from '../../../src/context/ServiceContext/ServiceContext.interfaces';
+import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 
@@ -65,17 +65,17 @@ const SummaryInfoBoard = () => {
         updateTVL();
     };
 
-    // useEffect(() => {
-    //     updateData();
-    // }, []);
+    useEffect(() => {
+        updateData();
+    }, []);
 
-    // useEffect(() => {
-    //     const updateTimer = setInterval(updateData, 10000);
+    useEffect(() => {
+        const updateTimer = setInterval(updateData, 10000);
 
-    //     return () => {
-    //         clearInterval(updateTimer);
-    //     }
-    // }, []);
+        return () => {
+            clearInterval(updateTimer);
+        };
+    }, []);
 
     return (
         <div className={styles.container}>

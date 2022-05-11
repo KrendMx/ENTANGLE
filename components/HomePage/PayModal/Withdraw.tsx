@@ -1,14 +1,17 @@
 import classNames from 'classnames';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+    useContext, useEffect, useState, useMemo,
+} from 'react';
 import { Contract, providers } from 'ethers';
 import styles from './style.module.css';
 import Input from '../../ui-kit/Input';
 import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
 import { opToken } from '../../../src/utils/abi/index';
-import { ProviderContext } from '../../../context/ProviderContext';
-import { networks, farms } from '../../../src/utils/GlobalConst';
+import { ProviderContext } from '../../../src/context/ProviderContext';
+import { networks, farms, namesConfig } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
+import type { namesValues, chainsValues } from './index';
 
 type propsType = {
     sellToken: (value: number) => void;
@@ -32,31 +35,34 @@ const Withdraw: React.FC<propsType> = (props) => {
     const [maxAmount, setMaxAmount] = useState<string>();
     const [maxError, setMaxError] = useState<boolean>(false);
 
-    const localChain = chainId === '43114' ? '250' : '43114';
+    const localChain = useMemo(
+        () =>
+            namesConfig[
+                sessionStorage.getItem('card') as namesValues
+            ],
+        [chainId],
+    );
 
     useEffect(() => {
         (async function () {
             const contracts = (
-                ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                ChainConfig[sessionStorage.getItem('card') as namesValues]
                     .SYNTH as any
             ).find(
                 (el: any) =>
                     el.ID
                     === farms[chainId][
-                        sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                        sessionStorage.getItem('card') as namesValues
                     ],
             );
-            if (contracts.CROSSCHAIN) {
-                getAllowance(
-                    contracts.CONTRACTS.SYNTH.address,
-                    contracts.CONTRACTS.FEE.address,
-                ).then((awc) => setAllowance(Number(awc.toBigInt())));
-            } else {
-                setAllowance(100000);
-            }
+
+            getAllowance(
+                contracts.CONTRACTS.SYNTH.address,
+                contracts.CONTRACTS.FEE.address,
+            ).then((awc) => setAllowance(Number(awc.toBigInt())));
             const contract = new Contract(
-                networks[chainId].synth,
-                opToken,
+                contracts.CONTRACTS.SYNTH.address,
+                contracts.CONTRACTS.SYNTH.abi,
                 new providers.JsonRpcProvider(networks[chainId].rpc),
             );
 
@@ -114,7 +120,7 @@ const Withdraw: React.FC<propsType> = (props) => {
                     )}
                 >
                     <p className={styles.sectionValue}>
-                        {payData[localChain]?.available}
+                        {payData[localChain as chainsValues]?.available}
                     </p>
                     <p className={styles.sectionSubValue}>Synth-LP</p>
                     <p
@@ -123,7 +129,7 @@ const Withdraw: React.FC<propsType> = (props) => {
                             styles.sectionGraySubValue,
                         )}
                     >
-                        {payData[localChain]?.totalAvailable}
+                        {payData[localChain as chainsValues]?.totalAvailable}
                     </p>
                 </div>
                 <div
@@ -134,7 +140,7 @@ const Withdraw: React.FC<propsType> = (props) => {
                 <p className={styles.sectionTitle}>Price</p>
                 <div className={styles.sectionRow}>
                     <p className={styles.sectionValue}>
-                        {payData[localChain]?.price}
+                        {payData[localChain as chainsValues]?.price}
                     </p>
                     <p
                         className={classNames(
@@ -144,10 +150,10 @@ const Withdraw: React.FC<propsType> = (props) => {
                     >
                         <img
                             className={styles.networkIcon}
-                            src={`./images/networks/${networks[localChain].icon}`}
+                            src={`./images/networks/${networks[localChain as chainsValues].icon}`}
                             alt=""
                         />
-                        {networks[localChain].currency}
+                        {networks[localChain as chainsValues].currency}
                     </p>
                 </div>
             </div>

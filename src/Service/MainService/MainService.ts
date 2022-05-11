@@ -4,14 +4,17 @@ import type {
     BalanceChartResponse,
     BalanceChartTick,
     GetTotalValueLockedResponse,
+    IResponsePrice,
+    IResponseProfit,
     iService,
     TransactionHistoryEntity,
-} from '../../../context/ServiceContext/ServiceContext.interfaces';
+    IResponseAVG,
+} from '../../context/ServiceContext/ServiceContext.interfaces';
 
 export default class MainService extends Service implements iService {
     constructor() {
         super({
-            apiBase: `http://${'localhost:7000'}/`,
+            apiBase: `http://${process.env.REACT_APP_API_HOST}/`,
         });
     }
 
@@ -48,4 +51,18 @@ export default class MainService extends Service implements iService {
                     value: price,
                 } as unknown as BalanceChartTick;
             }));
+
+    getChangeData = async () =>
+        await this.getJson<IResponsePrice[]>('metrics/price');
+
+    getProfit = async (userWallet: string, pid: number) =>
+        await this.postJson<IResponseProfit>('metrics/profit', {
+            user: userWallet,
+            pid,
+        });
+
+    getAVGPrice = async (userWallet: string): Promise<IResponseAVG> =>
+        await this.postJson<IResponseAVG>('metrics/avgBuy', {
+            user: userWallet,
+        });
 }

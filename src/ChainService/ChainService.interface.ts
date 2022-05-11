@@ -53,7 +53,7 @@ interface IChainService extends IChainServiceVars {
     sellToken: (value: number) => Promise<ITX>;
 }
 
-type IChain = 'FTM' | 'AVAX';
+type IChain = 'FTM' | 'AVAX' | 'BSC';
 
 export type {
     IChainService, IChain, keyType, SynthContracts,

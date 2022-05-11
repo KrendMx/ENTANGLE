@@ -4,7 +4,7 @@ import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider
 import classNames from 'classnames';
 import styles from './style.module.css';
 import { networks, farms } from '../../../src/utils/GlobalConst';
-import { ProviderContext } from '../../../context/ProviderContext';
+import { ProviderContext } from '../../../src/context/ProviderContext';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
 import Deposit from './Deposit';
 import Withdraw from './Withdraw';
@@ -13,6 +13,9 @@ import { ChainConfig } from '../../../src/ChainService/config';
 type PayModalPropsType = {
     handleClose: () => void;
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>
+
+export type namesValues = 'AVAX' | 'FTM' | 'BSC';
+export type chainsValues = '43114' | '250' | '56';
 
 const PayModal: React.FC<PayModalPropsType> = (props) => {
     const {
@@ -28,23 +31,21 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
         chainId, provider, changeLoadingTx, setSucInfo,
     } = useContext(ProviderContext);
 
-    const opositeId = chainId === '250' ? '43114' : '250';
-
     useEffect(() => {
-        if (chainId !== '250' && chainId !== '43114') {
+        if (chainId !== '250' && chainId !== '43114' && chainId !== '56') {
             handleClose();
         }
     }, [chainId]);
 
     const buyToken = async (value: number) => {
         const contracts = (
-            ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+            ChainConfig[sessionStorage.getItem('card') as namesValues]
                 .SYNTH as any
         ).find(
             (el: any) =>
                 el.ID
                 === farms[chainId][
-                    sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                    sessionStorage.getItem('card') as namesValues
                 ],
         );
         const buyContract = new Contract(
@@ -52,9 +53,13 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
             contracts.CONTRACTS.FEE.abi,
             (provider as Web3Provider).getSigner(),
         );
-        console.log(buyContract);
+        const stableContract = new Contract(
+            contracts.CONTRACTS.STABLE.address,
+            contracts.CONTRACTS.STABLE.abi,
+            (provider as Web3Provider).getSigner(),
+        );
 
-        const amount = Math.floor(value * 10 ** 6);
+        const amount = BigInt(Math.floor(value * 10 ** (await stableContract.decimals())));
         const response = await buyContract.buyWithFee(amount);
         if (response) {
             changeLoadingTx(true);
@@ -74,13 +79,13 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
     const sellToken = async (value: number) => {
         try {
             const contracts = (
-                ChainConfig[sessionStorage.getItem('card') as 'AVAX' | 'FTM']
+                ChainConfig[sessionStorage.getItem('card') as namesValues]
                     .SYNTH as any
             ).find(
                 (el: any) =>
                     el.ID
                     === farms[chainId][
-                        sessionStorage.getItem('card') as 'AVAX' | 'FTM'
+                        sessionStorage.getItem('card') as namesValues
                     ],
             );
             const sellContract = new Contract(
@@ -89,7 +94,7 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
                 (provider as Web3Provider).getSigner(),
             );
             // eslint-disable-next-line
-            const amount = BigInt(Math.floor(Number(value * Math.pow(10, 18))));
+            const amount = BigInt((value * Math.pow(10, 18)));
             const response = await sellContract.sellWithFee(amount);
             if (response) {
                 changeLoadingTx(true);

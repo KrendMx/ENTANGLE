@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ScrollLock from 'react-scrolllock';
 import styles from './styles.module.css';
 import Dropout from './Dropout';
-import { ProviderContext } from '../../context/ProviderContext';
+import { ProviderContext } from '../../src/context/ProviderContext';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
 import type { WalletProviderNames } from '../Modal/SelectWalletModal/SelectWalletModal.constants';

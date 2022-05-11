@@ -9,3 +9,6 @@ export { default as avaSynth } from './avaSynth.json';
 export { default as spiritChef } from './spiritChef.json';
 export { default as spiritPair } from './spiritPair.json';
 export { default as spiritRouter } from './spiritRouter.json';
+export { default as pancakeChef } from './pancakeChef.json';
+export { default as pancakeRouter } from './pancakeRouter.json';
+export {default as pancakePair} from './pancakePair.json'

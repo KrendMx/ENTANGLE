@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
-import { ProviderContext } from '../../../../context/ProviderContext';
+import { ProviderContext } from '../../../../src/context/ProviderContext';
 import type { ContainerStateType } from './containers/types';
 import { networks } from '../../../../src/utils/GlobalConst';
 import CopyBtn from '../../../ui-kit/CopyBtn/CopyBtn';
@@ -13,7 +13,7 @@ import HoverTooltip from '../../../ui-kit/HoverTooltip/HoverTooltip';
 import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
 
 type DashboardItemProps = {
-    chainId: '250' | '43114';
+    chainId: '250' | '43114' | '56';
     bgGradient: string;
     icon: string;
     heading: string;
@@ -45,6 +45,8 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
         openModal,
         yieldTime,
         isFiltered = false,
+        localChain,
+        localName,
     } = props;
     const {
         provider,
@@ -55,8 +57,6 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
         setChainIDAsync,
         setIsOpenSelectWalletModal,
     } = useContext(ProviderContext);
-
-    const localChain = chainId === '43114' ? '250' : '43114';
 
     const canAddToken = useMemo(
         () => selectedChainId !== chainId,
@@ -71,8 +71,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                 clearTimeout(timer);
             };
         }
-        return () => {
-        };
+        return () => {};
     }, [tooltipVisible]);
 
     useEffect(() => {
@@ -85,7 +84,11 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
     const buttonValue = useMemo(() => {
         if (disabled) return 'Not available';
         if (!account) return 'Connect wallet';
-        if (selectedChainId === '250' || selectedChainId === '43114') return 'Select';
+        if (
+            selectedChainId === '250'
+            || selectedChainId === '43114'
+            || selectedChainId === '56'
+        ) { return 'Select'; }
         return 'Change network';
     }, [account, selectedChainId]);
 
@@ -104,8 +107,11 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
     const handleSelectClick = () => {
         switch (buttonValue) {
         case 'Select':
-            openModal!();
-            sessionStorage.setItem('card', heading === 'MIM-USDC' ? 'FTM' : 'AVAX');
+                openModal!();
+            sessionStorage.setItem(
+                'card',
+                localName,
+            );
             break;
         case 'Change network':
             setChainID(localChain);
@@ -119,7 +125,11 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
     };
 
     return (
-        <div className={classNames(styles.overlayWrapper, { [styles.hidden]: isFiltered })}>
+        <div
+            className={classNames(styles.overlayWrapper, {
+                [styles.hidden]: isFiltered,
+            })}
+        >
             {disabled && <div className={styles.overlayDisabled} />}
             <div className={styles.wrapper}>
                 <div className={styles.topBg}>
@@ -137,7 +147,10 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                 <div className={styles.heading}>
                     {heading}
                     <div className={styles.addImgWrapper}>
-                        <CopyBtn text={networks[chainId].synth} wrapperClassName={styles.metamaskBtnImg} />
+                        <CopyBtn
+                            text={networks[chainId].synth}
+                            wrapperClassName={styles.metamaskBtnImg}
+                        />
                     </div>
                     {provider && account && (
                         <div
@@ -155,7 +168,10 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                                 src={`./images/connectors/${WalletProviderNames.MetaMask}.svg`}
                                 alt="Add to MetaMask"
                             />
-                            <HoverTooltip isVisible={tooltipVisible} text="Add to MetaMask" />
+                            <HoverTooltip
+                                isVisible={tooltipVisible}
+                                text="Add to MetaMask"
+                            />
                         </div>
                     )}
                 </div>

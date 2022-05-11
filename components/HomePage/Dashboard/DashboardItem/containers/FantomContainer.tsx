@@ -5,14 +5,14 @@ import React, {
     useReducer,
     useState,
 } from 'react';
-import { ProviderContext } from '../../../../../context/ProviderContext';
+import { ProviderContext } from '../../../../../src/context/ProviderContext';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 import { farms } from '../../../../../src/utils/GlobalConst';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import ChainService from '../../../../../src/ChainService/ChainService';
-import APIService from '../../../../../api/index';
+import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
 
 const FantomContainer = ({ isFiltered = false }) => {
     const {
@@ -25,6 +25,7 @@ const FantomContainer = ({ isFiltered = false }) => {
         chainId,
         preLoader,
     } = useContext(ProviderContext);
+    const { getProfit } = useContext(ServiceContext);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const closeModal = () => setIsOpenModal(false);
     const openModal = () => setIsOpenModal(true);
@@ -44,6 +45,8 @@ const FantomContainer = ({ isFiltered = false }) => {
             totalPositions: null,
             rowGradient: '',
             yieldTime: null,
+            localChain: '250',
+            localName: 'FTM',
         },
     );
     const data = {
@@ -99,7 +102,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     account,
                     account ? farms[chainId].FTM : '67',
                 );
-                const yieldTime = await APIService.getProfit(account, 8);
+                const yieldTime = await getProfit(account, 8);
                 setPositionSum(positions, 'fantom');
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,

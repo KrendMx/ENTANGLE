@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 
 import type { ChainIdType, ProviderType } from '../../types';
 import { toChainId } from '../../../src/utils';
-import ethereumNetworksConfig from '../../../context/ethereumNetworksConfig';
+import ethereumNetworksConfig from '../../../src/context/ethereumNetworksConfig';
 
 type walletKeyType = 'MetaMask' | 'Coin98' | 'CoinBase' | null;
 

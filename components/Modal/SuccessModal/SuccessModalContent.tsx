@@ -4,7 +4,7 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import type { SuccessModalProps } from './SuccessModal.interface';
-import { ProviderContext } from '../../../context/ProviderContext';
+import { ProviderContext } from '../../../src/context/ProviderContext';
 
 import styles from './style.module.css';
 import GradientButton from '../../ui-kit/GradientButton';

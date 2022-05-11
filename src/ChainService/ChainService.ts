@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { Contract, providers, BigNumber } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
-import { ProviderContext } from '../../context/ProviderContext';
+import { ProviderContext } from '../context/ProviderContext';
 
 // Config
 import { ChainConfig, AdditionalConfig, NETWORKS } from './config';
@@ -83,6 +83,7 @@ class ChainService {
 
     // calculate apr by farm id
     private calculateAPR = async (contracts: SynthContracts, id: string) => {
+        console.log(id);
         try {
             let apr = 0;
             switch (id) {
@@ -152,7 +153,40 @@ class ChainService {
                     / totalSupply
                     / BigInt(10 ** token1Dec);
                 apr = Number(rewardPerYear) / Number(amount0 + amount1);
-                console.log(id, apr);
+                break;
+            }
+            case '7': {
+                console.log(contracts);
+                const poolInfo = await contracts.CHEF.poolInfo(id);
+                const persec = await contracts.CHEF.cakePerBlock(poolInfo.isRegular);
+                const cakeAddress = await contracts.CHEF.CAKE();
+                const perSecInStable = (
+                    await contracts.ROUTER.getAmountsOut(persec, [
+                        cakeAddress,
+                        contracts.STABLESYNTCHEF.address,
+                    ])
+                )[1].toBigInt();
+                const totalAlloc = await contracts.CHEF.totalRegularAllocPoint();
+                const rewardPerYear = (perSecInStable
+                        * BigInt(this.secForYear)
+                        * poolInfo.allocPoint.toBigInt())
+                    / totalAlloc.toBigInt()
+                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
+                const balance = (
+                    await contracts.PAIR.balanceOf(contracts.CHEF.address)
+                ).toBigInt();
+                const reserves = await contracts.PAIR.getReserves();
+                const totalSupply = (
+                    await contracts.PAIR.totalSupply()
+                ).toBigInt();
+                const [token0Dec, token1Dec] = [18, 18];
+                const amount0 = (balance * BigInt(reserves[0]))
+                    / totalSupply
+                    / BigInt(10 ** token0Dec);
+                const amount1 = (balance * BigInt(reserves[1]))
+                    / totalSupply
+                    / BigInt(10 ** token1Dec);
+                apr = Number(rewardPerYear) / Number(amount0 + amount1);
                 break;
             }
             default:
@@ -185,6 +219,10 @@ class ChainService {
                 break;
             case '67':
                 token0Dec = 6;
+                token1Dec = 18;
+                break;
+            case '7':
+                token0Dec = 18;
                 token1Dec = 18;
                 break;
             default:

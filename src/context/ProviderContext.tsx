@@ -10,18 +10,18 @@ import React, {
 } from 'react';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import type { IAccountState, IProviderContext, payDataType } from './types';
-import toChainId from '../src/utils/toChainId';
+import toChainId from '../utils/toChainId';
 import ethereumNetworksConfig from './ethereumNetworksConfig';
-import type { ErrorI } from '../components/Modal/ErrorModal/ErrorModal.interfaces';
-import ErrorModal from '../components/Modal/ErrorModal/ErrorModal';
-import SuccessModal from '../components/Modal/SuccessModal/SuccessModal';
+import type { ErrorI } from '../../components/Modal/ErrorModal/ErrorModal.interfaces';
+import ErrorModal from '../../components/Modal/ErrorModal/ErrorModal';
+import SuccessModal from '../../components/Modal/SuccessModal/SuccessModal';
 import { ServiceProvider } from './ServiceContext';
-import { MainService, MockService } from '../components/Service';
-import { opToken } from '../src/utils/abi/index';
-import { networks } from '../src/utils/GlobalConst';
-import type { TransactionInfo } from '../components/Modal/SuccessModal/SuccessModal.interface';
-import SelectWalletModal from '../components/Modal/SelectWalletModal/SelectWalletModal';
-import { WalletProviderNames } from '../components/Modal/SelectWalletModal/SelectWalletModal.constants';
+import { MainService, MockService } from '../Service';
+import { opToken } from '../utils/abi/index';
+import { networks } from '../utils/GlobalConst';
+import type { TransactionInfo } from '../../components/Modal/SuccessModal/SuccessModal.interface';
+import SelectWalletModal from '../../components/Modal/SelectWalletModal/SelectWalletModal';
+import { WalletProviderNames } from '../../components/Modal/SelectWalletModal/SelectWalletModal.constants';
 
 export const ProviderContext = createContext<IProviderContext>(
     {} as IProviderContext,
@@ -65,6 +65,11 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
             totalAvailable: null,
         },
         '43114': {
+            price: null,
+            available: null,
+            totalAvailable: null,
+        },
+        '56': {
             price: null,
             available: null,
             totalAvailable: null,

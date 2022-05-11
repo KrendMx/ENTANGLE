@@ -10,9 +10,9 @@ import type { ContainerStateType } from './types';
 import ChainService from '../../../../../src/ChainService/ChainService';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
-import { ProviderContext } from '../../../../../context/ProviderContext';
+import { ProviderContext } from '../../../../../src/context/ProviderContext';
 import { farms } from '../../../../../src/utils/GlobalConst';
-import APIService from '../../../../../api/index';
+import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
     const {
@@ -25,6 +25,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         chainId,
         preLoader,
     } = useContext(ProviderContext);
+    const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -41,6 +42,8 @@ const AvalancheContainer = ({ isFiltered = false }) => {
             totalPositions: null,
             rowGradient: '',
             yieldTime: null,
+            localChain: '43114',
+            localName: 'AVAX',
         },
     );
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -93,8 +96,6 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         }
     }, [txLoading, chainId, preLoader]);
 
-    console.log(1);
-
     useEffect(() => {
         (async () => {
             if (account) {
@@ -103,7 +104,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     account,
                     account ? farms[chainId].AVAX : '9',
                 );
-                const yieldTime = await APIService.getProfit(account, 67);
+                const yieldTime = await getProfit(account, 67);
                 setPositionSum(positions, 'fantom');
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,

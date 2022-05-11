@@ -1,5 +1,5 @@
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
-import type { TransactionInfo } from '../components/Modal/SuccessModal/SuccessModal.interface';
+import type { TransactionInfo } from '../../components/Modal/SuccessModal/SuccessModal.interface';
 
 export interface payDataType {
     '43114': {
@@ -12,6 +12,11 @@ export interface payDataType {
         totalAvailable: string | null,
         price: string | null
     },
+    '56': {
+        available: string | null,
+        totalAvailable: string | null,
+        price: string | null
+    },
 }
 export interface IAccountState {
     walletKey: string | null;
@@ -20,7 +25,7 @@ export interface IAccountState {
     deposit: Map<string, number>;
     positionSum: Map<string, number>;
     profits: Map<string, { value: number, change: number }>;
-    chainId: '43114' | '250';
+    chainId: '43114' | '250' | '56';
     txLoading: boolean;
     preLoader: boolean;
 }

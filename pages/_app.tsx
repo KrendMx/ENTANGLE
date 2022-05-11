@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import { setupStore } from '../Redux/store/store';
-import ProviderContextWrapper from '../context/ProviderContext';
+import ProviderContextWrapper from '../src/context/ProviderContext';
 import Layout from '../src/HOC/Layout';
 
 import '../styles/globals.css';

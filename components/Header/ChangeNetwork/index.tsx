@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
 import styles from './style.module.css';
-import { ProviderContext } from '../../../context/ProviderContext';
+import { ProviderContext } from '../../../src/context/ProviderContext';
 import { networks } from '../../../src/utils/GlobalConst';
 
 const ChangeNetwork = () => {

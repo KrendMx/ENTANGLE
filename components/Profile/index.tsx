@@ -11,8 +11,8 @@ import { InfoBlockTypes } from '../ui-kit/InfoBlock/InfoBlock.constants';
 import {
     avaDex, avaSynth, ftmDex, ftmSynth,
 } from '../../src/ChainService/abi';
-import { ProviderContext } from '../../context/ProviderContext';
-import APIService from '../../api/index';
+import { ProviderContext } from '../../src/context/ProviderContext';
+import { ServiceContext } from '../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
@@ -32,6 +32,7 @@ const Profile = () => {
         getProfit: getProfitProvider,
         profits: profitsProvider,
     } = useContext(ProviderContext);
+    const { getAVGPrice, getProfit } = useContext(ServiceContext);
     const [balance, setBalance] = useState<number>(0);
     useEffect(() => {
         setBalance(getPositionSum());
@@ -111,9 +112,9 @@ const Profile = () => {
     useEffect(() => {
         (async function () {
             if (account) {
-                const avaxChange = await APIService.getProfit(account, 67);
-                const ftmChange = await APIService.getProfit(account, 8);
-                const avgPrice = await APIService.getAVGPrice(account);
+                const avaxChange = await getProfit(account, 67);
+                const ftmChange = await getProfit(account, 8);
+                const avgPrice = await getAVGPrice(account);
                 setAvg(avgPrice);
                 setChange([
                     avaxChange.stable + ftmChange.stable,
@@ -268,7 +269,12 @@ const Profile = () => {
                     <div className={styles.selectWrapper}>
                         <Select value={filter} onChange={handleChangeFilter}>
                             <Option value="">Sort by</Option>
-                            <Option value="l1">Price</Option>
+                            <Option value="l1">
+                                Price
+                            </Option>
+                            <Option value="l2">
+                                Profit
+                            </Option>
                         </Select>
                     </div>
                 </div>

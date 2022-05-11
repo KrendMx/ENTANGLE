@@ -30,6 +30,9 @@ interface iService {
     getTotalValueLocked: () => Promise<GetTotalValueLockedResponse>,
     getTransactionHistory: (userWallet: string) => Promise<TransactionHistoryEntity[]>,
     getBalanceChart: (userWallet: string) => Promise<BalanceChartTick[]>,
+    getChangeData: () => Promise<IResponsePrice[]>,
+    getProfit: (userWallet: string, pid: number) => Promise<IResponseProfit>,
+    getAVGPrice: (userWallet: string) => Promise<IResponseAVG>,
 }
 
 interface IResponsePrice {
@@ -37,6 +40,11 @@ interface IResponsePrice {
         avaxSynth: number,
         fantomSynth: number,
     },
+}
+
+interface IResponseAVG {
+    fantomSynth: number,
+    avaxSynth: number
 }
 
 interface IResponseProfit {
@@ -58,4 +66,5 @@ export type {
     GetTotalValueLockedResponse,
     IResponseProfit,
     IResponsePrice,
+    IResponseAVG,
 };

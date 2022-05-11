@@ -5,10 +5,19 @@ import { networks } from '../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
-import type { IState } from '../index';
 import { ProviderContext } from '../../../src/context/ProviderContext';
 
-const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
+interface IState {
+    chainId: '43114' | '250';
+    description: string;
+    positions: string;
+    price: string;
+    avg?: number;
+}
+
+const InvestCardExp: React.FC<IState> = ({
+    positions, price, avg, chainId, description,
+}) => {
     const { setProfit: setProfitProvider, account } = useContext(ProviderContext);
     const { getProfit } = useContext(ServiceContext);
     const [profit, setProfit] = useState<number>();
@@ -22,7 +31,7 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
                 const data = await getProfit(account, 67);
                 setProfit(data.stable);
                 setProfitChange(data.percentage);
-                setProfitProvider(data.stable, data.percentage, '43114');
+                setProfitProvider(data.stable, data.percentage, chainId);
             }
         }());
     }, []);
@@ -31,16 +40,15 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
         <div className={styles.root}>
             <div className={styles.logoWrapper}>
                 <img
-                    src={`/images/networks/${networks['43114'].icon}`}
+                    src={`/images/networks/${networks[chainId].icon}`}
                     alt="alt"
                     className={styles.logo}
                 />
             </div>
             <div className={styles.main}>
-                <p className={styles.pare}>{networks['43114'].currencyMin}</p>
+                <p className={styles.pare}>{networks[chainId].currencyMin}</p>
                 <p className={styles.undertitle}>
-                    Generates yield by running an autocompound UST/USDC strategy
-                    on sunny.ag
+                    {description}
                 </p>
             </div>
             <ul className={styles.list}>
@@ -48,7 +56,7 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
                     <p className={styles.undertitle}>Your Position</p>
                     <p className={styles.itemValue}>{positions}</p>
                     <p className={styles.undertitle}>
-                        {networks['43114'].currency}
+                        {networks[chainId].currency}
                     </p>
                 </li>
             </ul>
@@ -56,7 +64,7 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Price</p>
                     <p className={styles.itemValue}>{price}</p>
-                    <p className={styles.undertitle}>fUSDT/USDC Synthetic LP</p>
+                    <p className={styles.undertitle}>{networks[chainId].currencyMin}</p>
                 </li>
             </ul>
             <ul className={styles.list}>
@@ -94,4 +102,4 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
     );
 };
 
-export default InvestCardAvax;
+export default InvestCardExp;
