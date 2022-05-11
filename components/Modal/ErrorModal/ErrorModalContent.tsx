@@ -5,8 +5,15 @@ import { MetamaskErrorUserMessages } from './ErrorModal.constants';
 
 import styles from './style.module.css';
 
-const ErrorModalContent: React.FC<ErrorModalProps> = ({ error, handleClose }) => {
-    const errorText = Object.keys(MetamaskErrorUserMessages).includes(String(error.code)) ? MetamaskErrorUserMessages[error.code] : 'Something went wrong.';
+const ErrorModalContent: React.FC<ErrorModalProps> = ({
+    error,
+    handleClose,
+}) => {
+    const errorText = Object.keys(MetamaskErrorUserMessages).includes(
+        String(error.code),
+    )
+        ? MetamaskErrorUserMessages[error.code]
+        : 'Something went wrong.';
     return (
         <div className={styles.wrapper}>
             <div className={styles.closeWrapper}>
