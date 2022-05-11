@@ -1,12 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import { networks } from '../../../src/utils/GlobalConst';
 import type { IState } from '../index';
 import styles from './style.module.css';
+import { ProviderContext } from '../../../src/context/ProviderContext';
+import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
-const InvestCardFantom: React.FC<IState> = ({ price, positions }) => {
+const InvestCardFantom: React.FC<IState> = ({ price, positions, avg }) => {
+    const { setProfit: setProfitProvider, account } = useContext(ProviderContext);
+    const { getProfit } = useContext(ServiceContext);
+    const [profit, setProfit] = useState<number>();
+    const [profitChange, setProfitChange] = useState<number>();
     const isLoss = true;
     const isUp = false;
+
+    useEffect(() => {
+        (async function () {
+            if (account) {
+                const data = await getProfit(account, 8);
+                setProfit(data.stable);
+                setProfitChange(data.percentage);
+                setProfitProvider(data.stable, data.percentage, '250');
+            }
+        }());
+    }, []);
 
     return (
         <div className={styles.root}>
@@ -45,7 +63,10 @@ const InvestCardFantom: React.FC<IState> = ({ price, positions }) => {
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Avg Buy Price</p>
-                    <p className={styles.itemValue}>$1</p>
+                    <p className={styles.itemValue}>
+                        $
+                        {avg?.toFixed(2)}
+                    </p>
                     <p className={styles.undertitle}>
                         {networks['250'].currency}
                     </p>
@@ -54,15 +75,21 @@ const InvestCardFantom: React.FC<IState> = ({ price, positions }) => {
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Profit</p>
-                    <p className={styles.itemValue}>$96.589</p>
+                    <p className={styles.itemValue}>
+                        $
+                        {profit}
+                    </p>
                     <p
                         className={classNames(
                             styles.undertitle,
-                            { [styles.loss]: isLoss },
-                            { [styles.up]: isUp },
+                            { [styles.loss]: profitChange! < 0 },
+                            { [styles.up]: profitChange! > 0 },
                         )}
                     >
-                        +35%
+                        {profitChange! > 0
+                            ? `+${profitChange}`
+                            : `${profitChange}`}
+                        %
                     </p>
                 </li>
             </ul>

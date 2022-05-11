@@ -3,13 +3,20 @@ import classNames from 'classnames';
 
 import type { InfoBlockProps } from './SummaryInfoBoard.interfaces';
 import { InfoBlockTypes, numberFormatter } from './SummaryInfoBoard.constants';
-import type { iService, TotalValueLockedData } from '../../../context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '../../../context/ServiceContext/ServiceContext';
+import type {
+    iService,
+    TotalValueLockedData,
+} from '../../../src/context/ServiceContext/ServiceContext.interfaces';
+import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 
 // TODO MIGRATE TO INFO BLOCK from UI
-const InfoBlock: React.FC<InfoBlockProps> = ({ value, type, info }: InfoBlockProps) => {
+const InfoBlock: React.FC<InfoBlockProps> = ({
+    value,
+    type,
+    info,
+}: InfoBlockProps) => {
     let valueText = String(value);
     let additionalClass = {};
 
@@ -21,7 +28,10 @@ const InfoBlock: React.FC<InfoBlockProps> = ({ value, type, info }: InfoBlockPro
         }
         case InfoBlockTypes.PERCENTAGE: {
             const sign = value > 0 ? '+' : '';
-            additionalClass = { [styles.blockValueGood]: value > 0, [styles.blockValueBad]: value < 0 };
+            additionalClass = {
+                [styles.blockValueGood]: value > 0,
+                [styles.blockValueBad]: value < 0,
+            };
             valueText = `${sign}${value.toFixed(2)}%`;
             break;
         }
@@ -36,7 +46,9 @@ const InfoBlock: React.FC<InfoBlockProps> = ({ value, type, info }: InfoBlockPro
     return (
         <div className={styles.blockWrapper}>
             <div className={styles.blockInfo}>{info}</div>
-            <div className={classNames(styles.blockValue, additionalClass)}>{valueText}</div>
+            <div className={classNames(styles.blockValue, additionalClass)}>
+                {valueText}
+            </div>
         </div>
     );
 };
@@ -53,25 +65,50 @@ const SummaryInfoBoard = () => {
         updateTVL();
     };
 
-    // useEffect(() => {
-    //     updateData();
-    // }, []);
+    useEffect(() => {
+        updateData();
+    }, []);
 
-    // useEffect(() => {
-    //     const updateTimer = setInterval(updateData, 10000);
+    useEffect(() => {
+        const updateTimer = setInterval(updateData, 10000);
 
-    //     return () => {
-    //         clearInterval(updateTimer);
-    //     }
-    // }, []);
+        return () => {
+            clearInterval(updateTimer);
+        };
+    }, []);
 
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
-                <InfoBlock info="Total Value Locked (USD)" value={totalValueLockedData ? totalValueLockedData.amount : null} type={InfoBlockTypes.MONEY} isShort />
-                <InfoBlock info="Change (24h)" value={totalValueLockedData ? totalValueLockedData.change : null} type={InfoBlockTypes.PERCENTAGE} />
-                <InfoBlock info="Current enUSD Minted" value={0} type={InfoBlockTypes.MONEY} />
-                <InfoBlock info="Change (24h)" value={0} type={InfoBlockTypes.PERCENTAGE} />
+                <InfoBlock
+                    info="Total Value Locked (USD)"
+                    value={
+                        totalValueLockedData
+                            ? totalValueLockedData.amount
+                            : null
+                    }
+                    type={InfoBlockTypes.MONEY}
+                    isShort
+                />
+                <InfoBlock
+                    info="Change (24h)"
+                    value={
+                        totalValueLockedData
+                            ? totalValueLockedData.change
+                            : null
+                    }
+                    type={InfoBlockTypes.PERCENTAGE}
+                />
+                <InfoBlock
+                    info="Current enUSD Minted"
+                    value={0}
+                    type={InfoBlockTypes.MONEY}
+                />
+                <InfoBlock
+                    info="Change (24h)"
+                    value={0}
+                    type={InfoBlockTypes.PERCENTAGE}
+                />
             </div>
         </div>
     );

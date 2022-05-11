@@ -4,24 +4,33 @@ import Link from 'next/link';
 import ScrollLock from 'react-scrolllock';
 import styles from './styles.module.css';
 import Dropout from './Dropout';
-import { ProviderContext } from '../../context/ProviderContext';
+import { ProviderContext } from '../../src/context/ProviderContext';
 import ChangeNetwork from './ChangeNetwork';
-import { MenuBtn } from './MenuBtn';
+import MenuBtn from './MenuBtn/MenuBtn';
+import type { WalletProviderNames } from '../Modal/SelectWalletModal/SelectWalletModal.constants';
 
 const Header = () => {
-    const { account, setWallet, removeWallet } = useContext(ProviderContext);
+    const {
+        account, setIsOpenSelectWalletModal, setWallet, removeWallet, setPreloader,
+    } = useContext(ProviderContext);
 
-    const connect = () => account || setWallet('MetaMask');
+    const connect = () => account || setIsOpenSelectWalletModal(true);
     const disconnect = () => removeWallet();
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
+        setIsOpen(false);
+    }, []);
+
+    useEffect(() => {
         const wallet = localStorage.getItem('wallet');
         if (wallet) {
-            connect();
+            setWallet(wallet as keyof typeof WalletProviderNames);
+        } else {
+            setPreloader(false);
         }
-    });
+    }, []);
 
     const networkBtns = (
         <div
@@ -55,7 +64,7 @@ const Header = () => {
                 >
                     <>
                         <Link href="/profile">
-                            <div className={styles.linkBtn}>
+                            <div className={styles.locationBar}>
                                 <div>Profile</div>
                                 <img src="./images/person.svg" alt="" />
                             </div>
@@ -89,8 +98,7 @@ const Header = () => {
                 <div className="container">
                     <div className={styles.wrapper}>
                         <div className={styles.menuHeaderWrapper}>
-                            {/* @ts-ignore */}
-                            <Link href="/" className={styles.logo}>
+                            <Link href="/">
                                 <img src="./images/logo.svg" alt="" />
                             </Link>
                         </div>
@@ -128,41 +136,27 @@ const Header = () => {
                                         styles.directionColumn,
                                     )}
                                 >
-                                    <Dropout title="enUSD">
-                                        <>
-                                            <p>
-                                                Mint enUSD
-                                                <span
-                                                    className={styles.soonText}
-                                                >
-                                                    (soon)
-                                                </span>
-                                            </p>
-                                            <p>
-                                                Burn enUSD
-                                                <span
-                                                    className={styles.soonText}
-                                                >
-                                                    (soon)
-                                                </span>
-                                            </p>
-                                        </>
-                                    </Dropout>
+                                    <Dropout
+                                        title="enUSD"
+                                        isSoon
+                                        wrapperListClassName={
+                                            styles.displayNone
+                                        }
+                                        wrapperPickerClassName={
+                                            styles.displayNone
+                                        }
+                                    />
                                     <Dropout title="STAKE">
                                         <>
                                             <p>
                                                 Entangle
-                                                <span
-                                                    className={styles.soonText}
-                                                >
+                                                <span className={styles.soonText}>
                                                     (soon)
                                                 </span>
                                             </p>
                                             <p>
                                                 Stablecoins
-                                                <span
-                                                    className={styles.soonText}
-                                                >
+                                                <span className={styles.soonText}>
                                                     (soon)
                                                 </span>
                                             </p>
@@ -193,6 +187,7 @@ const Header = () => {
                             </div>
                             <div className={styles.menuBtnWrapper}>
                                 <MenuBtn
+                                    isOpen={isOpen}
                                     onOpen={() => {
                                         setIsOpen(true);
                                     }}

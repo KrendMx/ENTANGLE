@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
+import Image from 'next/image';
 
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import type { SuccessModalProps } from './SuccessModal.interface';
+import { ProviderContext } from '../../../src/context/ProviderContext';
 
 import styles from './style.module.css';
 import GradientButton from '../../ui-kit/GradientButton';
-import { ProviderContext } from '../../../context/ProviderContext';
 import { networks } from '../../../src/utils/GlobalConst';
 
 const SuccessModalContent: React.FC<SuccessModalProps> = ({
@@ -39,7 +40,11 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                             titleElement={(
                                 <div className={styles.metamaskBtnWrapper}>
                                     <div>Add to MetaMask</div>
-                                    <img className={styles.metamaskBtnImg} src="./images/connectors/metamask.svg" alt="" />
+                                    <img
+                                        className={styles.metamaskBtnImg}
+                                        src="./images/connectors/metamask.svg"
+                                        alt=""
+                                    />
                                 </div>
                             )}
                             onClick={() => {
@@ -49,7 +54,11 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                         />
                         <CopyToClipboard text={networks[chainId].synth}>
                             <div className={styles.copyWrapper}>
-                                <img className={styles.metamaskBtnImg} src="./images/copy.svg" alt="Copy synth address" />
+                                <img
+                                    className={styles.metamaskBtnImg}
+                                    src="./images/copy.svg"
+                                    alt="Copy synth address"
+                                />
                             </div>
                         </CopyToClipboard>
                     </div>

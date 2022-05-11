@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
-
-import { ProviderContext } from '../../../context/ProviderContext';
-import { networks } from '../../../src/utils/GlobalConst';
-
 import styles from './style.module.css';
+import { ProviderContext } from '../../../src/context/ProviderContext';
+import { networks } from '../../../src/utils/GlobalConst';
 
 const ChangeNetwork = () => {
     const [openList, setOpenList] = useState(false);
@@ -32,11 +30,12 @@ const ChangeNetwork = () => {
                     [styles.openList]: openList,
                 })}
             >
-                {(Object.keys(networks) as Array<keyof typeof networks>).map(
-                    (chainIdEl) => (
+                {(Object.keys(networks) as Array<keyof typeof networks>)
+                    .sort((a, b) => networks[b].order - networks[a].order)
+                    .map((chainIdEl) => (
                         <div
                             className={styles.network}
-                            onClick={() => setChainID(chainIdEl)}
+                            onClick={() => setChainID(chainIdEl as '43114' | '250')}
                             key={chainIdEl}
                         >
                             <p>{networks[chainIdEl].title}</p>
@@ -45,8 +44,7 @@ const ChangeNetwork = () => {
                                 alt=""
                             />
                         </div>
-                    ),
-                )}
+                    ))}
             </div>
         </div>
     );

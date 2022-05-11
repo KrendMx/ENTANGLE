@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { InfoBlockTypes } from './InfoBlock.constants';
+import type {InfoBlockTypes} from './InfoBlock.constants';
 
 type InfoBlockBalanceOptions = {
     changeValue: number,
@@ -15,4 +15,4 @@ type InfoBlockProps = {
     options?: InfoBlockBalanceOptions;
 };
 
-export type { InfoBlockProps, InfoBlockBalanceOptions };
+export type {InfoBlockProps, InfoBlockBalanceOptions};

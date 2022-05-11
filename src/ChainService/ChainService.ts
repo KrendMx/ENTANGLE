@@ -2,66 +2,51 @@
 import React, { useContext } from 'react';
 import { Contract, providers, BigNumber } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
-import { ProviderContext } from '../../context/ProviderContext';
-
-// Ethers Deps
+import { ProviderContext } from '../context/ProviderContext';
 
 // Config
-import { ChainConfig, AdditionalConfig } from './config';
+import { ChainConfig, AdditionalConfig, NETWORKS } from './config';
 
 // Interfaces
-import type { IChainService, IChain } from './ChainService.interface';
+import type {
+    IChainService,
+    IChain,
+    keyType,
+    SynthContracts,
+} from './ChainService.interface';
 
-class ChainService implements IChainService {
+class ChainService {
     public readonly name: IChain;
 
-    public readonly PairContract: Contract;
-
-    public readonly ChefContract: Contract;
-
-    public readonly RouterContract: Contract;
-
-    public readonly SynthContract: Contract;
-
-    public readonly DEXContract: Contract;
-
-    public readonly OppositeToken: IChain;
+    public readonly SynthsContractsArray: { [key: string]: Contract } = {};
 
     private readonly oneJoeDec = BigInt(100e18);
 
     private readonly secForYear = 31536000;
 
+    private readonly contracts: any = {};
+
     // Сontract initialization
     constructor(Chain: IChain) {
         this.name = Chain;
-        this.OppositeToken = Chain === 'AVAX' ? 'FTM' : 'AVAX';
-
-        this.PairContract = new Contract(
-            AdditionalConfig.CONTRACTS[this.name].PAIR.address,
-            AdditionalConfig.CONTRACTS[this.name].PAIR.abi,
-            new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
-        );
-        this.ChefContract = new Contract(
-            AdditionalConfig.CONTRACTS[this.name].CHEF.address,
-            AdditionalConfig.CONTRACTS[this.name].CHEF.abi,
-            new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
-        );
-        this.RouterContract = new Contract(
-            AdditionalConfig.CONTRACTS[this.name].ROUTER.address,
-            AdditionalConfig.CONTRACTS[this.name].ROUTER.abi,
-            new providers.JsonRpcProvider(ChainConfig[this.name].RPC),
-        );
-        this.SynthContract = new Contract(
-            ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.address,
-            ChainConfig[this.OppositeToken].CONTRACTS.SYNTH.abi,
-            new providers.JsonRpcProvider(ChainConfig[this.OppositeToken].RPC),
-        );
-
-        this.DEXContract = new Contract(
-            ChainConfig[this.OppositeToken].CONTRACTS.DEX.address,
-            ChainConfig[this.OppositeToken].CONTRACTS.DEX.abi,
-            new providers.JsonRpcProvider(ChainConfig[this.OppositeToken].RPC),
-        );
+        const config = ChainConfig[this.name].SYNTH;
+        for (const el of config) {
+            const keys = Object.keys(el.CONTRACTS);
+            this.contracts[el.ID] = {};
+            for (let i = 0; i < keys.length; i++) {
+                this.contracts[el.ID][keys[i] as any] = new Contract(
+                    el.CONTRACTS[keys[i] as keyof typeof el.CONTRACTS].address,
+                    el.CONTRACTS[keys[i] as keyof typeof el.CONTRACTS].abi,
+                    new providers.JsonRpcProvider(
+                        NETWORKS[
+                            el.CONTRACTS[
+                                keys[i] as keyof typeof el.CONTRACTS
+                            ].chainId
+                        ].rpc,
+                    ),
+                );
+            }
+        }
     }
 
     // USD price for AVAX calculations
@@ -83,6 +68,7 @@ class ChainService implements IChainService {
                 },
                 referrer: 'https://traderjoexyz.com/',
                 referrerPolicy: 'strict-origin-when-cross-origin',
+                // eslint-disable-next-line max-len
                 body: '{"operationName":"filteredPairsQuery","variables":{"dateAfter":1648746000,"first":1,"pairIds":["0x2a8a315e82f85d1f0658c5d66a452bbdd9356783"]},"query":"query filteredPairsQuery($pairIds: [String]!, $first: Int!, $dateAfter: Int! = 1622419200) {\\n  pairs(first: $first, where: {id_in: $pairIds}) {\\n    id\\n    name\\n    token0Price\\n    token1Price\\n    token0 {\\n      id\\n      symbol\\n      decimals\\n      __typename\\n    }\\n    token1 {\\n      id\\n      symbol\\n      decimals\\n      __typename\\n    }\\n    reserve0\\n    reserve1\\n    reserveUSD\\n    volumeUSD\\n    hourData(first: 24, where: {date_gt: $dateAfter}, orderBy: date, orderDirection: desc) {\\n      untrackedVolumeUSD\\n      volumeUSD\\n      date\\n      volumeToken0\\n      volumeToken1\\n      __typename\\n    }\\n    timestamp\\n    __typename\\n  }\\n}\\n"}',
                 method: 'POST',
                 mode: 'cors',
@@ -95,230 +81,288 @@ class ChainService implements IChainService {
         return volumeUSD;
     };
 
-    public getCardData = async () => {
+    // calculate apr by farm id
+    private calculateAPR = async (contracts: SynthContracts, id: string) => {
+        console.log(id);
         try {
-            let apr = null;
-            let totalDeposits = null;
-            let currentDeposits = null;
-            let available = null;
-            let totalAvailable = null;
-            let price = null;
-
-            const volumeUSD = await this.getUSDVolume();
-            const totalSupply = await this.PairContract.totalSupply();
-            const [reserve0, reserve1] = await this.PairContract.getReserves();
-            const generalLiquidity = reserve0.add(reserve1).div(10 ** 6);
-
-            let totalLpSupply: any;
-
-            const pointers = await this.ChefContract.poolInfo(
-                ChainConfig[this.name].net,
-            );
-            const { allocPoint } = pointers;
-
-            if (this.name === 'AVAX') {
-                totalLpSupply = pointers.totalLpSupply;
-            } else {
-                totalLpSupply = await this.PairContract.balanceOf(
-                    AdditionalConfig.CONTRACTS[this.name].CHEF.address,
-                );
+            let apr = 0;
+            switch (id) {
+            case '8': {
+                const usdValue = await this.getUSDVolume();
+                const persec = await contracts.CHEF.joePerSec();
+                const joeAddress = await contracts.CHEF.JOE();
+                const perSecInStable = (
+                    await contracts.ROUTER.getAmountsOut(persec, [
+                        joeAddress,
+                        contracts.STABLESYNTCHEF.address,
+                    ])
+                )[1].toBigInt();
+                const totalAlloc = await contracts.CHEF.totalAllocPoint();
+                const poolInfo = await contracts.CHEF.poolInfo(id);
+                const rewardPerYear = (perSecInStable
+                        * BigInt(this.secForYear)
+                        * poolInfo.allocPoint.toBigInt())
+                    / totalAlloc.toBigInt()
+                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
+                const balance = (
+                    await contracts.PAIR.balanceOf(contracts.CHEF.address)
+                ).toBigInt();
+                const reserves = await contracts.PAIR.getReserves();
+                const totalSupply = (
+                    await contracts.PAIR.totalSupply()
+                ).toBigInt();
+                const [token0Dec, token1Dec] = [6, 6];
+                const amount0 = (balance * BigInt(reserves[0]))
+                    / totalSupply
+                    / BigInt(10 ** token0Dec);
+                const amount1 = (balance * BigInt(reserves[1]))
+                    / totalSupply
+                    / BigInt(10 ** token1Dec);
+                apr = Number(rewardPerYear) / Number(amount0 + amount1)
+                    + (Number(usdValue) * 0.003) / Number(amount0 + amount1);
+                break;
             }
-            const totalAllocPoint = await this.ChefContract.totalAllocPoint();
-            const [token, usdc] = await this.RouterContract.getAmountsOut(
-                this.oneJoeDec,
-                [
-                    ChainConfig[this.name].forSwap,
-                    ChainConfig[this.name].CONTRACTS.STABLE.address,
-                ],
-            );
-            const forOneUSD = +(
-                token.div(BigInt(1e18)).toNumber() / usdc.div(1e6).toNumber()
-            ).toFixed(2);
-            const totalLpSupplyDec = totalLpSupply.toNumber();
-
-            const { amount } = await this.ChefContract.userInfo(
-                ChainConfig[this.name].net,
-                ChainConfig[this.name].forAmount,
-            );
-
-            const tokenApr = (BigNumber.from(
-                Math.floor(Number(volumeUSD) * 0.003),
-            ).toNumber()
-        / generalLiquidity.toNumber())
-        * 100;
-            let perSec: any;
-            let n: number;
-            let r0: number;
-            let r1: number;
-            let x: number;
-            let d0: number;
-            let d1: number;
-
-            switch (this.name) {
-            case 'AVAX':
-                perSec = await this.ChefContract.joePerSec();
-                n = +(
-                    (perSec.div(BigInt(1e18)).toNumber()
-                            * this.secForYear
-                            * allocPoint.toNumber())
-                        / totalAllocPoint.toNumber()
-                        / forOneUSD
-                ).toFixed(2);
-                r0 = reserve0
-                    .mul(totalLpSupplyDec)
-                    .div(totalSupply)
-                    .toNumber();
-                r1 = reserve1
-                    .mul(totalLpSupplyDec)
-                    .div(totalSupply)
-                    .toNumber();
-                d0 = reserve0.mul(amount).div(totalSupply).toNumber();
-                d1 = reserve1.mul(amount).div(totalSupply).toNumber();
-                x = (r0 + r1) / 10 ** 6;
-
-                currentDeposits = (d0 + d1) / 10 ** 6;
-                apr = ((n / x) * 100 + tokenApr).toFixed(2);
-
+            case '67': {
+                const persec = await contracts.CHEF.spiritPerBlock();
+                const spiritAddress = await contracts.CHEF.spirit();
+                const perSecInStable = (
+                    await contracts.ROUTER.getAmountsOut(persec, [
+                        spiritAddress,
+                        contracts.STABLESYNTCHEF.address,
+                    ])
+                )[1].toBigInt();
+                const totalAlloc = await contracts.CHEF.totalAllocPoint();
+                const poolInfo = await contracts.CHEF.poolInfo(id);
+                const rewardPerYear = (perSecInStable
+                        * BigInt(this.secForYear)
+                        * poolInfo.allocPoint.toBigInt())
+                    / totalAlloc.toBigInt()
+                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
+                const balance = (
+                    await contracts.PAIR.balanceOf(contracts.CHEF.address)
+                ).toBigInt();
+                const reserves = await contracts.PAIR.getReserves();
+                const totalSupply = (
+                    await contracts.PAIR.totalSupply()
+                ).toBigInt();
+                const [token0Dec, token1Dec] = [6, 18];
+                const amount0 = (balance * BigInt(reserves[0]))
+                    / totalSupply
+                    / BigInt(10 ** token0Dec);
+                const amount1 = (balance * BigInt(reserves[1]))
+                    / totalSupply
+                    / BigInt(10 ** token1Dec);
+                apr = Number(rewardPerYear) / Number(amount0 + amount1);
                 break;
-            case 'FTM':
-                perSec = await this.ChefContract.spiritPerBlock();
-                n = +(
-                    (perSec.div(BigInt(1e18)).toNumber()
-                            * (365 * 24 * 60 * 60)
-                            * allocPoint.toNumber())
-                        / totalAllocPoint.toNumber()
-                        / forOneUSD
-                ).toFixed(2);
-                r0 = parseFloat(
-                    reserve0
-                        .mul(totalLpSupplyDec)
-                        .div(totalSupply)
-                        .div(10 ** 6),
-                );
-                r1 = parseFloat(
-                    reserve1
-                        .mul(totalLpSupplyDec)
-                        .div(totalSupply)
-                        .toBigInt(),
-                )
-                        / 10 ** 18;
-                d0 = parseFloat(
-                    reserve0
-                        .mul(amount)
-                        .div(totalSupply)
-                        .div(10 ** 6),
-                );
-                d1 = parseFloat(
-                    reserve1.mul(amount).div(totalSupply).toBigInt(),
-                )
-                        / 10 ** 18;
-                x = r0 + r1;
-
-                currentDeposits = d0 + d1;
-                apr = ((n / x) * 100).toFixed(2);
+            }
+            case '7': {
+                console.log(contracts);
+                const poolInfo = await contracts.CHEF.poolInfo(id);
+                const persec = await contracts.CHEF.cakePerBlock(poolInfo.isRegular);
+                const cakeAddress = await contracts.CHEF.CAKE();
+                const perSecInStable = (
+                    await contracts.ROUTER.getAmountsOut(persec, [
+                        cakeAddress,
+                        contracts.STABLESYNTCHEF.address,
+                    ])
+                )[1].toBigInt();
+                const totalAlloc = await contracts.CHEF.totalRegularAllocPoint();
+                const rewardPerYear = (perSecInStable
+                        * BigInt(this.secForYear)
+                        * poolInfo.allocPoint.toBigInt())
+                    / totalAlloc.toBigInt()
+                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
+                const balance = (
+                    await contracts.PAIR.balanceOf(contracts.CHEF.address)
+                ).toBigInt();
+                const reserves = await contracts.PAIR.getReserves();
+                const totalSupply = (
+                    await contracts.PAIR.totalSupply()
+                ).toBigInt();
+                const [token0Dec, token1Dec] = [18, 18];
+                const amount0 = (balance * BigInt(reserves[0]))
+                    / totalSupply
+                    / BigInt(10 ** token0Dec);
+                const amount1 = (balance * BigInt(reserves[1]))
+                    / totalSupply
+                    / BigInt(10 ** token1Dec);
+                apr = Number(rewardPerYear) / Number(amount0 + amount1);
                 break;
+            }
             default:
                 break;
             }
 
-            const synthBalance = await this.SynthContract.balanceOf(
-                ChainConfig[this.OppositeToken].CONTRACTS.DEX.address,
-            );
-            const dec = await this.SynthContract.decimals();
-            const rate = await this.DEXContract.rate();
-            const OpTokenContract = await new Promise<Contract>(
-                async (resolve) => {
-                    const address = await this.DEXContract.opToken();
-                    resolve(
-                        new Contract(
-                            address,
-                            AdditionalConfig.CONTRACTS.OP.TOKEN.abi,
-                            new providers.JsonRpcProvider(
-                                ChainConfig[this.OppositeToken].RPC,
-                            ),
-                        ),
-                    );
-                },
-            );
-            const opTokenDec = await OpTokenContract.decimals();
-            const lp = await OpTokenContract.balanceOf(
-                ChainConfig[this.OppositeToken].CONTRACTS.DEX.address,
-            );
+            return Number((apr * 100).toFixed(2));
+        } catch (e) {
+            console.log(e);
+            return 0;
+        }
+    };
 
-            totalDeposits = amount.toNumber() / 10 ** 18;
-            price = 1 / (Number(rate.toBigInt()) / 10 ** 18);
-            available = Number(synthBalance.toBigInt()) / 10 ** dec;
-            totalAvailable = lp / 10 ** opTokenDec;
-
+    private getCurrenctDeposit = async (
+        contracts: SynthContracts,
+        id: string,
+    ) => {
+        try {
+            const lpAmount = (
+                await contracts.CHEF.userInfo(id, contracts.SYNTHCHEF.address)
+            ).amount.toBigInt();
+            const reserves = await contracts.PAIR.getReserves();
+            const totalSupply = (await contracts.PAIR.totalSupply()).toBigInt();
+            let token0Dec = 0;
+            let token1Dec = 0;
+            switch (id) {
+            case '8':
+                token0Dec = 6;
+                token1Dec = 6;
+                break;
+            case '67':
+                token0Dec = 6;
+                token1Dec = 18;
+                break;
+            case '7':
+                token0Dec = 18;
+                token1Dec = 18;
+                break;
+            default:
+                break;
+            }
+            const amount0 = Number(lpAmount * BigInt(reserves[0]))
+                / Number(totalSupply)
+                / Number(10 ** token0Dec);
+            const amount1 = Number(lpAmount * BigInt(reserves[1]))
+                / Number(totalSupply)
+                / Number(10 ** token1Dec);
             return {
-                apr: `${apr}%`,
-                totalDeposits: `${totalDeposits} ${
-                    ChainConfig[this.name].synthName
-                }`,
-                currentDeposits: `$${currentDeposits!.toFixed(3)}`,
-                available: `${Number(available.toFixed(5))}`,
-                totalAvailable: `$${totalAvailable.toFixed(5)}`,
-                price: `${Number(price.toFixed(6))}`,
+                currentDeposits: Number((amount0 + amount1).toFixed(2)),
+                totalDeposits: lpAmount,
+            };
+        } catch (e) {
+            console.log(e);
+            return {
+                currentDeposits: 0,
+                totalDeposits: 0,
+            };
+        }
+    };
+
+    private getRemainData = async (
+        contracts: SynthContracts,
+    ) => {
+        try {
+            const available = (await contracts.SYNTH.balanceOf(
+                contracts.DEX.address,
+            ))
+                / 10 ** (await contracts.SYNTH.decimals());
+            const totalAvailable = (await contracts.STABLE.balanceOf(
+                contracts.DEX.address,
+            ))
+                / 10 ** (await contracts.STABLE.decimals());
+            const price = 1
+                / (((await contracts.DEX.rate())
+                    / 10 ** (await contracts.DEX.rateDecimals())));
+            return {
+                available,
+                totalAvailable,
+                price,
+            };
+        } catch (e) {
+            console.log(e);
+            return {
+                available: 0,
+                totalAvailable: 0,
+                price: 0,
+            };
+        }
+    };
+
+    public getCardData = async (id: string) => {
+        try {
+            const necessaryСontracts: SynthContracts = this.contracts[id];
+
+            const synthObj = (ChainConfig[this.name].SYNTH as any).find(
+                (el: any) => el.ID === id,
+            );
+
+            const apr = await this.calculateAPR(
+                necessaryСontracts,
+                synthObj.FARMID,
+            );
+            const { currentDeposits, totalDeposits } = await this.getCurrenctDeposit(
+                necessaryСontracts,
+                synthObj.FARMID,
+            );
+            const { available, totalAvailable, price } = await this.getRemainData(
+                necessaryСontracts,
+            );
+            return {
+                apr,
+                totalDeposits,
+                currentDeposits,
+                available,
+                totalAvailable,
+                price,
             };
         } catch (e) {
             // Намутить обработку
             console.log(e);
-            throw new Error();
+            return {
+                apr: 0,
+                totalDeposits: 0,
+                currentDeposits: 0,
+                available: 0,
+                totalAvailable: 0,
+                price: 0,
+            };
         }
     };
 
-    public getPersonalData = async (account: string) => {
+    public getPersonalData = async (account: string, id: string) => {
         try {
-            const dec = await this.SynthContract.decimals();
+            const necessaryСontracts: SynthContracts = this.contracts[id];
 
-            const rate = await this.DEXContract.rate();
+            const dec = await necessaryСontracts.SYNTH.decimals();
+
+            const rate = await necessaryСontracts.DEX.rate();
             const price = 1 / (Number(rate.toBigInt()) / 10 ** 18);
 
-            const accountBalance = await this.SynthContract.balanceOf(account);
+            const accountBalance = await necessaryСontracts.SYNTH.balanceOf(account);
             const totalPositions = Number(accountBalance.toBigInt()) / 10 ** dec;
 
             const positions = totalPositions * price;
 
             return {
                 positions,
-                totalPositions: `${Number(totalPositions.toFixed(6))} ${
-                    ChainConfig[this.name].synthName
-                }`,
+                totalPositions,
             };
         } catch (e) {
-            // Намутить обработку
-            throw new Error();
+            console.log(e);
+            return {
+                positions: 0,
+                totalPositions: 0,
+            };
         }
     };
 
     // Это по другому нужно будет расписать, но пока так
-    public buyToken = async (value: number) => {
-        const { provider } = useContext(ProviderContext);
+    public buyToken = async (value: number, id: number) => {
         try {
-            const buyContract = new Contract(
-                ChainConfig[this.name].CONTRACTS.DEX.address,
-                ChainConfig[this.name].CONTRACTS.DEX.abi,
-                (provider as Web3Provider).getSigner(),
-            );
+            const contracts: SynthContracts = this.contracts[id];
 
             const amount = Math.floor(value * 10 ** 6);
-            return await buyContract.buy(amount);
+            return await contracts.FEE.buy(amount);
         } catch (e) {
             throw new Error();
         }
     };
 
-    public sellToken = async (value: number) => {
-        const { provider } = useContext(ProviderContext);
+    public sellToken = async (value: number, id: string) => {
         try {
-            const sellContract = new Contract(
-                ChainConfig[this.name].CONTRACTS.DEX.address,
-                ChainConfig[this.name].CONTRACTS.DEX.abi,
-                (provider as Web3Provider).getSigner(),
-            );
-            // eslint-disable-next-line
-      const amount = BigInt(Math.floor(Number(value * Math.pow(10, 18))));
-            return await sellContract.sell(amount);
+            const contracts: SynthContracts = this.contracts[id];
+
+            const amount = Math.floor(value * 10 ** 18);
+            return await contracts.FEE.sell(amount);
         } catch (e) {
             throw new Error();
         }

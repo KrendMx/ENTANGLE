@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ProviderContext } from '../../context/ProviderContext';
+import { ProviderContext } from '../../src/context/ProviderContext';
 
 const ConnectWallets = () => {
     const wallets = ['MetaMask', 'Coin98', 'CoinBase', 'WalletConnect'] as const;

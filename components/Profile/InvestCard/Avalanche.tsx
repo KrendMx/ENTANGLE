@@ -1,22 +1,37 @@
-import React, {
-    useEffect, useState, useContext, useMemo,
-} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { networks } from '../../../src/utils/GlobalConst';
+import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 import type { IState } from '../index';
+import { ProviderContext } from '../../../src/context/ProviderContext';
 
-const InvestCardAvax: React.FC<IState> = ({ positions, price }) => {
+const InvestCardAvax: React.FC<IState> = ({ positions, price, avg }) => {
+    const { setProfit: setProfitProvider, account } = useContext(ProviderContext);
+    const { getProfit } = useContext(ServiceContext);
+    const [profit, setProfit] = useState<number>();
+    const [profitChange, setProfitChange] = useState<number>();
     const isLoss = true;
     const isUp = false;
+
+    useEffect(() => {
+        (async function () {
+            if (account) {
+                const data = await getProfit(account, 67);
+                setProfit(data.stable);
+                setProfitChange(data.percentage);
+                setProfitProvider(data.stable, data.percentage, '43114');
+            }
+        }());
+    }, []);
 
     return (
         <div className={styles.root}>
             <div className={styles.logoWrapper}>
                 <img
-                    src={`./images/networks/${networks['43114'].icon}`}
+                    src={`/images/networks/${networks['43114'].icon}`}
                     alt="alt"
                     className={styles.logo}
                 />
@@ -31,9 +46,7 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price }) => {
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Your Position</p>
-                    <p className={styles.itemValue}>
-                        {positions}
-                    </p>
+                    <p className={styles.itemValue}>{positions}</p>
                     <p className={styles.undertitle}>
                         {networks['43114'].currency}
                     </p>
@@ -42,31 +55,38 @@ const InvestCardAvax: React.FC<IState> = ({ positions, price }) => {
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Price</p>
-                    <p className={styles.itemValue}>
-                        {price}
-                    </p>
+                    <p className={styles.itemValue}>{price}</p>
                     <p className={styles.undertitle}>fUSDT/USDC Synthetic LP</p>
                 </li>
             </ul>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Avg Buy Price</p>
-                    <p className={styles.itemValue}>$1</p>
+                    <p className={styles.itemValue}>
+                        $
+                        {avg?.toFixed(2)}
+                    </p>
                     <p className={styles.undertitle}>fUSDT/USDC Synthetic LP</p>
                 </li>
             </ul>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Profit</p>
-                    <p className={styles.itemValue}>$96.589</p>
+                    <p className={styles.itemValue}>
+                        $
+                        {profit}
+                    </p>
                     <p
                         className={classNames(
                             styles.undertitle,
-                            { [styles.loss]: isLoss },
-                            { [styles.up]: isUp },
+                            { [styles.loss]: profitChange! < 0 },
+                            { [styles.up]: profitChange! > 0 },
                         )}
                     >
-                        +35%
+                        {profitChange! > 0
+                            ? `+${profitChange}`
+                            : `${profitChange}`}
+                        %
                     </p>
                 </li>
             </ul>

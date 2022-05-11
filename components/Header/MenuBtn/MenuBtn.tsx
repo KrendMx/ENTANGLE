@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import type { MenuBtnProps } from './MenuBtn.interfaces';
 import styles from './style.module.css';
 
-export const MenuBtn: React.FC<MenuBtnProps> = ({
+const MenuBtn: React.FC<MenuBtnProps> = ({
+    isOpen: isOpenProp = false,
     onChange = () => {
     }, onClose = () => {
     }, onOpen = () => {
     },
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(isOpenProp);
+
+    useEffect(() => {
+        setIsOpen(isOpenProp);
+    }, [isOpenProp]);
 
     useEffect(() => {
         if (isOpen) {
@@ -36,3 +41,4 @@ export const MenuBtn: React.FC<MenuBtnProps> = ({
         </label>
     );
 };
+export default MenuBtn;

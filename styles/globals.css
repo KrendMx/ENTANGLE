@@ -1,13 +1,15 @@
 :root {
   --black: #101010;
-  --gray: #a3a3a3;
-  --color-3: #1e1e1e;
-  --color-4: #edf2f7;
-  --color-5: #f9f8f8;
-  --color-6: #ececec;
-  --color-7: #282b30;
-  --color-8: #e7e7e7;
-  font-size: 16px;
+    --gray: #a3a3a3;
+    --color-3: #1e1e1e;
+    --color-4: #edf2f7;
+    --color-5: #f9f8f8;
+    --color-6: #ececec;
+    --color-7: #282b30;
+    --color-8: #e7e7e7;
+    --green: #5bc15f;
+    --red: #c8534f;
+    font-size: 16px;
 }
 
 html {
