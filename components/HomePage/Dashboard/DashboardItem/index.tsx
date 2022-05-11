@@ -6,11 +6,10 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
-import { setChainId } from '../../../../Redux/store/reducers/WalletSlice';
 import type { ContainerStateType } from './containers/types';
 import { networks } from '../../../../src/utils/GlobalConst';
 import { useAppDispatch, useAppSelector } from '../../../../Redux/store/hooks/redux';
-import { importToken, setWallet } from '../../../../Redux/store/reducers/ActionCreators';
+import { changeNetwork, importToken, setWallet } from '../../../../Redux/store/reducers/ActionCreators';
 import type { ChainIdType } from '../../../../Redux/types';
 
 type DashboardItemProps = {
@@ -72,7 +71,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
 
     const handleMetamaskClick = () => {
         if (!canAddToken) {
-            dispatch(setChainId(localChain));
+            dispatch(changeNetwork(localChain));
             setAddingToken(true);
         } else {
             dispatch(importToken({ chainId: localChain, provider }));
@@ -84,7 +83,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 openModal!();
             break;
         case 'Change network':
-            dispatch(setChainId(localChain));
+            dispatch(changeNetwork(localChain));
             break;
         case 'Connect wallet':
             dispatch(setWallet({ walletKey: 'MetaMask', chainId }));

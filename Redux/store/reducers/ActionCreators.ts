@@ -9,16 +9,18 @@ import type { ChainIdType, ProviderType, walletKeyType } from '../../types';
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<ChainIdType> => {
-        if (provider) {
+    async (chainId: ChainIdType):
+        Promise<{ chainId: ChainIdType, newProvider: ProviderType }> => {
+        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+        if (newProvider) {
             try {
-                await provider.send('wallet_switchEthereumChain', [
+                await newProvider.send('wallet_switchEthereumChain', [
                     { chainId: toChainId(chainId) },
                 ]);
             } catch (switchError: any) {
                 if (switchError.code === 4902) {
                     try {
-                        await provider.send('wallet_addEthereumChain', [
+                        await newProvider.send('wallet_addEthereumChain', [
                             ethereumNetworksConfig[chainId],
                         ]);
                     } catch (addError) {
@@ -27,7 +29,7 @@ export const changeNetwork = createAsyncThunk(
                 }
             }
         }
-        return chainId;
+        return { chainId, newProvider };
     },
 );
 
@@ -54,7 +56,7 @@ export const setWallet = createAsyncThunk(
             .catch((e: any) => errorHandler(e, null));
         if (!networkData) return;
 
-        changeNetwork({ chainId, provider });
+        changeNetwork(chainId);
         const newChainId = parseInt(
             networkData.chainId.toString(),
             10,

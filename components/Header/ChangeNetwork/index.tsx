@@ -7,13 +7,14 @@ import type { ChainIdType } from '../../../Redux/types';
 import { setChainId } from '../../../Redux/store/reducers/WalletSlice';
 
 import styles from './style.module.css';
+import { changeNetwork } from '../../../Redux/store/reducers/ActionCreators';
 
 const ChangeNetwork = () => {
     const [openList, setOpenList] = useState(false);
     const { provider, chainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
 
-    const handleClick = (chainIdEl: ChainIdType) => dispatch(setChainId(chainIdEl));
+    const handleClick = (chainIdEl: ChainIdType) => dispatch(changeNetwork({ chainId: chainIdEl, provider }));
 
     return (
         <div className={styles.wrapper}>

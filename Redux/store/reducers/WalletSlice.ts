@@ -39,18 +39,11 @@ const walletSlice = createSlice({
             state.chainId = initialState.chainId;
             localStorage.removeItem('wallet');
         },
-        setChainId(state, action) {
-            changeNetwork({
-                chainId: action.payload,
-                provider: state.provider,
-            });
-            state.chainId = action.payload;
-            state.provider = new ethers.providers.Web3Provider(window.ethereum);
-        },
     },
     extraReducers: (builder) => {
         builder.addCase(changeNetwork.fulfilled, (state, action) => {
-            state.chainId = action.payload;
+            state.chainId = action.payload.chainId;
+            state.provider = action.payload.newProvider;
         });
         builder.addCase(setWallet.fulfilled, (state, action: any) => {
             const { payload } = action;
@@ -66,6 +59,6 @@ const walletSlice = createSlice({
 });
 
 export const {
-    chainChange, changeAccount, removeWallet, setChainId,
+    chainChange, changeAccount, removeWallet,
 } = walletSlice.actions;
 export default walletSlice.reducer;
