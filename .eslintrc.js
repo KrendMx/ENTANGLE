@@ -75,6 +75,7 @@ module.exports = {
         'no-plusplus': 'off',
         'implicit-arrow-linebreak': 'off',
         'consistent-return': 'off',
+        'no-nested-ternary': 'off',
     },
     settings: {
         'import/resolver': {

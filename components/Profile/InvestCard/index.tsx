@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import InvestCardExp from './InvestCars.example';
-import type { IState } from '../index';
+import type { IState, IFilter } from '../index';
 
 interface IProps {
     avaxState: IState;
@@ -10,6 +10,7 @@ interface IProps {
         avaxSynth: number;
     };
     isLoaded: boolean;
+    filter: IFilter;
 }
 
 const InvestCard: React.FC<IProps> = ({
@@ -17,23 +18,8 @@ const InvestCard: React.FC<IProps> = ({
     avaxState,
     isLoaded,
     avgPrice,
+    filter,
 }) => {
-    const cards = [
-        {
-            chainId: '250',
-            description: 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
-            position: ftmState?.positions,
-            avg: avgPrice?.fantomSynth,
-            price: ftmState?.price,
-        },
-        {
-            chainId: '43114',
-            description: 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
-            position: avaxState?.positions,
-            avg: avgPrice?.avaxSynth,
-            price: avaxState?.price,
-        },
-    ];
     const loader = (
         <div
             style={{
@@ -49,33 +35,78 @@ const InvestCard: React.FC<IProps> = ({
     const hasPhantom = Number(ftmState?.positions) > 0;
     const hasAvax = Number(avaxState?.positions) > 0;
     const hasNoOne = !hasPhantom && !hasAvax;
-    const data = (hasNoOne ? (
-        <h2
-            style={{
-                textAlign: 'center',
-                fontSize: '3rem',
-                margin: '100px 0',
-            }}
-        >
-            You do not have purchased synth
-        </h2>
-    ) : (
+    let cards = [
+        {
+            chainId: '250',
+            description: 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
+            position: ftmState?.positions,
+            avg: avgPrice?.fantomSynth,
+            price: ftmState?.price,
+        },
+        {
+            chainId: '43114',
+            description: 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
+            position: avaxState?.positions,
+            avg: avgPrice?.avaxSynth,
+            price: avaxState?.price,
+        },
+    ];
+    const data = useMemo(() =>
         cards.map((el, key) => (
-            <InvestCardExp
-                key={key}
-                chainId={el.chainId as '250' | '43114'}
-                description={el.description}
-                positions={el.position}
-                price={el.price}
-            />
-        ))
-    ));
+            el.position
+                ? (
+                    <InvestCardExp
+                        key={key}
+                        chainId={el.chainId as '250' | '43114'}
+                        description={el.description}
+                        positions={el.position}
+                        price={el.price}
+                    />
+                )
+                : undefined
+        )), [cards, filter]);
+
+    useEffect(() => {
+        switch (filter) {
+        case 'l1': {
+            cards = cards.sort((a, b) => (a.price > b.price ? 1 : -1));
+            break;
+        }
+        case 'l2': {
+            cards = cards.sort((a, b) => (a.price < b.price ? 1 : -1));
+            break;
+        }
+        case 'l3': {
+            cards = cards.sort((a, b) => (a.position > b.position ? 1 : -1));
+            break;
+        }
+        case 'l4': {
+            cards = cards.sort((a, b) => (a.position > b.position ? 1 : -1));
+            break;
+        }
+        default:
+            break;
+        }
+        console.log(cards);
+    }, [filter]);
     return (
         <div>
             {!isLoaded ? (
                 loader
             ) : (
-                data
+                hasNoOne
+                    ? (
+                        <h2
+                            style={{
+                                textAlign: 'center',
+                                fontSize: '3rem',
+                                margin: '100px 0',
+                            }}
+                        >
+                            You do not have purchased synth
+                        </h2>
+                    )
+                    : data
             )}
         </div>
     );

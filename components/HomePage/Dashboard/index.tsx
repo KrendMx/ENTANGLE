@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './style.module.css';
 import AvalancheContainer from './DashboardItem/containers/AvalancheContainer';
 import FantomContainer from './DashboardItem/containers/FantomContainer';
-import SolanaContainer from './DashboardItem/containers/SolanaContainer';
 import USDContainer from './DashboardItem/containers/USDContainer';
 import BUSDContainer from './DashboardItem/containers/BUSDContainer';
 import ETHContainer from './DashboardItem/containers/ETHContainer';
@@ -27,11 +26,6 @@ const items = [
         filter: 56,
         query: ['ust-busd'],
         element: (isFiltered: boolean) => <BUSDContainer isFiltered={isFiltered} />,
-    },
-    {
-        filter: null,
-        query: ['ust-usdc'],
-        element: (isFiltered: boolean) => <SolanaContainer isFiltered={isFiltered} />,
     },
     {
         filter: null,

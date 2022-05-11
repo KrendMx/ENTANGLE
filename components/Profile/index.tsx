@@ -19,6 +19,8 @@ import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 import { networks } from '../../src/utils/GlobalConst';
 
+export type IFilter = 'l1' | 'l2' | 'l3' | 'l4' | undefined | '';
+
 export interface IState {
     positions: string;
     price: string;
@@ -60,52 +62,56 @@ const Profile = () => {
     const [cardLoaded, setCardLoaded] = useState<boolean>(false);
     const [change, setChange] = useState<number[]>([]);
     const [avg, setAvg] = useState<{
-        fantomSynth: number,
-        avaxSynth: number
+        fantomSynth: number;
+        avaxSynth: number;
     }>();
     const { account, txLoading } = useContext(ProviderContext);
 
-    const [filter, setFilter] = React.useState('');
+    const [filter, setFilter] = React.useState<IFilter>('');
 
-    const handleChangeFilter = (value: string) => setFilter(value);
+    const handleChangeFilter = (value: IFilter) => setFilter(value);
 
     const ftmSynthContract = useMemo(
-        () => new Contract(
-            '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
-            ftmSynth,
-            new providers.JsonRpcProvider('https://rpc.ftm.tools'),
-        ),
+        () =>
+            new Contract(
+                '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
+                ftmSynth,
+                new providers.JsonRpcProvider('https://rpc.ftm.tools'),
+            ),
         [],
     );
 
     const ftmDEXContract = useMemo(
-        () => new Contract(
-            '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
-            ftmDex,
-            new providers.JsonRpcProvider('https://rpc.ftm.tools'),
-        ),
+        () =>
+            new Contract(
+                '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
+                ftmDex,
+                new providers.JsonRpcProvider('https://rpc.ftm.tools'),
+            ),
         [],
     );
 
     const avaSynthContract = useMemo(
-        () => new Contract(
-            '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
-            avaSynth,
-            new providers.JsonRpcProvider(
-                'https://api.avax.network/ext/bc/C/rpc',
+        () =>
+            new Contract(
+                '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
+                avaSynth,
+                new providers.JsonRpcProvider(
+                    'https://api.avax.network/ext/bc/C/rpc',
+                ),
             ),
-        ),
         [],
     );
 
     const avaDEXContract = useMemo(
-        () => new Contract(
-            '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
-            avaDex,
-            new providers.JsonRpcProvider(
-                'https://api.avax.network/ext/bc/C/rpc',
+        () =>
+            new Contract(
+                '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
+                avaDex,
+                new providers.JsonRpcProvider(
+                    'https://api.avax.network/ext/bc/C/rpc',
+                ),
             ),
-        ),
         [],
     );
 
@@ -269,10 +275,40 @@ const Profile = () => {
                     <div className={styles.selectWrapper}>
                         <Select value={filter} onChange={handleChangeFilter}>
                             <Option value="">Sort by</Option>
-                            <Option value="l1">
+                            <Option
+                                value={filter !== 'l2' ? 'l2' : 'l1'}
+                                extraSymbol={
+                                    filter !== 'l2' ? (
+                                        <i
+                                            className="fa fa-arrow-up"
+                                            aria-hidden="true"
+                                        />
+                                    ) : (
+                                        <i
+                                            className="fa fa-arrow-down"
+                                            aria-hidden="true"
+                                        />
+                                    )
+                                }
+                            >
                                 Price
                             </Option>
-                            <Option value="l2">
+                            <Option
+                                value={filter !== 'l4' ? 'l4' : 'l3'}
+                                extraSymbol={
+                                    filter !== 'l4' ? (
+                                        <i
+                                            className="fa fa-arrow-up"
+                                            aria-hidden="true"
+                                        />
+                                    ) : (
+                                        <i
+                                            className="fa fa-arrow-down"
+                                            aria-hidden="true"
+                                        />
+                                    )
+                                }
+                            >
                                 Profit
                             </Option>
                         </Select>
@@ -283,6 +319,7 @@ const Profile = () => {
                     avaxState={avaxState!}
                     avgPrice={avg}
                     isLoaded={cardLoaded}
+                    filter={filter}
                 />
             </section>
             <section className={styles.section}>

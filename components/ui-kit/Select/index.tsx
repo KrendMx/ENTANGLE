@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css';
 
 type SelectProps = {
-    value: string;
+    value: string | undefined;
     children: JSX.Element[];
     onChange: any;
 };
