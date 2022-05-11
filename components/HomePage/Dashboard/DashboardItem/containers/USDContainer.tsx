@@ -1,13 +1,13 @@
-import React, {useReducer} from 'react';
+import React, { useReducer } from 'react';
 import DashboardItem from '../index';
-import type {ContainerStateType} from './types';
+import type { ContainerStateType } from './types';
 
-const USDContainer = ({isFiltered = false}) => {
+const USDContainer = ({ isFiltered = false }) => {
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
-            stateUpdate: Partial<ContainerStateType>
-        ) => ({...containerState, ...stateUpdate}),
+            stateUpdate: Partial<ContainerStateType>,
+        ) => ({ ...containerState, ...stateUpdate }),
         {
             apr: '15.22%',
             currentDeposits: '0',
@@ -19,9 +19,10 @@ const USDContainer = ({isFiltered = false}) => {
             totalPositions: 'UST Synthetic LP',
             rowGradient:
                 'linear-gradient(90deg, #2845AE 0%, rgba(84, 147, 247, 0) 96.87%)',
-            yieldTime: '$0'
-
-        }
+            yieldTime: '$0',
+            localChain: '250',
+            localName: 'FTM',
+        },
     );
 
     const data = {
@@ -37,7 +38,7 @@ const USDContainer = ({isFiltered = false}) => {
         ...state,
     } as const;
 
-    return <DashboardItem {...data} isFiltered={isFiltered}/>;
+    return <DashboardItem {...data} isFiltered={isFiltered} />;
 };
 
 export default USDContainer;
