@@ -2,7 +2,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ethers } from 'ethers';
 
-import type { ChainIdType, ProviderType } from '../../types';
+import type { ProviderType } from '../../types';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 import { toChainId } from '../../../src/utils';
 import ethereumNetworksConfig from '../../../src/context/ethereumNetworksConfig';
 
@@ -12,7 +13,7 @@ type initialStateType = {
     walletKey: walletKeyType,
     provider: ProviderType,
     account: string | null,
-    chainId: ChainIdType,
+    chainId: availableChains,
 }
 
 const initialState: initialStateType = {
@@ -24,7 +25,7 @@ const initialState: initialStateType = {
 
 const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<ChainIdType> => {
+    async ({ chainId, provider }: { chainId: availableChains, provider: ProviderType }): Promise<availableChains> => {
         if (provider) {
             try {
                 await provider.send('wallet_switchEthereumChain', [
@@ -48,7 +49,7 @@ const changeNetwork = createAsyncThunk(
 
 const setWallet = createAsyncThunk(
     'wallet/setWallet',
-    async ({ walletKey, chainId }: { walletKey: walletKeyType, chainId: ChainIdType }) => {
+    async ({ walletKey, chainId }: { walletKey: walletKeyType, chainId: availableChains }) => {
         const errorHandler = (e: any, returnValue: any) => returnValue;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -85,7 +86,7 @@ const setWallet = createAsyncThunk(
 
 const setChainId = createAsyncThunk(
     'wallet/setChainId',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }) => {
+    async ({ chainId, provider }: { chainId: availableChains, provider: ProviderType }) => {
         await changeNetwork({ chainId, provider });
         const newProvider = new ethers.providers.Web3Provider(window.ethereum);
         return newProvider;
@@ -96,8 +97,8 @@ const walletSlice = createSlice({
     name: 'wallet',
     initialState,
     reducers: {
-        chainChange(state, action: PayloadAction<ChainIdType>) {
-            state.chainId = parseInt(action.payload, 16).toString() as ChainIdType;
+        chainChange(state, action: PayloadAction<availableChains>) {
+            state.chainId = parseInt(action.payload, 16).toString() as availableChains;
         },
         changeAccount(state, action: PayloadAction<{ accounts: string[] }>) {
             const [account] = action.payload.accounts;
