@@ -15,7 +15,6 @@ type PayModalPropsType = {
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>
 
 export type namesValues = 'AVAX' | 'FTM' | 'BSC';
-export type chainsValues = '43114' | '250' | '56';
 
 const PayModal: React.FC<PayModalPropsType> = (props) => {
     const {

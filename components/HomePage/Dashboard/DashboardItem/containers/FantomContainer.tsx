@@ -68,6 +68,7 @@ const FantomContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader) {
             (async () => {
+                setState({ available: null, totalAvailable: null });
                 const {
                     available,
                     totalAvailable,
@@ -78,7 +79,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                 } = await Service.getCardData(account ? farms[chainId].FTM : '9');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
                 const oldData = payData;
-                oldData[250].available = `${Number(available.toFixed(5))}`;
+                oldData[250].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
                 oldData[250].price = `${Number(price.toFixed(6))}`;
                 oldData[250].totalAvailable = `$${totalAvailable}`;
                 setPayData(oldData);
@@ -86,7 +87,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} MIM/USDC LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${Number(available.toFixed(5))}`,
+                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
                     totalAvailable: `$${totalAvailable}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
@@ -98,6 +99,7 @@ const FantomContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         (async () => {
             if (account) {
+                setState({ positions: null, totalPositions: null });
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,
                     account ? farms[chainId].FTM : '67',

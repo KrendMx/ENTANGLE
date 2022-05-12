@@ -88,7 +88,9 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
             selectedChainId === '250'
             || selectedChainId === '43114'
             || selectedChainId === '56'
-        ) { return 'Select'; }
+        ) {
+            return 'Select';
+        }
         return 'Change network';
     }, [account, selectedChainId]);
 
@@ -108,10 +110,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
         switch (buttonValue) {
         case 'Select':
                 openModal!();
-            sessionStorage.setItem(
-                'card',
-                localName,
-            );
+            sessionStorage.setItem('card', localName);
             break;
         case 'Change network':
             setChainID(localChain);
@@ -203,14 +202,14 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                 </div>
                 <div className={styles.section}>
                     <p className={styles.sectionTitle}>Available</p>
-                    <div
-                        className={classNames(
-                            styles.sectionRow,
-                            styles.sectionAvailable,
-                        )}
-                    >
-                        {totalAvailable ? (
-                            <>
+                    {available ? (
+                        <>
+                            <div
+                                className={classNames(
+                                    styles.sectionRow,
+                                    styles.sectionAvailable,
+                                )}
+                            >
                                 <p className={styles.sectionValue}>
                                     {available}
                                 </p>
@@ -225,15 +224,15 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
                                 >
                                     {totalAvailable}
                                 </p>
-                            </>
-                        ) : (
-                            <TextLoader bgGradient={bgGradient} />
-                        )}
-                    </div>
-                    <div
-                        style={{ background: rowGradient }}
-                        className={styles.rowGradient}
-                    />
+                            </div>
+                            <div
+                                style={{ background: rowGradient }}
+                                className={styles.rowGradient}
+                            />
+                        </>
+                    ) : (
+                        <TextLoader bgGradient={bgGradient} margin="0.87rem 0" />
+                    )}
                 </div>
                 <div className={styles.section}>
                     <p className={styles.sectionTitle}>Price</p>

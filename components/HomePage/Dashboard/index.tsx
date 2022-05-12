@@ -5,6 +5,7 @@ import FantomContainer from './DashboardItem/containers/FantomContainer';
 import USDContainer from './DashboardItem/containers/USDContainer';
 import BUSDContainer from './DashboardItem/containers/BUSDContainer';
 import ETHContainer from './DashboardItem/containers/ETHContainer';
+import SolanaContainer from './DashboardItem/containers/SolanaContainer';
 
 const items = [
     {
@@ -26,6 +27,11 @@ const items = [
         filter: 56,
         query: ['ust-busd'],
         element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
+    },
+    {
+        filter: null,
+        query: ['ust-usdc'],
+        element: (isFiltered: boolean) => <SolanaContainer isFiltered={isFiltered} />,
     },
     {
         filter: null,

@@ -69,6 +69,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader) {
             (async () => {
+                setState({ available: null, totalAvailable: null });
                 const {
                     apr,
                     available,
@@ -79,7 +80,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 } = await Service.getCardData(account ? farms[chainId].AVAX : '68');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
                 const oldData = payData;
-                oldData[43114].available = `${Number(available.toFixed(5))}`;
+                oldData[43114].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
                 oldData[43114].price = `${Number(price.toFixed(6))}`;
                 oldData[43114].totalAvailable = `$${totalAvailable}`;
                 setPayData(oldData);
@@ -87,7 +88,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} USDT/USDT.e LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${Number(available.toFixed(5))}`,
+                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
                     totalAvailable: `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #E93038 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
@@ -99,6 +100,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         (async () => {
             if (account) {
+                setState({ positions: null, totalPositions: null });
                 // @ts-ignore
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,

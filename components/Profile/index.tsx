@@ -71,6 +71,19 @@ const Profile = () => {
 
     const handleChangeFilter = (value: IFilter) => setFilter(value);
 
+    const loader = (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                margin: '100px 0',
+                fontSize: '3rem',
+            }}
+        >
+            <i className="fa fa-spinner fa-spin" />
+        </div>
+    );
+
     const ftmSynthContract = useMemo(
         () =>
             new Contract(
@@ -231,9 +244,9 @@ const Profile = () => {
                         <div className={styles.flex1}>
                             <InfoBlock
                                 info="Best performer"
-                                value={bestProfit.value}
+                                value={bestProfit.change}
                                 options={{
-                                    changeValue: bestProfit.change,
+                                    changeValue: bestProfit.value,
                                     image: (
                                         <img
                                             src={
@@ -250,9 +263,9 @@ const Profile = () => {
                         <div className={styles.flex1}>
                             <InfoBlock
                                 info="Worst permormer"
-                                value={worstProfit.value}
+                                value={worstProfit.change}
                                 options={{
-                                    changeValue: worstProfit.change,
+                                    changeValue: worstProfit.value,
                                     image: (
                                         <img
                                             src={
@@ -279,15 +292,9 @@ const Profile = () => {
                                 value={filter !== 'l2' ? 'l2' : 'l1'}
                                 extraSymbol={
                                     filter !== 'l2' ? (
-                                        <i
-                                            className="fa fa-arrow-up"
-                                            aria-hidden="true"
-                                        />
+                                        <>increase</>
                                     ) : (
-                                        <i
-                                            className="fa fa-arrow-down"
-                                            aria-hidden="true"
-                                        />
+                                        <>decreace</>
                                     )
                                 }
                             >
@@ -297,15 +304,9 @@ const Profile = () => {
                                 value={filter !== 'l4' ? 'l4' : 'l3'}
                                 extraSymbol={
                                     filter !== 'l4' ? (
-                                        <i
-                                            className="fa fa-arrow-up"
-                                            aria-hidden="true"
-                                        />
+                                        <>increase</>
                                     ) : (
-                                        <i
-                                            className="fa fa-arrow-down"
-                                            aria-hidden="true"
-                                        />
+                                        <>decreace</>
                                     )
                                 }
                             >
@@ -314,13 +315,20 @@ const Profile = () => {
                         </Select>
                     </div>
                 </div>
-                <InvestCard
-                    ftmState={ftmState!}
-                    avaxState={avaxState!}
-                    avgPrice={avg}
-                    isLoaded={cardLoaded}
-                    filter={filter}
-                />
+                {
+                    !cardLoaded ? (
+                        loader
+                    )
+                        : (
+                            <InvestCard
+                                ftmState={ftmState}
+                                avaxState={avaxState}
+                                avgPrice={avg}
+                                filter={filter}
+                            />
+                        )
+                }
+
             </section>
             <section className={styles.section}>
                 <TransactionHistory />

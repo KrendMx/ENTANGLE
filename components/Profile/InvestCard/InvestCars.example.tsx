@@ -5,10 +5,11 @@ import { networks } from '../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 import { ProviderContext } from '../../../src/context/ProviderContext';
 
 interface IState {
-    chainId: '43114' | '250';
+    chainId: availableChains;
     description: string;
     positions: string;
     price: string;
@@ -18,19 +19,15 @@ interface IState {
 const InvestCardExp: React.FC<IState> = ({
     positions, price, avg, chainId, description,
 }) => {
-    const { setProfit: setProfitProvider, account } = useContext(ProviderContext);
+    const { setProfit: setProfitProvider, profits, account } = useContext(ProviderContext);
     const { getProfit } = useContext(ServiceContext);
-    const [profit, setProfit] = useState<number>();
-    const [profitChange, setProfitChange] = useState<number>();
     const isLoss = true;
     const isUp = false;
 
     useEffect(() => {
         (async function () {
             if (account) {
-                const data = await getProfit(account, 67);
-                setProfit(data.stable);
-                setProfitChange(data.percentage);
+                const data = await getProfit(account, networks[chainId].farm);
                 setProfitProvider(data.stable, data.percentage, chainId);
             }
         }());
@@ -82,18 +79,18 @@ const InvestCardExp: React.FC<IState> = ({
                     <p className={styles.undertitle}>Profit</p>
                     <p className={styles.itemValue}>
                         $
-                        {profit}
+                        {profits.get(chainId)?.value}
                     </p>
                     <p
                         className={classNames(
                             styles.undertitle,
-                            { [styles.loss]: profitChange! < 0 },
-                            { [styles.up]: profitChange! > 0 },
+                            { [styles.loss]: profits.get(chainId)?.change! < 0 },
+                            { [styles.up]: profits.get(chainId)?.change! > 0 },
                         )}
                     >
-                        {profitChange! > 0
-                            ? `+${profitChange}`
-                            : `${profitChange}`}
+                        {profits.get(chainId)?.change! > 0
+                            ? `+${profits.get(chainId)?.change}`
+                            : `${profits.get(chainId)?.change}`}
                         %
                     </p>
                 </li>

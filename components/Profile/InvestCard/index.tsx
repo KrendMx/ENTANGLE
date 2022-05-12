@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import InvestCardExp from './InvestCars.example';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 import type { IState, IFilter } from '../index';
 
 interface IProps {
@@ -9,33 +10,24 @@ interface IProps {
         fantomSynth: number;
         avaxSynth: number;
     };
-    isLoaded: boolean;
     filter: IFilter;
+}
+
+type ICard = {
+    chainId: string,
+    description: string,
+    position: string,
+    avg: number,
+    price: string,
 }
 
 const InvestCard: React.FC<IProps> = ({
     ftmState,
     avaxState,
-    isLoaded,
     avgPrice,
     filter,
 }) => {
-    const loader = (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                margin: '100px 0',
-                fontSize: '3rem',
-            }}
-        >
-            <i className="fa fa-spinner fa-spin" />
-        </div>
-    );
-    const hasPhantom = Number(ftmState?.positions) > 0;
-    const hasAvax = Number(avaxState?.positions) > 0;
-    const hasNoOne = !hasPhantom && !hasAvax;
-    let cards = [
+    const [cards, setCards] = useState<ICard[]>([
         {
             chainId: '250',
             description: 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
@@ -50,50 +42,44 @@ const InvestCard: React.FC<IProps> = ({
             avg: avgPrice?.avaxSynth,
             price: avaxState?.price,
         },
-    ];
-    const data = useMemo(() =>
-        cards.map((el, key) => (
-            el.position
-                ? (
-                    <InvestCardExp
-                        key={key}
-                        chainId={el.chainId as '250' | '43114'}
-                        description={el.description}
-                        positions={el.position}
-                        price={el.price}
-                    />
-                )
-                : undefined
-        )), [cards, filter]);
+        {
+            chainId: '56',
+            description: 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
+            position: '0',
+            avg: 0,
+            price: '0',
+        },
+    ]);
+    const hasPhantom = Number(ftmState?.positions) > 0;
+    const hasAvax = Number(avaxState?.positions) > 0;
+    const hasNoOne = !hasPhantom && !hasAvax;
 
     useEffect(() => {
         switch (filter) {
         case 'l1': {
-            cards = cards.sort((a, b) => (a.price > b.price ? 1 : -1));
+            setCards(cards.sort((a, b) => (Number(a.price) > Number(b.price) ? 1 : -1)));
             break;
         }
         case 'l2': {
-            cards = cards.sort((a, b) => (a.price < b.price ? 1 : -1));
+            setCards(cards.sort((a, b) => (Number(a.price) < Number(b.price) ? 1 : -1)));
             break;
         }
         case 'l3': {
-            cards = cards.sort((a, b) => (a.position > b.position ? 1 : -1));
+            setCards(cards.sort((a, b) => (a.position > b.position ? 1 : -1)));
             break;
         }
         case 'l4': {
-            cards = cards.sort((a, b) => (a.position > b.position ? 1 : -1));
+            setCards(cards.sort((a, b) => (a.position > b.position ? 1 : -1)));
             break;
         }
         default:
             break;
         }
-        console.log(cards);
     }, [filter]);
+
     return (
         <div>
-            {!isLoaded ? (
-                loader
-            ) : (
+            {
                 hasNoOne
                     ? (
                         <h2
@@ -106,8 +92,20 @@ const InvestCard: React.FC<IProps> = ({
                             You do not have purchased synth
                         </h2>
                     )
-                    : data
-            )}
+                    : cards.map((el, key) => (
+                        Number(el.position)
+                            ? (
+                                <InvestCardExp
+                                    key={key}
+                                    chainId={el.chainId as availableChains}
+                                    description={el.description}
+                                    positions={el.position}
+                                    price={el.price}
+                                />
+                            )
+                            : undefined
+                    ))
+            }
         </div>
     );
 };

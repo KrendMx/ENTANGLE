@@ -10,8 +10,9 @@ import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/t
 import { opToken } from '../../../src/utils/abi/index';
 import { ProviderContext } from '../../../src/context/ProviderContext';
 import { networks, farms, namesConfig } from '../../../src/utils/GlobalConst';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
-import type { namesValues, chainsValues } from './index';
+import type { namesValues } from './index';
 
 type propsType = {
     buyToken: (value: number) => void;
@@ -125,7 +126,7 @@ const Deposit: React.FC<propsType> = (props) => {
                     )}
                 >
                     <p className={styles.sectionValue}>
-                        {payData[localChain as chainsValues]?.available}
+                        {payData[localChain as availableChains]?.available}
                     </p>
                     <p className={styles.sectionSubValue}>Synth-LP</p>
                     <p
@@ -151,7 +152,7 @@ const Deposit: React.FC<propsType> = (props) => {
                 <p className={styles.sectionTitle}>Price</p>
                 <div className={styles.sectionRow}>
                     <p className={styles.sectionValue}>
-                        {payData[localChain as chainsValues]?.price}
+                        {payData[localChain as availableChains]?.price}
                     </p>
                     <p
                         className={classNames(
@@ -161,10 +162,10 @@ const Deposit: React.FC<propsType> = (props) => {
                     >
                         <img
                             className={styles.networkIcon}
-                            src={`./images/networks/${networks[localChain as chainsValues]?.icon}`}
+                            src={`./images/networks/${networks[localChain as availableChains]?.icon}`}
                             alt=""
                         />
-                        {networks[localChain as chainsValues]?.currency}
+                        {networks[localChain as availableChains]?.currency}
                     </p>
                 </div>
             </div>
@@ -201,7 +202,7 @@ const Deposit: React.FC<propsType> = (props) => {
                         ).toFixed(6)}
                     </p>
                     <p className={styles.sectionSubValue}>
-                        {networks[localChain as chainsValues]?.currency}
+                        {networks[localChain as availableChains]?.currency}
                     </p>
                 </div>
             </div>

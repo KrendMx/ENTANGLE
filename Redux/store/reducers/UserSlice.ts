@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-import type { ChainIdType, ProviderType } from '../../types';
+import type { availableChains } from '../../../src/utils/GlobalConst';
+import type { ProviderType } from '../../types';
 import { networks } from '../../../src/utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 
@@ -12,13 +12,13 @@ type initStateType = {
 }
 
 type ImportTypes = {
-    chainId: ChainIdType;
+    chainId: availableChains;
     provider: ProviderType;
 }
 
 type positionSumType = {
     n: number,
-    key: ChainIdType,
+    key: availableChains,
 }
 
 const initialState: initStateType = {

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
 import styles from './style.module.css';
 import { ProviderContext } from '../../../src/context/ProviderContext';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 import { networks } from '../../../src/utils/GlobalConst';
 
 const ChangeNetwork = () => {
@@ -31,11 +32,11 @@ const ChangeNetwork = () => {
                 })}
             >
                 {(Object.keys(networks) as Array<keyof typeof networks>)
-                    .sort((a, b) => networks[b].order - networks[a].order)
-                    .map((chainIdEl) => (
+                    .sort((a, b) => networks[a].order - networks[b].order)
+                    .map((chainIdEl: availableChains) => (
                         <div
                             className={styles.network}
-                            onClick={() => setChainID(chainIdEl as '43114' | '250')}
+                            onClick={() => setChainID(chainIdEl)}
                             key={chainIdEl}
                         >
                             <p>{networks[chainIdEl].title}</p>

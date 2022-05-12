@@ -1,5 +1,6 @@
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import type { TransactionInfo } from '../../components/Modal/SuccessModal/SuccessModal.interface';
+import type { availableChains } from '../utils/GlobalConst';
 
 export interface payDataType {
     '43114': {
@@ -25,7 +26,7 @@ export interface IAccountState {
     deposit: Map<string, number>;
     positionSum: Map<string, number>;
     profits: Map<string, { value: number, change: number }>;
-    chainId: '43114' | '250' | '56';
+    chainId: availableChains;
     txLoading: boolean;
     preLoader: boolean;
 }

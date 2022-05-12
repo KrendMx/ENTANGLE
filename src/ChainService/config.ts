@@ -21,7 +21,7 @@ import {
 
 export const NETWORKS = {
     250: {
-        rpc: 'https://rpc.ankr.com/fantom',
+        rpc: 'https://rpc.ftm.tools',
     },
     43114: {
         rpc: 'https://api.avax.network/ext/bc/C/rpc',
