@@ -20,8 +20,6 @@ class ChainService {
 
     public readonly SynthsContractsArray: { [key: string]: Contract } = {};
 
-    private readonly oneJoeDec = BigInt(100e18);
-
     private readonly secForYear = 31536000;
 
     private readonly contracts: any = {};
@@ -83,7 +81,6 @@ class ChainService {
 
     // calculate apr by farm id
     private calculateAPR = async (contracts: SynthContracts, id: string) => {
-        console.log(id);
         try {
             let apr = 0;
             switch (id) {
@@ -156,7 +153,6 @@ class ChainService {
                 break;
             }
             case '7': {
-                console.log(contracts);
                 const poolInfo = await contracts.CHEF.poolInfo(id);
                 const persec = await contracts.CHEF.cakePerBlock(poolInfo.isRegular);
                 const cakeAddress = await contracts.CHEF.CAKE();
@@ -251,6 +247,7 @@ class ChainService {
         contracts: SynthContracts,
     ) => {
         try {
+            console.log(contracts);
             const available = (await contracts.SYNTH.balanceOf(
                 contracts.DEX.address,
             ))

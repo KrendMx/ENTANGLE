@@ -480,7 +480,7 @@ export const ChainConfig = {
                         chainId: 43114,
                     },
                     STABLE: {
-                        address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+                        address: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
                         abi: avaSynth,
                         chainId: 43114,
                     },

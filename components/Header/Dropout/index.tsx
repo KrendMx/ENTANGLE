@@ -45,6 +45,7 @@ const Dropout: React.FC<DropoutProps> = ({
                     className={styles.input}
                     type="checkbox"
                     checked={isOpen}
+                    readOnly
                 />
                 <div
                     className={classNames(
