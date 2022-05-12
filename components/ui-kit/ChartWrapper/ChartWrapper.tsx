@@ -5,11 +5,12 @@ import {
     CategoryScale,
     LinearScale,
     PointElement,
-    LineElement,
     Title,
     Tooltip,
     Legend,
     Filler,
+    LineController,
+    LineElement,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import moment from 'moment/moment';
@@ -22,11 +23,12 @@ ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
-    LineElement,
     Title,
     Tooltip,
     Legend,
     Filler,
+    LineController,
+    LineElement,
 );
 
 const ChartWrapper: React.FC<ChartDataProps> = ({
