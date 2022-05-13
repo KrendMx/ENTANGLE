@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css';
 
 type SelectProps = {
-    value: string;
+    value: string | undefined;
     children: JSX.Element[];
     onChange: any;
 };
@@ -10,10 +10,15 @@ type SelectProps = {
 type OptionProps = {
     value: string;
     children: string;
+    extraSymbol?: JSX.Element;
 };
 
-export const Option: React.FC<OptionProps> = ({ value, children }) => (
-    <li data-select-value={value}>{children}</li>
+export const Option: React.FC<OptionProps> = ({ value, children, extraSymbol }) => (
+    <li data-select-value={value}>
+        {children}
+        {' '}
+        {extraSymbol}
+    </li>
 );
 
 const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {

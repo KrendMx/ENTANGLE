@@ -1,9 +1,9 @@
 .wrapper {
-    width: 10rem;
-    height: 1rem;
-    margin: 0.25rem 0;
-    animation: move 5s ease infinite;
-    border-radius: 18px;
+  width: 10rem;
+  height: 1rem;
+  margin: 0.25rem 0;
+  animation: move 2s ease infinite;
+  border-radius: 18px;
 }
 
 @keyframes move {

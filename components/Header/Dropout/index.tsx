@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 
 type DropoutProps = {
     title: string;
-    children: JSX.Element,
     wrapperClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     wrapperTextClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     wrapperPickerClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     wrapperListClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     textClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
+    isSoon?: boolean;
     arrowImg?: React.ReactElement;
+    children?: JSX.Element;
 };
 
 const Dropout: React.FC<DropoutProps> = ({
@@ -21,9 +22,15 @@ const Dropout: React.FC<DropoutProps> = ({
     wrapperListClassName,
     wrapperPickerClassName,
     textClassName,
+    isSoon = false,
     arrowImg,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    // Every dropout must be closed after page change
+    useEffect(() => {
+        setIsOpen(false);
+    }, []);
 
     return (
         <div
@@ -38,16 +45,27 @@ const Dropout: React.FC<DropoutProps> = ({
                     className={styles.input}
                     type="checkbox"
                     checked={isOpen}
+                    readOnly
                 />
                 <div
-                    className={classNames(wrapperTextClassName, {
-                        [styles.title]: !wrapperTextClassName,
-                    })}
+                    className={classNames(
+                        wrapperTextClassName,
+                        {
+                            [styles.title]: !wrapperTextClassName,
+                        },
+                    )}
                     onClick={() => {
                         setIsOpen(!isOpen);
                     }}
                 >
-                    <div className={classNames(textClassName)}>{title}</div>
+                    <div className={classNames(textClassName)}>
+                        {title}
+                        {isSoon && (
+                            <span className={styles.soonText}>
+                                (soon)
+                            </span>
+                        )}
+                    </div>
                     {arrowImg || (
                         <img
                             className={classNames(wrapperPickerClassName)}
@@ -56,9 +74,7 @@ const Dropout: React.FC<DropoutProps> = ({
                         />
                     )}
                 </div>
-                <div className={classNames(wrapperListClassName, styles.list)}>
-                    {children}
-                </div>
+                <div className={classNames(wrapperListClassName, styles.list)}>{children}</div>
             </label>
         </div>
     );

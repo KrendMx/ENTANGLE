@@ -1,92 +1,152 @@
 import React, {
-    useContext, useEffect, useState, useMemo,
+    useContext, useEffect, useMemo, useState,
 } from 'react';
 import classNames from 'classnames';
 import { Contract, providers } from 'ethers';
-import SoonChart from '../ui-kit/SoonChart/SoonChart';
-
 import InvestCard from './InvestCard';
 import Typography from '../Typography';
 import Select, { Option } from '../ui-kit/Select';
 import InfoBlock from '../ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from '../ui-kit/InfoBlock/InfoBlock.constants';
 import {
-    ftmDex,
-    ftmSynth,
-    avaDex,
-    avaSynth,
-} from '../HomePage/Dashboard/DashboardItem/containers/abi/index';
-import { ProviderContext } from '../../context/ProviderContext';
-import { getChangeData } from '../../src/api/index';
+    avaDex, avaSynth, ftmDex, ftmSynth,
+} from '../../src/ChainService/abi';
+import { ProviderContext } from '../../src/context/ProviderContext';
+import { ServiceContext } from '../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
+import ProfileChart from './ProfileChart/ProfileChart';
+import TransactionHistory from './TransactionHistory/TransactionHistory';
+import { networks } from '../../src/utils/GlobalConst';
+
+export type IFilter = 'l1' | 'l2' | 'l3' | 'l4' | undefined | '';
 
 export interface IState {
     positions: string;
     price: string;
+    avg?: number;
 }
 
 const Profile = () => {
-    const { getPositionSum, positionSum } = useContext(ProviderContext);
+    const {
+        getPositionSum,
+        positionSum,
+        getProfit: getProfitProvider,
+        profits: profitsProvider,
+    } = useContext(ProviderContext);
+    const { getAVGPrice, getProfit } = useContext(ServiceContext);
     const [balance, setBalance] = useState<number>(0);
-    const [filter, setFilter] = React.useState('');
+    useEffect(() => {
+        setBalance(getPositionSum());
+    }, [positionSum]);
+    const [bestProfit, setBestProfit] = useState<{
+        value: number;
+        change: number;
+        chain: keyof typeof networks;
+    }>({ value: 0.0000001, change: 0, chain: '250' });
+    const [worstProfit, setWorstProfit] = useState<{
+        value: number;
+        change: number;
+        chain: keyof typeof networks;
+    }>({ value: -0.0000001, change: 0, chain: '43114' });
+    useEffect(() => {
+        const data = Object.keys(networks).map((i) => ({
+            chain: i as keyof typeof networks,
+            ...getProfitProvider(i),
+        }));
+        setBestProfit(data.reduce((l, e) => (e.value > l.value ? e : l)));
+        setWorstProfit(data.reduce((l, e) => (e.value < l.value ? e : l)));
+    }, [profitsProvider]);
     const [avaxState, setAvaxState] = useState<IState>();
     const [ftmState, setFtmState] = useState<IState>();
-    const [change, setChange] = useState<number>();
+    const [cardLoaded, setCardLoaded] = useState<boolean>(false);
+    const [change, setChange] = useState<number[]>([]);
+    const [avg, setAvg] = useState<{
+        fantomSynth: number;
+        avaxSynth: number;
+    }>();
     const { account, txLoading } = useContext(ProviderContext);
 
+    const [filter, setFilter] = React.useState<IFilter>('');
+
+    const handleChangeFilter = (value: IFilter) => setFilter(value);
+
+    const loader = (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                margin: '100px 0',
+                fontSize: '3rem',
+            }}
+        >
+            <i className="fa fa-spinner fa-spin" />
+        </div>
+    );
+
     const ftmSynthContract = useMemo(
-        () => new Contract(
-            '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
-            ftmSynth,
-            new providers.JsonRpcProvider('https://rpc.ftm.tools'),
-        ),
+        () =>
+            new Contract(
+                '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
+                ftmSynth,
+                new providers.JsonRpcProvider('https://rpc.ftm.tools'),
+            ),
         [],
     );
 
     const ftmDEXContract = useMemo(
-        () => new Contract(
-            '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
-            ftmDex,
-            new providers.JsonRpcProvider('https://rpc.ftm.tools'),
-        ),
+        () =>
+            new Contract(
+                '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
+                ftmDex,
+                new providers.JsonRpcProvider('https://rpc.ftm.tools'),
+            ),
         [],
     );
 
     const avaSynthContract = useMemo(
-        () => new Contract(
-            '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
-            avaSynth,
-            new providers.JsonRpcProvider(
-                'https://api.avax.network/ext/bc/C/rpc',
+        () =>
+            new Contract(
+                '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
+                avaSynth,
+                new providers.JsonRpcProvider(
+                    'https://api.avax.network/ext/bc/C/rpc',
+                ),
             ),
-        ),
         [],
     );
 
     const avaDEXContract = useMemo(
-        () => new Contract(
-            '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
-            avaDex,
-            new providers.JsonRpcProvider(
-                'https://api.avax.network/ext/bc/C/rpc',
+        () =>
+            new Contract(
+                '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
+                avaDex,
+                new providers.JsonRpcProvider(
+                    'https://api.avax.network/ext/bc/C/rpc',
+                ),
             ),
-        ),
         [],
     );
 
-    // useEffect(() => {
-    //     (async function() {
-    //         const data = await getChangeData();
-    //         const avaxChange = (1 /data[0].price.avaxSynth) * Number(avaxState?.positions) - (1 /data[1].price.avaxSynth) * Number(avaxState?.positions)
-    //         const ftmChange = (1 /data[0].price.fantomSynth) * Number(ftmState?.positions) - (1 /data[1].price.fantomSynth) * Number(ftmState?.positions)
-    //         setChange(avaxChange + ftmChange);
-    //     }())
-    // }, [])
+    useEffect(() => {
+        (async function () {
+            if (account) {
+                const avaxChange = await getProfit(account, 67);
+                const ftmChange = await getProfit(account, 8);
+                const avgPrice = await getAVGPrice(account);
+                setAvg(avgPrice);
+                setChange([
+                    avaxChange.stable + ftmChange.stable,
+                    avaxChange.percentage + ftmChange.percentage,
+                ]);
+            }
+        }());
+    }, [account]);
 
     useEffect(() => {
         (async () => {
             if (account) {
+                setCardLoaded(false);
                 const ftmDec = await ftmSynthContract.decimals();
 
                 const avaxRate = await ftmDEXContract.rate();
@@ -116,23 +176,21 @@ const Profile = () => {
                     positions: `${Number(avaxPosition.toFixed(2))}`,
                     price: `${Number(avaxPrice.toFixed(6))}`,
                 });
+                setCardLoaded(true);
             }
         })();
     }, [account, txLoading]);
 
     useEffect(() => {
-        if (ftmState?.positions && ftmState?.price || avaxState?.positions && avaxState?.price) {
+        if (
+            (ftmState?.positions && ftmState?.price)
+            || (avaxState?.positions && avaxState?.price)
+        ) {
             const ftmBalance = Number(ftmState?.positions!) * Number(ftmState?.price!);
             const avaxBalance = Number(avaxState?.positions!) * Number(avaxState?.price!);
             setBalance(ftmBalance + avaxBalance);
         }
     }, [ftmState?.positions, avaxState?.positions]);
-
-    // useEffect(() => {
-    //     setBalance(getPositionSum());
-    // }, [positionSum]);
-
-    const handleChangeFilter = (value: string) => setFilter(value);
 
     return (
         <div>
@@ -145,11 +203,12 @@ const Profile = () => {
                             styles.smCol,
                         )}
                     >
-                        <SoonChart />
+                        <ProfileChart />
                         <div
                             className={classNames(
                                 styles.verticalWrapper,
                                 styles.flex1,
+                                styles.smCol,
                                 styles.smRow,
                             )}
                         >
@@ -163,7 +222,7 @@ const Profile = () => {
                                     info="Current balance"
                                     value={balance}
                                     type={InfoBlockTypes.BALANCE}
-                                    options={{ changeValue: change || 0 }}
+                                    options={{ changeValue: change[1] || 0 }}
                                 />
                             </div>
                             <div
@@ -174,8 +233,8 @@ const Profile = () => {
                             >
                                 <InfoBlock
                                     info="All time profit"
-                                    value={change || 0}
-                                    options={{ changeValue: change || 0 }}
+                                    value={change[0] || 0}
+                                    options={{ changeValue: change[1] || 0 }}
                                     type={InfoBlockTypes.PERCENTAGE_MIXED}
                                 />
                             </div>
@@ -184,13 +243,16 @@ const Profile = () => {
                     <div className={styles.horisontalWrapper}>
                         <div className={styles.flex1}>
                             <InfoBlock
-                                info="Best performer (soon)"
-                                value={+0.000001}
+                                info="Best performer"
+                                value={bestProfit.change}
                                 options={{
-                                    changeValue: 0,
+                                    changeValue: bestProfit.value,
                                     image: (
                                         <img
-                                            src="./images/networks/avalancheDashboard.png"
+                                            src={
+                                                networks[bestProfit.chain]
+                                                    .mainIcon
+                                            }
                                             alt=""
                                         />
                                     ),
@@ -200,13 +262,16 @@ const Profile = () => {
                         </div>
                         <div className={styles.flex1}>
                             <InfoBlock
-                                info="Worst permormer (soon)"
-                                value={-0.000001}
+                                info="Worst permormer"
+                                value={worstProfit.change}
                                 options={{
-                                    changeValue: -0,
+                                    changeValue: worstProfit.value,
                                     image: (
                                         <img
-                                            src="./images/networks/fantomDashboard.png"
+                                            src={
+                                                networks[worstProfit.chain]
+                                                    .mainIcon
+                                            }
                                             alt=""
                                         />
                                     ),
@@ -223,45 +288,50 @@ const Profile = () => {
                     <div className={styles.selectWrapper}>
                         <Select value={filter} onChange={handleChangeFilter}>
                             <Option value="">Sort by</Option>
-                            <Option value="l1">Price</Option>
+                            <Option
+                                value={filter !== 'l2' ? 'l2' : 'l1'}
+                                extraSymbol={
+                                    filter !== 'l2' ? (
+                                        <>increase</>
+                                    ) : (
+                                        <>decreace</>
+                                    )
+                                }
+                            >
+                                Price
+                            </Option>
+                            <Option
+                                value={filter !== 'l4' ? 'l4' : 'l3'}
+                                extraSymbol={
+                                    filter !== 'l4' ? (
+                                        <>increase</>
+                                    ) : (
+                                        <>decreace</>
+                                    )
+                                }
+                            >
+                                Profit
+                            </Option>
                         </Select>
                     </div>
                 </div>
-                <InvestCard ftmState={ftmState!} avaxState={avaxState!} />
+                {
+                    !cardLoaded ? (
+                        loader
+                    )
+                        : (
+                            <InvestCard
+                                ftmState={ftmState}
+                                avaxState={avaxState}
+                                avgPrice={avg}
+                                filter={filter}
+                            />
+                        )
+                }
+
             </section>
             <section className={styles.section}>
-                <div className={styles.panel}>
-                    <Typography type="title">Transaction history</Typography>
-                    <div className={styles.selects}>
-                        <div className={styles.selectWrapper}>
-                            <Select
-                                value={filter}
-                                onChange={handleChangeFilter}
-                            >
-                                <Option value="">All activity</Option>
-                                <Option value="l1">Soon</Option>
-                            </Select>
-                        </div>
-                        <div className={styles.selectWrapper}>
-                            <Select
-                                value={filter}
-                                onChange={handleChangeFilter}
-                            >
-                                <Option value="">Latest first</Option>
-                                <Option value="l1">Soon</Option>
-                            </Select>
-                        </div>
-                    </div>
-                </div>
-                <h2
-                    style={{
-                        textAlign: 'center',
-                        fontSize: '5rem',
-                        marginBottom: '50px',
-                    }}
-                >
-                    Soon
-                </h2>
+                <TransactionHistory />
             </section>
         </div>
     );

@@ -3,14 +3,16 @@ import { Contract, ethers } from 'ethers';
 import { opToken } from '../../../src/ChainService/abi';
 
 import { toChainId } from '../../../src/utils';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 import { networks } from '../../../src/utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
-import type { ChainIdType, ProviderType, walletKeyType } from '../../types';
+import type { ProviderType, walletKeyType } from '../../types';
+import { useAppSelector } from '../hooks/redux';
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async (chainId: ChainIdType):
-        Promise<{ chainId: ChainIdType, newProvider: ProviderType }> => {
+    async (chainId: availableChains):
+        Promise<{ chainId: availableChains, newProvider: ProviderType }> => {
         const newProvider = new ethers.providers.Web3Provider(window.ethereum);
         if (newProvider) {
             try {
@@ -35,7 +37,8 @@ export const changeNetwork = createAsyncThunk(
 
 export const setWallet = createAsyncThunk(
     'wallet/setWallet',
-    async ({ walletKey, chainId }: { walletKey: walletKeyType, chainId: ChainIdType }) => {
+    async ({ walletKey }: { walletKey: walletKeyType }) => {
+        const { chainId } = useAppSelector((state) => state.walletReducer);
         const errorHandler = (e: any, returnValue: any) => returnValue;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -60,9 +63,8 @@ export const setWallet = createAsyncThunk(
         const newChainId = parseInt(
             networkData.chainId.toString(),
             10,
-        ).toString() as ChainIdType;
+        ).toString() as availableChains;
         localStorage.setItem('wallet', '1');
-        // eslint-disable-next-line consistent-return
         return {
             walletKey,
             newChainId,
@@ -74,7 +76,7 @@ export const setWallet = createAsyncThunk(
 
 export const importToken = createAsyncThunk(
     'user/import-token',
-    async ({ chainId, provider }: { chainId: ChainIdType, provider: ProviderType }): Promise<any> => {
+    async ({ chainId, provider }: { chainId: availableChains, provider: ProviderType }): Promise<any> => {
         if (provider) {
             const options = {
                 type: 'ERC20',

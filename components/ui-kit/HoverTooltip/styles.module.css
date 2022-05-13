@@ -1,0 +1,28 @@
+.upHover {
+  font-size: 14px;
+  z-index: 10;
+  max-height: 0;
+  opacity: 0;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background-color: var(--color-7);
+  position: absolute;
+  bottom: 2rem;
+  left: -4rem;
+  width: max-content;
+  visibility: hidden;
+}
+
+.showUpHover {
+  transition: all .3s ease-in;
+  opacity: 1;
+  max-height: 150px;
+}
+
+.relative {
+  position: relative;
+}
+
+.visible {
+  visibility: visible;
+}

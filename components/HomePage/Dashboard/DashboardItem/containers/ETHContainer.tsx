@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
-import { Contract, providers, BigNumber } from 'ethers';
+import React, { useReducer } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 
-const ETHContainer = () => {
+const ETHContainer = ({ isFiltered = false }) => {
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -19,6 +18,9 @@ const ETHContainer = () => {
             positions: '$0',
             totalPositions: 'MIM/UST Synthetic LP',
             rowGradient: '',
+            yieldTime: '$0',
+            localChain: '250',
+            localName: 'FTM',
         },
     );
 
@@ -31,11 +33,11 @@ const ETHContainer = () => {
         priceCurrency: 'MIM/UST Synthetic LP',
         description:
             'Generates yield by running autocompounded mim/UST strategy on convexfinance.com',
-        disabled: true,
+        disabled: false,
         ...state,
     } as const;
 
-    return <DashboardItem {...data} />;
+    return <DashboardItem {...data} isFiltered={isFiltered} />;
 };
 
 export default ETHContainer;

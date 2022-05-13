@@ -5,6 +5,8 @@ import styles from './style.module.css';
 type GradientButtonProps = {
     title: string;
     titleElement?: React.ReactElement;
+    titleClass?: React.HTMLAttributes<HTMLDivElement>['className'];
+    wrapperClass?: React.HTMLAttributes<HTMLDivElement>['className'];
     gradient?: string;
     onClick: () => void;
     disabled?: boolean;
@@ -14,6 +16,8 @@ type GradientButtonProps = {
 const GradientButton: React.FC<GradientButtonProps> = ({
     title,
     titleElement,
+    titleClass,
+    wrapperClass,
     onClick,
     disabled,
     loader,
@@ -22,12 +26,12 @@ const GradientButton: React.FC<GradientButtonProps> = ({
     <div
         onClick={onClick}
         style={{ background: gradient }}
-        className={classNames(styles.wrapper, {
+        className={classNames(wrapperClass, styles.wrapper, {
             [styles.disabled]: disabled,
         })}
     >
         {titleElement ? (
-            <div className={styles.titleElement}>{titleElement}</div>
+            <div className={classNames(titleClass, styles.titleElement)}>{titleElement}</div>
         ) : (
             <p className={styles.title}>
                 {title}

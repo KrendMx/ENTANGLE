@@ -17,7 +17,7 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint'],
     rules: {
-        'no-param-reassign': ['error', { 'props': false }],
+        'no-param-reassign': ['error', { props: false }],
         'max-len': ['error', { code: 120 }],
         indent: ['error', 4],
         'no-unused-vars': 'warn',
@@ -47,6 +47,7 @@ module.exports = {
         'jsx-a11y/label-has-associated-control': 'off',
         'no-return-assign': 'off',
         'react/no-array-index-key': 'off',
+        'import/no-cycle': 'off',
         'jsx-a11y/click-events-have-key-events': 'off',
         'jsx-a11y/no-static-element-interactions': 'off',
         'jsx-a11y/no-noninteractive-element-interactions': 'off',
@@ -67,9 +68,15 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'import/extensions': 'off',
         'no-shadow': 'off',
+        'react-hooks/exhaustive-deps': 'off',
         '@typescript-eslint/no-shadow': ['error'],
         '@typescript-eslint/consistent-type-imports': ['error'],
         '@typescript-eslint/no-explicit-any': 'off',
+        'no-plusplus': 'off',
+        'implicit-arrow-linebreak': 'off',
+        'consistent-return': 'off',
+        'no-nested-ternary': 'off',
+        'no-console': 'off',
     },
     settings: {
         'import/resolver': {

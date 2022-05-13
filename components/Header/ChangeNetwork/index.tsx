@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 
 import { networks } from '../../../src/utils/GlobalConst';
 import { useAppDispatch, useAppSelector } from '../../../Redux/store/hooks/redux';
-import type { ChainIdType } from '../../../Redux/types';
-import { setChainId } from '../../../Redux/store/reducers/WalletSlice';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 
 import styles from './style.module.css';
 import { changeNetwork } from '../../../Redux/store/reducers/ActionCreators';
@@ -14,7 +13,7 @@ const ChangeNetwork = () => {
     const { provider, chainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
 
-    const handleClick = (chainIdEl: ChainIdType) => dispatch(changeNetwork({ chainId: chainIdEl, provider }));
+    const handleClick = (chainIdEl: availableChains) => dispatch(changeNetwork({ chainId: chainIdEl, provider }));
 
     return (
         <div className={styles.wrapper}>
@@ -38,8 +37,9 @@ const ChangeNetwork = () => {
                     [styles.openList]: openList,
                 })}
             >
-                {(Object.keys(networks) as Array<keyof typeof networks>).map(
-                    (chainIdEl: keyof typeof networks) => (
+                {(Object.keys(networks) as Array<keyof typeof networks>)
+                    .sort((a, b) => networks[a].order - networks[b].order)
+                    .map((chainIdEl: availableChains) => (
                         <div
                             className={styles.network}
                             onClick={() => handleClick(chainIdEl)}
@@ -51,8 +51,7 @@ const ChangeNetwork = () => {
                                 alt=""
                             />
                         </div>
-                    ),
-                )}
+                    ))}
             </div>
         </div>
     );

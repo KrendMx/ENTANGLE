@@ -6,7 +6,10 @@ import { InfoBlockTypes, numberFormatter } from './InfoBlock.constants';
 import styles from './style.module.css';
 
 const InfoBlock: React.FC<InfoBlockProps> = ({
-    value, type, info, ...props
+    value,
+    type,
+    info,
+    ...props
 }: InfoBlockProps) => {
     let valueText: string | React.ReactElement = String(value);
     let additionalClass = {};
@@ -17,23 +20,30 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
     if (value !== null) {
         switch (type) {
         case InfoBlockTypes.MONEY: {
-            valueText = `$${numberFormatter(value, 2)}`;
+            valueText = `$${numberFormatter(value, 4)}`;
             break;
         }
         case InfoBlockTypes.BALANCE: {
-            valueText = `$${Number(value).toFixed(2)}`;
+            valueText = `$${Number(value).toFixed(4)}`;
 
             const {
-                options: {
-                    changeValue = 0,
-                    changePeriod = '24h',
-                } = {},
+                options: { changeValue = 0, changePeriod = '24h' } = {},
             } = props;
             const sign = changeValue > 0 ? '+' : '-';
-            additionalBottomBlockClass = { [styles.blockValueGood]: changeValue > 0, [styles.blockValueBad]: changeValue < 0 };
+            additionalBottomBlockClass = {
+                [styles.blockValueGood]: changeValue > 0,
+                [styles.blockValueBad]: changeValue < 0,
+            };
             additionalBottomBlock = (
                 <div className={styles.horisontalWrapper}>
-                    <div className={classNames(additionalBottomBlockClass)}>{`${sign}$${Number(Math.abs(changeValue)).toFixed(2)}`}</div>
+                    <div
+                        className={classNames(additionalBottomBlockClass)}
+                    >
+                        {`${sign}$${Number(Math.abs(changeValue)).toFixed(
+                            4,
+                        )}`}
+
+                    </div>
                     <div className={styles.bordered}>{changePeriod}</div>
                 </div>
             );
@@ -41,33 +51,34 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
         }
         case InfoBlockTypes.PERCENTAGE_MIXED: {
             const sign = value > 0 ? '+' : '';
-            additionalClass = { [styles.blockValueGood]: value > 0, [styles.blockValueBad]: value < 0 };
-            const {
-                options: {
-                    changeValue = 0,
-                    image = null,
-                } = {},
-            } = props;
+            additionalClass = {
+                [styles.blockValueGood]: value > 0,
+                [styles.blockValueBad]: value < 0,
+            };
+            const { options: { changeValue = 0, image = null } = {} } = props;
             const signChange = changeValue > 0 ? '+' : '-';
-            additionalBottomBlockClass = { [styles.blockValueGood]: changeValue > 0, [styles.blockValueBad]: changeValue < 0 };
+            additionalBottomBlockClass = {
+                [styles.blockValueGood]: changeValue > 0,
+                [styles.blockValueBad]: changeValue < 0,
+            };
             additionalBottomBlock = (
                 <div className={styles.horisontalWrapper}>
-                    <div className={classNames(additionalBottomBlockClass)} />
+                    <div
+                        className={classNames(additionalBottomBlockClass)}
+                    />
                 </div>
             );
             valueText = (
                 <div className={styles.linedValue}>
                     {image && (
-                        <div className={styles.smallImg}>
-                            {image}
-                        </div>
+                        <div className={styles.smallImg}>{image}</div>
                     )}
-                    {`${sign}${value.toFixed(2)}%`}
+                    <div>{`${sign}${value.toFixed(4)}%`}</div>
                     <div className={styles.smallText}>
                         (
                         {signChange}
                         $
-                        {Number(Math.abs(changeValue)).toFixed(2)}
+                        {Number(Math.abs(changeValue)).toFixed(4)}
                         )
                     </div>
                 </div>
@@ -76,8 +87,11 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
         }
         case InfoBlockTypes.PERCENTAGE: {
             const sign = value > 0 ? '+' : '';
-            additionalClass = { [styles.blockValueGood]: value > 0, [styles.blockValueBad]: value < 0 };
-            valueText = `${sign}${value.toFixed(2)}%`;
+            additionalClass = {
+                [styles.blockValueGood]: value > 0,
+                [styles.blockValueBad]: value < 0,
+            };
+            valueText = `${sign}${value.toFixed(4)}%`;
             break;
         }
         default: {

@@ -8,4 +8,7 @@ export type ContainerStateType = {
     positions: string | null;
     totalPositions: string | null;
     rowGradient: string;
+    yieldTime: string | null;
+    localChain: '250' | '43114' | '56';
+    localName: 'FTM' | 'AVAX' | 'BSC';
 }

@@ -82,6 +82,7 @@
 }
 
 .addImgWrapper {
+  position: relative;
   cursor: pointer;
 }
 
@@ -177,8 +178,12 @@
   border-radius: 18px;
 }
 
+.hidden {
+  display: none;
+}
+
 .sectionError {
-    margin: 0.5rem 0;
-    text-align: center;
-    font-size: 18px;
+  margin: 0.5rem 0;
+  text-align: center;
+  font-size: 18px;
 }

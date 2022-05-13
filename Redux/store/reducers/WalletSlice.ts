@@ -1,18 +1,17 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { ethers } from 'ethers';
 
-import type { ChainIdType, ProviderType, walletKeyType } from '../../types';
+import type { ProviderType, walletKeyType } from '../../types';
 import { changeNetwork, setWallet } from './ActionCreators';
+import type { availableChains } from '../../../src/utils/GlobalConst';
 
 type initialStateType = {
     walletKey: walletKeyType,
     provider: ProviderType,
     account: string | null,
-    chainId: ChainIdType,
     error: boolean;
+    chainId: availableChains,
 }
-
 const initialState: initialStateType = {
     walletKey: null,
     provider: null,
@@ -25,8 +24,8 @@ const walletSlice = createSlice({
     name: 'wallet',
     initialState,
     reducers: {
-        chainChange(state, action: PayloadAction<ChainIdType>) {
-            state.chainId = parseInt(action.payload, 16).toString() as ChainIdType;
+        chainChange(state, action: PayloadAction<availableChains>) {
+            state.chainId = parseInt(action.payload, 16).toString() as availableChains;
         },
         changeAccount(state, action: PayloadAction<{ accounts: string[] }>) {
             const [account] = action.payload.accounts;

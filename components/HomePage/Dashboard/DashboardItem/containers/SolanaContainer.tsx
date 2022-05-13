@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
-import { Contract, providers, BigNumber } from 'ethers';
+import React, { useReducer } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 
-const SolanaContainer = () => {
+const SolanaContainer = ({ isFiltered = false }) => {
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -20,6 +19,9 @@ const SolanaContainer = () => {
             totalPositions: 'USDT/USDT Synthetic LP',
             rowGradient:
                 'linear-gradient(90deg, #9A45FF 0%, rgba(25, 252, 156, 0) 96.87%)',
+            yieldTime: '$0',
+            localChain: '250',
+            localName: 'FTM',
         },
     );
 
@@ -36,7 +38,7 @@ const SolanaContainer = () => {
         ...state,
     } as const;
 
-    return <DashboardItem {...data} />;
+    return <DashboardItem {...data} isFiltered={isFiltered} />;
 };
 
 export default SolanaContainer;

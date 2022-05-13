@@ -5,10 +5,10 @@ import styles from './styles.module.css';
 type InputProps = {
     value: string;
     placeholder: string;
-    children: JSX.Element;
     type: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     otherProps?: InputHTMLAttributes<HTMLInputElement>;
+    children: JSX.Element
 };
 
 const Input: React.FC<InputProps> = ({

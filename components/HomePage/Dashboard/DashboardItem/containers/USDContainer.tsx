@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
-import { Contract, providers, BigNumber } from 'ethers';
+import React, { useReducer } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 
-const USDContainer = () => {
+const USDContainer = ({ isFiltered = false }) => {
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -20,6 +19,9 @@ const USDContainer = () => {
             totalPositions: 'UST Synthetic LP',
             rowGradient:
                 'linear-gradient(90deg, #2845AE 0%, rgba(84, 147, 247, 0) 96.87%)',
+            yieldTime: '$0',
+            localChain: '250',
+            localName: 'FTM',
         },
     );
 
@@ -36,7 +38,7 @@ const USDContainer = () => {
         ...state,
     } as const;
 
-    return <DashboardItem {...data} />;
+    return <DashboardItem {...data} isFiltered={isFiltered} />;
 };
 
 export default USDContainer;

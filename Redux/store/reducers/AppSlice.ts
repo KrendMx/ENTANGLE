@@ -14,7 +14,6 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         appLoaded(state, action: PayloadAction<boolean>) {
-            // eslint-disable-next-line no-param-reassign
             state.isLoaded = action.payload;
         },
     },
