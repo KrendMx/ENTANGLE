@@ -6,16 +6,15 @@ import styles from './styles.module.css';
 import Dropout from './Dropout';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
-import type { WalletProviderNames } from '../Modal/SelectWalletModal/SelectWalletModal.constants';
 import { removeWallet } from '../../Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
 import { setIsOpenSelectWalletModal, setPreloader } from '../../Redux/store/reducers/UserSlice';
 import { setWallet } from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const { account } = useAppSelector((state) => state.walletReducer);
+    const { account, chainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
-    const connect = () => account || dispatch(setIsOpenSelectWalletModal());
+    const connect = () => account || dispatch(setWallet({ walletKey: 'MetaMask' }));
     const disconnect = () => dispatch(removeWallet());
 
     const [isOpen, setIsOpen] = useState(false);

@@ -7,7 +7,6 @@ import type { availableChains } from '../../../src/utils/GlobalConst';
 import { networks } from '../../../src/utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 import type { ProviderType, walletKeyType } from '../../types';
-import { useAppSelector } from '../hooks/redux';
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
@@ -38,7 +37,6 @@ export const changeNetwork = createAsyncThunk(
 export const setWallet = createAsyncThunk(
     'wallet/setWallet',
     async ({ walletKey }: { walletKey: walletKeyType }) => {
-        const { chainId } = useAppSelector((state) => state.walletReducer);
         const errorHandler = (e: any, returnValue: any) => returnValue;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -59,7 +57,7 @@ export const setWallet = createAsyncThunk(
             .catch((e: any) => errorHandler(e, null));
         if (!networkData) return;
 
-        changeNetwork(chainId);
+        changeNetwork('43114');
         const newChainId = parseInt(
             networkData.chainId.toString(),
             10,
