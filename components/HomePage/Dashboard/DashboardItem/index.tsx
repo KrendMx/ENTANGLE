@@ -113,7 +113,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
             dispatch(changeNetwork(localChain));
             break;
         case 'Connect wallet':
-            dispatch(setWallet({ walletKey: 'MetaMask', chainId }));
+            dispatch(setWallet({ walletKey: 'MetaMask' }));
             setIsOpenSelectWalletModal();
             break;
         default:
