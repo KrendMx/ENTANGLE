@@ -6,8 +6,8 @@ export const networks = {
     '43114': {
         title: 'Avalanche',
         icon: 'avalanche.svg',
-        currency: 'USDT/USDT.e Synthetic LP',
-        currencyMin: 'USDT/USDT.e',
+        currency: 'USDC/USDC.e Synthetic LP',
+        currencyMin: 'USDC/USDC.e',
         dex: '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
         fiat: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
         rpc: 'https://api.avax.network/ext/bc/C/rpc',

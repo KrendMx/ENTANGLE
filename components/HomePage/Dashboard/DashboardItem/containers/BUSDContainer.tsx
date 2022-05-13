@@ -76,7 +76,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                 } = await Service.getCardData(account ? farms[chainId].BSC : '7');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
                 const oldData = payData;
-                oldData[56].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
+                oldData[56].available = `${state.localChain === chainId ? 'Infinity' : Number(available.toFixed(5))}`;
                 oldData[56].price = `${Number(price.toFixed(6))}`;
                 oldData[56].totalAvailable = `$${totalAvailable}`;
                 setPayData(oldData);
@@ -84,8 +84,8 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} USDT/BUSD LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
-                    totalAvailable: `$${totalAvailable.toFixed(5)}`,
+                    available: `${state.localChain === chainId ? 'Infinity' : Number(available.toFixed(5))}`,
+                    totalAvailable: state.localChain === chainId ? '' : `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #FF9501 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
                 });

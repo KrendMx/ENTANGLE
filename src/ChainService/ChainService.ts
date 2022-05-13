@@ -247,7 +247,6 @@ class ChainService {
         contracts: SynthContracts,
     ) => {
         try {
-            console.log(contracts);
             const available = (await contracts.SYNTH.balanceOf(
                 contracts.DEX.address,
             ))

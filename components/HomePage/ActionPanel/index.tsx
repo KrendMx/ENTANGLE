@@ -3,19 +3,29 @@ import styles from './style.module.css';
 import Select, { Option } from '../../ui-kit/Select';
 import Input from '../../ui-kit/Input';
 
-const ActionPanel = () => {
-    const [filter, setFilter] = useState('');
-    const [search, setSearch] = useState('');
+interface IActionProps {
+    filter: string;
+    search: string;
+    setFilter: React.Dispatch<React.SetStateAction<string>>;
+    setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
 
+const ActionPanel: React.FC<IActionProps> = ({
+    search, filter, setFilter, setSearch,
+}) => {
     const handleChangeFilter = (value: string) => setFilter(value);
-    const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value);
+    const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
+        setSearch(e.target.value);
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.filterWrapper}>
                 <Select value={filter} onChange={handleChangeFilter}>
                     <Option value=""> Filter by</Option>
-                    <Option value="l1">L1-Chain</Option>
+                    <Option value="43114">Avalanche</Option>
+                    <Option value="250">Fantom</Option>
+                    <Option value="56">Binance</Option>
+                    <Option value="1">Ethereum</Option>
                 </Select>
             </div>
             <div className={styles.searchWrapper}>
@@ -25,11 +35,13 @@ const ActionPanel = () => {
                     value={search}
                     type="text"
                 >
-                    <img
-                        className={styles.searchIcon}
-                        src="./images/searchIcon.svg"
-                        alt=""
-                    />
+                    <button type="submit">
+                        <img
+                            className={styles.searchIcon}
+                            src="./images/searchIcon.svg"
+                            alt=""
+                        />
+                    </button>
                 </Input>
             </div>
         </div>

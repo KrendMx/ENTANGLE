@@ -82,6 +82,7 @@ const DashboardItem: React.FC<DashboardItemProps> = (props) => {
     }, [selectedChainId, addingToken]);
 
     const buttonValue = useMemo(() => {
+        if (localChain === '1') return 'High Gas Fees. Excluded for MVP';
         if (disabled) return 'Not available';
         if (!account) return 'Connect wallet';
         if (

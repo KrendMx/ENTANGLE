@@ -79,7 +79,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                 } = await Service.getCardData(account ? farms[chainId].FTM : '9');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
                 const oldData = payData;
-                oldData[250].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
+                oldData[250].available = `${state.localChain === chainId ? 'Infinity' : Number(available.toFixed(5))}`;
                 oldData[250].price = `${Number(price.toFixed(6))}`;
                 oldData[250].totalAvailable = `$${totalAvailable}`;
                 setPayData(oldData);
@@ -87,8 +87,8 @@ const FantomContainer = ({ isFiltered = false }) => {
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} MIM/USDC LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
-                    totalAvailable: `$${totalAvailable}`,
+                    available: `${state.localChain === chainId ? 'Infinity' : Number(available.toFixed(5))}`,
+                    totalAvailable: state.localChain === chainId ? '' : `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
                 });

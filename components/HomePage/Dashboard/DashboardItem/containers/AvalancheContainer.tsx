@@ -54,11 +54,11 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         icon: 'avalancheDashboard.png',
         bgGradient:
             'linear-gradient(90deg, rgba(233, 48, 56, 0.4) 0%, rgba(239, 70, 78, 0) 100%)',
-        heading: 'USDT-USDT.e',
+        heading: 'USDC-USDC.e',
         chainId: '43114',
-        priceCurrency: 'USDT/USDT.e Synthetic LP',
+        priceCurrency: 'USDC/USDC.e Synthetic LP',
         description:
-            'Generates yield by running autocompounded USDT/USDT.e strategy on traderjoexyz.com',
+            'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
         disabled: false,
         openModal,
         ...state,
@@ -77,19 +77,34 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     totalDeposits,
                     currentDeposits,
                     price,
-                } = await Service.getCardData(account ? farms[chainId].AVAX : '68');
-                const percentage = Math.ceil((available / currentDeposits) * 100);
+                } = await Service.getCardData(
+                    account ? farms[chainId].AVAX : '68',
+                );
+                const percentage = Math.ceil(
+                    (available / currentDeposits) * 100,
+                );
                 const oldData = payData;
-                oldData[43114].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
+                oldData[43114].available = `${
+                    state.localChain === chainId
+                        ? 'Infinity'
+                        : Number(available.toFixed(5))
+                }`;
                 oldData[43114].price = `${Number(price.toFixed(6))}`;
                 oldData[43114].totalAvailable = `$${totalAvailable}`;
                 setPayData(oldData);
                 setState({
                     apr: `${apr}%`,
-                    totalDeposits: `${totalDeposits} USDT/USDT.e LP`,
+                    totalDeposits: `${totalDeposits} USDC/USDC.e LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
-                    totalAvailable: `$${totalAvailable.toFixed(5)}`,
+                    available: `${
+                        state.localChain === chainId
+                            ? 'Infinity'
+                            : Number(available.toFixed(5))
+                    }`,
+                    totalAvailable:
+                        state.localChain === chainId
+                            ? ''
+                            : `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #E93038 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
                 });

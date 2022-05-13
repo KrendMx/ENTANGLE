@@ -19,7 +19,7 @@ import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 import { networks } from '../../src/utils/GlobalConst';
 
-export type IFilter = 'l1' | 'l2' | 'l3' | 'l4' | undefined | '';
+export type IFilter = 'Price increase' | 'Price decrease' | 'Profit increase' | 'Profit decrease' | 'Sort by';
 
 export interface IState {
     positions: string;
@@ -67,7 +67,7 @@ const Profile = () => {
     }>();
     const { account, txLoading } = useContext(ProviderContext);
 
-    const [filter, setFilter] = React.useState<IFilter>('');
+    const [filter, setFilter] = React.useState<IFilter>('Sort by');
 
     const handleChangeFilter = (value: IFilter) => setFilter(value);
 
@@ -133,8 +133,6 @@ const Profile = () => {
             if (account) {
                 const avaxChange = await getProfit(account, 67);
                 const ftmChange = await getProfit(account, 8);
-                const avgPrice = await getAVGPrice(account);
-                setAvg(avgPrice);
                 setChange([
                     avaxChange.stable + ftmChange.stable,
                     avaxChange.percentage + ftmChange.percentage,
@@ -287,30 +285,26 @@ const Profile = () => {
                     <Typography type="title">Your Entangle Assets</Typography>
                     <div className={styles.selectWrapper}>
                         <Select value={filter} onChange={handleChangeFilter}>
-                            <Option value="">Sort by</Option>
+                            <Option value="Sort by">Sort by</Option>
                             <Option
-                                value={filter !== 'l2' ? 'l2' : 'l1'}
-                                extraSymbol={
-                                    filter !== 'l2' ? (
-                                        <>increase</>
-                                    ) : (
-                                        <>decreace</>
-                                    )
-                                }
+                                value="Price increase"
                             >
-                                Price
+                                Price increase
                             </Option>
                             <Option
-                                value={filter !== 'l4' ? 'l4' : 'l3'}
-                                extraSymbol={
-                                    filter !== 'l4' ? (
-                                        <>increase</>
-                                    ) : (
-                                        <>decreace</>
-                                    )
-                                }
+                                value="Price decrease"
                             >
-                                Profit
+                                Price decrease
+                            </Option>
+                            <Option
+                                value="Profit increase"
+                            >
+                                Profit increase
+                            </Option>
+                            <Option
+                                value="Profit decrease"
+                            >
+                                Profit decrease
                             </Option>
                         </Select>
                     </div>
