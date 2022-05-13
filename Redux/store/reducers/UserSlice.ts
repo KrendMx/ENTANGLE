@@ -9,6 +9,8 @@ type initStateType = {
     positionSumObj: Map<string, number>,
     txLoading: boolean,
     positionSum: string | number,
+    isOpenSelectWalletModal: boolean;
+    preLoader: boolean;
 }
 
 type ImportTypes = {
@@ -25,6 +27,8 @@ const initialState: initStateType = {
     positionSumObj: new Map(),
     txLoading: false,
     positionSum: 0,
+    isOpenSelectWalletModal: false,
+    preLoader: true,
 };
 
 const importToken = createAsyncThunk(
@@ -67,6 +71,12 @@ const userSlice = createSlice({
         setPositionSum(state, action: PayloadAction<positionSumType>) {
             state.positionSumObj = new Map(state.positionSumObj.set(action.payload.key, action.payload.n));
         },
+        setIsOpenSelectWalletModal(state) {
+            state.isOpenSelectWalletModal = !state.isOpenSelectWalletModal;
+        },
+        setPreloader(state) {
+            state.preLoader = !state.preLoader;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(importToken.fulfilled, (state, action) => {
@@ -75,4 +85,7 @@ const userSlice = createSlice({
     },
 });
 
+export const {
+    changeLoadingTx, setPositionSum, setIsOpenSelectWalletModal, setPreloader,
+} = userSlice.actions;
 export default userSlice.reducer;

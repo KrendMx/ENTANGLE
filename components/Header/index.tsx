@@ -1,23 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import ScrollLock from 'react-scrolllock';
 import styles from './styles.module.css';
 import Dropout from './Dropout';
-import { ProviderContext } from '../../src/context/ProviderContext';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
 import type { WalletProviderNames } from '../Modal/SelectWalletModal/SelectWalletModal.constants';
+import { removeWallet } from '../../Redux/store/reducers/WalletSlice';
+import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
+import { setIsOpenSelectWalletModal, setPreloader } from '../../Redux/store/reducers/UserSlice';
+import { setWallet } from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const {
-        account, setIsOpenSelectWalletModal, setWallet, removeWallet, setPreloader,
-    } = useContext(ProviderContext);
+    const { account } = useAppSelector((state) => state.walletReducer);
+    const dispatch = useAppDispatch();
+    const connect = () => account || dispatch(setIsOpenSelectWalletModal());
+    const disconnect = () => dispatch(removeWallet());
 
-    const connect = () => account || setIsOpenSelectWalletModal(true);
-    const disconnect = () => removeWallet();
-
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         setIsOpen(false);
@@ -26,9 +27,9 @@ const Header = () => {
     useEffect(() => {
         const wallet = localStorage.getItem('wallet');
         if (wallet) {
-            setWallet(wallet as keyof typeof WalletProviderNames);
+            dispatch(setWallet({ walletKey: 'MetaMask' }));
         } else {
-            setPreloader(false);
+            dispatch(setPreloader());
         }
     }, []);
 

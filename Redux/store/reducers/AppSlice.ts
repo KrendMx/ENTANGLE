@@ -13,10 +13,11 @@ export const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-        appLoaded(state, action:PayloadAction<boolean>) {
+        appLoaded(state, action: PayloadAction<boolean>) {
             state.isLoaded = action.payload;
         },
     },
 });
 
+export const { appLoaded } = appSlice.actions;
 export default appSlice.reducer;
