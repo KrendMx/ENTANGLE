@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Contract, ethers } from 'ethers';
+import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import { opToken } from '../../../src/ChainService/abi';
 
 import { toChainId } from '../../../src/utils';
@@ -12,6 +13,7 @@ export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
     async (chainId: availableChains):
         Promise<{ chainId: availableChains, newProvider: ProviderType }> => {
+        console.log(chainId);
         const newProvider = new ethers.providers.Web3Provider(window.ethereum);
         if (newProvider) {
             try {

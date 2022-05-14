@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Typography from '../../Typography';
+import Typography from '../../ui-kit/Typography';
 import Select, { Option } from '../../ui-kit/Select';
 import Pager from './Pager/Pager';
 import styles from './style.module.css';

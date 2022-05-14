@@ -13,7 +13,7 @@ import type { ContainerStateType } from './containers/types';
 import CopyBtn from '../../../ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '../../../ui-kit/HoverTooltip/HoverTooltip';
 import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
-import { setIsOpenSelectWalletModal } from '../../../../Redux/store/reducers/UserSlice';
+import { setIsOpenSelectWalletModal } from '../../../../Redux/store/reducers/AppSlice';
 
 type DashboardItemProps = {
     chainId: availableChains;

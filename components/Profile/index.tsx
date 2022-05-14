@@ -4,7 +4,7 @@ import React, {
 import classNames from 'classnames';
 import { Contract, providers } from 'ethers';
 import InvestCard from './InvestCard';
-import Typography from '../Typography';
+import Typography from '../ui-kit/Typography';
 import Select, { Option } from '../ui-kit/Select';
 import InfoBlock from '../ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from '../ui-kit/InfoBlock/InfoBlock.constants';
