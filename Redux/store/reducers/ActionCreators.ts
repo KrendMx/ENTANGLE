@@ -11,20 +11,22 @@ import type { ProviderType, walletKeyType } from '../../types';
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async (
-        chainId: availableChains,
-    ): Promise<{ chainId: availableChains; newProvider: ProviderType }> => {
-        console.log(chainId);
-        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-        if (newProvider) {
+    async ({
+        chainId,
+        provider,
+    }: {
+        chainId: availableChains;
+        provider: Web3Provider;
+    }): Promise<{ chainId: availableChains; newProvider: ProviderType }> => {
+        if (provider) {
             try {
-                await newProvider.send('wallet_switchEthereumChain', [
+                await provider.send('wallet_switchEthereumChain', [
                     { chainId: toChainId(chainId) },
                 ]);
             } catch (switchError: any) {
                 if (switchError.code === 4902) {
                     try {
-                        await newProvider.send('wallet_addEthereumChain', [
+                        await provider.send('wallet_addEthereumChain', [
                             ethereumNetworksConfig[chainId],
                         ]);
                     } catch (addError) {
@@ -33,6 +35,7 @@ export const changeNetwork = createAsyncThunk(
                 }
             }
         }
+        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
         return { chainId, newProvider };
     },
 );
@@ -46,7 +49,9 @@ export const setWallet = createAsyncThunk(
 
         if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
         if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
-        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) { return; }
+        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) {
+            return;
+        }
 
         const account = (
             await provider
@@ -60,7 +65,7 @@ export const setWallet = createAsyncThunk(
             .catch((e: any) => errorHandler(e, null));
         if (!networkData) return;
 
-        changeNetwork('43114');
+        changeNetwork({ chainId: '43114', provider });
         const newChainId = parseInt(
             networkData.chainId.toString(),
             10,

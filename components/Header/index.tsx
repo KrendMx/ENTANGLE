@@ -63,7 +63,7 @@ const Header = () => {
                     wrapperPickerClassName={styles.connectButtonPicker}
                 >
                     <>
-                        <Link href="/profile">
+                        <Link href="/profile" passHref>
                             <div className={styles.locationBar}>
                                 <div>Profile</div>
                                 <img src="./images/person.svg" alt="" />
@@ -98,7 +98,7 @@ const Header = () => {
                 <div className="container">
                     <div className={styles.wrapper}>
                         <div className={styles.menuHeaderWrapper}>
-                            <Link href="/">
+                            <Link href="/" passHref>
                                 <img src="./images/logo.svg" alt="" />
                             </Link>
                         </div>
@@ -117,7 +117,7 @@ const Header = () => {
                                     )}
                                 >
                                     <>
-                                        <Link href="/">
+                                        <Link href="/" passHref>
                                             <p className={styles.dropItem}>
                                                 Buy & Sell Synth-LP
                                             </p>

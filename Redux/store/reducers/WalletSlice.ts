@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice, createListenerMiddleware } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import type { ProviderType, walletKeyType } from '../../types';
 import { changeNetwork, setWallet } from './ActionCreators';
@@ -19,8 +19,6 @@ const initialState: initialStateType = {
     chainId: '43114',
     preLoader: true,
 };
-
-export const listenerMiddleware = createListenerMiddleware();
 
 const walletSlice = createSlice({
     name: 'wallet',
@@ -60,14 +58,6 @@ const walletSlice = createSlice({
             }
             state.preLoader = false;
         });
-    },
-});
-
-listenerMiddleware.startListening({
-    actionCreator: walletSlice.actions.chainChange,
-    effect: async (action, listenerApi) => {
-        console.log(action);
-        console.log(listenerApi);
     },
 });
 

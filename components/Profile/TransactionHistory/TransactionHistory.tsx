@@ -16,6 +16,7 @@ import {
     TransactionOrder,
 } from './TransactionHistory.constants';
 import { ProviderContext } from '../../../src/context/ProviderContext';
+import { useAppSelector } from '../../../Redux/store/hooks/redux';
 
 const TransactionHistory: React.FC = () => {
     const loader = (
@@ -39,7 +40,7 @@ const TransactionHistory: React.FC = () => {
         TransactionHistoryEntity[]
     >([]);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const { account } = useContext(ProviderContext);
+    const { account } = useAppSelector((state) => state.walletReducer);
     const updateHistory = () => {
         if (!account) return;
         service

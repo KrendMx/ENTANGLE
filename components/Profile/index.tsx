@@ -11,13 +11,13 @@ import { InfoBlockTypes } from '../ui-kit/InfoBlock/InfoBlock.constants';
 import {
     avaDex, avaSynth, ftmDex, ftmSynth,
 } from '../../src/ChainService/abi';
-import { ProviderContext } from '../../src/context/ProviderContext';
 import { ServiceContext } from '../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 import { networks } from '../../src/utils/GlobalConst';
+import { useAppSelector } from '../../Redux/store/hooks/redux';
 
 export type IFilter = 'Price increase' | 'Price decrease' | 'Profit increase' | 'Profit decrease' | 'Sort by';
 
@@ -28,16 +28,11 @@ export interface IState {
 }
 
 const Profile = () => {
-    const {
-        getPositionSum,
-        positionSum,
-        getProfit: getProfitProvider,
-        profits: profitsProvider,
-    } = useContext(ProviderContext);
+    const { positionSum, profits } = useAppSelector((state) => state.userReducer);
     const { getAVGPrice, getProfit } = useContext(ServiceContext);
     const [balance, setBalance] = useState<number>(0);
     useEffect(() => {
-        setBalance(getPositionSum());
+        setBalance(Number(positionSum));
     }, [positionSum]);
     const [bestProfit, setBestProfit] = useState<{
         value: number;
@@ -50,13 +45,21 @@ const Profile = () => {
         chain: keyof typeof networks;
     }>({ value: -0.0000001, change: 0, chain: '43114' });
     useEffect(() => {
-        const data = Object.keys(networks).map((i) => ({
-            chain: i as keyof typeof networks,
-            ...getProfitProvider(i),
-        }));
+        const data = Object.keys(networks).map((i) => (
+            profits.get(i)
+                ? {
+                    chain: i as keyof typeof networks,
+                    ...profits.get(i),
+                }
+                : {
+                    chain: i as keyof typeof networks,
+                    value: 0,
+                    change: 0,
+                }
+        ));
         setBestProfit(data.reduce((l, e) => (e.value > l.value ? e : l)));
         setWorstProfit(data.reduce((l, e) => (e.value < l.value ? e : l)));
-    }, [profitsProvider]);
+    }, [profits]);
     const [avaxState, setAvaxState] = useState<IState>();
     const [ftmState, setFtmState] = useState<IState>();
     const [cardLoaded, setCardLoaded] = useState<boolean>(false);
@@ -65,7 +68,8 @@ const Profile = () => {
         fantomSynth: number;
         avaxSynth: number;
     }>();
-    const { account, txLoading } = useContext(ProviderContext);
+    const { account } = useAppSelector((state) => state.walletReducer);
+    const { txLoading } = useAppSelector((state) => state.userReducer);
 
     const [filter, setFilter] = React.useState<IFilter>('Sort by');
 
