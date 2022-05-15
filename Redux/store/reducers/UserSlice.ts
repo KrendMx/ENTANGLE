@@ -30,7 +30,7 @@ type payDataActionType = {
 
 type initStateType = {
     positionSumObj: Map<string, number>;
-    profits: Map<string, number>;
+    profits: Map<string, { value: number; change: number }>;
     deposit: Map<string, number>;
     avgPrices: {
         '250': string | null;
@@ -49,6 +49,12 @@ type ImportTypes = {
 type positionSumType = {
     n: number;
     key: availableChains;
+};
+
+type profitSumType = {
+    n: number,
+    change: number,
+    key: string
 };
 
 const initialState: initStateType = {
@@ -122,9 +128,9 @@ const userSlice = createSlice({
                 state.positionSumObj.set(action.payload.key, action.payload.n),
             );
         },
-        setProfit(state, action: PayloadAction<positionSumType>) {
+        setProfit(state, action: PayloadAction<profitSumType>) {
             state.profits = new Map(
-                state.profits.set(action.payload.key, action.payload.n),
+                state.profits.set(action.payload.key, { value: action.payload.n, change: action.payload.change }),
             );
         },
         setDeposit(state, action: PayloadAction<positionSumType>) {

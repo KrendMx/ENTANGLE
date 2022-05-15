@@ -1,13 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Contract } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import classNames from 'classnames';
 import styles from './style.module.css';
 import { networks, farms } from '../../../src/utils/GlobalConst';
-import { ProviderContext } from '../../../src/context/ProviderContext';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
 import Deposit from './Deposit';
 import Withdraw from './Withdraw';
+import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
+import { changeLoadingTx } from '../../../Redux/store/reducers/UserSlice';
+import { setSucInfo } from '../../../Redux/store/reducers/AppSlice';
 import { ChainConfig } from '../../../src/ChainService/config';
 
 type PayModalPropsType = {
@@ -25,10 +27,8 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
     } = props;
     const [activeTab, setActiveTab] = useState(0);
     const buttons = ['Deposit', 'Withdraw'];
-
-    const {
-        chainId, provider, changeLoadingTx, setSucInfo,
-    } = useContext(ProviderContext);
+    const dispatch = useAppDispatch();
+    const { chainId, provider } = useAppSelector((state) => state.walletReducer);
 
     useEffect(() => {
         if (chainId !== '250' && chainId !== '43114' && chainId !== '56') {
@@ -61,17 +61,17 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
         const amount = BigInt(Math.floor(value * 10 ** (await stableContract.decimals())));
         const response = await buyContract.buyWithFee(amount);
         if (response) {
-            changeLoadingTx(true);
+            dispatch(changeLoadingTx(true));
         }
         const res = await response.wait();
 
         if (res?.status) {
-            changeLoadingTx(false);
-            setSucInfo({
+            dispatch(changeLoadingTx(false));
+            dispatch(setSucInfo({
                 value,
                 symbol: networks[chainId].currencyMin,
                 isReceived: true,
-            });
+            }));
         }
     };
 
@@ -96,18 +96,18 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
             const amount = BigInt((value * Math.pow(10, 18)));
             const response = await sellContract.sellWithFee(amount);
             if (response) {
-                changeLoadingTx(true);
+                dispatch(changeLoadingTx(true));
             }
             const res = await response.wait();
 
             if (res?.status) {
-                changeLoadingTx(false);
-                setSucInfo({
+                dispatch(changeLoadingTx(false));
+                dispatch(setSucInfo({
                     value,
                     symbol: networks[chainId].currencyMin,
                     isReceived: false,
-                });
-                // closeModal();
+                }));
+                handleClose();
             }
         } catch (e) {
             console.log(e);

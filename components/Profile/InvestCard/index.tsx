@@ -1,11 +1,10 @@
 import React, {
-    useEffect, useState, useContext,
+    useEffect, useState,
 } from 'react';
 import InvestCardExp from './InvestCars.example';
 import { CardsOrder } from './InvestCards.const';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 import type { IState, IFilter } from '../index';
-import { ProviderContext } from '../../../src/context/ProviderContext';
 
 interface IProps {
     avaxState: IState;
@@ -31,7 +30,6 @@ const InvestCard: React.FC<IProps> = ({
     avgPrice,
     filter,
 }) => {
-    const { profits } = useContext(ProviderContext);
     const [cards, setCards] = useState<ICard[]>([]);
     const hasPhantom = Number(ftmState?.positions) > 0;
     const hasAvax = Number(avaxState?.positions) > 0;

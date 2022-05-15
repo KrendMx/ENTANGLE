@@ -3,7 +3,7 @@ import { enableMapSet } from 'immer';
 
 import userReducer from './reducers/UserSlice';
 import appReducer from './reducers/AppSlice';
-import walletReducer from './reducers/WalletSlice';
+import walletReducer, { listenerMiddleware } from './reducers/WalletSlice';
 
 enableMapSet();
 
@@ -13,13 +13,15 @@ const rootReducer = combineReducers({
     walletReducer,
 });
 
-export const setupStore = () => configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false,
-    }),
-});
+export const setupStore = () =>
+    configureStore({
+        reducer: rootReducer,
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({ serializableCheck: false }).prepend(
+                listenerMiddleware.middleware,
+            ),
+    });
 
-export type RootState = ReturnType<typeof rootReducer>
-export type AppStore = ReturnType<typeof setupStore>
-export type AppDispatch = AppStore['dispatch']
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];

@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { networks } from '../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
+import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
 import type { availableChains } from '../../../src/utils/GlobalConst';
-import { ProviderContext } from '../../../src/context/ProviderContext';
+import { setPrices, setProfit } from '../../../Redux/store/reducers/UserSlice';
 
 interface IState {
     chainId: availableChains;
@@ -22,13 +23,9 @@ const InvestCardExp: React.FC<IState> = ({
     chainId,
     description,
 }) => {
-    const {
-        setProfit: setProfitProvider,
-        profits,
-        account,
-        setPrices,
-        avgPrices,
-    } = useContext(ProviderContext);
+    const dispatch = useAppDispatch();
+    const { account } = useAppSelector((state) => state.walletReducer);
+    const { profits, avgPrices } = useAppSelector((state) => state.userReducer);
     const { getProfit, getAVGPrice } = useContext(ServiceContext);
     const isLoss = true;
     const isUp = false;
@@ -37,12 +34,12 @@ const InvestCardExp: React.FC<IState> = ({
         (async function () {
             if (account) {
                 const avgData = await getAVGPrice(account);
-                setPrices({
+                dispatch(setPrices({
                     '250': avgData.fantomSynth.toFixed(3),
                     '43114': avgData.avaxSynth.toFixed(3),
-                });
+                }));
                 const data = await getProfit(account, networks[chainId].farm);
-                setProfitProvider(data.stable, data.percentage, chainId);
+                dispatch(setProfit({ n: data.stable, change: data.percentage, key: chainId }));
             }
         }());
     }, []);

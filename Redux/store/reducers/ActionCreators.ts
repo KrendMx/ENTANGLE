@@ -11,8 +11,9 @@ import type { ProviderType, walletKeyType } from '../../types';
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async (chainId: availableChains):
-        Promise<{ chainId: availableChains, newProvider: ProviderType }> => {
+    async (
+        chainId: availableChains,
+    ): Promise<{ chainId: availableChains; newProvider: ProviderType }> => {
         console.log(chainId);
         const newProvider = new ethers.providers.Web3Provider(window.ethereum);
         if (newProvider) {
@@ -45,7 +46,7 @@ export const setWallet = createAsyncThunk(
 
         if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
         if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
-        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) return;
+        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) { return; }
 
         const account = (
             await provider
@@ -76,7 +77,13 @@ export const setWallet = createAsyncThunk(
 
 export const importToken = createAsyncThunk(
     'user/import-token',
-    async ({ chainId, provider }: { chainId: availableChains, provider: ProviderType }): Promise<any> => {
+    async ({
+        chainId,
+        provider,
+    }: {
+        chainId: availableChains;
+        provider: ProviderType;
+    }): Promise<any> => {
         if (provider) {
             const options = {
                 type: 'ERC20',
@@ -112,10 +119,10 @@ export const getAllowance = createAsyncThunk(
         provider,
         account,
     }: {
-        contractAddress: string,
-        dexAddress: string,
-        provider: ProviderType,
-        account: string | null
+        contractAddress: string;
+        dexAddress: string;
+        provider: ProviderType;
+        account: string | null;
     }) => {
         const contract = new Contract(
             contractAddress,
@@ -125,6 +132,31 @@ export const getAllowance = createAsyncThunk(
 
         const data = await contract.allowance(account, dexAddress);
 
+        return data;
+    },
+);
+
+export const approve = createAsyncThunk(
+    'user/approve',
+    async ({
+        tokenAddress,
+        dexAddress,
+        provider,
+    }: {
+        tokenAddress: string;
+        dexAddress: string;
+        provider: ProviderType;
+    }) => {
+        const contract = new Contract(
+            tokenAddress,
+            opToken,
+            provider.getSigner(),
+        );
+
+        const data = await contract.approve(
+            dexAddress,
+            '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+        );
         return data;
     },
 );
