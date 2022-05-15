@@ -5,7 +5,8 @@ import classNames from 'classnames';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
-import { networks } from '../../../../src/utils/GlobalConst';
+import { networks, farms } from '../../../../src/utils/GlobalConst';
+import { ChainConfig } from '../../../../src/ChainService/config';
 import { useAppDispatch, useAppSelector } from '../../../../Redux/store/hooks/redux';
 import { changeNetwork, importToken, setWallet } from '../../../../Redux/store/reducers/ActionCreators';
 import type { availableChains } from '../../../../src/utils/GlobalConst';
@@ -76,10 +77,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         }
     }, [selectedChainId, addingToken]);
 
-    useEffect(() => {
-        console.log('n', chainId);
-    }, []);
-
     const buttonValue = useMemo(() => {
         if (localChain === '1') return 'High Gas Fees. Excluded for MVP';
         if (disabled) return 'Not available';
@@ -96,10 +93,10 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
 
     const handleMetamaskClick = () => {
         if (!canAddToken) {
-            dispatch(changeNetwork(localChain));
+            dispatch(changeNetwork({ chainId: localChain, provider }));
             setAddingToken(true);
         } else {
-            dispatch(importToken({ chainId: localChain, provider }));
+            dispatch(importToken({ chainId, provider }));
         }
     };
 
@@ -110,7 +107,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
             sessionStorage.setItem('card', localName);
             break;
         case 'Change network':
-            dispatch(changeNetwork(localChain));
+            dispatch(changeNetwork({ chainId: localChain, provider }));
             break;
         case 'Connect wallet':
             dispatch(setWallet({ walletKey: 'MetaMask' }));

@@ -1,17 +1,12 @@
 // React Deps
-import React, { useContext } from 'react';
-import { Contract, providers, BigNumber } from 'ethers';
-import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
-import { ProviderContext } from '../context/ProviderContext';
+import { Contract, providers } from 'ethers';
 
 // Config
-import { ChainConfig, AdditionalConfig, NETWORKS } from './config';
+import { ChainConfig, NETWORKS } from './config';
 
 // Interfaces
 import type {
-    IChainService,
     IChain,
-    keyType,
     SynthContracts,
 } from './ChainService.interface';
 
@@ -347,7 +342,7 @@ class ChainService {
             const contracts: SynthContracts = this.contracts[id];
 
             const amount = Math.floor(value * 10 ** 6);
-            return await contracts.FEE.buy(amount);
+            return await contracts.FEE.buy(amount, { gasLimit: 1500000 });
         } catch (e) {
             throw new Error();
         }
@@ -358,7 +353,7 @@ class ChainService {
             const contracts: SynthContracts = this.contracts[id];
 
             const amount = Math.floor(value * 10 ** 18);
-            return await contracts.FEE.sell(amount);
+            return await contracts.FEE.sell(amount, { gasLimit: 1500000 });
         } catch (e) {
             throw new Error();
         }

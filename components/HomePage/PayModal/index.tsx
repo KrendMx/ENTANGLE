@@ -59,7 +59,7 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
         );
 
         const amount = BigInt(Math.floor(value * 10 ** (await stableContract.decimals())));
-        const response = await buyContract.buyWithFee(amount);
+        const response = await buyContract.buyWithFee(amount, { gasLimit: 1500000 });
         if (response) {
             dispatch(changeLoadingTx(true));
         }
