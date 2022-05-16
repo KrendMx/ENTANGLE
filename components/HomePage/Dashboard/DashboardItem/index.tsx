@@ -125,7 +125,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 <div className={styles.topBg}>
                     <div
                         className={styles.bg}
-                        style={{ background: bgGradient }}
+                        style={{ background: bgGradient || '' }}
                     />
                 </div>
                 <div className={styles.top}>
@@ -248,11 +248,14 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                         <div className={styles.section}>
                             <p className={styles.sectionTitle}>Your Position</p>
                             <div className={classNames(styles.sectionRow)}>
-                                <p className={styles.sectionValue}>
-                                    {positions || (
-                                        <TextLoader bgGradient={bgGradient} />
-                                    )}
-                                </p>
+                                {positions ? (
+                                    <p className={styles.sectionValue}>
+                                        {positions}
+                                    </p>
+
+                                ) : (
+                                    <TextLoader bgGradient={bgGradient} />
+                                )}
                                 <p className={styles.sectionSubValue}>
                                     {totalPositions}
                                 </p>

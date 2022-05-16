@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^12.1.6",
     "@reduxjs/toolkit": "^1.8.1",
     "assert": "^2.0.0",
     "axios": "^0.27.2",
@@ -24,10 +25,10 @@
     "immer": "^9.0.14",
     "moment": "^2.29.3",
     "next": "12.1.5",
-    "react": "18.0.0",
+    "react": "^18.1.0",
     "react-chartjs-2": "^4.1.0",
     "react-copy-to-clipboard": "^5.1.0",
-    "react-dom": "18.0.0",
+    "react-dom": "^18.1.0",
     "react-i18next": "^11.16.6",
     "react-redux": "^7.2.8",
     "react-scrolllock": "^5.0.1",

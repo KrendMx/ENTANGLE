@@ -19,7 +19,7 @@ import {
 } from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const { account } = useAppSelector(
+    const { account, provider } = useAppSelector(
         (state) => state.walletReducer,
     );
     const dispatch = useAppDispatch();
@@ -33,33 +33,36 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
+        if (provider) {
+            provider.on(
+                'chainChanged',
+                async (chainId: any) => {
+                    console.log(chainId);
+                    dispatch(
+                        changeNetworkWC({
+                            chainId: chainId.toString(),
+                            provider,
+                        }),
+                    );
+                },
+            );
+            provider.on(
+                'disconnect',
+                () => {
+                    dispatch(
+                        removeWallet(),
+                    );
+                },
+            );
+        }
+    }, [provider]);
+
+    useEffect(() => {
         (async function () {
             const walletKey = localStorage.getItem('wallet') as walletKeyType;
             const walletconnect = localStorage.getItem('walletconnect');
             if (walletKey) {
                 const data = await dispatch(setWallet({ walletKey }));
-                if (walletKey === 'WalletConnect') {
-                    (data.payload as any).provider.on(
-                        'chainChanged',
-                        async (chainId: any) => {
-                            console.log(chainId);
-                            dispatch(
-                                changeNetworkWC({
-                                    chainId: chainId.toString(),
-                                    provider: (data.payload as any).provider,
-                                }),
-                            );
-                        },
-                    );
-                    (data.payload as any).provider.on(
-                        'disconnect',
-                        () => {
-                            dispatch(
-                                removeWallet(),
-                            );
-                        },
-                    );
-                }
             } else if (walletconnect) {
                 const data = await dispatch(setWallet({ walletKey: 'WalletConnect' }));
                 console.log(data);

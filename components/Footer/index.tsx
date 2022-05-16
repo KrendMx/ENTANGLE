@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './style.module.css';
@@ -46,7 +47,7 @@ const Footer = () => {
             <div className={styles.content}>
                 <Link href="/" passHref>
                     <span className={styles.logo}>
-                        <img src="./images/logo.svg" alt="" />
+                        <img src="/images/logo.svg" alt="" />
                     </span>
                 </Link>
                 <nav className={styles.navigate}>

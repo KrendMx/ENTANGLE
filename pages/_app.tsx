@@ -8,6 +8,7 @@ import Layout from '../src/HOC/Layout';
 import ModalContextWrapper from '../components/ModalContextWrapper';
 
 import '../styles/globals.css';
+import '../styles/fonts.css';
 import { ServiceProvider } from '../src/context/ServiceContext';
 import { MockService, MainService } from '../src/Service';
 

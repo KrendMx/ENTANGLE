@@ -46,7 +46,7 @@ const FantomContainer = ({ isFiltered = false }) => {
     const data = {
         icon: 'fantomDashboard.svg',
         bgGradient:
-            ' linear-gradient(90deg, rgba(15, 89, 142, 0.4) 0%, rgba(15, 89, 142, 0) 100%)',
+            'linear-gradient(90deg, rgba(15, 89, 142, 0.4) 0%, rgba(15, 89, 142, 0) 100%)',
         heading: 'MIM-USDC',
         chainId: '250',
         priceCurrency: 'USDT/USDT.e Synthetic LP',
