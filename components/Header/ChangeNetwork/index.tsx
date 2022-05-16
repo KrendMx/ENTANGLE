@@ -10,7 +10,7 @@ import { changeNetwork } from '../../../Redux/store/reducers/ActionCreators';
 
 const ChangeNetwork = () => {
     const [openList, setOpenList] = useState(false);
-    const { provider, chainId } = useAppSelector((state) => state.walletReducer);
+    const { chainId, provider } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
 
     const handleClick = (chainIdEl: availableChains) => dispatch(changeNetwork({ chainId: chainIdEl, provider }));

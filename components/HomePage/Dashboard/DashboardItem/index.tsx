@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
-import { networks } from '../../../../src/utils/GlobalConst';
+import { networks, synths } from '../../../../src/utils/GlobalConst';
 import { useAppDispatch, useAppSelector } from '../../../../Redux/store/hooks/redux';
 import { changeNetwork, importToken, setWallet } from '../../../../Redux/store/reducers/ActionCreators';
 import type { availableChains } from '../../../../src/utils/GlobalConst';
@@ -13,7 +13,7 @@ import type { ContainerStateType } from './containers/types';
 import CopyBtn from '../../../ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '../../../ui-kit/HoverTooltip/HoverTooltip';
 import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
-import { setIsOpenSelectWalletModal } from '../../../../Redux/store/reducers/UserSlice';
+import { setIsOpenSelectWalletModal } from '../../../../Redux/store/reducers/AppSlice';
 
 type DashboardItemProps = {
     chainId: availableChains;
@@ -52,11 +52,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
 }) => {
     const { account, provider, chainId: selectedChainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
-
-    const canAddToken = useMemo(
-        () => selectedChainId !== chainId,
-        [selectedChainId],
-    );
     const [addingToken, setAddingToken] = useState(false);
     const [tooltipVisible, setTooltipVisible] = useState(false);
     useEffect(() => {
@@ -70,15 +65,12 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     }, [tooltipVisible]);
 
     useEffect(() => {
-        if (canAddToken && addingToken) {
-            dispatch(importToken({ chainId, provider }));
+        if (addingToken) {
+            const synthAddress = synths[chainId][localName];
+            dispatch(importToken({ chainId, synthAddress, provider }));
             setAddingToken(false);
         }
     }, [selectedChainId, addingToken]);
-
-    useEffect(() => {
-        console.log('n', chainId);
-    }, []);
 
     const buttonValue = useMemo(() => {
         if (localChain === '1') return 'High Gas Fees. Excluded for MVP';
@@ -95,11 +87,12 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     }, [account, selectedChainId]);
 
     const handleMetamaskClick = () => {
-        if (!canAddToken) {
-            dispatch(changeNetwork(localChain));
+        if (addingToken) {
+            dispatch(changeNetwork({ chainId: localChain, provider }));
             setAddingToken(true);
         } else {
-            dispatch(importToken({ chainId: localChain, provider }));
+            const synthAddress = synths[chainId][localName];
+            dispatch(importToken({ chainId, synthAddress, provider }));
         }
     };
 
@@ -110,7 +103,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
             sessionStorage.setItem('card', localName);
             break;
         case 'Change network':
-            dispatch(changeNetwork(localChain));
+            dispatch(changeNetwork({ chainId: localChain, provider }));
             break;
         case 'Connect wallet':
             dispatch(setWallet({ walletKey: 'MetaMask' }));

@@ -6,15 +6,15 @@ import styles from './styles.module.css';
 import Dropout from './Dropout';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
-import { removeWallet } from '../../Redux/store/reducers/WalletSlice';
+import { removeWallet, setPreloader } from '../../Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
-import { setIsOpenSelectWalletModal, setPreloader } from '../../Redux/store/reducers/UserSlice';
+import { setIsOpenSelectWalletModal } from '../../Redux/store/reducers/AppSlice';
 import { setWallet } from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const { account, chainId } = useAppSelector((state) => state.walletReducer);
+    const { account } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
-    const connect = () => account || dispatch(setWallet({ walletKey: 'MetaMask' }));
+    const connect = () => account || dispatch(setIsOpenSelectWalletModal(true));
     const disconnect = () => dispatch(removeWallet());
 
     const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ const Header = () => {
         if (wallet) {
             dispatch(setWallet({ walletKey: 'MetaMask' }));
         } else {
-            dispatch(setPreloader());
+            dispatch(setPreloader(false));
         }
     }, []);
 
@@ -63,7 +63,7 @@ const Header = () => {
                     wrapperPickerClassName={styles.connectButtonPicker}
                 >
                     <>
-                        <Link href="/profile">
+                        <Link href="/profile" passHref>
                             <div className={styles.locationBar}>
                                 <div>Profile</div>
                                 <img src="./images/person.svg" alt="" />
@@ -98,7 +98,7 @@ const Header = () => {
                 <div className="container">
                     <div className={styles.wrapper}>
                         <div className={styles.menuHeaderWrapper}>
-                            <Link href="/">
+                            <Link href="/" passHref>
                                 <img src="./images/logo.svg" alt="" />
                             </Link>
                         </div>
@@ -117,7 +117,7 @@ const Header = () => {
                                     )}
                                 >
                                     <>
-                                        <Link href="/">
+                                        <Link href="/" passHref>
                                             <p className={styles.dropItem}>
                                                 Buy & Sell Synth-LP
                                             </p>

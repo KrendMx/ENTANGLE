@@ -1,20 +1,21 @@
-import React, { useContext } from 'react';
-import Image from 'next/image';
+import React from 'react';
 
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import type { SuccessModalProps } from './SuccessModal.interface';
-import { ProviderContext } from '../../../src/context/ProviderContext';
 
 import styles from './style.module.css';
 import GradientButton from '../../ui-kit/GradientButton';
-import { networks } from '../../../src/utils/GlobalConst';
+import { networks, synths } from '../../../src/utils/GlobalConst';
+import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
+import { importToken } from '../../../Redux/store/reducers/ActionCreators';
 
 const SuccessModalContent: React.FC<SuccessModalProps> = ({
     transactionInfo,
     handleClose,
 }) => {
-    const { importToken, chainId } = useContext(ProviderContext);
+    const dispatch = useAppDispatch();
+    const { chainId, provider } = useAppSelector((state) => state.walletReducer);
     const directionText = `You ${transactionInfo.isReceived ? 'received' : 'spent'}:`;
     return (
         <div className={styles.wrapper}>
@@ -48,7 +49,8 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                                 </div>
                             )}
                             onClick={() => {
-                                importToken();
+                                const synthAddress = synths[chainId][sessionStorage.getItem('card')];
+                                dispatch(importToken({ chainId, synthAddress, provider }));
                             }}
                             title=""
                         />

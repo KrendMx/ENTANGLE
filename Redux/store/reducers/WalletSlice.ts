@@ -9,15 +9,15 @@ type initialStateType = {
     walletKey: walletKeyType,
     provider: ProviderType,
     account: string | null,
-    error: boolean;
     chainId: availableChains,
+    preLoader: boolean;
 }
 const initialState: initialStateType = {
     walletKey: null,
     provider: null,
     account: null,
-    chainId: '250',
-    error: false,
+    chainId: '43114',
+    preLoader: true,
 };
 
 const walletSlice = createSlice({
@@ -38,6 +38,9 @@ const walletSlice = createSlice({
             state.chainId = initialState.chainId;
             localStorage.removeItem('wallet');
         },
+        setPreloader(state, action: PayloadAction<boolean>) {
+            state.preLoader = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(changeNetwork.fulfilled, (state, action) => {
@@ -53,11 +56,12 @@ const walletSlice = createSlice({
                 state.provider = payload.provider;
                 state.account = payload.account;
             }
+            state.preLoader = false;
         });
     },
 });
 
 export const {
-    chainChange, changeAccount, removeWallet,
+    chainChange, changeAccount, removeWallet, setPreloader,
 } = walletSlice.actions;
 export default walletSlice.reducer;

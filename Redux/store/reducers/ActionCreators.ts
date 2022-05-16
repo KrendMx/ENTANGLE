@@ -1,27 +1,45 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Contract, ethers } from 'ethers';
+import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import { opToken } from '../../../src/ChainService/abi';
 
 import { toChainId } from '../../../src/utils';
 import type { availableChains } from '../../../src/utils/GlobalConst';
-import { networks } from '../../../src/utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 import type { ProviderType, walletKeyType } from '../../types';
+import type { ErrorI } from '../../../components/Modal/ErrorModal/ErrorModal.interfaces';
+import { setError, setErrorStack } from './AppSlice';
+import { useAppDispatch } from '../hooks/redux';
+
+export const useErrorHandler = (e: ErrorI, returnValue: any) => {
+    const dispatch = useAppDispatch();
+    dispatch(setErrorStack({ e }));
+    if ((e.code as number) === -32002) {
+        localStorage.removeItem('wallet');
+        return returnValue;
+    }
+    dispatch(setError({ e }));
+    return returnValue;
+};
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
-    async (chainId: availableChains):
-        Promise<{ chainId: availableChains, newProvider: ProviderType }> => {
-        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-        if (newProvider) {
+    async ({
+        chainId,
+        provider,
+    }: {
+        chainId: availableChains;
+        provider: Web3Provider;
+    }): Promise<{ chainId: availableChains; newProvider: ProviderType }> => {
+        if (provider) {
             try {
-                await newProvider.send('wallet_switchEthereumChain', [
+                await provider.send('wallet_switchEthereumChain', [
                     { chainId: toChainId(chainId) },
                 ]);
             } catch (switchError: any) {
                 if (switchError.code === 4902) {
                     try {
-                        await newProvider.send('wallet_addEthereumChain', [
+                        await provider.send('wallet_addEthereumChain', [
                             ethereumNetworksConfig[chainId],
                         ]);
                     } catch (addError) {
@@ -30,6 +48,7 @@ export const changeNetwork = createAsyncThunk(
                 }
             }
         }
+        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
         return { chainId, newProvider };
     },
 );
@@ -37,27 +56,27 @@ export const changeNetwork = createAsyncThunk(
 export const setWallet = createAsyncThunk(
     'wallet/setWallet',
     async ({ walletKey }: { walletKey: walletKeyType }) => {
-        const errorHandler = (e: any, returnValue: any) => returnValue;
-
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
         if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
         if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
-        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) return;
+        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) {
+            return;
+        }
 
         const account = (
             await provider
                 .send('eth_requestAccounts', [])
-                .catch((e: any) => errorHandler(e, []))
+                .catch((e: any) => useErrorHandler(e, []))
         )[0] || null;
         if (!account) return;
 
         const networkData = await provider
             .getNetwork()
-            .catch((e: any) => errorHandler(e, null));
+            .catch((e: any) => useErrorHandler(e, []));
         if (!networkData) return;
 
-        changeNetwork('43114');
+        changeNetwork({ chainId: '43114', provider });
         const newChainId = parseInt(
             networkData.chainId.toString(),
             10,
@@ -74,12 +93,20 @@ export const setWallet = createAsyncThunk(
 
 export const importToken = createAsyncThunk(
     'user/import-token',
-    async ({ chainId, provider }: { chainId: availableChains, provider: ProviderType }): Promise<any> => {
+    async ({
+        chainId,
+        synthAddress,
+        provider,
+    }: {
+        chainId: availableChains;
+        synthAddress: string;
+        provider: ProviderType;
+    }): Promise<any> => {
         if (provider) {
             const options = {
                 type: 'ERC20',
                 options: {
-                    address: networks[chainId].synth,
+                    address: synthAddress,
                     symbol: 'SYNTH',
                     decimals: 18,
                 },
@@ -110,10 +137,10 @@ export const getAllowance = createAsyncThunk(
         provider,
         account,
     }: {
-        contractAddress: string,
-        dexAddress: string,
-        provider: ProviderType,
-        account: string | null
+        contractAddress: string;
+        dexAddress: string;
+        provider: ProviderType;
+        account: string | null;
     }) => {
         const contract = new Contract(
             contractAddress,
@@ -123,6 +150,31 @@ export const getAllowance = createAsyncThunk(
 
         const data = await contract.allowance(account, dexAddress);
 
+        return data;
+    },
+);
+
+export const approve = createAsyncThunk(
+    'user/approve',
+    async ({
+        tokenAddress,
+        dexAddress,
+        provider,
+    }: {
+        tokenAddress: string;
+        dexAddress: string;
+        provider: ProviderType;
+    }) => {
+        const contract = new Contract(
+            tokenAddress,
+            opToken,
+            provider.getSigner(),
+        );
+
+        const data = await contract.approve(
+            dexAddress,
+            '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+        );
         return data;
     },
 );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './style.module.css';
 import Select, { Option } from '../../ui-kit/Select';
 import Input from '../../ui-kit/Input';

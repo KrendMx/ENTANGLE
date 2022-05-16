@@ -1,30 +1,24 @@
 import React, {
-    useContext,
     useEffect,
     useMemo,
     useReducer,
     useState,
+    useContext,
 } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 import ChainService from '../../../../../src/ChainService/ChainService';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
-import { ProviderContext } from '../../../../../src/context/ProviderContext';
 import { farms } from '../../../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
+import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
+import { setPayData, setPositionSum } from '../../../../../Redux/store/reducers/UserSlice';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
-    const {
-        account,
-        txLoading,
-        setPositionSum,
-        setDeposit,
-        setPayData,
-        payData,
-        chainId,
-        preLoader,
-    } = useContext(ProviderContext);
+    const dispatch = useAppDispatch();
+    const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
+    const { txLoading, payData } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
@@ -83,15 +77,18 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,
                 );
-                const oldData = payData;
-                oldData[43114].available = `${
-                    state.localChain === chainId
-                        ? 'Infinity'
-                        : Number(available.toFixed(5))
-                }`;
-                oldData[43114].price = `${Number(price.toFixed(6))}`;
-                oldData[43114].totalAvailable = `$${totalAvailable}`;
-                setPayData(oldData);
+                dispatch(setPayData({
+                    key: '43114',
+                    data: {
+                        available: `${
+                            state.localChain === chainId
+                                ? 'Infinity'
+                                : Number(available.toFixed(5))
+                        }`,
+                        price: `${Number(price.toFixed(6))}`,
+                        totalAvailable: `$${totalAvailable}`,
+                    },
+                }));
                 setState({
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} USDC/USDC.e LP`,
@@ -122,7 +119,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     account ? farms[chainId].AVAX : '9',
                 );
                 const yieldTime = await getProfit(account, 67);
-                setPositionSum(positions, 'fantom');
+                setPositionSum({ n: positions, key: '43114' });
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,
                     totalPositions: `${Number(
