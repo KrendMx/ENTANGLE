@@ -12,12 +12,13 @@ import type {
 import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 import LoadingChart from '../../ui-kit/NoDataChart/LoadingChart';
 import { ProviderContext } from '../../../src/context/ProviderContext';
+import { useAppSelector } from '../../../Redux/store/hooks/redux';
 
 const ProfileChart: React.FC = () => {
     const service = useContext<iService>(ServiceContext);
     const [data, setData] = useState<BalanceChartTick[]>([]);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const { account } = useContext(ProviderContext);
+    const { account } = useAppSelector((state) => state.walletReducer);
 
     const updateChart = () => {
         if (!account) return;

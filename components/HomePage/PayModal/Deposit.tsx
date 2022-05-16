@@ -1,37 +1,31 @@
 import classNames from 'classnames';
 import React, {
-    useContext, useEffect, useMemo, useState,
+    useEffect, useMemo, useState,
 } from 'react';
 import { Contract, providers } from 'ethers';
 import styles from './style.module.css';
 import Input from '../../ui-kit/Input';
 import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
-import { opToken } from '../../../src/utils/abi/index';
-import { ProviderContext } from '../../../src/context/ProviderContext';
 import { networks, farms, namesConfig } from '../../../src/utils/GlobalConst';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
+import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
+import { getAllowance, approve } from '../../../Redux/store/reducers/ActionCreators';
 import type { namesValues } from './index';
+import { changeLoadingTx } from '../../../Redux/store/reducers/UserSlice';
 
 type propsType = {
     buyToken: (value: number) => void;
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
 const Deposit: React.FC<propsType> = (props) => {
+    const dispatch = useAppDispatch();
+    const { chainId, account, provider } = useAppSelector((state) => state.walletReducer);
+    const { payData, txLoading, deposit } = useAppSelector((state) => state.userReducer);
     const {
         available, totalAvailable, price, buyToken,
     } = props;
-    const {
-        account,
-        getAllowance,
-        getDeposit,
-        approve,
-        chainId,
-        changeLoadingTx,
-        txLoading,
-        payData,
-    } = useContext(ProviderContext);
     const [amount, setAmount] = useState('');
     const [allowance, setAllowance] = useState<number>(0);
     const [maxAmount, setMaxAmount] = useState<string>();
@@ -58,10 +52,12 @@ const Deposit: React.FC<propsType> = (props) => {
                         sessionStorage.getItem('card') as namesValues
                     ],
             );
-            getAllowance(
-                contracts.CONTRACTS.STABLE.address,
-                contracts.CONTRACTS.FEE.address,
-            ).then((awc) => setAllowance(Number(awc.toBigInt())));
+            dispatch(getAllowance({
+                contractAddress: contracts.CONTRACTS.STABLE.address,
+                dexAddress: contracts.CONTRACTS.FEE.address,
+                account,
+                provider,
+            })).then((action) => setAllowance(Number(action.payload.toBigInt())));
             console.log(contracts);
             const contract = new Contract(
                 contracts.CONTRACTS.STABLE.address,
@@ -94,25 +90,27 @@ const Deposit: React.FC<propsType> = (props) => {
                     sessionStorage.getItem('card') as namesValues
                 ],
         );
-        const data = await approve(
-            contracts.CONTRACTS.STABLE.address,
-            contracts.CONTRACTS.FEE.address,
-        );
-        if (data) {
-            changeLoadingTx(true);
-        }
-        const res = await data.wait();
-        if (res?.status) {
-            setAllowance(10000000000);
-            changeLoadingTx(false);
-        }
+        dispatch(approve({
+            tokenAddress: contracts.CONTRACTS.STABLE.address,
+            dexAddress: contracts.CONTRACTS.FEE.address,
+            provider,
+        })).then(async (action) => {
+            if (action.payload) {
+                dispatch(changeLoadingTx(true));
+            }
+            const res = await action.payload.wait();
+            if (res?.status) {
+                setAllowance(10000000000);
+                dispatch(changeLoadingTx(false));
+            }
+        });
     };
 
     const getMax = async () => {
         setAmount(maxAmount!);
     };
     const percentage = Math.ceil(
-        (Number(available) / getDeposit(chainId)) * 100,
+        (Number(available) / deposit[chainId]) * 100,
     );
 
     return (

@@ -1,97 +1,24 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ethers } from 'ethers';
+import { createSlice } from '@reduxjs/toolkit';
 
-import type { ProviderType } from '../../types';
+import type { ProviderType, walletKeyType } from '../../types';
+import { changeNetwork, setWallet } from './ActionCreators';
 import type { availableChains } from '../../../src/utils/GlobalConst';
-import { toChainId } from '../../../src/utils';
-import ethereumNetworksConfig from '../../../src/context/ethereumNetworksConfig';
-
-type walletKeyType = 'MetaMask' | 'Coin98' | 'CoinBase' | null;
 
 type initialStateType = {
     walletKey: walletKeyType,
     provider: ProviderType,
     account: string | null,
     chainId: availableChains,
+    preLoader: boolean;
 }
-
 const initialState: initialStateType = {
     walletKey: null,
     provider: null,
     account: null,
-    chainId: '250',
+    chainId: '43114',
+    preLoader: true,
 };
-
-const changeNetwork = createAsyncThunk(
-    'wallet/changeNetwork',
-    async ({ chainId, provider }: { chainId: availableChains, provider: ProviderType }): Promise<availableChains> => {
-        if (provider) {
-            try {
-                await provider.send('wallet_switchEthereumChain', [
-                    { chainId: toChainId(chainId) },
-                ]);
-            } catch (switchError: any) {
-                if (switchError.code === 4902) {
-                    try {
-                        await provider.send('wallet_addEthereumChain', [
-                            ethereumNetworksConfig[chainId],
-                        ]);
-                    } catch (addError) {
-                        console.log(switchError);
-                    }
-                }
-            }
-        }
-        return chainId;
-    },
-);
-
-const setWallet = createAsyncThunk(
-    'wallet/setWallet',
-    async ({ walletKey, chainId }: { walletKey: walletKeyType, chainId: availableChains }) => {
-        const errorHandler = (e: any, returnValue: any) => returnValue;
-
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-        if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
-        if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
-        // eslint-disable-next-line no-useless-return
-        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) return;
-
-        const account = (
-            await provider
-                .send('eth_requestAccounts', [])
-                .catch((e: any) => errorHandler(e, []))
-        )[0] || null;
-        if (!account) return;
-
-        const networkData = await provider
-            .getNetwork()
-            .catch((e: any) => errorHandler(e, null));
-        if (!networkData) return;
-        // @ts-ignore ругается на finally
-        const response = await changeNetwork({ chainId, provider }).finally(() => {
-            const newChainId = parseInt(
-                networkData.chainId.toString(),
-                16,
-            ).toString() as initialStateType['chainId'];
-            return newChainId;
-        });
-        localStorage.setItem('wallet', '1');
-        // eslint-disable-next-line consistent-return
-        return response;
-    },
-);
-
-const setChainId = createAsyncThunk(
-    'wallet/setChainId',
-    async ({ chainId, provider }: { chainId: availableChains, provider: ProviderType }) => {
-        await changeNetwork({ chainId, provider });
-        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-        return newProvider;
-    },
-);
 
 const walletSlice = createSlice({
     name: 'wallet',
@@ -104,22 +31,41 @@ const walletSlice = createSlice({
             const [account] = action.payload.accounts;
             state.account = account;
         },
-        removeWallet(state, action) {
-            state.account = action.payload;
+        removeWallet(state) {
+            state.walletKey = initialState.walletKey;
+            state.provider = initialState.provider;
+            state.account = initialState.account;
+            state.chainId = initialState.chainId;
             localStorage.removeItem('wallet');
+        },
+        changeNetworkWC(state, action: PayloadAction<{chainId: availableChains, provider: ProviderType}>) {
+            state.chainId = action.payload.chainId;
+            state.provider = action.payload.provider;
+        },
+        setPreloader(state, action: PayloadAction<boolean>) {
+            state.preLoader = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder.addCase(changeNetwork.fulfilled, (state, action) => {
-            state.chainId = action.payload;
+            state.chainId = action.payload.chainId;
+            state.provider = action.payload.newProvider;
         });
-        builder.addCase(setChainId.fulfilled, (state, action) => {
-            state.provider = action.payload;
-        });
-        builder.addCase(setWallet.fulfilled, (state, action) => {
-            state.walletKey = action.payload;
+        builder.addCase(setWallet.fulfilled, (state, action: any) => {
+            const { payload } = action;
+
+            if (payload) {
+                state.walletKey = payload.walletKey;
+                state.chainId = payload.newChainId;
+                state.provider = payload.provider;
+                state.account = payload.account;
+            }
+            state.preLoader = false;
         });
     },
 });
 
+export const {
+    chainChange, changeAccount, removeWallet, setPreloader, changeNetworkWC,
+} = walletSlice.actions;
 export default walletSlice.reducer;

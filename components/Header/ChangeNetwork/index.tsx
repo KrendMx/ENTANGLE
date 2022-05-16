@@ -1,13 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
-import styles from './style.module.css';
-import { ProviderContext } from '../../../src/context/ProviderContext';
-import type { availableChains } from '../../../src/utils/GlobalConst';
+
 import { networks } from '../../../src/utils/GlobalConst';
+import { useAppDispatch, useAppSelector } from '../../../Redux/store/hooks/redux';
+import type { availableChains } from '../../../src/utils/GlobalConst';
+
+import styles from './style.module.css';
+import { changeNetwork } from '../../../Redux/store/reducers/ActionCreators';
 
 const ChangeNetwork = () => {
     const [openList, setOpenList] = useState(false);
-    const { setChainID, chainId, account } = useContext(ProviderContext);
+    const { chainId, provider } = useAppSelector((state) => state.walletReducer);
+    const dispatch = useAppDispatch();
+
+    const handleClick = (chainIdEl: availableChains) => dispatch(changeNetwork({ chainId: chainIdEl, provider }));
 
     return (
         <div className={styles.wrapper}>
@@ -36,7 +42,7 @@ const ChangeNetwork = () => {
                     .map((chainIdEl: availableChains) => (
                         <div
                             className={styles.network}
-                            onClick={() => setChainID(chainIdEl)}
+                            onClick={() => handleClick(chainIdEl)}
                             key={chainIdEl}
                         >
                             <p>{networks[chainIdEl].title}</p>

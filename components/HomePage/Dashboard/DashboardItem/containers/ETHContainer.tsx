@@ -19,8 +19,8 @@ const ETHContainer = ({ isFiltered = false }) => {
             totalPositions: 'MIM/UST Synthetic LP',
             rowGradient: '',
             yieldTime: '$0',
-            localChain: '250',
-            localName: 'FTM',
+            localChain: '1',
+            localName: 'ETH',
         },
     );
 

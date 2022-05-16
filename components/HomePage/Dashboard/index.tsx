@@ -7,48 +7,53 @@ import BUSDContainer from './DashboardItem/containers/BUSDContainer';
 import ETHContainer from './DashboardItem/containers/ETHContainer';
 import SolanaContainer from './DashboardItem/containers/SolanaContainer';
 
+interface IDashboardProps {
+    filter: string;
+    query: string;
+}
+
 const items = [
     {
-        filter: 250,
-        query: ['mim-usdc', 'fantom'],
-        element: (isFiltered: boolean, key: number) => <FantomContainer isFiltered={isFiltered} key={key} />,
-    },
-    {
-        filter: 43114,
-        query: ['usdt-usdt.e', 'avalanche'],
+        filter: [43114, 250, 56, 1],
+        query: ['usdc-usdc.e', 'avalanche', 'avax', 'ava', 'joe'],
         element: (isFiltered: boolean, key: number) => <AvalancheContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: 1,
-        query: ['mim-ust'],
+        filter: [43114, 250, 56, 1],
+        query: ['mim-usdc', 'fantom', 'ftm', 'spirit'],
+        element: (isFiltered: boolean, key: number) => <FantomContainer isFiltered={isFiltered} key={key} />,
+    },
+    {
+        filter: [43114, 250, 56, 1],
+        query: ['mim-ust', 'etherem', 'ether', 'convexfinance'],
         element: (isFiltered: boolean, key: number) => <ETHContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: 56,
-        query: ['ust-busd'],
+        filter: [43114, 250, 56, 1],
+        query: ['ust-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
         element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: null,
-        query: ['ust-usdc'],
-        element: (isFiltered: boolean) => <SolanaContainer isFiltered={isFiltered} />,
+        filter: [],
+        query: ['ust-usdc', 'sunny'],
+        element: (isFiltered: boolean, key: number) => <SolanaContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: null,
-        query: ['ust'],
+        filter: [],
+        query: ['ust', 'anchor'],
         element: (isFiltered: boolean, key: number) => <USDContainer isFiltered={isFiltered} key={key} />,
     },
 ];
 
-const Dashboard = ({ filter: filterProp = '', query: queryProp = '' }) => (
+const Dashboard: React.FC<IDashboardProps> = ({ filter = '', query = '' }) => (
     <div className={styles.wrapper}>
         {items.map((i, key) => {
             let isFiltered = false;
-            if (filterProp !== '') {
-                isFiltered = String(i.filter) === String(filterProp);
+            if (filter !== '') {
+                isFiltered = !i.filter.includes(Number(filter));
             }
-            if (queryProp !== '') {
-                isFiltered = isFiltered || !i.query.join('/').toLowerCase().includes(queryProp.toLowerCase().trim());
+            if (query !== '') {
+                isFiltered = isFiltered || !i.query.join('/').toLowerCase().includes(query.toLowerCase().trim());
             }
             return i.element(isFiltered, key);
         })}

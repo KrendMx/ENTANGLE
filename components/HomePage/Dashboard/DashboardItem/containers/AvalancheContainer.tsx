@@ -1,30 +1,24 @@
 import React, {
-    useContext,
     useEffect,
     useMemo,
     useReducer,
     useState,
+    useContext,
 } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 import ChainService from '../../../../../src/ChainService/ChainService';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
-import { ProviderContext } from '../../../../../src/context/ProviderContext';
 import { farms } from '../../../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
+import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
+import { setPayData, setPositionSum } from '../../../../../Redux/store/reducers/UserSlice';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
-    const {
-        account,
-        txLoading,
-        setPositionSum,
-        setDeposit,
-        setPayData,
-        payData,
-        chainId,
-        preLoader,
-    } = useContext(ProviderContext);
+    const dispatch = useAppDispatch();
+    const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
+    const { txLoading, payData } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
@@ -54,11 +48,11 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         icon: 'avalancheDashboard.png',
         bgGradient:
             'linear-gradient(90deg, rgba(233, 48, 56, 0.4) 0%, rgba(239, 70, 78, 0) 100%)',
-        heading: 'USDT-USDT.e',
+        heading: 'USDC-USDC.e',
         chainId: '43114',
-        priceCurrency: 'USDT/USDT.e Synthetic LP',
+        priceCurrency: 'USDC/USDC.e Synthetic LP',
         description:
-            'Generates yield by running autocompounded USDT/USDT.e strategy on traderjoexyz.com',
+            'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
         disabled: false,
         openModal,
         ...state,
@@ -77,19 +71,37 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     totalDeposits,
                     currentDeposits,
                     price,
-                } = await Service.getCardData(account ? farms[chainId].AVAX : '68');
-                const percentage = Math.ceil((available / currentDeposits) * 100);
-                const oldData = payData;
-                oldData[43114].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
-                oldData[43114].price = `${Number(price.toFixed(6))}`;
-                oldData[43114].totalAvailable = `$${totalAvailable}`;
-                setPayData(oldData);
+                } = await Service.getCardData(
+                    account ? farms[chainId]?.AVAX : '68',
+                );
+                const percentage = Math.ceil(
+                    (available / currentDeposits) * 100,
+                );
+                dispatch(setPayData({
+                    key: '43114',
+                    data: {
+                        available: `${
+                            state.localChain === chainId
+                                ? 'Infinity'
+                                : Number(available.toFixed(5))
+                        }`,
+                        price: `${Number(price.toFixed(6))}`,
+                        totalAvailable: `$${totalAvailable}`,
+                    },
+                }));
                 setState({
                     apr: `${apr}%`,
-                    totalDeposits: `${totalDeposits} USDT/USDT.e LP`,
+                    totalDeposits: `${totalDeposits} USDC/USDC.e LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
-                    totalAvailable: `$${totalAvailable.toFixed(5)}`,
+                    available: `${
+                        state.localChain === chainId
+                            ? 'Infinity'
+                            : Number(available.toFixed(5))
+                    }`,
+                    totalAvailable:
+                        state.localChain === chainId
+                            ? ''
+                            : `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #E93038 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
                 });
@@ -104,10 +116,10 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 // @ts-ignore
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,
-                    account ? farms[chainId].AVAX : '9',
+                    account ? farms[chainId]?.AVAX : '9',
                 );
                 const yieldTime = await getProfit(account, 67);
-                setPositionSum(positions, 'fantom');
+                setPositionSum({ n: positions, key: '43114' });
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,
                     totalPositions: `${Number(

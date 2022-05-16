@@ -5,7 +5,7 @@ import {
     useAppSelector,
 } from '../../../Redux/store/hooks/redux';
 import { appSlice } from '../../../Redux/store/reducers/AppSlice';
-import Preloader from '../../../components/Preloader';
+import Preloader from '../../../components/ui-kit/Preloader';
 
 import Footer from '../../../components/Footer/index';
 import Header from '../../../components/Header';

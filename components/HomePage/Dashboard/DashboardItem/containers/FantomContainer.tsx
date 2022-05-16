@@ -5,7 +5,6 @@ import React, {
     useReducer,
     useState,
 } from 'react';
-import { ProviderContext } from '../../../../../src/context/ProviderContext';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 import { farms } from '../../../../../src/utils/GlobalConst';
@@ -13,18 +12,13 @@ import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import ChainService from '../../../../../src/ChainService/ChainService';
 import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
+import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
+import { setPayData, setPositionSum } from '../../../../../Redux/store/reducers/UserSlice';
 
 const FantomContainer = ({ isFiltered = false }) => {
-    const {
-        account,
-        txLoading,
-        setPositionSum,
-        setDeposit,
-        setPayData,
-        payData,
-        chainId,
-        preLoader,
-    } = useContext(ProviderContext);
+    const dispatch = useAppDispatch();
+    const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
+    const { txLoading, payData } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const closeModal = () => setIsOpenModal(false);
@@ -76,19 +70,26 @@ const FantomContainer = ({ isFiltered = false }) => {
                     currentDeposits,
                     apr,
                     price,
-                } = await Service.getCardData(account ? farms[chainId].FTM : '9');
+                } = await Service.getCardData(account ? farms[chainId]?.FTM : '9');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
-                const oldData = payData;
-                oldData[250].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
-                oldData[250].price = `${Number(price.toFixed(6))}`;
-                oldData[250].totalAvailable = `$${totalAvailable}`;
-                setPayData(oldData);
+                dispatch(setPayData({
+                    key: '250',
+                    data: {
+                        available: `${
+                            state.localChain === chainId
+                                ? 'Infinity'
+                                : Number(available.toFixed(5))
+                        }`,
+                        price: `${Number(price.toFixed(6))}`,
+                        totalAvailable: `$${totalAvailable}`,
+                    },
+                }));
                 setState({
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} MIM/USDC LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
-                    totalAvailable: `$${totalAvailable}`,
+                    available: `${state.localChain === chainId ? 'Infinity' : Number(available.toFixed(5))}`,
+                    totalAvailable: state.localChain === chainId ? '' : `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
                 });
@@ -102,10 +103,10 @@ const FantomContainer = ({ isFiltered = false }) => {
                 setState({ positions: null, totalPositions: null });
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,
-                    account ? farms[chainId].FTM : '67',
+                    account ? farms[chainId]?.FTM : '67',
                 );
                 const yieldTime = await getProfit(account, 8);
-                setPositionSum(positions, 'fantom');
+                setPositionSum({ n: positions, key: '250' });
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,
                     totalPositions: `${Number(

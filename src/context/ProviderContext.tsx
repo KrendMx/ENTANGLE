@@ -53,6 +53,10 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         deposit: new Map(),
         positionSum: new Map(),
         profits: new Map(),
+        avgPrices: {
+            '250': null,
+            '43114': null,
+        },
         chainId: '250',
         txLoading: false,
         preLoader: true,
@@ -94,6 +98,12 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
     const setProfit = (n: number, change: number, key: string) => {
         setState({
             profits: new Map(state.profits.set(key, { value: n, change })),
+        });
+    };
+
+    const setPrices = (avgPrices: { '250': string; '43114': string }) => {
+        setState({
+            avgPrices,
         });
     };
 
@@ -393,6 +403,7 @@ const ProviderContextWrapper: React.FC<{ children: ReactNode }> = ({
         setPreloader,
         preLoader,
         payData,
+        setPrices,
     };
 
     const service = useMemo(

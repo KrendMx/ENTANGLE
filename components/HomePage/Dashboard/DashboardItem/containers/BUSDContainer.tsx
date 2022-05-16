@@ -1,7 +1,6 @@
 import React, {
     useReducer, useContext, useState, useMemo, useEffect,
 } from 'react';
-import { ProviderContext } from '../../../../../src/context/ProviderContext';
 import ChainService from '../../../../../src/ChainService/ChainService';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
@@ -9,18 +8,13 @@ import { farms } from '../../../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
+import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
+import { setPayData, setPositionSum } from '../../../../../Redux/store/reducers/UserSlice';
 
 const BUSDContainer = ({ isFiltered = false }) => {
-    const {
-        account,
-        txLoading,
-        setPositionSum,
-        setDeposit,
-        setPayData,
-        payData,
-        chainId,
-        preLoader,
-    } = useContext(ProviderContext);
+    const dispatch = useAppDispatch();
+    const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
+    const { txLoading, payData } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
@@ -73,19 +67,26 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     totalDeposits,
                     currentDeposits,
                     price,
-                } = await Service.getCardData(account ? farms[chainId].BSC : '7');
+                } = await Service.getCardData(account ? farms[chainId]?.BSC : '7');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
-                const oldData = payData;
-                oldData[56].available = `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`;
-                oldData[56].price = `${Number(price.toFixed(6))}`;
-                oldData[56].totalAvailable = `$${totalAvailable}`;
-                setPayData(oldData);
+                dispatch(setPayData({
+                    key: '56',
+                    data: {
+                        available: `${
+                            state.localChain === chainId
+                                ? 'Infinity'
+                                : Number(available.toFixed(5))
+                        }`,
+                        price: `${Number(price.toFixed(6))}`,
+                        totalAvailable: `$${totalAvailable}`,
+                    },
+                }));
                 setState({
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} USDT/BUSD LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${state.localChain === chainId ? '∞' : Number(available.toFixed(5))}`,
-                    totalAvailable: `$${totalAvailable.toFixed(5)}`,
+                    available: `${state.localChain === chainId ? 'Infinity' : Number(available.toFixed(5))}`,
+                    totalAvailable: state.localChain === chainId ? '' : `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #FF9501 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
                 });
@@ -99,11 +100,11 @@ const BUSDContainer = ({ isFiltered = false }) => {
                 setState({ positions: null, totalPositions: null });
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,
-                    account ? farms[chainId].BSC : '7',
+                    account ? farms[chainId]?.BSC : '7',
                 );
                 // const yieldTime = await getProfit(account, 67);
                 const yieldTime = { stable: '' };
-                setPositionSum(positions, 'binance');
+                dispatch(setPositionSum({ n: positions, key: '56' }));
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,
                     totalPositions: `${Number(

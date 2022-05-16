@@ -1,36 +1,31 @@
 import classNames from 'classnames';
 import React, {
-    useContext, useEffect, useState, useMemo,
+    useEffect, useState, useMemo,
 } from 'react';
 import { Contract, providers } from 'ethers';
 import styles from './style.module.css';
 import Input from '../../ui-kit/Input';
 import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
-import { opToken } from '../../../src/utils/abi/index';
-import { ProviderContext } from '../../../src/context/ProviderContext';
 import { networks, farms, namesConfig } from '../../../src/utils/GlobalConst';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
+import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
+import { getAllowance, approve } from '../../../Redux/store/reducers/ActionCreators';
 import type { namesValues } from './index';
+import { changeLoadingTx } from '../../../Redux/store/reducers/UserSlice';
 
 type propsType = {
     sellToken: (value: number) => void;
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
 const Withdraw: React.FC<propsType> = (props) => {
+    const dispatch = useAppDispatch();
+    const { chainId, account, provider } = useAppSelector((state) => state.walletReducer);
+    const { payData, txLoading, deposit } = useAppSelector((state) => state.userReducer);
     const {
         available, totalAvailable, price, sellToken,
     } = props;
-    const {
-        getAllowance,
-        approve,
-        chainId,
-        account,
-        txLoading,
-        changeLoadingTx,
-        payData,
-    } = useContext(ProviderContext);
     const [amount, setAmount] = useState<string>('');
     const [allowance, setAllowance] = useState(0);
     const [maxAmount, setMaxAmount] = useState<string>();
@@ -57,10 +52,12 @@ const Withdraw: React.FC<propsType> = (props) => {
                     ],
             );
 
-            getAllowance(
-                contracts.CONTRACTS.SYNTH.address,
-                contracts.CONTRACTS.FEE.address,
-            ).then((awc) => setAllowance(Number(awc.toBigInt())));
+            dispatch(getAllowance({
+                contractAddress: contracts.CONTRACTS.SYNTH.address,
+                dexAddress: contracts.CONTRACTS.FEE.address,
+                account,
+                provider,
+            })).then((action) => setAllowance(Number(action.payload.toBigInt())));
             const contract = new Contract(
                 contracts.CONTRACTS.SYNTH.address,
                 contracts.CONTRACTS.SYNTH.abi,
@@ -92,18 +89,20 @@ const Withdraw: React.FC<propsType> = (props) => {
                     sessionStorage.getItem('card') as 'AVAX' | 'FTM'
                 ],
         );
-        const data = await approve(
-            contracts.CONTRACTS.SYNTH.address,
-            contracts.CONTRACTS.FEE.address,
-        );
-        if (data) {
-            changeLoadingTx(true);
-        }
-        const res = await data.wait();
-        if (res?.status === 1) {
-            setAllowance(10000000000);
-            changeLoadingTx(false);
-        }
+        dispatch(approve({
+            tokenAddress: contracts.CONTRACTS.SYNTH.address,
+            dexAddress: contracts.CONTRACTS.FEE.address,
+            provider,
+        })).then((action) => {
+            if (action.payload) {
+                dispatch(changeLoadingTx(true));
+            }
+            const res = action.payload.wait();
+            if (res?.status === 1) {
+                setAllowance(10000000000);
+                dispatch(changeLoadingTx(false));
+            }
+        });
     };
 
     const getMax = async () => {

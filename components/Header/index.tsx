@@ -1,35 +1,92 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import ScrollLock from 'react-scrolllock';
 import styles from './styles.module.css';
 import Dropout from './Dropout';
-import { ProviderContext } from '../../src/context/ProviderContext';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
-import type { WalletProviderNames } from '../Modal/SelectWalletModal/SelectWalletModal.constants';
+import type { walletKeyType } from '../../Redux/types';
+import {
+    removeWallet,
+    setPreloader,
+    changeNetworkWC,
+} from '../../Redux/store/reducers/WalletSlice';
+import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
+import { setIsOpenSelectWalletModal } from '../../Redux/store/reducers/AppSlice';
+import {
+    setWallet,
+} from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const {
-        account, setIsOpenSelectWalletModal, setWallet, removeWallet, setPreloader,
-    } = useContext(ProviderContext);
+    const { account } = useAppSelector(
+        (state) => state.walletReducer,
+    );
+    const dispatch = useAppDispatch();
+    const connect = () => account || dispatch(setIsOpenSelectWalletModal(true));
+    const disconnect = () => dispatch(removeWallet());
 
-    const connect = () => account || setIsOpenSelectWalletModal(true);
-    const disconnect = () => removeWallet();
-
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         setIsOpen(false);
     }, []);
 
     useEffect(() => {
-        const wallet = localStorage.getItem('wallet');
-        if (wallet) {
-            setWallet(wallet as keyof typeof WalletProviderNames);
-        } else {
-            setPreloader(false);
-        }
+        (async function () {
+            const walletKey = localStorage.getItem('wallet') as walletKeyType;
+            const walletconnect = localStorage.getItem('walletconnect');
+            if (walletKey) {
+                const data = await dispatch(setWallet({ walletKey }));
+                if (walletKey === 'WalletConnect') {
+                    (data.payload as any).provider.on(
+                        'chainChanged',
+                        async (chainId: any) => {
+                            console.log(chainId);
+                            dispatch(
+                                changeNetworkWC({
+                                    chainId: chainId.toString(),
+                                    provider: (data.payload as any).provider,
+                                }),
+                            );
+                        },
+                    );
+                    (data.payload as any).provider.on(
+                        'disconnect',
+                        () => {
+                            dispatch(
+                                removeWallet(),
+                            );
+                        },
+                    );
+                }
+            } else if (walletconnect) {
+                const data = await dispatch(setWallet({ walletKey: 'WalletConnect' }));
+                console.log(data);
+                (data.payload as any).provider.on(
+                    'chainChanged',
+                    async (chainId: any) => {
+                        console.log(chainId);
+                        dispatch(
+                            changeNetworkWC({
+                                chainId: chainId.toString(),
+                                provider: (data.payload as any).provider,
+                            }),
+                        );
+                    },
+                );
+                (data.payload as any).provider.on(
+                    'disconnect',
+                    () => {
+                        dispatch(
+                            removeWallet(),
+                        );
+                    },
+                );
+            } else {
+                dispatch(setPreloader(false));
+            }
+        }());
     }, []);
 
     const networkBtns = (
@@ -63,7 +120,7 @@ const Header = () => {
                     wrapperPickerClassName={styles.connectButtonPicker}
                 >
                     <>
-                        <Link href="/profile">
+                        <Link href="/profile" passHref>
                             <div className={styles.locationBar}>
                                 <div>Profile</div>
                                 <img src="./images/person.svg" alt="" />
@@ -98,7 +155,7 @@ const Header = () => {
                 <div className="container">
                     <div className={styles.wrapper}>
                         <div className={styles.menuHeaderWrapper}>
-                            <Link href="/">
+                            <Link href="/" passHref>
                                 <img src="./images/logo.svg" alt="" />
                             </Link>
                         </div>
@@ -117,7 +174,7 @@ const Header = () => {
                                     )}
                                 >
                                     <>
-                                        <Link href="/">
+                                        <Link href="/" passHref>
                                             <p className={styles.dropItem}>
                                                 Buy & Sell Synth-LP
                                             </p>
@@ -150,13 +207,17 @@ const Header = () => {
                                         <>
                                             <p>
                                                 Entangle
-                                                <span className={styles.soonText}>
+                                                <span
+                                                    className={styles.soonText}
+                                                >
                                                     (soon)
                                                 </span>
                                             </p>
                                             <p>
                                                 Stablecoins
-                                                <span className={styles.soonText}>
+                                                <span
+                                                    className={styles.soonText}
+                                                >
                                                     (soon)
                                                 </span>
                                             </p>

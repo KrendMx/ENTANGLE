@@ -34,21 +34,12 @@ const SelectWalletModalContent: React.FC<SelectWalletProps> = ({
                             src={`./images/connectors/${i}.svg`}
                             alt=""
                         />
-                        <div className={styles.BtnText}>MetaMask</div>
+                        <div className={styles.BtnText}>
+                            {WalletProviderNames[i]}
+                        </div>
                     </div>
                 </div>
             ))}
-            <div>
-                <div className={styles.BtnWrapper}>
-                    <img
-                        className={styles.BtnImg}
-                        src="./images/connectors/WalletConnect.svg"
-                        alt=""
-                    />
-                    <div className={styles.BtnText}>WalletConnect</div>
-                    <div className={styles.BtnText}>(soon)</div>
-                </div>
-            </div>
         </div>
     </div>
 );

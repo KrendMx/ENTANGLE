@@ -1,3 +1,5 @@
+import type { availableChains } from '../../../../../src/utils/GlobalConst';
+
 export type ContainerStateType = {
     apr: string | null;
     currentDeposits: string | null;
@@ -9,6 +11,6 @@ export type ContainerStateType = {
     totalPositions: string | null;
     rowGradient: string;
     yieldTime: string | null;
-    localChain: '250' | '43114' | '56';
-    localName: 'FTM' | 'AVAX' | 'BSC';
+    localChain: availableChains;
+    localName: 'FTM' | 'AVAX' | 'BSC' | 'ETH';
 }
