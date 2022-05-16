@@ -67,7 +67,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     totalDeposits,
                     currentDeposits,
                     price,
-                } = await Service.getCardData(account ? farms[chainId].BSC : '7');
+                } = await Service.getCardData(account ? farms[chainId]?.BSC : '7');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
                 dispatch(setPayData({
                     key: '56',
@@ -100,7 +100,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                 setState({ positions: null, totalPositions: null });
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,
-                    account ? farms[chainId].BSC : '7',
+                    account ? farms[chainId]?.BSC : '7',
                 );
                 // const yieldTime = await getProfit(account, 67);
                 const yieldTime = { stable: '' };

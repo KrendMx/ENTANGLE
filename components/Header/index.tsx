@@ -6,13 +6,22 @@ import styles from './styles.module.css';
 import Dropout from './Dropout';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
-import { removeWallet, setPreloader } from '../../Redux/store/reducers/WalletSlice';
+import type { walletKeyType } from '../../Redux/types';
+import {
+    removeWallet,
+    setPreloader,
+    changeNetworkWC,
+} from '../../Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
 import { setIsOpenSelectWalletModal } from '../../Redux/store/reducers/AppSlice';
-import { setWallet } from '../../Redux/store/reducers/ActionCreators';
+import {
+    setWallet,
+} from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const { account } = useAppSelector((state) => state.walletReducer);
+    const { account } = useAppSelector(
+        (state) => state.walletReducer,
+    );
     const dispatch = useAppDispatch();
     const connect = () => account || dispatch(setIsOpenSelectWalletModal(true));
     const disconnect = () => dispatch(removeWallet());
@@ -24,12 +33,60 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
-        const wallet = localStorage.getItem('wallet');
-        if (wallet) {
-            dispatch(setWallet({ walletKey: 'MetaMask' }));
-        } else {
-            dispatch(setPreloader(false));
-        }
+        (async function () {
+            const walletKey = localStorage.getItem('wallet') as walletKeyType;
+            const walletconnect = localStorage.getItem('walletconnect');
+            if (walletKey) {
+                const data = await dispatch(setWallet({ walletKey }));
+                if (walletKey === 'WalletConnect') {
+                    (data.payload as any).provider.on(
+                        'chainChanged',
+                        async (chainId: any) => {
+                            console.log(chainId);
+                            dispatch(
+                                changeNetworkWC({
+                                    chainId: chainId.toString(),
+                                    provider: (data.payload as any).provider,
+                                }),
+                            );
+                        },
+                    );
+                    (data.payload as any).provider.on(
+                        'disconnect',
+                        () => {
+                            dispatch(
+                                removeWallet(),
+                            );
+                        },
+                    );
+                }
+            } else if (walletconnect) {
+                const data = await dispatch(setWallet({ walletKey: 'WalletConnect' }));
+                console.log(data);
+                (data.payload as any).provider.on(
+                    'chainChanged',
+                    async (chainId: any) => {
+                        console.log(chainId);
+                        dispatch(
+                            changeNetworkWC({
+                                chainId: chainId.toString(),
+                                provider: (data.payload as any).provider,
+                            }),
+                        );
+                    },
+                );
+                (data.payload as any).provider.on(
+                    'disconnect',
+                    () => {
+                        dispatch(
+                            removeWallet(),
+                        );
+                    },
+                );
+            } else {
+                dispatch(setPreloader(false));
+            }
+        }());
     }, []);
 
     const networkBtns = (
@@ -150,13 +207,17 @@ const Header = () => {
                                         <>
                                             <p>
                                                 Entangle
-                                                <span className={styles.soonText}>
+                                                <span
+                                                    className={styles.soonText}
+                                                >
                                                     (soon)
                                                 </span>
                                             </p>
                                             <p>
                                                 Stablecoins
-                                                <span className={styles.soonText}>
+                                                <span
+                                                    className={styles.soonText}
+                                                >
                                                     (soon)
                                                 </span>
                                             </p>

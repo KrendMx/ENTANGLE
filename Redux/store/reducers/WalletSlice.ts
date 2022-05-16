@@ -38,6 +38,10 @@ const walletSlice = createSlice({
             state.chainId = initialState.chainId;
             localStorage.removeItem('wallet');
         },
+        changeNetworkWC(state, action: PayloadAction<{chainId: availableChains, provider: ProviderType}>) {
+            state.chainId = action.payload.chainId;
+            state.provider = action.payload.provider;
+        },
         setPreloader(state, action: PayloadAction<boolean>) {
             state.preLoader = action.payload;
         },
@@ -62,6 +66,6 @@ const walletSlice = createSlice({
 });
 
 export const {
-    chainChange, changeAccount, removeWallet, setPreloader,
+    chainChange, changeAccount, removeWallet, setPreloader, changeNetworkWC,
 } = walletSlice.actions;
 export default walletSlice.reducer;

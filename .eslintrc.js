@@ -77,6 +77,7 @@ module.exports = {
         'consistent-return': 'off',
         'no-nested-ternary': 'off',
         'no-console': 'off',
+        'prefer-destructuring': 'off',
     },
     settings: {
         'import/resolver': {

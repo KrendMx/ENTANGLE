@@ -38,7 +38,7 @@ const ModalContextWrapper = () => {
                 <SelectWalletModal
                     selectWallet={(
                         walletProviderName: any,
-                    ) => dispatch(setWallet(walletProviderName))}
+                    ) => dispatch(setWallet({ walletKey: walletProviderName }))}
                     handleClose={() => {
                         dispatch(setIsOpenSelectWalletModal(false));
                     }}

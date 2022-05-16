@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Contract, ethers } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
+import WalletConnectProvider from '@walletconnect/web3-provider';
 import { opToken } from '../../../src/ChainService/abi';
 
 import { toChainId } from '../../../src/utils';
@@ -56,32 +57,46 @@ export const changeNetwork = createAsyncThunk(
 export const setWallet = createAsyncThunk(
     'wallet/setWallet',
     async ({ walletKey }: { walletKey: walletKeyType }) => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-
         if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
         if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
         if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) {
             return;
         }
+        let [account, newChainId, provider] = [null, null, null];
+        if (walletKey === 'WalletConnect') {
+            const connect = new WalletConnectProvider({
+                rpc: {
+                    1: 'https://rpc.ankr.com/eth',
+                    56: 'https://bsc-dataseed2.binance.org',
+                    43114: 'https://api.avax.network/ext/bc/C/rpc',
+                    250: 'https://rpc.ftm.tools',
+                },
+            });
+            await connect.enable();
+            account = connect.accounts[0];
+            newChainId = connect.chainId.toString();
+            provider = new ethers.providers.Web3Provider(connect);
+        } else {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
 
-        const account = (
-            await provider
-                .send('eth_requestAccounts', [])
-                .catch((e: any) => useErrorHandler(e, []))
-        )[0] || null;
-        if (!account) return;
+            account = (
+                await provider
+                    .send('eth_requestAccounts', [])
+                    .catch((e: any) => useErrorHandler(e, []))
+            )[0] || null;
+            if (!account) return;
 
-        const networkData = await provider
-            .getNetwork()
-            .catch((e: any) => useErrorHandler(e, []));
-        if (!networkData) return;
+            const networkData = await provider
+                .getNetwork()
+                .catch((e: any) => useErrorHandler(e, []));
+            if (!networkData) return;
 
-        changeNetwork({ chainId: '43114', provider });
-        const newChainId = parseInt(
-            networkData.chainId.toString(),
-            10,
-        ).toString() as availableChains;
-        localStorage.setItem('wallet', '1');
+            newChainId = parseInt(
+                networkData.chainId.toString(),
+                10,
+            ).toString() as availableChains;
+        }
+        localStorage.setItem('wallet', walletKey);
         return {
             walletKey,
             newChainId,

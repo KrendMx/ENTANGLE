@@ -70,7 +70,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     currentDeposits,
                     apr,
                     price,
-                } = await Service.getCardData(account ? farms[chainId].FTM : '9');
+                } = await Service.getCardData(account ? farms[chainId]?.FTM : '9');
                 const percentage = Math.ceil((available / currentDeposits) * 100);
                 dispatch(setPayData({
                     key: '250',
@@ -103,7 +103,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                 setState({ positions: null, totalPositions: null });
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,
-                    account ? farms[chainId].FTM : '67',
+                    account ? farms[chainId]?.FTM : '67',
                 );
                 const yieldTime = await getProfit(account, 8);
                 setPositionSum({ n: positions, key: '250' });

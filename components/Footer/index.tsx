@@ -29,15 +29,15 @@ const Footer = () => {
     const socials = [
         {
             icon: './images/socialNetworks/telegram.svg',
-            to: '/',
+            to: 'https://t.me/+oh2SozgECncwZTQ0',
         },
         {
             icon: './images/socialNetworks/twitter.svg',
-            to: '/',
+            to: 'https://twitter.com/Entanglefi',
         },
         {
             icon: './images/socialNetworks/discord.svg',
-            to: '/',
+            to: 'https://discord.com/invite/wpnGvAdX',
         },
     ];
 

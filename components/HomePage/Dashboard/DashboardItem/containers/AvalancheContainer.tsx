@@ -72,7 +72,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     currentDeposits,
                     price,
                 } = await Service.getCardData(
-                    account ? farms[chainId].AVAX : '68',
+                    account ? farms[chainId]?.AVAX : '68',
                 );
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,
@@ -116,7 +116,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 // @ts-ignore
                 const { positions, totalPositions } = await Service.getPersonalData(
                     account,
-                    account ? farms[chainId].AVAX : '9',
+                    account ? farms[chainId]?.AVAX : '9',
                 );
                 const yieldTime = await getProfit(account, 67);
                 setPositionSum({ n: positions, key: '43114' });
