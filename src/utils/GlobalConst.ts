@@ -95,3 +95,21 @@ export const namesConfig = {
     'AVAX': '43114',
     'FTM': '250',
 };
+
+export const synths = {
+    '250': {
+        'BSC': '0x4e726245a362c1FE0947151199Bb225c0131C362',
+        'AVAX': '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
+        'FTM': '0x19ffF7129dC1121d013908aECd14A70aa58bD0Ea',
+    },
+    '43114': {
+        'BSC': '0x50780f5825ACf7A85d38368c2dFABE39d512cC26',
+        'AVAX': '0x998e0ffb556A114a8c22C3378775A4066b7432A7',
+        'FTM': '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
+    },
+    '56': {
+        'BSC': '0xBD289C7596e4130B367dE865e3d87E239eCB2438',
+        'AVAX': '0x901D6D195f9fF29051E499792291186B9A9CdBFc',
+        'FTM': '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
+    },
+};

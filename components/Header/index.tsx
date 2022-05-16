@@ -12,7 +12,7 @@ import { setIsOpenSelectWalletModal } from '../../Redux/store/reducers/AppSlice'
 import { setWallet } from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const { account, provider, walletKey } = useAppSelector((state) => state.walletReducer);
+    const { account } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
     const connect = () => account || dispatch(setIsOpenSelectWalletModal(true));
     const disconnect = () => dispatch(removeWallet());

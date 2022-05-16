@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
-import { networks, farms } from '../../../../src/utils/GlobalConst';
-import { ChainConfig } from '../../../../src/ChainService/config';
+import { networks, synths } from '../../../../src/utils/GlobalConst';
 import { useAppDispatch, useAppSelector } from '../../../../Redux/store/hooks/redux';
 import { changeNetwork, importToken, setWallet } from '../../../../Redux/store/reducers/ActionCreators';
 import type { availableChains } from '../../../../src/utils/GlobalConst';
@@ -53,11 +52,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
 }) => {
     const { account, provider, chainId: selectedChainId } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
-
-    const canAddToken = useMemo(
-        () => selectedChainId !== chainId,
-        [selectedChainId],
-    );
     const [addingToken, setAddingToken] = useState(false);
     const [tooltipVisible, setTooltipVisible] = useState(false);
     useEffect(() => {
@@ -71,8 +65,9 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     }, [tooltipVisible]);
 
     useEffect(() => {
-        if (canAddToken && addingToken) {
-            dispatch(importToken({ chainId, provider }));
+        if (addingToken) {
+            const synthAddress = synths[chainId][localName];
+            dispatch(importToken({ chainId, synthAddress, provider }));
             setAddingToken(false);
         }
     }, [selectedChainId, addingToken]);
@@ -92,11 +87,12 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     }, [account, selectedChainId]);
 
     const handleMetamaskClick = () => {
-        if (!canAddToken) {
+        if (addingToken) {
             dispatch(changeNetwork({ chainId: localChain, provider }));
             setAddingToken(true);
         } else {
-            dispatch(importToken({ chainId, provider }));
+            const synthAddress = synths[chainId][localName];
+            dispatch(importToken({ chainId, synthAddress, provider }));
         }
     };
 

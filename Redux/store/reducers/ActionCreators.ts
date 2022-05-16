@@ -5,9 +5,22 @@ import { opToken } from '../../../src/ChainService/abi';
 
 import { toChainId } from '../../../src/utils';
 import type { availableChains } from '../../../src/utils/GlobalConst';
-import { networks } from '../../../src/utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 import type { ProviderType, walletKeyType } from '../../types';
+import type { ErrorI } from '../../../components/Modal/ErrorModal/ErrorModal.interfaces';
+import { setError, setErrorStack } from './AppSlice';
+import { useAppDispatch } from '../hooks/redux';
+
+export const useErrorHandler = (e: ErrorI, returnValue: any) => {
+    const dispatch = useAppDispatch();
+    dispatch(setErrorStack({ e }));
+    if ((e.code as number) === -32002) {
+        localStorage.removeItem('wallet');
+        return returnValue;
+    }
+    dispatch(setError({ e }));
+    return returnValue;
+};
 
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
@@ -43,8 +56,6 @@ export const changeNetwork = createAsyncThunk(
 export const setWallet = createAsyncThunk(
     'wallet/setWallet',
     async ({ walletKey }: { walletKey: walletKeyType }) => {
-        const errorHandler = (e: any, returnValue: any) => returnValue;
-
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
         if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
@@ -56,13 +67,13 @@ export const setWallet = createAsyncThunk(
         const account = (
             await provider
                 .send('eth_requestAccounts', [])
-                .catch((e: any) => errorHandler(e, []))
+                .catch((e: any) => useErrorHandler(e, []))
         )[0] || null;
         if (!account) return;
 
         const networkData = await provider
             .getNetwork()
-            .catch((e: any) => errorHandler(e, null));
+            .catch((e: any) => useErrorHandler(e, []));
         if (!networkData) return;
 
         changeNetwork({ chainId: '43114', provider });
@@ -84,16 +95,18 @@ export const importToken = createAsyncThunk(
     'user/import-token',
     async ({
         chainId,
+        synthAddress,
         provider,
     }: {
         chainId: availableChains;
+        synthAddress: string;
         provider: ProviderType;
     }): Promise<any> => {
         if (provider) {
             const options = {
                 type: 'ERC20',
                 options: {
-                    address: networks[chainId].synth,
+                    address: synthAddress,
                     symbol: 'SYNTH',
                     decimals: 18,
                 },

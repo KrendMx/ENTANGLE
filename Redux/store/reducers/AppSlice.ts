@@ -34,12 +34,8 @@ export const appSlice = createSlice({
         setError(state, action: PayloadAction<{e: ErrorI}>) {
             state.error = action.payload.e;
         },
-        errorHandler(state, action: PayloadAction<{e: ErrorI, returnValue: any}>) {
-            state.errorStack = [...state.errorStack, action.payload.e];
-            if ((action.payload.e.code as number) === -32002) {
-                localStorage.removeItem('wallet');
-            }
-            state.error = action.payload.e;
+        setErrorStack(state, action: PayloadAction<{e: ErrorI}>) {
+            state.errorStack.push(action.payload.e);
         },
         setSucInfo(state, action: PayloadAction<TransactionInfo>) {
             state.sucInfo = action.payload;
@@ -51,6 +47,6 @@ export const appSlice = createSlice({
 });
 
 export const {
-    appLoaded, setError, errorHandler, setSucInfo, setIsOpenSelectWalletModal,
+    appLoaded, setError, setErrorStack, setSucInfo, setIsOpenSelectWalletModal,
 } = appSlice.actions;
 export default appSlice.reducer;

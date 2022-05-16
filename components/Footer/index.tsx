@@ -44,14 +44,14 @@ const Footer = () => {
     return (
         <footer className={styles.wrapper}>
             <div className={styles.content}>
-                <Link href="/">
+                <Link href="/" passHref>
                     <span className={styles.logo}>
                         <img src="./images/logo.svg" alt="" />
                     </span>
                 </Link>
                 <nav className={styles.navigate}>
                     {navigate.map(({ title, to }, key) => (
-                        <Link key={key} href={to}>
+                        <Link key={key} href={to} passHref>
                             <span className={classNames(styles.link)}>
                                 {title}
                             </span>
