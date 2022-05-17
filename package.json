@@ -8,6 +8,9 @@
     "lint": "eslint --fix --ext .ts,.tsx .",
     "prepare": "husky install"
   },
+  "browserslist": [
+    "last 4 versions"
+  ],
   "dependencies": {
     "@next/bundle-analyzer": "^12.1.6",
     "@reduxjs/toolkit": "^1.8.1",
@@ -67,8 +70,11 @@
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
+    "flex-gap-polyfill": "^4.1.0",
+    "postcss": "^8.4.13",
     "postcss-custom-media": "^8.0.0",
     "postcss-import": "^14.1.0",
+    "postcss-nested": "^5.0.6",
     "postcss-preset-env": "^7.4.3",
     "postcss-reporter": "^7.0.5",
     "postcss-sort-media-queries": "^4.2.1",

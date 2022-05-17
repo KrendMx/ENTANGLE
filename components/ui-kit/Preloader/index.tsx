@@ -16,6 +16,7 @@ const Preloader: React.FC<PreloaderProps> = ({ isVisible, timeout = 1000 }) => (
         classNames={{ exit: styles.preloaderExitActive }}
     >
         <div className={styles.preloader}>
+            <div className={styles.background} />
             <img src="./images/logo.svg" alt="Logo" />
         </div>
     </CSSTransition>

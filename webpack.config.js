@@ -1,9 +1,8 @@
 const postcssPresetEnv = require('postcss-preset-env');
-const postcssImport = require('postcss-const');
 const postcssSortMedia = require('postcss-sort-media-queries');
 const postcssReporter = require('postcss-reporter');
 const autoprefixer = require('autoprefixer');
-const path = require('path');
+const flexGapPolyfill = require('flex-gap-polyfill');
 
 module.exports = {
     module: {
@@ -28,10 +27,10 @@ module.exports = {
                                 ident: 'postcss',
                                 plugins: [
                                     postcssPresetEnv({ stage: 0 }),
-                                    postcssImport,
                                     postcssReporter,
-                                    autoprefixer,
                                     postcssSortMedia,
+                                    flexGapPolyfill,
+                                    autoprefixer,
                                 ],
                             },
                         },
