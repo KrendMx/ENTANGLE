@@ -41,7 +41,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         },
     );
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const closeModal = () => setIsOpenModal(false);
+    const closeModal = () => { history.replaceState({}, '', '/'); setIsOpenModal(false); };
     const openModal = () => setIsOpenModal(true);
 
     const data = {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import Link from 'next/link';
 import ScrollLock from 'react-scrolllock';
@@ -14,17 +15,15 @@ import {
 } from '../../Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
 import { setIsOpenSelectWalletModal } from '../../Redux/store/reducers/AppSlice';
-import {
-    setWallet,
-} from '../../Redux/store/reducers/ActionCreators';
+import { setWallet } from '../../Redux/store/reducers/ActionCreators';
 
 const Header = () => {
-    const { account, provider } = useAppSelector(
+    const { account, provider, connect: walletConnectProvider } = useAppSelector(
         (state) => state.walletReducer,
     );
     const dispatch = useAppDispatch();
     const connect = () => account || dispatch(setIsOpenSelectWalletModal(true));
-    const disconnect = () => dispatch(removeWallet());
+    const disconnect = async () => { await walletConnectProvider.disconnect(); dispatch(removeWallet()); };
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -33,59 +32,26 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
-        if (provider) {
-            provider.on(
-                'chainChanged',
-                async (chainId: any) => {
-                    console.log(chainId);
-                    dispatch(
-                        changeNetworkWC({
-                            chainId: chainId.toString(),
-                            provider,
-                        }),
-                    );
-                },
-            );
-            provider.on(
-                'disconnect',
-                () => {
-                    dispatch(
-                        removeWallet(),
-                    );
-                },
-            );
+        if (walletConnectProvider) {
+            walletConnectProvider.on('chainChanged', async (chainId: any) => {
+                dispatch(
+                    changeNetworkWC({
+                        chainId: chainId.toString(),
+                        provider,
+                    }),
+                );
+            });
+            walletConnectProvider.on('disconnect', async () => {
+                dispatch(removeWallet());
+            });
         }
-    }, [provider]);
+    }, [walletConnectProvider]);
 
     useEffect(() => {
-        (async function () {
+        (async function checkWallet() {
             const walletKey = localStorage.getItem('wallet') as walletKeyType;
-            const walletconnect = localStorage.getItem('walletconnect');
             if (walletKey) {
-                const data = await dispatch(setWallet({ walletKey }));
-            } else if (walletconnect) {
-                const data = await dispatch(setWallet({ walletKey: 'WalletConnect' }));
-                console.log(data);
-                (data.payload as any).provider.on(
-                    'chainChanged',
-                    async (chainId: any) => {
-                        console.log(chainId);
-                        dispatch(
-                            changeNetworkWC({
-                                chainId: chainId.toString(),
-                                provider: (data.payload as any).provider,
-                            }),
-                        );
-                    },
-                );
-                (data.payload as any).provider.on(
-                    'disconnect',
-                    () => {
-                        dispatch(
-                            removeWallet(),
-                        );
-                    },
-                );
+                await dispatch(setWallet({ walletKey }));
             } else {
                 dispatch(setPreloader(false));
             }
@@ -126,12 +92,24 @@ const Header = () => {
                         <Link href="/profile" passHref>
                             <div className={styles.locationBar}>
                                 <div>Profile</div>
-                                <img src="./images/person.svg" alt="" />
+                                <Image
+                                    src="/images/person.svg"
+                                    width={25}
+                                    height={25}
+                                    quality={100}
+                                    alt=""
+                                />
                             </div>
                         </Link>
                         <div className={styles.linkBtn} onClick={disconnect}>
-                            <div>Disconnect</div>
-                            <img src="./images/logout.svg" alt="" />
+                            <div style={{ marginRight: '5px' }}>Disconnect</div>
+                            <Image
+                                src="/images/logout.svg"
+                                width={20}
+                                height={20}
+                                quality={100}
+                                alt=""
+                            />
                         </div>
                     </>
                 </Dropout>
@@ -142,7 +120,7 @@ const Header = () => {
         <Dropout
             title="ENG"
             wrapperListClassName={styles.langList}
-            arrowImg={<img src="./images/arrowIconSmallWhite.svg" alt="" />}
+            arrowImg={<Image src="/images/arrowIconSmallWhite.svg" width={10} height={10} alt="" />}
         >
             <p>ENG</p>
         </Dropout>
@@ -159,7 +137,7 @@ const Header = () => {
                     <div className={styles.wrapper}>
                         <div className={styles.menuHeaderWrapper}>
                             <Link href="/" passHref>
-                                <img src="./images/logo.svg" alt="" />
+                                <Image src="/images/logo.svg" width={205} height={40} alt="" />
                             </Link>
                         </div>
                         <div

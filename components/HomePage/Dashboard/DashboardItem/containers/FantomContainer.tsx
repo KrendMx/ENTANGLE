@@ -21,7 +21,7 @@ const FantomContainer = ({ isFiltered = false }) => {
     const { txLoading, payData } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const closeModal = () => setIsOpenModal(false);
+    const closeModal = () => { history.replaceState({}, '', '/'); setIsOpenModal(false); };
     const openModal = () => setIsOpenModal(true);
     const [state, setState] = useReducer(
         (

@@ -30,7 +30,7 @@ const items = [
     },
     {
         filter: [43114, 250, 56, 1],
-        query: ['ust-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
+        query: ['usdt-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
         element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
     },
     {

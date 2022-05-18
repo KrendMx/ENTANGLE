@@ -96,10 +96,15 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         }
     };
 
+    const makeUrl = ({ net, card }) => {
+        history.replaceState({}, '', `?net=${net}&card=${card}`);
+    };
+
     const handleSelectClick = () => {
         switch (buttonValue) {
         case 'Select':
-                openModal!();
+            openModal!();
+            makeUrl({ net: selectedChainId, card: localChain });
             sessionStorage.setItem('card', localName);
             break;
         case 'Change network':

@@ -78,6 +78,7 @@ module.exports = {
         'no-nested-ternary': 'off',
         'no-console': 'off',
         'prefer-destructuring': 'off',
+        'no-restricted-globals': 'off',
     },
     settings: {
         'import/resolver': {
