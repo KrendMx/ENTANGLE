@@ -15,7 +15,10 @@ import {
 } from '../../Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
 import { setIsOpenSelectWalletModal } from '../../Redux/store/reducers/AppSlice';
-import { setWallet } from '../../Redux/store/reducers/ActionCreators';
+import { setIsOpenModal } from '../../Redux/store/reducers/UserSlice';
+import { chainToNameConfig } from '../../src/utils/GlobalConst';
+import { setWallet, changeNetwork } from '../../Redux/store/reducers/ActionCreators';
+import type { availableChains } from '../../src/utils/GlobalConst';
 
 const Header = () => {
     const { account, provider, connect: walletConnectProvider } = useAppSelector(
@@ -23,9 +26,20 @@ const Header = () => {
     );
     const dispatch = useAppDispatch();
     const connect = () => account || dispatch(setIsOpenSelectWalletModal(true));
-    const disconnect = async () => { await walletConnectProvider.disconnect(); dispatch(removeWallet()); };
+    const disconnect = async () => { await walletConnectProvider?.disconnect(); dispatch(removeWallet()); };
 
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        if (location.search && provider) {
+            const searchArray = location.search.replace('&', '=').split('=');
+            const chainId = searchArray[1] as availableChains;
+            const card = searchArray[3];
+            dispatch(changeNetwork({ chainId, provider }));
+            sessionStorage.setItem('card', chainToNameConfig[card]);
+            dispatch(setIsOpenModal(true));
+        }
+    }, [account]);
 
     useEffect(() => {
         setIsOpen(false);

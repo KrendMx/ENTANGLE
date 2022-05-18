@@ -39,6 +39,7 @@ type initStateType = {
     txLoading: boolean;
     positionSum: string | number;
     payData: payDataType;
+    isOpenModal: boolean;
 };
 
 type ImportTypes = {
@@ -84,6 +85,7 @@ const initialState: initStateType = {
             price: null,
         },
     },
+    isOpenModal: false,
 };
 
 const importToken = createAsyncThunk(
@@ -147,6 +149,9 @@ const userSlice = createSlice({
         setPayData(state, action: PayloadAction<payDataActionType>) {
             state.payData[action.payload.key] = action.payload.data;
         },
+        setIsOpenModal(state, action: PayloadAction<boolean>) {
+            state.isOpenModal = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(importToken.fulfilled, (state, action) => {
@@ -162,5 +167,6 @@ export const {
     setDeposit,
     setProfit,
     setPayData,
+    setIsOpenModal,
 } = userSlice.actions;
 export default userSlice.reducer;

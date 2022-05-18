@@ -14,8 +14,8 @@ const ActionPanel: React.FC<IActionProps> = ({
     search, filter, setFilter, setSearch,
 }) => {
     const handleChangeFilter = (value: string) => setFilter(value);
-    const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
-        setSearch(e.target.value);
+    const handleChangeSearch = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
+        (/^[A-Za-z]{0,}$/.test(target.value) ? setSearch(target.value) : undefined);
 
     return (
         <div className={styles.wrapper}>
