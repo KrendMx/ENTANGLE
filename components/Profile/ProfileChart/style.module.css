@@ -19,5 +19,5 @@
 }
 
 .filterActive {
-  background-color: #2C2C33;
+  background-color: var(--color-9);
 }

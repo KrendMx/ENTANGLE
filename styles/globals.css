@@ -1,21 +1,8 @@
-:root {
-  --black: #101010;
-    --gray: #a3a3a3;
-    --color-3: #1e1e1e;
-    --color-4: #edf2f7;
-    --color-5: #f9f8f8;
-    --color-6: #ececec;
-    --color-7: #282b30;
-    --color-8: #e7e7e7;
-    --green: #5bc15f;
-    --red: #c8534f;
-    font-size: 16px;
-}
-
 html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 
 *::before,
@@ -37,7 +24,7 @@ a {
 body {
   margin: 0;
   padding: 0;
-  color: #fff;
+  color: var(--white);
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
   min-height: 100vh;
@@ -58,19 +45,22 @@ input {
 }
 
 .container {
-width: 100%;
-margin: 0 auto;
-padding: 0 20px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  
 }
 
 @media (min-width: 1100px) {
-.container {
-  max-width: 1260px;
-}
+  .container {
+    max-width: 1260px;
+  }
 }
 
+
 @media (max-width: 340px) {
-.container {
-  padding: 0 5px;
-}
+  .container {
+    padding: 0 5px;
+  }
 }
