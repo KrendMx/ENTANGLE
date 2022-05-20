@@ -39,18 +39,14 @@ type keyType = ('9' & '67') | ('8' & '68');
 
 interface IChainServiceVars {
     readonly name: IChain;
-    readonly ChefContract: Contract;
-    readonly RouterContract: Contract;
     readonly SynthsContractsArray: {[key: string]: Contract};
-    readonly DEXContract: Contract;
-    readonly OppositeToken: IChain;
 }
 
 interface IChainService extends IChainServiceVars {
-    getCardData: () => Promise<ICardData>;
-    getPersonalData: (account: string) => Promise<IPersonalData>;
-    buyToken: (value: number) => Promise<ITX>;
-    sellToken: (value: number) => Promise<ITX>;
+    getCardData: (id: string) => Promise<ICardData>;
+    getPersonalData: (account: string, id: string) => Promise<IPersonalData>;
+    buyToken: (value: number, id: string) => Promise<ITX>;
+    sellToken: (value: number, id: string) => Promise<ITX>;
 }
 
 type IChain = 'FTM' | 'AVAX' | 'BSC';

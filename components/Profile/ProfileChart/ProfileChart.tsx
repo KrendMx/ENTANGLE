@@ -11,7 +11,6 @@ import type {
 } from '../../../src/context/ServiceContext/ServiceContext.interfaces';
 import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 import LoadingChart from '../../ui-kit/NoDataChart/LoadingChart';
-import { ProviderContext } from '../../../src/context/ProviderContext';
 import { useAppSelector } from '../../../Redux/store/hooks/redux';
 
 const ProfileChart: React.FC = () => {

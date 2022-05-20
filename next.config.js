@@ -22,8 +22,4 @@ module.exports = withBundleAnalyzer({
     images: {
         domains: ['app.entangle.fi', 'dev.entangle.fi'],
     },
-    pwa: {
-        dest: 'public',
-        disable: true,
-    },
 });

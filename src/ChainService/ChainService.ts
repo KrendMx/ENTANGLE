@@ -8,9 +8,10 @@ import { ChainConfig, NETWORKS } from './config';
 import type {
     IChain,
     SynthContracts,
+    IChainService,
 } from './ChainService.interface';
 
-class ChainService {
+class ChainService implements IChainService {
     public readonly name: IChain;
 
     public readonly SynthsContractsArray: { [key: string]: Contract } = {};
@@ -217,7 +218,7 @@ class ChainService {
                 token1Dec = 18;
                 break;
             default:
-                break;
+                throw new Error('Unexpected id while "getCurrenctDeposit"');
             }
             const amount0 = Number(lpAmount * BigInt(reserves[0]))
                 / Number(totalSupply)
@@ -297,7 +298,6 @@ class ChainService {
             };
         } catch (e) {
             // Намутить обработку
-            console.log(e);
             return {
                 apr: 0,
                 totalDeposits: 0,
@@ -328,7 +328,6 @@ class ChainService {
                 totalPositions,
             };
         } catch (e) {
-            console.log(e);
             return {
                 positions: 0,
                 totalPositions: 0,
@@ -337,7 +336,7 @@ class ChainService {
     };
 
     // Это по другому нужно будет расписать, но пока так
-    public buyToken = async (value: number, id: number) => {
+    public buyToken = async (value: number, id: string) => {
         try {
             const contracts: SynthContracts = this.contracts[id];
 

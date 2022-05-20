@@ -20,14 +20,12 @@ type ICard = {
     chainId: string;
     description: string;
     position: string;
-    avg: number;
     price: string;
 };
 
 const InvestCard: React.FC<IProps> = ({
     ftmState,
     avaxState,
-    avgPrice,
     filter,
 }) => {
     const [cards, setCards] = useState<ICard[]>([]);
@@ -41,7 +39,6 @@ const InvestCard: React.FC<IProps> = ({
             description:
                 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
             position: ftmState?.positions,
-            avg: avgPrice?.fantomSynth,
             price: ftmState?.price,
         },
         {
@@ -49,7 +46,6 @@ const InvestCard: React.FC<IProps> = ({
             description:
                 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
             position: avaxState?.positions,
-            avg: avgPrice?.avaxSynth,
             price: avaxState?.price,
         },
         {
@@ -57,7 +53,6 @@ const InvestCard: React.FC<IProps> = ({
             description:
                 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
             position: '0',
-            avg: 0,
             price: '0',
         },
     ];

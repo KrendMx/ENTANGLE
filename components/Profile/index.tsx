@@ -29,7 +29,7 @@ export interface IState {
 
 const Profile = () => {
     const { positionSum, profits } = useAppSelector((state) => state.userReducer);
-    const { getAVGPrice, getProfit } = useContext(ServiceContext);
+    const { getProfit } = useContext(ServiceContext);
     const [balance, setBalance] = useState<number>(0);
     useEffect(() => {
         setBalance(Number(positionSum));
@@ -64,10 +64,6 @@ const Profile = () => {
     const [ftmState, setFtmState] = useState<IState>();
     const [cardLoaded, setCardLoaded] = useState<boolean>(false);
     const [change, setChange] = useState<number[]>([]);
-    const [avg, setAvg] = useState<{
-        fantomSynth: number;
-        avaxSynth: number;
-    }>();
     const { account } = useAppSelector((state) => state.walletReducer);
     const { txLoading } = useAppSelector((state) => state.userReducer);
 
@@ -321,7 +317,6 @@ const Profile = () => {
                             <InvestCard
                                 ftmState={ftmState}
                                 avaxState={avaxState}
-                                avgPrice={avg}
                                 filter={filter}
                             />
                         )

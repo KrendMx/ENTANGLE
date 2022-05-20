@@ -2,13 +2,7 @@ import React from 'react';
 import styles from './style.module.css';
 import Select, { Option } from '../../ui-kit/Select';
 import Input from '../../ui-kit/Input';
-
-interface IActionProps {
-    filter: string;
-    search: string;
-    setFilter: React.Dispatch<React.SetStateAction<string>>;
-    setSearch: React.Dispatch<React.SetStateAction<string>>;
-}
+import type { IActionProps } from './ActionPanel.interfaces';
 
 const ActionPanel: React.FC<IActionProps> = ({
     search, filter, setFilter, setSearch,
