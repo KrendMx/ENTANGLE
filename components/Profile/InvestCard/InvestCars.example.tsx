@@ -14,7 +14,6 @@ interface IState {
     description: string;
     positions: string;
     price: string;
-    avg?: number;
 }
 
 const InvestCardExp: React.FC<IState> = ({
@@ -27,8 +26,6 @@ const InvestCardExp: React.FC<IState> = ({
     const { account } = useAppSelector((state) => state.walletReducer);
     const { profits, avgPrices } = useAppSelector((state) => state.userReducer);
     const { getProfit, getAVGPrice } = useContext(ServiceContext);
-    const isLoss = true;
-    const isUp = false;
 
     useEffect(() => {
         (async function () {

@@ -58,7 +58,7 @@ const HistoryCard: React.FC<CardProps> = ({ chainId, date, price }) => {
                         {Math.abs(price).toFixed(9)}
                     </p>
                     <p className={styles.undertitle}>
-                        {networks['250'].currency}
+                        {networks[chainId].currency}
                     </p>
                 </li>
             </ul>

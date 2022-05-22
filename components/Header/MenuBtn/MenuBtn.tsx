@@ -4,10 +4,9 @@ import styles from './style.module.css';
 
 const MenuBtn: React.FC<MenuBtnProps> = ({
     isOpen: isOpenProp = false,
-    onChange = () => {
-    }, onClose = () => {
-    }, onOpen = () => {
-    },
+    onChange = () => {},
+    onClose = () => {},
+    onOpen = () => {},
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(isOpenProp);
 

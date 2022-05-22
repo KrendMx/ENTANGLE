@@ -62,9 +62,9 @@ export const setWallet = createAsyncThunk(
         if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) {
             return;
         }
-        let [account, newChainId, provider] = [null, null, null];
+        let [account, newChainId, provider, connect] = [null, null, null, null];
         if (walletKey === 'WalletConnect') {
-            const connect = new WalletConnectProvider({
+            connect = new WalletConnectProvider({
                 rpc: {
                     1: 'https://rpc.ankr.com/eth',
                     56: 'https://bsc-dataseed2.binance.org',
@@ -98,6 +98,7 @@ export const setWallet = createAsyncThunk(
         }
         localStorage.setItem('wallet', walletKey);
         return {
+            connect,
             walletKey,
             newChainId,
             provider,

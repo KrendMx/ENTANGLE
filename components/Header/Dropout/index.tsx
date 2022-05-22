@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.css';
-
-type DropoutProps = {
-    title: string;
-    wrapperClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    wrapperTextClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    wrapperPickerClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    wrapperListClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    textClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    isSoon?: boolean;
-    arrowImg?: React.ReactElement;
-    children?: JSX.Element;
-};
+import type { DropoutProps } from './Dropout.interfaces';
 
 const Dropout: React.FC<DropoutProps> = ({
     children,

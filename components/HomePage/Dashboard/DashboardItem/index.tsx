@@ -1,13 +1,18 @@
-import React, {
-    useEffect, useMemo, useState,
-} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
 import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
 import { networks, synths } from '../../../../src/utils/GlobalConst';
-import { useAppDispatch, useAppSelector } from '../../../../Redux/store/hooks/redux';
-import { changeNetwork, importToken, setWallet } from '../../../../Redux/store/reducers/ActionCreators';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../Redux/store/hooks/redux';
+import {
+    changeNetwork,
+    importToken,
+    setWallet,
+} from '../../../../Redux/store/reducers/ActionCreators';
 import type { availableChains } from '../../../../src/utils/GlobalConst';
 import type { ContainerStateType } from './containers/types';
 import CopyBtn from '../../../ui-kit/CopyBtn/CopyBtn';
@@ -50,7 +55,11 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     localChain,
     localName,
 }) => {
-    const { account, provider, chainId: selectedChainId } = useAppSelector((state) => state.walletReducer);
+    const {
+        account,
+        provider,
+        chainId: selectedChainId,
+    } = useAppSelector((state) => state.walletReducer);
     const dispatch = useAppDispatch();
     const [addingToken, setAddingToken] = useState(false);
     const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -76,14 +85,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         if (localChain === '1') return 'High Gas Fees. Excluded for MVP';
         if (disabled) return 'Not available';
         if (!account) return 'Connect wallet';
-        if (
-            selectedChainId === '250'
-            || selectedChainId === '43114'
-            || selectedChainId === '56'
-        ) {
-            return 'Select';
-        }
-        return 'Change network';
+        return 'Select';
     }, [account, selectedChainId]);
 
     const handleMetamaskClick = () => {
@@ -96,21 +98,23 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         }
     };
 
+    const makeUrl = ({ net, card }) => {
+        history.replaceState({}, '', `?net=${net}&card=${card}`);
+    };
+
     const handleSelectClick = () => {
         switch (buttonValue) {
         case 'Select':
                 openModal!();
+            makeUrl({ net: selectedChainId, card: localChain });
             sessionStorage.setItem('card', localName);
-            break;
-        case 'Change network':
-            dispatch(changeNetwork({ chainId: localChain, provider }));
             break;
         case 'Connect wallet':
             dispatch(setWallet({ walletKey: 'MetaMask' }));
             setIsOpenSelectWalletModal();
             break;
         default:
-            break;
+            throw new Error('Unexpected button value');
         }
     };
 
@@ -125,7 +129,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 <div className={styles.topBg}>
                     <div
                         className={styles.bg}
-                        style={{ background: bgGradient }}
+                        style={{ background: bgGradient || '' }}
                     />
                 </div>
                 <div className={styles.top}>
@@ -222,7 +226,10 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             />
                         </>
                     ) : (
-                        <TextLoader bgGradient={bgGradient} margin="0.87rem 0" />
+                        <TextLoader
+                            bgGradient={bgGradient}
+                            margin="0.87rem 0"
+                        />
                     )}
                 </div>
                 <div className={styles.section}>
@@ -248,11 +255,13 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                         <div className={styles.section}>
                             <p className={styles.sectionTitle}>Your Position</p>
                             <div className={classNames(styles.sectionRow)}>
-                                <p className={styles.sectionValue}>
-                                    {positions || (
-                                        <TextLoader bgGradient={bgGradient} />
-                                    )}
-                                </p>
+                                {positions ? (
+                                    <p className={styles.sectionValue}>
+                                        {positions}
+                                    </p>
+                                ) : (
+                                    <TextLoader bgGradient={bgGradient} />
+                                )}
                                 <p className={styles.sectionSubValue}>
                                     {totalPositions}
                                 </p>

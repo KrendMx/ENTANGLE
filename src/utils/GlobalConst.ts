@@ -96,6 +96,12 @@ export const namesConfig = {
     'FTM': '250',
 };
 
+export const chainToNameConfig = {
+    '56': 'BSC',
+    '43114': 'AVAX',
+    '250': 'FTM',
+};
+
 export const synths = {
     '250': {
         'BSC': '0x4e726245a362c1FE0947151199Bb225c0131C362',

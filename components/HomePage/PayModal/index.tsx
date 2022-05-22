@@ -4,19 +4,13 @@ import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider
 import classNames from 'classnames';
 import styles from './style.module.css';
 import { networks, farms } from '../../../src/utils/GlobalConst';
-import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
+import type { PayModalPropsType, namesValues } from './PayModal.interfaces';
 import Deposit from './Deposit';
 import Withdraw from './Withdraw';
 import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
 import { changeLoadingTx } from '../../../Redux/store/reducers/UserSlice';
 import { setSucInfo } from '../../../Redux/store/reducers/AppSlice';
 import { ChainConfig } from '../../../src/ChainService/config';
-
-type PayModalPropsType = {
-    handleClose: () => void;
-} & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>
-
-export type namesValues = 'AVAX' | 'FTM' | 'BSC';
 
 const PayModal: React.FC<PayModalPropsType> = (props) => {
     const {
@@ -31,7 +25,7 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
     const { chainId, provider } = useAppSelector((state) => state.walletReducer);
 
     useEffect(() => {
-        if (chainId !== '250' && chainId !== '43114' && chainId !== '56') {
+        if (!(chainId in networks)) {
             handleClose();
         }
     }, [chainId]);

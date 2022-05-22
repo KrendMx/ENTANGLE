@@ -9,12 +9,12 @@ import { ServiceContext } from '../../../../../src/context/ServiceContext/Servic
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
-import { setPayData, setPositionSum } from '../../../../../Redux/store/reducers/UserSlice';
+import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../Redux/store/reducers/UserSlice';
 
 const BUSDContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
-    const { txLoading, payData } = useAppSelector((state) => state.userReducer);
+    const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
@@ -36,9 +36,8 @@ const BUSDContainer = ({ isFiltered = false }) => {
             localName: 'BSC',
         },
     );
-    const [isOpenModal, setIsOpenModal] = useState(false);
-    const closeModal = () => setIsOpenModal(false);
-    const openModal = () => setIsOpenModal(true);
+    const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
+    const openModal = () => dispatch(setIsOpenModal(true));
 
     const data = {
         icon: 'pancakeDashboard.png',

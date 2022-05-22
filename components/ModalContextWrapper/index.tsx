@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ErrorModal from '../Modal/ErrorModal/ErrorModal';
 import SuccessModal from '../Modal/SuccessModal/SuccessModal';
 import SelectWalletModal from '../Modal/SelectWalletModal/SelectWalletModal';
+import Disclaimer from '../Disclaimer/index';
 
 import { useAppSelector, useAppDispatch } from '../../Redux/store/hooks/redux';
 import {
@@ -13,9 +14,17 @@ import { setWallet } from '../../Redux/store/reducers/ActionCreators';
 
 const ModalContextWrapper = () => {
     const dispatch = useAppDispatch();
+    const [termsModal, setTermsModal] = useState(false);
     const { error, sucInfo, isOpenSelectWalletModal } = useAppSelector(
         (state) => state.appReducer,
     );
+    const handleClose = () => { localStorage.setItem('terms', 'true'); setTermsModal(false); };
+
+    useEffect(() => {
+        if (!localStorage.getItem('terms')) {
+            setTermsModal(true);
+        }
+    }, []);
     return (
         <>
             {error && (
@@ -42,6 +51,11 @@ const ModalContextWrapper = () => {
                     handleClose={() => {
                         dispatch(setIsOpenSelectWalletModal(false));
                     }}
+                />
+            )}
+            {termsModal && (
+                <Disclaimer
+                    handleClose={handleClose}
                 />
             )}
         </>

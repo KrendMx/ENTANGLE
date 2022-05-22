@@ -1,7 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type WalletConnectProvider from '@walletconnect/web3-provider';
 
-import type { ProviderType, walletKeyType } from '../../types';
+import type { ProviderType, walletKeyType, setWalletType } from '../../types';
 import { changeNetwork, setWallet } from './ActionCreators';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 
@@ -11,6 +12,7 @@ type initialStateType = {
     account: string | null,
     chainId: availableChains,
     preLoader: boolean;
+    connect: WalletConnectProvider;
 }
 const initialState: initialStateType = {
     walletKey: null,
@@ -18,6 +20,7 @@ const initialState: initialStateType = {
     account: null,
     chainId: '43114',
     preLoader: true,
+    connect: null,
 };
 
 const walletSlice = createSlice({
@@ -36,6 +39,7 @@ const walletSlice = createSlice({
             state.provider = initialState.provider;
             state.account = initialState.account;
             state.chainId = initialState.chainId;
+            state.connect = initialState.connect;
             localStorage.removeItem('wallet');
         },
         changeNetworkWC(state, action: PayloadAction<{chainId: availableChains, provider: ProviderType}>) {
@@ -51,10 +55,11 @@ const walletSlice = createSlice({
             state.chainId = action.payload.chainId;
             state.provider = action.payload.newProvider;
         });
-        builder.addCase(setWallet.fulfilled, (state, action: any) => {
+        builder.addCase(setWallet.fulfilled, (state, action: PayloadAction<setWalletType>) => {
             const { payload } = action;
 
             if (payload) {
+                state.connect = payload.connect;
                 state.walletKey = payload.walletKey;
                 state.chainId = payload.newChainId;
                 state.provider = payload.provider;

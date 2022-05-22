@@ -12,7 +12,7 @@ import type { availableChains } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
 import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
 import { getAllowance, approve } from '../../../Redux/store/reducers/ActionCreators';
-import type { namesValues } from './index';
+import type { namesValues } from './PayModal.interfaces';
 import { changeLoadingTx } from '../../../Redux/store/reducers/UserSlice';
 
 type propsType = {
