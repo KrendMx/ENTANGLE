@@ -3,7 +3,6 @@ import React, {
     useEffect,
     useMemo,
     useReducer,
-    useState,
 } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
@@ -12,13 +11,13 @@ import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import ChainService from '../../../../../src/ChainService/ChainService';
 import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
-import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
-import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../Redux/store/reducers/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../../../../src/Redux/store/hooks/redux';
+import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../src/Redux/store/reducers/UserSlice';
 
 const FantomContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
-    const { txLoading, payData, isOpenModal } = useAppSelector((state) => state.userReducer);
+    const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
 
     const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };

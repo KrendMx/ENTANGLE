@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 import type { ErrorModalProps } from './ErrorModal.interfaces';
 import { MetamaskErrorUserMessages } from './ErrorModal.constants';
@@ -17,10 +18,13 @@ const ErrorModalContent: React.FC<ErrorModalProps> = ({
     return (
         <div className={styles.wrapper}>
             <div className={styles.closeWrapper}>
-                <img
+                <Image
+                    width={20}
+                    height={20}
                     className={styles.closeImg}
                     onClick={handleClose}
-                    src="./images/close.svg"
+                    quality={100}
+                    src="/images/close.svg"
                     alt="closeImg"
                 />
             </div>

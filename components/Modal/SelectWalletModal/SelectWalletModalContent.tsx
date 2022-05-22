@@ -11,10 +11,13 @@ const SelectWalletModalContent: React.FC<SelectWalletProps> = ({
 }) => (
     <div className={styles.wrapper}>
         <div className={styles.closeWrapper}>
-            <img
+            <Image
+                width={20}
+                height={20}
                 className={styles.closeImg}
                 onClick={handleClose}
-                src="./images/close.svg"
+                quality={100}
+                src="/images/close.svg"
                 alt="closeImg"
             />
         </div>
@@ -29,9 +32,12 @@ const SelectWalletModalContent: React.FC<SelectWalletProps> = ({
                             handleClose();
                         }}
                     >
-                        <img
+                        <Image
+                            width={32}
+                            height={32}
                             className={styles.BtnImg}
-                            src={`./images/connectors/${i}.svg`}
+                            quality={100}
+                            src={`/images/connectors/${i}.svg`}
                             alt=""
                         />
                         <div className={styles.BtnText}>

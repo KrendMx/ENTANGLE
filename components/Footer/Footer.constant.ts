@@ -23,15 +23,15 @@ const NAVIGATE = [
 
 const SOCIALS = [
     {
-        icon: './images/socialNetworks/telegram.svg',
+        icon: '/images/socialNetworks/telegram.svg',
         to: 'https://t.me/+oh2SozgECncwZTQ0',
     },
     {
-        icon: './images/socialNetworks/twitter.svg',
+        icon: '/images/socialNetworks/twitter.svg',
         to: 'https://twitter.com/Entanglefi',
     },
     {
-        icon: './images/socialNetworks/discord.svg',
+        icon: '/images/socialNetworks/discord.svg',
         to: 'https://discord.com/invite/wpnGvAdX',
     },
 ];

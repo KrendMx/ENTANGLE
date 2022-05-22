@@ -1,8 +1,8 @@
 import { avaDex, ftmDex } from './abi/index';
 
-export type availableChains = '43114' | '250' | '56' | '1';
+type availableChains = '43114' | '250' | '56' | '1';
 
-export const networks = {
+const networks = {
     '43114': {
         title: 'Avalanche',
         abbr: 'AVAX',
@@ -69,7 +69,7 @@ export const networks = {
     },
 } as const;
 
-export const farms = {
+const farms = {
     '250': {
         'FTM': '9',
         'AVAX': '8',
@@ -90,19 +90,19 @@ export const farms = {
     },
 } as const;
 
-export const namesConfig = {
+const namesConfig = {
     'BSC': '56',
     'AVAX': '43114',
     'FTM': '250',
 };
 
-export const chainToNameConfig = {
+const chainToNameConfig = {
     '56': 'BSC',
     '43114': 'AVAX',
     '250': 'FTM',
 };
 
-export const synths = {
+const synths = {
     '250': {
         'BSC': '0x4e726245a362c1FE0947151199Bb225c0131C362',
         'AVAX': '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
@@ -119,3 +119,9 @@ export const synths = {
         'FTM': '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
     },
 };
+
+export {
+    synths, chainToNameConfig, namesConfig, farms, networks,
+};
+
+export type { availableChains };

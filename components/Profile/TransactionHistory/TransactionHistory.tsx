@@ -14,9 +14,9 @@ import type { networks } from '../../../src/utils/GlobalConst';
 import {
     TransactionFilters,
     TransactionOrder,
-    loader,
 } from './TransactionHistory.constants';
-import { useAppSelector } from '../../../Redux/store/hooks/redux';
+import { loader } from '../Profile.constant';
+import { useAppSelector } from '../../../src/Redux/store/hooks/redux';
 
 const TransactionHistory: React.FC = () => {
     const service = useContext<iService>(ServiceContext);

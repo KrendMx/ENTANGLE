@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import styles from './styles.module.css';
 
 type SelectProps = {
     value: string | undefined;
-    children: JSX.Element[];
+    children: React.ReactNode[];
     onChange: any;
 };
 
@@ -28,7 +29,7 @@ const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
 
     useEffect(() => {
         React.Children.forEach<React.ReactElement<OptionProps, 'li'>>(
-            children,
+            children as any,
             (child) => {
                 if (child.props.value === value && selected !== value) {
                     setSelected(child?.props?.children || '');
@@ -54,8 +55,11 @@ const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
     return (
         <div className={styles.wrapper} ref={selectWrapperNode}>
             <label className={styles.label}>{selected}</label>
-            <img
-                src="./images/selectArrowIcon.svg"
+            <Image
+                width={13}
+                height={13}
+                quality={100}
+                src="/images/selectArrowIcon.svg"
                 className={styles.icon}
                 alt=""
             />

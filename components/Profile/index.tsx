@@ -1,34 +1,28 @@
 import React, {
-    useContext, useEffect, useMemo, useState,
+    useContext, useEffect, useState,
 } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
-import { Contract, providers } from 'ethers';
+import { ChainConfig } from '../../src/ChainService/config';
 import InvestCard from './InvestCard';
 import Typography from '../ui-kit/Typography';
 import Select, { Option } from '../ui-kit/Select';
 import InfoBlock from '../ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from '../ui-kit/InfoBlock/InfoBlock.constants';
-import {
-    avaDex, avaSynth, ftmDex, ftmSynth,
-} from '../../src/ChainService/abi';
 import { ServiceContext } from '../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 import { networks } from '../../src/utils/GlobalConst';
-import { useAppSelector } from '../../Redux/store/hooks/redux';
-
-export type IFilter = 'Price increase' | 'Price decrease' | 'Profit increase' | 'Profit decrease' | 'Sort by';
-
-export interface IState {
-    positions: string;
-    price: string;
-    avg?: number;
-}
+import { useAppSelector } from '../../src/Redux/store/hooks/redux';
+import { SortArray, calculatePosPrice, loader } from './Profile.constant';
+import type { IFilter } from './Profile.interfaces';
 
 const Profile = () => {
-    const { positionSum, profits } = useAppSelector((state) => state.userReducer);
+    const { positionSum, profits } = useAppSelector(
+        (state) => state.userReducer,
+    );
     const { getProfit } = useContext(ServiceContext);
     const [balance, setBalance] = useState<number>(0);
     useEffect(() => {
@@ -45,8 +39,8 @@ const Profile = () => {
         chain: keyof typeof networks;
     }>({ value: -0.0000001, change: 0, chain: '43114' });
     useEffect(() => {
-        const data = Object.keys(networks).map((i) => (
-            profits.get(i)
+        const data = Object.keys(networks).map((i) =>
+            (profits.get(i)
                 ? {
                     chain: i as keyof typeof networks,
                     ...profits.get(i),
@@ -55,13 +49,11 @@ const Profile = () => {
                     chain: i as keyof typeof networks,
                     value: 0,
                     change: 0,
-                }
-        ));
+                }));
         setBestProfit(data.reduce((l, e) => (e.value > l.value ? e : l)));
         setWorstProfit(data.reduce((l, e) => (e.value < l.value ? e : l)));
     }, [profits]);
-    const [avaxState, setAvaxState] = useState<IState>();
-    const [ftmState, setFtmState] = useState<IState>();
+    const [cryptoBalances, setCryptoBalances] = useState<{}>();
     const [cardLoaded, setCardLoaded] = useState<boolean>(false);
     const [change, setChange] = useState<number[]>([]);
     const { account } = useAppSelector((state) => state.walletReducer);
@@ -71,65 +63,8 @@ const Profile = () => {
 
     const handleChangeFilter = (value: IFilter) => setFilter(value);
 
-    const loader = (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                margin: '100px 0',
-                fontSize: '3rem',
-            }}
-        >
-            <i className="fa fa-spinner fa-spin" />
-        </div>
-    );
-
-    const ftmSynthContract = useMemo(
-        () =>
-            new Contract(
-                '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
-                ftmSynth,
-                new providers.JsonRpcProvider('https://rpc.ftm.tools'),
-            ),
-        [],
-    );
-
-    const ftmDEXContract = useMemo(
-        () =>
-            new Contract(
-                '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
-                ftmDex,
-                new providers.JsonRpcProvider('https://rpc.ftm.tools'),
-            ),
-        [],
-    );
-
-    const avaSynthContract = useMemo(
-        () =>
-            new Contract(
-                '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
-                avaSynth,
-                new providers.JsonRpcProvider(
-                    'https://api.avax.network/ext/bc/C/rpc',
-                ),
-            ),
-        [],
-    );
-
-    const avaDEXContract = useMemo(
-        () =>
-            new Contract(
-                '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
-                avaDex,
-                new providers.JsonRpcProvider(
-                    'https://api.avax.network/ext/bc/C/rpc',
-                ),
-            ),
-        [],
-    );
-
     useEffect(() => {
-        (async function () {
+        (async function getAvg() {
             if (account) {
                 const avaxChange = await getProfit(account, 67);
                 const ftmChange = await getProfit(account, 8);
@@ -145,50 +80,27 @@ const Profile = () => {
         (async () => {
             if (account) {
                 setCardLoaded(false);
-                const ftmDec = await ftmSynthContract.decimals();
-
-                const avaxRate = await ftmDEXContract.rate();
-                const avaxPrice = 1 / (Number(avaxRate.toBigInt()) / 10 ** 18);
-
-                const avaxAccountBalance = await ftmSynthContract.balanceOf(
-                    account,
-                );
-                const avaxSynthPosition = Number(avaxAccountBalance.toBigInt()) / 10 ** ftmDec;
-
-                const avaxPosition = avaxSynthPosition * avaxPrice;
-                const avaDec = await avaSynthContract.decimals();
-
-                const rate = await avaDEXContract.rate();
-                const price = 1 / (Number(rate.toBigInt()) / 10 ** 18);
-
-                const accountBalance = await avaSynthContract.balanceOf(
-                    account,
-                );
-                const synthPosition = Number(accountBalance.toBigInt()) / 10 ** avaDec;
-                const position = synthPosition * price;
-                setFtmState({
-                    price: `${Number(price.toFixed(6))}`,
-                    positions: `${Number(position.toFixed(2))}`,
-                });
-                setAvaxState({
-                    positions: `${Number(avaxPosition.toFixed(2))}`,
-                    price: `${Number(avaxPrice.toFixed(6))}`,
-                });
+                const balances: { [key: string]: { price: number, positions: number } } = {};
+                const keys = Object.keys(ChainConfig);
+                for (const key of keys) {
+                    const Balance: { price: number, positions: number } = { price: 0, positions: 0 };
+                    for (
+                        let i = 0;
+                        i < ChainConfig[key].SYNTH.length;
+                        i++
+                    ) {
+                        const { positions, price } = await calculatePosPrice(account, key, i);
+                        Balance.positions += Number(positions.toFixed(2));
+                        Balance.price += price;
+                    }
+                    balances[key] = Balance;
+                    setBalance((prev) => prev + Balance.price);
+                }
+                setCryptoBalances(balances);
                 setCardLoaded(true);
             }
         })();
     }, [account, txLoading]);
-
-    useEffect(() => {
-        if (
-            (ftmState?.positions && ftmState?.price)
-            || (avaxState?.positions && avaxState?.price)
-        ) {
-            const ftmBalance = Number(ftmState?.positions!) * Number(ftmState?.price!);
-            const avaxBalance = Number(avaxState?.positions!) * Number(avaxState?.price!);
-            setBalance(ftmBalance + avaxBalance);
-        }
-    }, [ftmState?.positions, avaxState?.positions]);
 
     return (
         <div>
@@ -246,12 +158,15 @@ const Profile = () => {
                                 options={{
                                     changeValue: bestProfit.value,
                                     image: (
-                                        <img
+                                        <Image
+                                            width={30}
+                                            height={30}
+                                            quality={100}
                                             src={
                                                 networks[bestProfit.chain]
                                                     .mainIcon
                                             }
-                                            alt=""
+                                            alt="best coin"
                                         />
                                     ),
                                 }}
@@ -265,12 +180,15 @@ const Profile = () => {
                                 options={{
                                     changeValue: worstProfit.value,
                                     image: (
-                                        <img
+                                        <Image
+                                            width={30}
+                                            height={30}
+                                            quality={100}
                                             src={
-                                                networks[worstProfit.chain]
+                                                networks[bestProfit.chain]
                                                     .mainIcon
                                             }
-                                            alt=""
+                                            alt="worst coin"
                                         />
                                     ),
                                 }}
@@ -286,42 +204,22 @@ const Profile = () => {
                     <div className={styles.selectWrapper}>
                         <Select value={filter} onChange={handleChangeFilter}>
                             <Option value="Sort by">Sort by</Option>
-                            <Option
-                                value="Price increase"
-                            >
-                                Price increase
-                            </Option>
-                            <Option
-                                value="Price decrease"
-                            >
-                                Price decrease
-                            </Option>
-                            <Option
-                                value="Profit increase"
-                            >
-                                Profit increase
-                            </Option>
-                            <Option
-                                value="Profit decrease"
-                            >
-                                Profit decrease
-                            </Option>
+                            {SortArray.map((el, key) => (
+                                <Option value={el} key={key}>
+                                    {el}
+                                </Option>
+                            ))}
                         </Select>
                     </div>
                 </div>
-                {
-                    !cardLoaded ? (
-                        loader
-                    )
-                        : (
-                            <InvestCard
-                                ftmState={ftmState}
-                                avaxState={avaxState}
-                                filter={filter}
-                            />
-                        )
-                }
-
+                {!cardLoaded ? (
+                    loader
+                ) : (
+                    <InvestCard
+                        balances={cryptoBalances}
+                        filter={filter}
+                    />
+                )}
             </section>
             <section className={styles.section}>
                 <TransactionHistory />

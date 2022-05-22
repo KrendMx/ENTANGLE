@@ -1,19 +1,20 @@
 import React, { useContext, useEffect } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 
 import { networks } from '../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
-import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
+import { useAppSelector, useAppDispatch } from '../../../src/Redux/store/hooks/redux';
 import type { availableChains } from '../../../src/utils/GlobalConst';
-import { setPrices, setProfit } from '../../../Redux/store/reducers/UserSlice';
+import { setPrices, setProfit } from '../../../src/Redux/store/reducers/UserSlice';
 
 interface IState {
     chainId: availableChains;
     description: string;
-    positions: string;
-    price: string;
+    positions: number;
+    price: number;
 }
 
 const InvestCardExp: React.FC<IState> = ({
@@ -28,7 +29,7 @@ const InvestCardExp: React.FC<IState> = ({
     const { getProfit, getAVGPrice } = useContext(ServiceContext);
 
     useEffect(() => {
-        (async function () {
+        (async function GetAvg() {
             if (account) {
                 const avgData = await getAVGPrice(account);
                 dispatch(setPrices({
@@ -44,7 +45,10 @@ const InvestCardExp: React.FC<IState> = ({
     return (
         <div className={styles.root}>
             <div className={styles.logoWrapper}>
-                <img
+                <Image
+                    width={100}
+                    height={100}
+                    quality={100}
                     src={`/images/networks/${networks[chainId].icon}`}
                     alt="alt"
                     className={styles.logo}
@@ -66,7 +70,7 @@ const InvestCardExp: React.FC<IState> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Price</p>
-                    <p className={styles.itemValue}>{price}</p>
+                    <p className={styles.itemValue}>{Number(price.toFixed(6))}</p>
                     <p className={styles.undertitle}>
                         {networks[chainId].currencyMin}
                     </p>

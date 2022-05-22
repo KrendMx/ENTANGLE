@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 import type { DropoutProps } from './Dropout.interfaces';
@@ -56,11 +57,15 @@ const Dropout: React.FC<DropoutProps> = ({
                         )}
                     </div>
                     {arrowImg || (
-                        <img
-                            className={classNames(wrapperPickerClassName)}
-                            src="./images/arrowIcon.svg"
-                            alt=""
-                        />
+                        <div className={classNames(wrapperPickerClassName)}>
+                            <Image
+                                width={12}
+                                height={12}
+                                quality={100}
+                                src="/images/arrowIcon.svg"
+                                alt=""
+                            />
+                        </div>
                     )}
                 </div>
                 <div className={classNames(wrapperListClassName, styles.list)}>{children}</div>

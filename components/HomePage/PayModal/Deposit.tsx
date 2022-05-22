@@ -2,18 +2,20 @@ import classNames from 'classnames';
 import React, {
     useEffect, useMemo, useState,
 } from 'react';
+import Image from 'next/image';
 import { Contract, providers } from 'ethers';
 import styles from './style.module.css';
 import Input from '../../ui-kit/Input';
 import GradientButton from '../../ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
-import { networks, farms, namesConfig } from '../../../src/utils/GlobalConst';
+import {
+    networks, farms, namesConfig,
+} from '../../../src/utils/GlobalConst';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
-import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
-import { getAllowance, approve } from '../../../Redux/store/reducers/ActionCreators';
-import type { namesValues } from './PayModal.interfaces';
-import { changeLoadingTx } from '../../../Redux/store/reducers/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../../src/Redux/store/hooks/redux';
+import { getAllowance, approve } from '../../../src/Redux/store/reducers/ActionCreators';
+import { changeLoadingTx } from '../../../src/Redux/store/reducers/UserSlice';
 
 type propsType = {
     buyToken: (value: number) => void;
@@ -24,7 +26,7 @@ const Deposit: React.FC<propsType> = (props) => {
     const { chainId, account, provider } = useAppSelector((state) => state.walletReducer);
     const { payData, txLoading, deposit } = useAppSelector((state) => state.userReducer);
     const {
-        available, totalAvailable, price, buyToken,
+        available, price, buyToken,
     } = props;
     const [amount, setAmount] = useState('');
     const [allowance, setAllowance] = useState<number>(0);
@@ -34,22 +36,22 @@ const Deposit: React.FC<propsType> = (props) => {
     const localChain = useMemo(
         () =>
             namesConfig[
-                sessionStorage.getItem('card') as namesValues
+                sessionStorage.getItem('card')
             ],
         [chainId],
     );
 
     useEffect(() => {
-        (async function () {
+        (async function getAllowanceAndBalance() {
             const contracts = (
                 ChainConfig[
-                    sessionStorage.getItem('card') as namesValues
+                    sessionStorage.getItem('card')
                 ].SYNTH as any
             ).find(
                 (el: any) =>
                     el.ID
                     === farms[chainId][
-                        sessionStorage.getItem('card') as namesValues
+                        sessionStorage.getItem('card')
                     ],
             );
             dispatch(getAllowance({
@@ -58,7 +60,6 @@ const Deposit: React.FC<propsType> = (props) => {
                 account,
                 provider,
             })).then((action) => setAllowance(Number(action.payload.toBigInt())));
-            console.log(contracts);
             const contract = new Contract(
                 contracts.CONTRACTS.STABLE.address,
                 contracts.CONTRACTS.STABLE.abi,
@@ -81,13 +82,13 @@ const Deposit: React.FC<propsType> = (props) => {
     const handleApprove = async () => {
         const contracts = (
             ChainConfig[
-                sessionStorage.getItem('card') as namesValues
+                sessionStorage.getItem('card')
             ].SYNTH as any
         ).find(
             (el: any) =>
                 el.ID
                 === farms[chainId][
-                    sessionStorage.getItem('card') as namesValues
+                    sessionStorage.getItem('card')
                 ],
         );
         dispatch(approve({
@@ -107,7 +108,7 @@ const Deposit: React.FC<propsType> = (props) => {
     };
 
     const getMax = async () => {
-        setAmount(maxAmount!);
+        setAmount(maxAmount || '0');
     };
     const percentage = Math.ceil(
         (Number(available) / deposit[chainId]) * 100,
@@ -158,9 +159,12 @@ const Deposit: React.FC<propsType> = (props) => {
                             styles.networkIconWrapper,
                         )}
                     >
-                        <img
+                        <Image
+                            width={15}
+                            height={25}
+                            quality={100}
                             className={styles.networkIcon}
-                            src={`./images/networks/${networks[localChain as availableChains]?.icon}`}
+                            src={`/images/networks/${networks[localChain as availableChains]?.icon}`}
                             alt=""
                         />
                         {networks[localChain as availableChains]?.currency}
@@ -176,7 +180,7 @@ const Deposit: React.FC<propsType> = (props) => {
                     value={amount}
                     onChange={({ target }) => {
                         const value = target.value.replace(',', '.').trim();
-                        if (Number(value) >= 0) {
+                        if (Number(value) >= 0 && value.length <= 6) {
                             setAmount(value);
                         }
                     }}

@@ -1,5 +1,4 @@
 import type { Contract } from 'ethers';
-import type { ChainConfig } from './config';
 
 interface ICardData {
     apr: number;
@@ -17,10 +16,6 @@ interface IPersonalData {
 
 interface IResult {
     result: number;
-}
-
-interface ITX {
-    wait: () => Promise<IResult>;
 }
 
 type SynthContracts = {
@@ -45,8 +40,6 @@ interface IChainServiceVars {
 interface IChainService extends IChainServiceVars {
     getCardData: (id: string) => Promise<ICardData>;
     getPersonalData: (account: string, id: string) => Promise<IPersonalData>;
-    buyToken: (value: number, id: string) => Promise<ITX>;
-    sellToken: (value: number, id: string) => Promise<ITX>;
 }
 
 type IChain = 'FTM' | 'AVAX' | 'BSC';

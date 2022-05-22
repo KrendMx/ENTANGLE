@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { MetamaskErrorUserMessages } from '../../../components/Modal/ErrorModal/ErrorModal.constants';
+import type { MetamaskErrorUserMessages } from '../../../../components/Modal/ErrorModal/ErrorModal.constants';
 
 type AppState = {
     isLoaded: boolean;

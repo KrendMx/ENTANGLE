@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {
     useEffect, useState, useMemo,
 } from 'react';
+import Image from 'next/image';
 import { Contract, providers } from 'ethers';
 import styles from './style.module.css';
 import Input from '../../ui-kit/Input';
@@ -10,10 +11,9 @@ import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/t
 import { networks, farms, namesConfig } from '../../../src/utils/GlobalConst';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 import { ChainConfig } from '../../../src/ChainService/config';
-import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
-import { getAllowance, approve } from '../../../Redux/store/reducers/ActionCreators';
-import type { namesValues } from './PayModal.interfaces';
-import { changeLoadingTx } from '../../../Redux/store/reducers/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../../src/Redux/store/hooks/redux';
+import { getAllowance, approve } from '../../../src/Redux/store/reducers/ActionCreators';
+import { changeLoadingTx } from '../../../src/Redux/store/reducers/UserSlice';
 
 type propsType = {
     sellToken: (value: number) => void;
@@ -22,9 +22,9 @@ type propsType = {
 const Withdraw: React.FC<propsType> = (props) => {
     const dispatch = useAppDispatch();
     const { chainId, account, provider } = useAppSelector((state) => state.walletReducer);
-    const { payData, txLoading, deposit } = useAppSelector((state) => state.userReducer);
+    const { payData, txLoading } = useAppSelector((state) => state.userReducer);
     const {
-        available, totalAvailable, price, sellToken,
+        price, sellToken,
     } = props;
     const [amount, setAmount] = useState<string>('');
     const [allowance, setAllowance] = useState(0);
@@ -34,21 +34,21 @@ const Withdraw: React.FC<propsType> = (props) => {
     const localChain = useMemo(
         () =>
             namesConfig[
-                sessionStorage.getItem('card') as namesValues
+                sessionStorage.getItem('card')
             ],
         [chainId],
     );
 
     useEffect(() => {
-        (async function () {
+        (async function getAllowanceAndBalance() {
             const contracts = (
-                ChainConfig[sessionStorage.getItem('card') as namesValues]
+                ChainConfig[sessionStorage.getItem('card')]
                     .SYNTH as any
             ).find(
                 (el: any) =>
                     el.ID
                     === farms[chainId][
-                        sessionStorage.getItem('card') as namesValues
+                        sessionStorage.getItem('card')
                     ],
             );
 
@@ -148,9 +148,12 @@ const Withdraw: React.FC<propsType> = (props) => {
                             styles.networkIconWrapper,
                         )}
                     >
-                        <img
+                        <Image
+                            width={15}
+                            height={25}
+                            quality={100}
                             className={styles.networkIcon}
-                            src={`./images/networks/${networks[localChain as availableChains].icon}`}
+                            src={`/images/networks/${networks[localChain as availableChains]?.icon}`}
                             alt=""
                         />
                         {networks[localChain as availableChains].currency}

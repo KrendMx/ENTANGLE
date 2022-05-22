@@ -10,17 +10,5 @@ const TransactionOrder = {
     'Recent last': (a: TransactionHistoryEntity, b: TransactionHistoryEntity) => (b.time - a.time),
     'Recent first': (a: TransactionHistoryEntity, b: TransactionHistoryEntity) => (a.time - b.time),
 };
-const loader = (
-    <div
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            margin: '100px 0',
-            fontSize: '3rem',
-        }}
-    >
-        <i className="fa fa-spinner fa-spin" />
-    </div>
-);
 
-export { TransactionFilters, TransactionOrder, loader };
+export { TransactionFilters, TransactionOrder };

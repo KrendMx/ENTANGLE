@@ -11,12 +11,12 @@ const ETHContainer = ({ isFiltered = false }) => {
         {
             apr: 'TBA',
             currentDeposits: '$0',
-            totalDeposits: '0 MIM/UST LP',
+            totalDeposits: '0 aDAI/aSUSD LP',
             available: '0',
             totalAvailable: '$0',
             price: '0',
             positions: '$0',
-            totalPositions: 'MIM/UST Synthetic LP',
+            totalPositions: 'aDAI/aSUSD Synthetic LP',
             rowGradient: '',
             yieldTime: '$0',
             localChain: '1',
@@ -28,11 +28,11 @@ const ETHContainer = ({ isFiltered = false }) => {
         icon: 'etheriumDashboard.svg',
         bgGradient:
             'linear-gradient(90deg, rgba(152,152,152,0.2) 0%, rgba(246, 246, 246, 0) 96.87%)',
-        heading: 'MIM-UST',
+        heading: 'aDAI-aSUSD',
         chainId: '43114',
-        priceCurrency: 'MIM/UST Synthetic LP',
+        priceCurrency: 'aDAI/aSUSD Synthetic LP',
         description:
-            'Generates yield by running autocompounded mim/UST strategy on convexfinance.com',
+            'Generates yield by running autocompounded aDAI/aSUSD strategy on convexfinance.com',
         disabled: false,
         ...state,
     } as const;

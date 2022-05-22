@@ -1,8 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { availableChains } from '../../../src/utils/GlobalConst';
+import type { availableChains } from '../../../utils/GlobalConst';
 import type { ProviderType } from '../../types';
-import { networks } from '../../../src/utils/GlobalConst';
+import { networks } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 
 interface payDataType {
@@ -110,7 +110,7 @@ const importToken = createAsyncThunk(
                             ethereumNetworksConfig[chainId],
                         ]);
                     } catch (addError) {
-                        console.log(switchError);
+                        throw new Error(switchError);
                     }
                 }
             }
