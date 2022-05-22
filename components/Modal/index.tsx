@@ -22,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({ children, handleClose }) => {
     return ReactDOM.createPortal(
         <div className={styles.wrapper} ref={modal}>
             <ScrollLock>
-                <div>{children}</div>
+                <div className={styles.modalChildWrap}>{children}</div>
             </ScrollLock>
         </div>,
         document.body,

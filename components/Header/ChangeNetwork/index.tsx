@@ -3,7 +3,10 @@ import Image from 'next/image';
 import classNames from 'classnames';
 
 import { networks } from '../../../src/utils/GlobalConst';
-import { useAppDispatch, useAppSelector } from '../../../Redux/store/hooks/redux';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../Redux/store/hooks/redux';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 
 import styles from './style.module.css';
@@ -11,14 +14,17 @@ import { changeNetwork } from '../../../Redux/store/reducers/ActionCreators';
 
 const ChangeNetwork = () => {
     const [openList] = useState(false);
-    const { chainId, provider } = useAppSelector((state) => state.walletReducer);
+    const { chainId, provider } = useAppSelector(
+        (state) => state.walletReducer,
+    );
     const dispatch = useAppDispatch();
 
-    const handleClick = (chainIdEl: availableChains) => dispatch(changeNetwork({ chainId: chainIdEl, provider }));
+    const handleClick = (chainIdEl: availableChains) =>
+        dispatch(changeNetwork({ chainId: chainIdEl, provider }));
 
     return (
         <div className={styles.wrapper}>
-            {networks[chainId]?.icon ? (
+            {chainId in networks ? (
                 <div className={styles.selected}>
                     {networks[chainId]?.title}
                     <Image
@@ -32,7 +38,13 @@ const ChangeNetwork = () => {
             ) : (
                 <div className={styles.selected}>
                     {networks['43114']?.title}
-                    <Image src="/images/networks/avalanche.svg" width={32} height={32} quality={100} alt="" />
+                    <Image
+                        src="/images/networks/avalanche.svg"
+                        width={32}
+                        height={32}
+                        quality={100}
+                        alt=""
+                    />
                 </div>
             )}
 

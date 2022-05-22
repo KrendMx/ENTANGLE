@@ -1,33 +1,5 @@
 .wrapper {
-    padding: 50px 33px 33px;
-    min-width: 404px;
-    width: 100%;
-    border-radius: 12px;
-    position: relative;
-    background: rgba(30, 30, 30, 0.1);
-    border: 1px solid var(--color-11);
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-        inset 0px -4px 4px rgba(255, 255, 255, 0.25),
-        inset 0px 0px 68px rgba(255, 255, 255, 0.05),
-        inset 0px 4px 4px rgba(255, 255, 255, 0.15);
-    position: relative;
-}
-
-.wrapper::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .9);
-  z-index: -1;
-}
-
-@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-  .wrapper::before {
-    backdrop-filter: blur(62px);
-    background-color: rgba(0, 0, 0, .1);
-  }
+    padding: 35px 15px;
 }
 
 .close {
@@ -70,7 +42,7 @@
     color: var(--white);
 }
 
-.tabWrapper.active > .tab {
+.tabWrapper.active>.tab {
     cursor: default;
     background: linear-gradient(180deg, var(--color-14) 17.71%, var(--color-15) 90.44%);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
@@ -97,7 +69,8 @@
     margin-bottom: 0;
 }
 
-.inputWrapper > div, .inputWrapperError > div {
+.inputWrapper>div,
+.inputWrapperError>div {
     padding: 14px;
 }
 
@@ -105,12 +78,10 @@
     font-size: 16px;
     display: flex;
     align-items: center;
-    background: linear-gradient(
-            90deg,
+    background: linear-gradient(90deg,
             #ff5eba 1.27%,
             rgba(104, 49, 214, 0.87) 51.2%,
-            #0094ff 103.24%
-        ),
+            #0094ff 103.24%),
         var(--color-6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -162,14 +133,14 @@
 }
 
 .rowGradient {
-  --colorFrom: #0f598e;
-  --percentage: 1%;
-  margin-top: 9px;
-  height: 5px;
-  width: 100%;
-  background: rgb(42 42 42);
-  background: linear-gradient(90deg, var(--colorFrom) 0%, rgba(0, 0, 0, 0) var(--percentage));
-  border-radius: 2.5px;
+    --colorFrom: #0f598e;
+    --percentage: 1%;
+    margin-top: 9px;
+    height: 5px;
+    width: 100%;
+    background: rgb(42 42 42);
+    background: linear-gradient(90deg, var(--colorFrom) 0%, rgba(0, 0, 0, 0) var(--percentage));
+    border-radius: 2.5px;
 }
 
 .networkIcon {

@@ -9,6 +9,7 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .wrapper {
   padding: 16px 16px 32px 32px;
   min-width: 404px;
@@ -40,6 +41,8 @@
 }
 
 
+=======
+>>>>>>> task/ENT-102__crossbrowser
 .errorText {
   color: var(--color-6);
   font-weight: 600;
@@ -47,9 +50,4 @@
   font-size: 24px;
   line-height: 1em;
   text-align: center;
-}
-@media screen and (max-width: 640px) {
-  .wrapper {
-    min-width: 100%;
-  }
 }

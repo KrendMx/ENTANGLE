@@ -29,6 +29,7 @@
 .menuHeaderWrapper {
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .menuBtnWrapper {

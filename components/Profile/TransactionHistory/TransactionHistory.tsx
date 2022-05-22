@@ -14,24 +14,11 @@ import type { networks } from '../../../src/utils/GlobalConst';
 import {
     TransactionFilters,
     TransactionOrder,
+    loader,
 } from './TransactionHistory.constants';
-import { ProviderContext } from '../../../src/context/ProviderContext';
 import { useAppSelector } from '../../../Redux/store/hooks/redux';
 
 const TransactionHistory: React.FC = () => {
-    const loader = (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                margin: '100px 0',
-                fontSize: '3rem',
-            }}
-        >
-            <i className="fa fa-spinner fa-spin" />
-        </div>
-    );
-
     const service = useContext<iService>(ServiceContext);
     const [transactions, setTransactions] = useState<
         TransactionHistoryEntity[]
