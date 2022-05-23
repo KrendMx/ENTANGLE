@@ -43,7 +43,7 @@ const FantomContainer = ({ isFiltered = false }) => {
         },
     );
     const data = {
-        icon: 'fantomDashboard.svg',
+        icon: 'fantom.svg',
         bgGradient:
             'linear-gradient(90deg, rgba(15, 89, 142, 0.4) 0%, rgba(15, 89, 142, 0) 100%)',
         heading: 'MIM-USDC',
