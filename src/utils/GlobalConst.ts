@@ -59,7 +59,7 @@ const networks = {
         currencyMin: 'MIM/USDC',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
-        rpc: 'https://rpc3.fantom.network',
+        rpc: 'https://rpc.fantom.network',
         synth: '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
         dexAbi: ftmDex,
         mainColor: '#E93038',

@@ -123,7 +123,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     positions: `$${Number(positions.toFixed(2))}`,
                     totalPositions: `${Number(
                         totalPositions.toFixed(5),
-                    )} USDT/USDT.e Synthetic LP`,
+                    )} USDC/USDC.e Synthetic LP`,
                     yieldTime: `$${Number(yieldTime.stable || 0).toFixed(4)}`,
                 });
             }
