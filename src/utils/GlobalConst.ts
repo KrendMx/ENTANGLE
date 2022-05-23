@@ -33,7 +33,7 @@ export const networks = {
         mainColor: '#E93038',
         order: 1,
         farm: 7,
-        mainIcon: '/images/networks/fantomDashboard.png',
+        mainIcon: '/images/networks/fantomDashboard.svg',
     },
     '1': {
         title: 'Ethereum',
@@ -49,7 +49,7 @@ export const networks = {
         mainColor: '#E93038',
         order: 3,
         farm: 0,
-        mainIcon: '/images/networks/fantomDashboard.png',
+        mainIcon: '/images/networks/fantomDashboard.svg',
     },
     '250': {
         title: 'Fantom',
@@ -65,7 +65,7 @@ export const networks = {
         mainColor: '#E93038',
         order: 4,
         farm: 67,
-        mainIcon: '/images/networks/fantomDashboard.png',
+        mainIcon: '/images/networks/fantomDashboard.svg',
     },
 } as const;
 

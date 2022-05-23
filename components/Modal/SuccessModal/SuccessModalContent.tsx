@@ -44,7 +44,7 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                                     <img
                                         className={styles.metamaskBtnImg}
                                         src="./images/connectors/metamask.svg"
-                                        alt=""
+                                        alt="Metamask logo"
                                     />
                                 </div>
                             )}
