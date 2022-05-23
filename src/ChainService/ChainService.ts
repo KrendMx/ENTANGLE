@@ -42,6 +42,10 @@ class ChainService implements IChainService {
             }
         }
     }
+    /* Calculation of APR by counting the number
+    of synthetics relative to the total pool
+    ----------------------BNB-------------------
+    */
 
     private getAPRForBNB = async (contracts: SynthContracts, id: string) => {
         try {
@@ -80,6 +84,11 @@ class ChainService implements IChainService {
         }
     };
 
+    /* Calculation of APR by counting the number
+    of synthetics relative to the total pool
+    ----------------------FTM-------------------
+    */
+
     private getAPRForFTM = async (contracts: SynthContracts, id: string) => {
         try {
             const persec = await contracts.CHEF.spiritPerBlock();
@@ -116,6 +125,11 @@ class ChainService implements IChainService {
             throw new Error('Error while calculating ftm apr');
         }
     };
+
+    /* Calculation of APR by counting the number
+    of synthetics relative to the total pool
+    ----------------------AVAX-------------------
+    */
 
     private getAPRForAVAX = async (contracts: SynthContracts, id: string) => {
         try {
@@ -188,7 +202,7 @@ class ChainService implements IChainService {
         return volumeUSD;
     };
 
-    // calculate apr by farm id
+    // Checking the Farm ID
     private calculateAPR = async (contracts: SynthContracts, id: string) => {
         try {
             let apr = 0;
@@ -214,6 +228,12 @@ class ChainService implements IChainService {
             throw new Error('Error while calculating apr');
         }
     };
+
+    /*
+        Calculation of Current Deposit relative
+        to the number of lp tokens and the number
+        of tokens in reserves
+    */
 
     private getCurrenctDeposit = async (
         contracts: SynthContracts,
@@ -258,6 +278,10 @@ class ChainService implements IChainService {
         }
     };
 
+    /*
+        Small calculations of additional data
+    */
+
     private getRemainData = async (
         contracts: SynthContracts,
     ) => {
@@ -282,6 +306,11 @@ class ChainService implements IChainService {
             throw new Error('Error while calculating remain data');
         }
     };
+
+    /*
+        A method that combines the calculation
+        of all the necessary information
+    */
 
     public getCardData = async (id: string) => {
         try {
@@ -314,6 +343,10 @@ class ChainService implements IChainService {
             throw new Error('Error while calculating card data');
         }
     };
+
+    /*
+        Counting the user's personal data relative to the user wallet
+    */
 
     public getPersonalData = async (account: string, id: string) => {
         try {

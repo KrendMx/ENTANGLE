@@ -1,20 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { MetamaskErrorUserMessages } from '../../../../components/Modal/ErrorModal/ErrorModal.constants';
-
-type AppState = {
-    isLoaded: boolean;
-    error: null | ErrorI;
-    errorStack: ErrorI[];
-    sucInfo: null | TransactionInfo;
-    isOpenSelectWalletModal: boolean;
-}
-
-type TransactionInfo = { value: number, symbol: string, isReceived: boolean }
-
-interface ErrorI extends Error {
-    code: keyof typeof MetamaskErrorUserMessages
-}
+import type { AppState, ErrorI, TransactionInfo } from '../interfaces/App.interfaces';
 
 const initialState: AppState = {
     isLoaded: false,

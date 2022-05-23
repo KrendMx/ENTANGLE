@@ -8,7 +8,7 @@ import { toChainId } from '../../../utils';
 import type { availableChains } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 import type { ProviderType, walletKeyType } from '../../types';
-import type { ErrorI } from '../../../../components/Modal/ErrorModal/ErrorModal.interfaces';
+import type { ErrorI } from '@/components/Modal/ErrorModal/ErrorModal.interfaces';
 import { setError, setErrorStack } from './AppSlice';
 import { useAppDispatch } from '../hooks/redux';
 
@@ -22,7 +22,10 @@ export const useErrorHandler = (e: ErrorI, returnValue: any) => {
     dispatch(setError({ e }));
     return returnValue;
 };
-
+/*
+    Asynchronously changes the network
+    (if the network is not in the injected wallet, then it adds it)
+*/
 export const changeNetwork = createAsyncThunk(
     'wallet/changeNetwork',
     async ({
@@ -53,7 +56,10 @@ export const changeNetwork = createAsyncThunk(
         return { chainId, newProvider };
     },
 );
-
+/*
+    Sets all wallet parameters (takes them from the injected wallet):
+    wallet key, provider, account, chain id
+*/
 export const setWallet = createAsyncThunk(
     'wallet/setWallet',
     async ({ walletKey }: { walletKey: walletKeyType }) => {
@@ -107,6 +113,7 @@ export const setWallet = createAsyncThunk(
     },
 );
 
+// Adds a synthetic to the user's wallet (sends a request to the injected wallet)
 export const importToken = createAsyncThunk(
     'user/import-token',
     async ({

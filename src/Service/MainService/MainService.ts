@@ -11,6 +11,7 @@ import type {
     IResponseAVG,
 } from '../../context/ServiceContext/ServiceContext.interfaces';
 
+// Service initialization with all backend routes
 export default class MainService extends Service implements iService {
     constructor() {
         super({
