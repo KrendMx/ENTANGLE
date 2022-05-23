@@ -81,6 +81,7 @@
     .content {
         padding: 15px 30px;
         font-size: .65rem;
+        max-width: 23rem;
     }
     
     .extraForCheckbox {
