@@ -11,7 +11,7 @@
 }
 
 .label .bagete {
-  background: #A3A3A3;
+  background: var(--gray);
   height: var(--line-height);
   margin: var(--line-spacing) 0;
   width: 100%;

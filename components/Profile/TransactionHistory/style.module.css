@@ -34,15 +34,15 @@
 }
 
 .block.disabled:hover > div {
-  color: #989898;
+  color: var(--color-17);
 }
 
 .block.selected > div {
-  color: #E9E9E9;
+  color: var(--color-18);
 }
 
 .block:hover > div {
-  color: #E9E9E9;
+  color: var(--color-18);
 }
 
 .block > div {
@@ -50,15 +50,15 @@
   z-index: 10;
   border-radius: 7px;
   height: 100%;
-  color: #989898;
+  color: var(--color-18);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .disabled {
-  background: #161616;
-  color: grey;
+  background: var(--color-19);
+  color: var(--gray);
   cursor: not-allowed;
 }
 

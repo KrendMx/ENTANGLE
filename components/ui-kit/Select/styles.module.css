@@ -43,5 +43,5 @@
 }
 
 .options li:hover {
-    background-color: #222222;
+    background-color: var(--color-10);
 }
