@@ -6,10 +6,10 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import type { SuccessModalProps } from './SuccessModal.interface';
 
 import styles from './style.module.css';
-import GradientButton from '../../ui-kit/GradientButton';
-import { networks, synths } from '../../../src/utils/GlobalConst';
-import { useAppSelector, useAppDispatch } from '../../../src/Redux/store/hooks/redux';
-import { importToken } from '../../../src/Redux/store/reducers/ActionCreators';
+import GradientButton from '@/ui-kit/GradientButton';
+import { networks, synths } from '@/src/utils/GlobalConst';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { importToken } from '@/src/Redux/store/reducers/ActionCreators';
 
 const SuccessModalContent: React.FC<SuccessModalProps> = ({
     transactionInfo,

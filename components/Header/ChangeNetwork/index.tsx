@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
-import { networks } from '../../../src/utils/GlobalConst';
+import { networks } from '@/src/utils/GlobalConst';
 import {
     useAppDispatch,
     useAppSelector,
-} from '../../../src/Redux/store/hooks/redux';
-import type { availableChains } from '../../../src/utils/GlobalConst';
+} from '@/src/Redux/store/hooks/redux';
+import type { availableChains } from '@/src/utils/GlobalConst';
 
 import styles from './style.module.css';
-import { changeNetwork } from '../../../src/Redux/store/reducers/ActionCreators';
+import { changeNetwork } from '@/src/Redux/store/reducers/ActionCreators';
 
 const ChangeNetwork = () => {
     const [openList] = useState(false);

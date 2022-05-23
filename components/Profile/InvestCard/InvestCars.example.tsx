@@ -2,13 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
-import { networks } from '../../../src/utils/GlobalConst';
-import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
+import { networks } from '@/src/utils/GlobalConst';
+import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
-import { useAppSelector, useAppDispatch } from '../../../src/Redux/store/hooks/redux';
-import type { availableChains } from '../../../src/utils/GlobalConst';
-import { setPrices, setProfit } from '../../../src/Redux/store/reducers/UserSlice';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import type { availableChains } from '@/src/utils/GlobalConst';
+import { setPrices, setProfit } from '@/src/Redux/store/reducers/UserSlice';
 
 interface IState {
     chainId: availableChains;

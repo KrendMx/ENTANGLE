@@ -6,7 +6,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix --ext .ts,.tsx .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "jest --no-cache --watch --config jest.config.js",
+    "test:ci": "jest --ci"
   },
   "browserslist": [
     "last 4 versions"
@@ -47,8 +49,8 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.0.1",
-    "@testing-library/user-event": "^14.1.0",
+    "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^14.2.0",
     "@types/axios": "^0.14.0",
     "@types/chart.js": "^2.9.37",
     "@types/jest": "^27.4.1",
@@ -71,6 +73,8 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "flex-gap-polyfill": "^4.1.0",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
     "postcss": "^8.4.14",
     "postcss-custom-media": "^8.0.0",
     "postcss-import": "^14.1.0",

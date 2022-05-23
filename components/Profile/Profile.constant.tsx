@@ -1,5 +1,5 @@
 import { Contract, providers } from 'ethers';
-import { ChainConfig, NETWORKS } from '../../src/ChainService/config';
+import { ChainConfig, NETWORKS } from '@/src/ChainService/config';
 
 const SortArray = ['Price increase', 'Price decrease', 'Profit increase', 'Profit decrease'] as const;
 

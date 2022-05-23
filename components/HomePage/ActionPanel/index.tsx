@@ -1,10 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from './style.module.css';
-import Select, { Option } from '../../ui-kit/Select';
-import Input from '../../ui-kit/Input';
+import Select, { Option } from '@/ui-kit/Select';
+import Input from '@/ui-kit/Input';
 import type { IActionProps } from './ActionPanel.interfaces';
-import { networks } from '../../../src/utils/GlobalConst';
+import { networks } from '@/src/utils/GlobalConst';
 
 const ActionPanel: React.FC<IActionProps> = ({
     search,

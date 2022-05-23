@@ -3,19 +3,19 @@ import React, {
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
-import { ChainConfig } from '../../src/ChainService/config';
+import { ChainConfig } from '@/src/ChainService/config';
 import InvestCard from './InvestCard';
-import Typography from '../ui-kit/Typography';
-import Select, { Option } from '../ui-kit/Select';
-import InfoBlock from '../ui-kit/InfoBlock/InfoBlock';
-import { InfoBlockTypes } from '../ui-kit/InfoBlock/InfoBlock.constants';
-import { ServiceContext } from '../../src/context/ServiceContext/ServiceContext';
+import Typography from '@/ui-kit/Typography';
+import Select, { Option } from '@/ui-kit/Select';
+import InfoBlock from '@/ui-kit/InfoBlock/InfoBlock';
+import { InfoBlockTypes } from '@/ui-kit/InfoBlock/InfoBlock.constants';
+import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
-import { networks } from '../../src/utils/GlobalConst';
-import { useAppSelector } from '../../src/Redux/store/hooks/redux';
+import { networks } from '@/src/utils/GlobalConst';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import { SortArray, calculatePosPrice, loader } from './Profile.constant';
 import type { IFilter } from './Profile.interfaces';
 
@@ -166,7 +166,7 @@ const Profile = () => {
                                                 networks[bestProfit.chain]
                                                     .mainIcon
                                             }
-                                            alt="best coin"
+                                            alt="best coin@"
                                         />
                                     ),
                                 }}

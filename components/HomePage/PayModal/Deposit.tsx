@@ -1,21 +1,20 @@
 import classNames from 'classnames';
-import React, {
-    useEffect, useMemo, useState,
-} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Contract, providers } from 'ethers';
 import styles from './style.module.css';
-import Input from '../../ui-kit/Input';
-import GradientButton from '../../ui-kit/GradientButton';
+import Input from '@/ui-kit/Input';
+import GradientButton from '@/ui-kit/GradientButton';
 import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
+import { networks, farms, namesConfig } from '@/src/utils/GlobalConst';
+import type { availableChains } from '@/src/utils/GlobalConst';
+import { ChainConfig } from '@/src/ChainService/config';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import {
-    networks, farms, namesConfig,
-} from '../../../src/utils/GlobalConst';
-import type { availableChains } from '../../../src/utils/GlobalConst';
-import { ChainConfig } from '../../../src/ChainService/config';
-import { useAppSelector, useAppDispatch } from '../../../src/Redux/store/hooks/redux';
-import { getAllowance, approve } from '../../../src/Redux/store/reducers/ActionCreators';
-import { changeLoadingTx } from '../../../src/Redux/store/reducers/UserSlice';
+    getAllowance,
+    approve,
+} from '@/src/Redux/store/reducers/ActionCreators';
+import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
 
 type propsType = {
     buyToken: (value: number) => void;
@@ -23,79 +22,82 @@ type propsType = {
 
 const Deposit: React.FC<propsType> = (props) => {
     const dispatch = useAppDispatch();
-    const { chainId, account, provider } = useAppSelector((state) => state.walletReducer);
-    const { payData, txLoading, deposit } = useAppSelector((state) => state.userReducer);
-    const {
-        available, price, buyToken,
-    } = props;
+    const { chainId, account, provider } = useAppSelector(
+        (state) => state.walletReducer,
+    );
+    const { payData, txLoading, deposit } = useAppSelector(
+        (state) => state.userReducer,
+    );
+    const { available, price, buyToken } = props;
     const [amount, setAmount] = useState('');
     const [allowance, setAllowance] = useState<number>(0);
-    const [maxAmount, setMaxAmount] = useState<string>();
     const [maxError, setMaxError] = useState<boolean>(false);
 
     const localChain = useMemo(
-        () =>
-            namesConfig[
-                sessionStorage.getItem('card')
-            ],
+        () => namesConfig[sessionStorage.getItem('card')],
         [chainId],
+    );
+
+    const chainThings = useMemo(() => {
+        const genered = (
+            ChainConfig[sessionStorage.getItem('card')].SYNTH as any
+        ).find(
+            (el: any) =>
+                el.ID === farms[chainId][sessionStorage.getItem('card')],
+        );
+        const contract = new Contract(
+            genered.CONTRACTS.STABLE.address,
+            genered.CONTRACTS.STABLE.abi,
+            new providers.JsonRpcProvider(networks[chainId]?.rpc),
+        );
+
+        return {
+            genered,
+            contract,
+        };
+    }, [account, chainId]);
+
+    const balance = useMemo(
+        async () =>
+            Number(
+                (await chainThings.contract.balanceOf(account)).toBigInt()
+                    / BigInt(10 ** (await chainThings.contract.decimals())),
+            ),
+        [account, txLoading, chainId],
     );
 
     useEffect(() => {
         (async function getAllowanceAndBalance() {
-            const contracts = (
-                ChainConfig[
-                    sessionStorage.getItem('card')
-                ].SYNTH as any
-            ).find(
-                (el: any) =>
-                    el.ID
-                    === farms[chainId][
-                        sessionStorage.getItem('card')
-                    ],
-            );
-            dispatch(getAllowance({
-                contractAddress: contracts.CONTRACTS.STABLE.address,
-                dexAddress: contracts.CONTRACTS.FEE.address,
-                account,
-                provider,
-            })).then((action) => setAllowance(Number(action.payload.toBigInt())));
-            const contract = new Contract(
-                contracts.CONTRACTS.STABLE.address,
-                contracts.CONTRACTS.STABLE.abi,
-                new providers.JsonRpcProvider(networks[chainId]?.rpc),
-            );
-            const balance = Number((await contract.balanceOf(account)).toBigInt()
-                / BigInt(10 ** (await contract.decimals())));
-            setMaxAmount(balance.toString());
+            dispatch(
+                getAllowance({
+                    contractAddress:
+                        chainThings.genered.CONTRACTS.STABLE.address,
+                    dexAddress: chainThings.genered.CONTRACTS.FEE.address,
+                    account,
+                    provider,
+                }),
+            ).then((action) => setAllowance(Number(action.payload.toBigInt())));
         }());
     }, [chainId]);
 
     useEffect(() => {
-        if (Number(amount) > Number(maxAmount)) {
-            setMaxError(true);
-        } else {
-            setMaxError(false);
-        }
+        (async function checkMax() {
+            if (Number(amount) > Number(await balance)) {
+                setMaxError(true);
+            } else {
+                setMaxError(false);
+            }
+        }());
     }, [amount, chainId]);
 
     const handleApprove = async () => {
-        const contracts = (
-            ChainConfig[
-                sessionStorage.getItem('card')
-            ].SYNTH as any
-        ).find(
-            (el: any) =>
-                el.ID
-                === farms[chainId][
-                    sessionStorage.getItem('card')
-                ],
-        );
-        dispatch(approve({
-            tokenAddress: contracts.CONTRACTS.STABLE.address,
-            dexAddress: contracts.CONTRACTS.FEE.address,
-            provider,
-        })).then(async (action) => {
+        dispatch(
+            approve({
+                tokenAddress: chainThings.genered.CONTRACTS.STABLE.address,
+                dexAddress: chainThings.genered.CONTRACTS.FEE.address,
+                provider,
+            }),
+        ).then(async (action) => {
             if (action.payload) {
                 dispatch(changeLoadingTx(true));
             }
@@ -108,11 +110,9 @@ const Deposit: React.FC<propsType> = (props) => {
     };
 
     const getMax = async () => {
-        setAmount(maxAmount || '0');
+        setAmount((await balance).toString() || '0');
     };
-    const percentage = Math.ceil(
-        (Number(available) / deposit[chainId]) * 100,
-    );
+    const percentage = Math.ceil((Number(available) / deposit[chainId]) * 100);
 
     return (
         <>
@@ -125,7 +125,9 @@ const Deposit: React.FC<propsType> = (props) => {
                     )}
                 >
                     <p className={styles.sectionValue}>
-                        {payData[localChain as availableChains]?.available}
+                        {payData[localChain as availableChains]?.available || (
+                            <i className="fa fa-spinner fa-spin" />
+                        )}
                     </p>
                     <p className={styles.sectionSubValue}>Synth-LP</p>
                     <p
@@ -134,7 +136,7 @@ const Deposit: React.FC<propsType> = (props) => {
                             styles.sectionGraySubValue,
                         )}
                     >
-                        {payData[chainId]?.totalAvailable}
+                        {payData[chainId]?.totalAvailable || ''}
                     </p>
                 </div>
                 <div
@@ -151,7 +153,9 @@ const Deposit: React.FC<propsType> = (props) => {
                 <p className={styles.sectionTitle}>Price</p>
                 <div className={styles.sectionRow}>
                     <p className={styles.sectionValue}>
-                        {payData[localChain as availableChains]?.price}
+                        {payData[localChain as availableChains]?.price || (
+                            <i className="fa fa-spinner fa-spin" />
+                        )}
                     </p>
                     <p
                         className={classNames(
@@ -164,7 +168,9 @@ const Deposit: React.FC<propsType> = (props) => {
                             height={25}
                             quality={100}
                             className={styles.networkIcon}
-                            src={`/images/networks/${networks[localChain as availableChains]?.icon}`}
+                            src={`/images/networks/${
+                                networks[localChain as availableChains]?.icon
+                            }`}
                             alt=""
                         />
                         {networks[localChain as availableChains]?.currency}
@@ -224,15 +230,21 @@ const Deposit: React.FC<propsType> = (props) => {
                 />
             ) : (
                 <GradientButton
-                    title={allowance > 0 ? 'Add funds' : 'Approve'}
+                    title={
+                        allowance > 0
+                            ? payData[localChain as availableChains]?.price
+                                ? 'Add funds'
+                                : 'Data Loading'
+                            : 'Approve'
+                    }
                     onClick={
                         allowance > 0
                             ? () => buyToken(parseFloat(amount))
                             : () => handleApprove()
                     }
+                    disabled={!payData[localChain as availableChains]?.price || !amount}
                 />
             )}
-            {}
         </>
     );
 };

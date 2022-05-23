@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import InvestCardExp from './InvestCars.example';
 import { CardsOrder } from './InvestCards.const';
-import type { availableChains } from '../../../src/utils/GlobalConst';
+import type { availableChains } from '@/src/utils/GlobalConst';
 import type { IProps, ICard } from './InvestCard.interfaces';
 
 const InvestCard: React.FC<IProps> = ({

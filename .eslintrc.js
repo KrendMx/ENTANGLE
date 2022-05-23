@@ -80,6 +80,7 @@ module.exports = {
         'prefer-destructuring': 'off',
         'no-restricted-globals': 'off',
         'no-await-in-loop': 'off',
+        'import/no-unresolved': 'off',
     },
     settings: {
         'import/resolver': {

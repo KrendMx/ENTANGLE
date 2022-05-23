@@ -42,7 +42,7 @@
 
 .content {
     padding: 15px 60px;
-    width: calc(100vw - 35%);
+    max-width: 55rem;
     background: linear-gradient(#101010f5, #101010f5) padding-box,
         linear-gradient(104.59deg, #00F0FF 0.46%, #FB37FF 100%) border-box;
     border: 1px solid transparent;
@@ -72,3 +72,20 @@
   margin-bottom: 1rem;
   font-weight: 700;
 }
+
+.extraForCheckbox {
+    margin-left: 2rem;
+}
+
+@media screen and (max-width: 750px) {
+    .content {
+        padding: 15px 30px;
+        font-size: .65rem;
+    }
+    
+    .extraForCheckbox {
+        margin-left: 0;
+        margin-bottom: 3rem;
+    }
+  }
+

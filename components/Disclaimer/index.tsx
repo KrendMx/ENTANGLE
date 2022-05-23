@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ScrollLock from 'react-scrolllock';
 import Image from 'next/image';
 import styles from './styles.module.css';
-import GradientButton from '../ui-kit/GradientButton';
-import GradientCheckbox from '../ui-kit/GradientCheckbox';
+import GradientButton from '@/ui-kit/GradientButton';
+import GradientCheckbox from '@/ui-kit/GradientCheckbox';
 
 interface DisclaimerProps {
     handleClose: () => void;
@@ -111,6 +111,7 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                 gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
                                 isChecked={checked}
                                 onClickHandler={() => setChecked(!checked)}
+                                additionalClass={styles.extraForCheckbox}
                             />
                             <div className={styles.blockButton}>
                                 <GradientButton

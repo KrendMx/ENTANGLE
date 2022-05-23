@@ -3,7 +3,7 @@ import Image from 'next/image';
 import moment from 'moment/moment';
 import classNames from 'classnames';
 import styles from './style.module.css';
-import { networks } from '../../../../src/utils/GlobalConst';
+import { networks } from '@/src/utils/GlobalConst';
 
 type CardProps = {
     chainId: keyof typeof networks;

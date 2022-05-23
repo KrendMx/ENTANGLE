@@ -4,14 +4,14 @@ import { Contract } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import classNames from 'classnames';
 import styles from './style.module.css';
-import { networks, farms } from '../../../src/utils/GlobalConst';
+import { networks, farms } from '@/src/utils/GlobalConst';
 import type { PayModalPropsType } from './PayModal.interfaces';
 import Deposit from './Deposit';
 import Withdraw from './Withdraw';
-import { useAppSelector, useAppDispatch } from '../../../src/Redux/store/hooks/redux';
-import { changeLoadingTx } from '../../../src/Redux/store/reducers/UserSlice';
-import { setSucInfo } from '../../../src/Redux/store/reducers/AppSlice';
-import { ChainConfig } from '../../../src/ChainService/config';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
+import { setSucInfo } from '@/src/Redux/store/reducers/AppSlice';
+import { ChainConfig } from '@/src/ChainService/config';
 
 const PayModal: React.FC<PayModalPropsType> = (props) => {
     const {

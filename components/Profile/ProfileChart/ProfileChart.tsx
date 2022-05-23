@@ -1,16 +1,16 @@
 import moment from 'moment/moment';
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import type { ChartDataProps } from '../../ui-kit/ChartWrapper/ChartWrapper.interfaces';
-import ChartWrapper from '../../ui-kit/ChartWrapper/ChartWrapper';
-import SoonChart from '../../ui-kit/SoonChart/SoonChart';
+import type { ChartDataProps } from '@/ui-kit/ChartWrapper/ChartWrapper.interfaces';
+import ChartWrapper from '@/ui-kit/ChartWrapper/ChartWrapper';
+import SoonChart from '@/ui-kit/SoonChart/SoonChart';
 import styles from './style.module.css';
 import type {
     BalanceChartTick,
     iService,
-} from '../../../src/context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
-import { useAppSelector } from '../../../src/Redux/store/hooks/redux';
+} from '@/src/context/ServiceContext/ServiceContext.interfaces';
+import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import ChartLoader from './ProfileCharts.constant';
 
 const ProfileChart: React.FC = () => {

@@ -1,15 +1,15 @@
 import React, {
-    useReducer, useContext, useState, useMemo, useEffect,
+    useReducer, useContext, useMemo, useEffect,
 } from 'react';
-import ChainService from '../../../../../src/ChainService/ChainService';
+import ChainService from '@/src/ChainService/ChainService';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
-import { farms } from '../../../../../src/utils/GlobalConst';
-import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
+import { farms } from '@/src/utils/GlobalConst';
+import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
-import { useAppSelector, useAppDispatch } from '../../../../../src/Redux/store/hooks/redux';
-import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../src/Redux/store/reducers/UserSlice';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
 
 const BUSDContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
@@ -47,7 +47,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
         chainId: '56',
         priceCurrency: 'USDT/BUSD Synthetic LP',
         description:
-            'Generates yield by running an autocompound UST/BUSD strategy on pancakeswap.finance',
+            'Generates yield by running an autocompound USDT/BUSD strategy on pancakeswap.finance',
         disabled: false,
         openModal,
         ...state,

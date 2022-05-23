@@ -6,13 +6,13 @@ import React, {
 } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
-import ChainService from '../../../../../src/ChainService/ChainService';
+import ChainService from '@/src/ChainService/ChainService';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
-import { farms } from '../../../../../src/utils/GlobalConst';
-import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
-import { useAppSelector, useAppDispatch } from '../../../../../src/Redux/store/hooks/redux';
-import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../src/Redux/store/reducers/UserSlice';
+import { farms } from '@/src/utils/GlobalConst';
+import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();

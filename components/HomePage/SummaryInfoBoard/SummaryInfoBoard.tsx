@@ -6,8 +6,8 @@ import { InfoBlockTypes, numberFormatter } from './SummaryInfoBoard.constants';
 import type {
     iService,
     TotalValueLockedData,
-} from '../../../src/context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
+} from '@/src/context/ServiceContext/ServiceContext.interfaces';
+import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 

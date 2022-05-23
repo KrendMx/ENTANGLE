@@ -1,10 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 import styles from './styles.module.css';
 
 interface IProps {
     isChecked: boolean;
     text: string;
     gradient: string;
+    additionalClass?: React.HTMLAttributes<HTMLDivElement>['className'];
     onClickHandler: () => void;
 }
 
@@ -13,14 +15,15 @@ const GradientCheckbox: React.FC<IProps> = ({
     isChecked,
     onClickHandler,
     gradient,
+    additionalClass,
 }) => (
-    <div className={styles.container}>
+    <div className={classNames(additionalClass, styles.container)}>
         <input
             type="checkbox"
             id="confirmCheck"
             onClick={onClickHandler}
             checked={isChecked}
-            className={styles.checkBox}
+            className={classNames(styles.checkBox)}
             style={{ background: gradient }}
         />
         <label htmlFor="confirmCheck" className={styles.text}>
