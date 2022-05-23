@@ -1,8 +1,9 @@
 import React from 'react';
+import Image from 'next/image';
 import moment from 'moment/moment';
 import classNames from 'classnames';
 import styles from './style.module.css';
-import { networks } from '../../../../src/utils/GlobalConst';
+import { networks } from '@/src/utils/GlobalConst';
 
 type CardProps = {
     chainId: keyof typeof networks;
@@ -20,8 +21,11 @@ const HistoryCard: React.FC<CardProps> = ({ chainId, date, price }) => {
     return (
         <div className={styles.root}>
             <div className={styles.logoWrapper}>
-                <img
-                    src={`./images/networks/${networks[chainId].icon}`}
+                <Image
+                    width={100}
+                    height={100}
+                    quality={100}
+                    src={`/images/networks/${networks[chainId].icon}`}
                     alt="alt"
                     className={styles.logo}
                 />

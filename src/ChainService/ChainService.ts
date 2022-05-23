@@ -43,6 +43,119 @@ class ChainService implements IChainService {
         }
     }
 
+    private getAPRForBNB = async (contracts: SynthContracts, id: string) => {
+        try {
+            const poolInfo = await contracts.CHEF.poolInfo(id);
+            const persec = await contracts.CHEF.cakePerBlock(poolInfo.isRegular);
+            const cakeAddress = await contracts.CHEF.CAKE();
+            const perSecInStable = (
+                await contracts.ROUTER.getAmountsOut(persec, [
+                    cakeAddress,
+                    contracts.STABLESYNTCHEF.address,
+                ])
+            )[1].toBigInt();
+            const totalAlloc = await contracts.CHEF.totalRegularAllocPoint();
+            const rewardPerYear = (perSecInStable
+                * BigInt(this.secForYear)
+                * poolInfo.allocPoint.toBigInt())
+            / totalAlloc.toBigInt()
+            / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
+            const balance = (
+                await contracts.PAIR.balanceOf(contracts.CHEF.address)
+            ).toBigInt();
+            const reserves = await contracts.PAIR.getReserves();
+            const totalSupply = (
+                await contracts.PAIR.totalSupply()
+            ).toBigInt();
+            const [token0Dec, token1Dec] = [18, 18];
+            const amount0 = (balance * BigInt(reserves[0]))
+            / totalSupply
+            / BigInt(10 ** token0Dec);
+            const amount1 = (balance * BigInt(reserves[1]))
+            / totalSupply
+            / BigInt(10 ** token1Dec);
+            return Number(rewardPerYear) / Number(amount0 + amount1);
+        } catch (e) {
+            throw new Error('Error while calculating bnb apr');
+        }
+    };
+
+    private getAPRForFTM = async (contracts: SynthContracts, id: string) => {
+        try {
+            const persec = await contracts.CHEF.spiritPerBlock();
+            const spiritAddress = await contracts.CHEF.spirit();
+            const perSecInStable = (
+                await contracts.ROUTER.getAmountsOut(persec, [
+                    spiritAddress,
+                    contracts.STABLESYNTCHEF.address,
+                ])
+            )[1].toBigInt();
+            const totalAlloc = await contracts.CHEF.totalAllocPoint();
+            const poolInfo = await contracts.CHEF.poolInfo(id);
+            const rewardPerYear = (perSecInStable
+                * BigInt(this.secForYear)
+                * poolInfo.allocPoint.toBigInt())
+            / totalAlloc.toBigInt()
+            / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
+            const balance = (
+                await contracts.PAIR.balanceOf(contracts.CHEF.address)
+            ).toBigInt();
+            const reserves = await contracts.PAIR.getReserves();
+            const totalSupply = (
+                await contracts.PAIR.totalSupply()
+            ).toBigInt();
+            const [token0Dec, token1Dec] = [6, 18];
+            const amount0 = (balance * BigInt(reserves[0]))
+            / totalSupply
+            / BigInt(10 ** token0Dec);
+            const amount1 = (balance * BigInt(reserves[1]))
+            / totalSupply
+            / BigInt(10 ** token1Dec);
+            return Number(rewardPerYear) / Number(amount0 + amount1);
+        } catch (e) {
+            throw new Error('Error while calculating ftm apr');
+        }
+    };
+
+    private getAPRForAVAX = async (contracts: SynthContracts, id: string) => {
+        try {
+            const usdValue = await this.getUSDVolume();
+            const persec = await contracts.CHEF.joePerSec();
+            const joeAddress = await contracts.CHEF.JOE();
+            const perSecInStable = (
+                await contracts.ROUTER.getAmountsOut(persec, [
+                    joeAddress,
+                    contracts.STABLESYNTCHEF.address,
+                ])
+            )[1].toBigInt();
+            const totalAlloc = await contracts.CHEF.totalAllocPoint();
+            const poolInfo = await contracts.CHEF.poolInfo(id);
+            const rewardPerYear = (perSecInStable
+                        * BigInt(this.secForYear)
+                        * poolInfo.allocPoint.toBigInt())
+                    / totalAlloc.toBigInt()
+                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
+            const balance = (
+                await contracts.PAIR.balanceOf(contracts.CHEF.address)
+            ).toBigInt();
+            const reserves = await contracts.PAIR.getReserves();
+            const totalSupply = (
+                await contracts.PAIR.totalSupply()
+            ).toBigInt();
+            const [token0Dec, token1Dec] = [6, 6];
+            const amount0 = (balance * BigInt(reserves[0]))
+                    / totalSupply
+                    / BigInt(10 ** token0Dec);
+            const amount1 = (balance * BigInt(reserves[1]))
+                    / totalSupply
+                    / BigInt(10 ** token1Dec);
+            return Number(rewardPerYear) / Number(amount0 + amount1)
+                    + (Number(usdValue) * 0.003) / Number(amount0 + amount1);
+        } catch (e) {
+            throw new Error('Error while calculating avax apr');
+        }
+    };
+
     // USD price for AVAX calculations
     private getUSDVolume = async (): Promise<string> => {
         const { volumeUSD } = await fetch(
@@ -81,114 +194,24 @@ class ChainService implements IChainService {
             let apr = 0;
             switch (id) {
             case '8': {
-                const usdValue = await this.getUSDVolume();
-                const persec = await contracts.CHEF.joePerSec();
-                const joeAddress = await contracts.CHEF.JOE();
-                const perSecInStable = (
-                    await contracts.ROUTER.getAmountsOut(persec, [
-                        joeAddress,
-                        contracts.STABLESYNTCHEF.address,
-                    ])
-                )[1].toBigInt();
-                const totalAlloc = await contracts.CHEF.totalAllocPoint();
-                const poolInfo = await contracts.CHEF.poolInfo(id);
-                const rewardPerYear = (perSecInStable
-                        * BigInt(this.secForYear)
-                        * poolInfo.allocPoint.toBigInt())
-                    / totalAlloc.toBigInt()
-                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
-                const balance = (
-                    await contracts.PAIR.balanceOf(contracts.CHEF.address)
-                ).toBigInt();
-                const reserves = await contracts.PAIR.getReserves();
-                const totalSupply = (
-                    await contracts.PAIR.totalSupply()
-                ).toBigInt();
-                const [token0Dec, token1Dec] = [6, 6];
-                const amount0 = (balance * BigInt(reserves[0]))
-                    / totalSupply
-                    / BigInt(10 ** token0Dec);
-                const amount1 = (balance * BigInt(reserves[1]))
-                    / totalSupply
-                    / BigInt(10 ** token1Dec);
-                apr = Number(rewardPerYear) / Number(amount0 + amount1)
-                    + (Number(usdValue) * 0.003) / Number(amount0 + amount1);
+                apr = await this.getAPRForAVAX(contracts, id);
                 break;
             }
             case '67': {
-                const persec = await contracts.CHEF.spiritPerBlock();
-                const spiritAddress = await contracts.CHEF.spirit();
-                const perSecInStable = (
-                    await contracts.ROUTER.getAmountsOut(persec, [
-                        spiritAddress,
-                        contracts.STABLESYNTCHEF.address,
-                    ])
-                )[1].toBigInt();
-                const totalAlloc = await contracts.CHEF.totalAllocPoint();
-                const poolInfo = await contracts.CHEF.poolInfo(id);
-                const rewardPerYear = (perSecInStable
-                        * BigInt(this.secForYear)
-                        * poolInfo.allocPoint.toBigInt())
-                    / totalAlloc.toBigInt()
-                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
-                const balance = (
-                    await contracts.PAIR.balanceOf(contracts.CHEF.address)
-                ).toBigInt();
-                const reserves = await contracts.PAIR.getReserves();
-                const totalSupply = (
-                    await contracts.PAIR.totalSupply()
-                ).toBigInt();
-                const [token0Dec, token1Dec] = [6, 18];
-                const amount0 = (balance * BigInt(reserves[0]))
-                    / totalSupply
-                    / BigInt(10 ** token0Dec);
-                const amount1 = (balance * BigInt(reserves[1]))
-                    / totalSupply
-                    / BigInt(10 ** token1Dec);
-                apr = Number(rewardPerYear) / Number(amount0 + amount1);
+                apr = await this.getAPRForFTM(contracts, id);
                 break;
             }
             case '7': {
-                const poolInfo = await contracts.CHEF.poolInfo(id);
-                const persec = await contracts.CHEF.cakePerBlock(poolInfo.isRegular);
-                const cakeAddress = await contracts.CHEF.CAKE();
-                const perSecInStable = (
-                    await contracts.ROUTER.getAmountsOut(persec, [
-                        cakeAddress,
-                        contracts.STABLESYNTCHEF.address,
-                    ])
-                )[1].toBigInt();
-                const totalAlloc = await contracts.CHEF.totalRegularAllocPoint();
-                const rewardPerYear = (perSecInStable
-                        * BigInt(this.secForYear)
-                        * poolInfo.allocPoint.toBigInt())
-                    / totalAlloc.toBigInt()
-                    / BigInt(10 ** (await contracts.STABLESYNTCHEF.decimals()));
-                const balance = (
-                    await contracts.PAIR.balanceOf(contracts.CHEF.address)
-                ).toBigInt();
-                const reserves = await contracts.PAIR.getReserves();
-                const totalSupply = (
-                    await contracts.PAIR.totalSupply()
-                ).toBigInt();
-                const [token0Dec, token1Dec] = [18, 18];
-                const amount0 = (balance * BigInt(reserves[0]))
-                    / totalSupply
-                    / BigInt(10 ** token0Dec);
-                const amount1 = (balance * BigInt(reserves[1]))
-                    / totalSupply
-                    / BigInt(10 ** token1Dec);
-                apr = Number(rewardPerYear) / Number(amount0 + amount1);
+                apr = await this.getAPRForBNB(contracts, id);
                 break;
             }
             default:
-                break;
+                throw new Error('Unexpected id');
             }
 
             return Number((apr * 100).toFixed(2));
         } catch (e) {
-            console.log(e);
-            return 0;
+            throw new Error('Error while calculating apr');
         }
     };
 
@@ -231,11 +254,7 @@ class ChainService implements IChainService {
                 totalDeposits: lpAmount,
             };
         } catch (e) {
-            console.log(e);
-            return {
-                currentDeposits: 0,
-                totalDeposits: 0,
-            };
+            throw new Error('Error while calculating current deposit');
         }
     };
 
@@ -260,12 +279,7 @@ class ChainService implements IChainService {
                 price,
             };
         } catch (e) {
-            console.log(e);
-            return {
-                available: 0,
-                totalAvailable: 0,
-                price: 0,
-            };
+            throw new Error('Error while calculating remain data');
         }
     };
 
@@ -297,15 +311,7 @@ class ChainService implements IChainService {
                 price,
             };
         } catch (e) {
-            // Намутить обработку
-            return {
-                apr: 0,
-                totalDeposits: 0,
-                currentDeposits: 0,
-                available: 0,
-                totalAvailable: 0,
-                price: 0,
-            };
+            throw new Error('Error while calculating card data');
         }
     };
 
@@ -328,33 +334,7 @@ class ChainService implements IChainService {
                 totalPositions,
             };
         } catch (e) {
-            return {
-                positions: 0,
-                totalPositions: 0,
-            };
-        }
-    };
-
-    // Это по другому нужно будет расписать, но пока так
-    public buyToken = async (value: number, id: string) => {
-        try {
-            const contracts: SynthContracts = this.contracts[id];
-
-            const amount = Math.floor(value * 10 ** 6);
-            return await contracts.FEE.buy(amount, { gasLimit: 1500000 });
-        } catch (e) {
-            throw new Error();
-        }
-    };
-
-    public sellToken = async (value: number, id: string) => {
-        try {
-            const contracts: SynthContracts = this.contracts[id];
-
-            const amount = Math.floor(value * 10 ** 18);
-            return await contracts.FEE.sell(amount, { gasLimit: 1500000 });
-        } catch (e) {
-            throw new Error();
+            throw new Error('Error while calculating positions sum');
         }
     };
 }

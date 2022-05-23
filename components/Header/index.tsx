@@ -7,21 +7,21 @@ import styles from './styles.module.css';
 import Dropout from './Dropout';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
-import type { walletKeyType } from '../../Redux/types';
+import type { walletKeyType } from '@/src/Redux/types';
 import {
     removeWallet,
     setPreloader,
     changeNetworkWC,
-} from '../../Redux/store/reducers/WalletSlice';
-import { useAppDispatch, useAppSelector } from '../../Redux/store/hooks/redux';
-import { setIsOpenSelectWalletModal } from '../../Redux/store/reducers/AppSlice';
-import { setIsOpenModal } from '../../Redux/store/reducers/UserSlice';
-import { chainToNameConfig } from '../../src/utils/GlobalConst';
+} from '@/src/Redux/store/reducers/WalletSlice';
+import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
+import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
+import { setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
+import { chainToNameConfig } from '@/src/utils/GlobalConst';
 import {
     setWallet,
     changeNetwork,
-} from '../../Redux/store/reducers/ActionCreators';
-import type { availableChains } from '../../src/utils/GlobalConst';
+} from '@/src/Redux/store/reducers/ActionCreators';
+import type { availableChains } from '@/src/utils/GlobalConst';
 
 const Header = () => {
     const {

@@ -4,7 +4,7 @@ import type WalletConnectProvider from '@walletconnect/web3-provider';
 
 import type { ProviderType, walletKeyType, setWalletType } from '../../types';
 import { changeNetwork, setWallet } from './ActionCreators';
-import type { availableChains } from '../../../src/utils/GlobalConst';
+import type { availableChains } from '../../../utils/GlobalConst';
 
 type initialStateType = {
     walletKey: walletKeyType,

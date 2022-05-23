@@ -1,14 +1,15 @@
 import React from 'react';
+import Image from 'next/image';
 
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import type { SuccessModalProps } from './SuccessModal.interface';
 
 import styles from './style.module.css';
-import GradientButton from '../../ui-kit/GradientButton';
-import { networks, synths } from '../../../src/utils/GlobalConst';
-import { useAppSelector, useAppDispatch } from '../../../Redux/store/hooks/redux';
-import { importToken } from '../../../Redux/store/reducers/ActionCreators';
+import GradientButton from '@/ui-kit/GradientButton';
+import { networks, synths } from '@/src/utils/GlobalConst';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { importToken } from '@/src/Redux/store/reducers/ActionCreators';
 
 const SuccessModalContent: React.FC<SuccessModalProps> = ({
     transactionInfo,
@@ -20,10 +21,13 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
     return (
         <div className={styles.wrapper}>
             <div className={styles.closeWrapper}>
-                <img
+                <Image
+                    width={20}
+                    height={20}
                     className={styles.closeImg}
                     onClick={handleClose}
-                    src="./images/close.svg"
+                    quality={100}
+                    src="/images/close.svg"
                     alt="closeImg"
                 />
             </div>
@@ -41,10 +45,13 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                             titleElement={(
                                 <div className={styles.metamaskBtnWrapper}>
                                     <div>Add to MetaMask</div>
-                                    <img
+                                    <Image
+                                        width={30}
+                                        height={30}
                                         className={styles.metamaskBtnImg}
-                                        src="./images/connectors/metamask.svg"
-                                        alt="Metamask logo"
+                                        quality={100}
+                                        src="/images/connectors/metamask.svg"
+                                        alt=""
                                     />
                                 </div>
                             )}
@@ -56,9 +63,12 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                         />
                         <CopyToClipboard text={networks[chainId].synth}>
                             <div className={styles.copyWrapper}>
-                                <img
+                                <Image
+                                    width={30}
+                                    height={30}
                                     className={styles.metamaskBtnImg}
-                                    src="./images/copy.svg"
+                                    quality={100}
+                                    src="/images/copy.svg"
                                     alt="Copy synth address"
                                 />
                             </div>

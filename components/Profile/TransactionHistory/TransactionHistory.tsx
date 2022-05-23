@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Typography from '../../ui-kit/Typography';
-import Select, { Option } from '../../ui-kit/Select';
+import Typography from '@/ui-kit/Typography';
+import Select, { Option } from '@/ui-kit/Select';
 import Pager from './Pager/Pager';
 import styles from './style.module.css';
 import type {
     iService,
     TransactionHistoryEntity,
-} from '../../../src/context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
+} from '@/src/context/ServiceContext/ServiceContext.interfaces';
+import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import HistoryCard from './HistoryCard/HistoryCard';
-import type { networks } from '../../../src/utils/GlobalConst';
+import type { networks } from '@/src/utils/GlobalConst';
 import {
     TransactionFilters,
     TransactionOrder,
-    loader,
 } from './TransactionHistory.constants';
-import { useAppSelector } from '../../../Redux/store/hooks/redux';
+import { loader } from '../Profile.constant';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 
 const TransactionHistory: React.FC = () => {
     const service = useContext<iService>(ServiceContext);

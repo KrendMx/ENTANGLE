@@ -4,13 +4,13 @@ import SuccessModal from '../Modal/SuccessModal/SuccessModal';
 import SelectWalletModal from '../Modal/SelectWalletModal/SelectWalletModal';
 import Disclaimer from '../Disclaimer/index';
 
-import { useAppSelector, useAppDispatch } from '../../Redux/store/hooks/redux';
+import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import {
     setError,
     setSucInfo,
     setIsOpenSelectWalletModal,
-} from '../../Redux/store/reducers/AppSlice';
-import { setWallet } from '../../Redux/store/reducers/ActionCreators';
+} from '@/src/Redux/store/reducers/AppSlice';
+import { setWallet } from '@/src/Redux/store/reducers/ActionCreators';
 
 const ModalContextWrapper = () => {
     const dispatch = useAppDispatch();

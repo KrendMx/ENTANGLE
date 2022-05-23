@@ -3,57 +3,40 @@ import React, {
 } from 'react';
 import InvestCardExp from './InvestCars.example';
 import { CardsOrder } from './InvestCards.const';
-import type { availableChains } from '../../../src/utils/GlobalConst';
-import type { IState, IFilter } from '../index';
-
-interface IProps {
-    avaxState: IState;
-    ftmState: IState;
-    avgPrice?: {
-        fantomSynth: number;
-        avaxSynth: number;
-    };
-    filter: IFilter;
-}
-
-type ICard = {
-    chainId: string;
-    description: string;
-    position: string;
-    price: string;
-};
+import type { availableChains } from '@/src/utils/GlobalConst';
+import type { IProps, ICard } from './InvestCard.interfaces';
 
 const InvestCard: React.FC<IProps> = ({
-    ftmState,
-    avaxState,
+    balances,
     filter,
 }) => {
     const [cards, setCards] = useState<ICard[]>([]);
-    const hasPhantom = Number(ftmState?.positions) > 0;
-    const hasAvax = Number(avaxState?.positions) > 0;
-    const hasNoOne = !hasPhantom && !hasAvax;
+    const hasPhantom = Number(balances?.FTM?.positions) > 0;
+    const hasAvax = Number(balances.AVAX?.positions) > 0;
+    const hasBnb = Number(balances.BSC?.positions) > 0;
+    const hasNoOne = !hasPhantom && !hasAvax && !hasBnb;
 
     const InitCards = [
         {
             chainId: '250',
             description:
                 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
-            position: ftmState?.positions,
-            price: ftmState?.price,
+            position: balances?.FTM?.positions,
+            price: balances?.FTM?.price,
         },
         {
             chainId: '43114',
             description:
                 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
-            position: avaxState?.positions,
-            price: avaxState?.price,
+            position: balances?.AVAX?.positions,
+            price: balances?.AVAX?.price,
         },
         {
             chainId: '56',
             description:
                 'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
-            position: '0',
-            price: '0',
+            position: balances?.BSC?.positions,
+            price: balances?.BSC?.price,
         },
     ];
 

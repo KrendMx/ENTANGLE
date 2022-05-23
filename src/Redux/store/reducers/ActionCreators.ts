@@ -2,13 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Contract, ethers } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { opToken } from '../../../src/ChainService/abi';
+import { opToken } from '../../../ChainService/abi';
 
-import { toChainId } from '../../../src/utils';
-import type { availableChains } from '../../../src/utils/GlobalConst';
+import { toChainId } from '../../../utils';
+import type { availableChains } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 import type { ProviderType, walletKeyType } from '../../types';
-import type { ErrorI } from '../../../components/Modal/ErrorModal/ErrorModal.interfaces';
+import type { ErrorI } from '../../../../components/Modal/ErrorModal/ErrorModal.interfaces';
 import { setError, setErrorStack } from './AppSlice';
 import { useAppDispatch } from '../hooks/redux';
 
@@ -44,7 +44,7 @@ export const changeNetwork = createAsyncThunk(
                             ethereumNetworksConfig[chainId],
                         ]);
                     } catch (addError) {
-                        console.log(switchError);
+                        throw new Error(switchError);
                     }
                 }
             }
@@ -137,7 +137,7 @@ export const importToken = createAsyncThunk(
                             ethereumNetworksConfig[chainId],
                         ]);
                     } catch (addError) {
-                        console.log(switchError);
+                        throw new Error(switchError);
                     }
                 }
             }

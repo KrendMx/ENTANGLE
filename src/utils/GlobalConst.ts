@@ -1,8 +1,8 @@
 import { avaDex, ftmDex } from './abi/index';
 
-export type availableChains = '43114' | '250' | '56' | '1';
+type availableChains = '43114' | '250' | '56' | '1';
 
-export const networks = {
+const networks = {
     '43114': {
         title: 'Avalanche',
         abbr: 'AVAX',
@@ -23,8 +23,8 @@ export const networks = {
         title: 'Binance',
         abbr: 'BSC',
         icon: 'binance.svg',
-        currency: 'UST/BUSD Synthetic LP',
-        currencyMin: 'UST-BUSD',
+        currency: 'USDT/BUSD Synthetic LP',
+        currencyMin: 'USDT-BUSD',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8', // ?
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // ?
         rpc: 'https://rpc.ankr.com/bsc',
@@ -59,7 +59,7 @@ export const networks = {
         currencyMin: 'MIM/USDC',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
-        rpc: 'https://rpc3.fantom.network',
+        rpc: 'https://rpc.fantom.network',
         synth: '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
         dexAbi: ftmDex,
         mainColor: '#E93038',
@@ -69,7 +69,7 @@ export const networks = {
     },
 } as const;
 
-export const farms = {
+const farms = {
     '250': {
         'FTM': '9',
         'AVAX': '8',
@@ -90,19 +90,19 @@ export const farms = {
     },
 } as const;
 
-export const namesConfig = {
+const namesConfig = {
     'BSC': '56',
     'AVAX': '43114',
     'FTM': '250',
 };
 
-export const chainToNameConfig = {
+const chainToNameConfig = {
     '56': 'BSC',
     '43114': 'AVAX',
     '250': 'FTM',
 };
 
-export const synths = {
+const synths = {
     '250': {
         'BSC': '0x4e726245a362c1FE0947151199Bb225c0131C362',
         'AVAX': '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
@@ -119,3 +119,9 @@ export const synths = {
         'FTM': '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
     },
 };
+
+export {
+    synths, chainToNameConfig, namesConfig, farms, networks,
+};
+
+export type { availableChains };

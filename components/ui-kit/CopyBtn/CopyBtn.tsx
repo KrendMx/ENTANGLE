@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styles from './styles.module.css';
@@ -62,9 +63,12 @@ const CopyBtn: React.FC<CopyBtnProps> = ({
                 >
                     Token address copied
                 </div>
-                <img
+                <Image
+                    width={18}
+                    height={18}
                     className={styles.img}
-                    src="./images/copy.svg"
+                    quality={100}
+                    src="/images/copy.svg"
                     alt="Copy synth address"
                 />
             </div>
