@@ -1,6 +1,6 @@
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import type WalletConnectProvider from '@walletconnect/web3-provider';
-import type { availableChains } from '../src/utils/GlobalConst';
+import type { availableChains } from '../utils/GlobalConst';
 
 export type ProviderType = Web3Provider | null;
 export type walletKeyType =

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './style.module.css';
 import GradientButton from '../../../ui-kit/GradientButton';
@@ -7,18 +8,18 @@ import { networks, synths } from '../../../../src/utils/GlobalConst';
 import {
     useAppDispatch,
     useAppSelector,
-} from '../../../../Redux/store/hooks/redux';
+} from '../../../../src/Redux/store/hooks/redux';
 import {
     changeNetwork,
     importToken,
     setWallet,
-} from '../../../../Redux/store/reducers/ActionCreators';
+} from '../../../../src/Redux/store/reducers/ActionCreators';
 import type { availableChains } from '../../../../src/utils/GlobalConst';
 import type { ContainerStateType } from './containers/types';
 import CopyBtn from '../../../ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '../../../ui-kit/HoverTooltip/HoverTooltip';
 import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
-import { setIsOpenSelectWalletModal } from '../../../../Redux/store/reducers/AppSlice';
+import { setIsOpenSelectWalletModal } from '../../../../src/Redux/store/reducers/AppSlice';
 
 type DashboardItemProps = {
     chainId: availableChains;
@@ -134,7 +135,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 </div>
                 <div className={styles.top}>
                     <div className={styles.logo}>
-                        <img src={`./images/networks/${icon}`} alt="" />
+                        <Image width={60} height={60} quality={100} src={`/images/networks/${icon}`} alt="" />
                     </div>
                     <p className={styles.title}>Synthetic-LP</p>
                 </div>
@@ -157,9 +158,12 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             }}
                             onClick={handleMetamaskClick}
                         >
-                            <img
+                            <Image
+                                width={20}
+                                height={20}
                                 className={styles.metamaskBtnImg}
-                                src={`./images/connectors/${WalletProviderNames.MetaMask}.svg`}
+                                quality={100}
+                                src={`/images/connectors/${WalletProviderNames.MetaMask}.svg`}
                                 alt="Add to MetaMask"
                             />
                             <HoverTooltip

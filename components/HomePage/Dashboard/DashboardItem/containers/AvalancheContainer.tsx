@@ -2,7 +2,6 @@ import React, {
     useEffect,
     useMemo,
     useReducer,
-    useState,
     useContext,
 } from 'react';
 import DashboardItem from '../index';
@@ -12,13 +11,13 @@ import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import { farms } from '../../../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
-import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
-import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../Redux/store/reducers/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../../../../src/Redux/store/hooks/redux';
+import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../src/Redux/store/reducers/UserSlice';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
-    const { txLoading, payData, isOpenModal } = useAppSelector((state) => state.userReducer);
+    const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
     const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (

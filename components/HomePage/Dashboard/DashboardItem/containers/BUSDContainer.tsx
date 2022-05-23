@@ -8,8 +8,8 @@ import { farms } from '../../../../../src/utils/GlobalConst';
 import { ServiceContext } from '../../../../../src/context/ServiceContext/ServiceContext';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
-import { useAppSelector, useAppDispatch } from '../../../../../Redux/store/hooks/redux';
-import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../Redux/store/reducers/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../../../../src/Redux/store/hooks/redux';
+import { setPayData, setPositionSum, setIsOpenModal } from '../../../../../src/Redux/store/reducers/UserSlice';
 
 const BUSDContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();

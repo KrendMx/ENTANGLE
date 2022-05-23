@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 
 import styles from './styles.module.css';
@@ -17,7 +18,7 @@ const Preloader: React.FC<PreloaderProps> = ({ isVisible, timeout = 1000 }) => (
     >
         <div className={styles.preloader}>
             <div className={styles.background} />
-            <img src="./images/logo.svg" alt="Logo" />
+            <Image width={205} height={50} quality={100} src="/images/logo.svg" alt="Logo" />
         </div>
     </CSSTransition>
 );

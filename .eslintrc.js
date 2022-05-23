@@ -34,7 +34,7 @@ module.exports = {
         'react/jsx-indent-props': ['error', 4],
         'react/jsx-props-no-spreading': 'off',
         'import/prefer-default-export': 'off',
-        'react/destructuring-assignment': ['error', 'always'],
+        'react/destructuring-assignment': 'off',
         'react/state-in-constructor': 'off',
         'react/forbid-prop-types': 'off',
         'react/no-danger': 'off',
@@ -79,6 +79,7 @@ module.exports = {
         'no-console': 'off',
         'prefer-destructuring': 'off',
         'no-restricted-globals': 'off',
+        'no-await-in-loop': 'off',
     },
     settings: {
         'import/resolver': {

@@ -103,7 +103,7 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
                 grid: { color: 'rgba(82, 87, 102, 0.2)' },
                 ticks: {
                     // @ts-ignore
-                    callback: (value, index, tick) =>
+                    callback: (value) =>
                         `$${numberFormatter(value, 2)}`,
                     maxRotation: 0,
                     minRotation: 0,
@@ -113,7 +113,7 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
                 grid: { color: 'rgba(82, 87, 102, 0.2)' },
                 ticks: {
                     // @ts-ignore
-                    callback: (value, index, tick) =>
+                    callback: (value, index) =>
                         moment(labels[index])
                             .format(labelFormat)
                             .split(' ')

@@ -10,8 +10,8 @@ import type {
     iService,
 } from '../../../src/context/ServiceContext/ServiceContext.interfaces';
 import { ServiceContext } from '../../../src/context/ServiceContext/ServiceContext';
-import LoadingChart from '../../ui-kit/NoDataChart/LoadingChart';
-import { useAppSelector } from '../../../Redux/store/hooks/redux';
+import { useAppSelector } from '../../../src/Redux/store/hooks/redux';
+import ChartLoader from './ProfileCharts.constant';
 
 const ProfileChart: React.FC = () => {
     const service = useContext<iService>(ServiceContext);
@@ -71,7 +71,7 @@ const ProfileChart: React.FC = () => {
         filterChanged();
     }, [selectedFilter, isLoaded]);
 
-    if (!isLoaded) return <LoadingChart />;
+    if (!isLoaded) return ChartLoader;
 
     return (
         <div className={styles.chartWrapper}>

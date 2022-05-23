@@ -6,11 +6,11 @@ import { networks } from '../../../src/utils/GlobalConst';
 import {
     useAppDispatch,
     useAppSelector,
-} from '../../../Redux/store/hooks/redux';
+} from '../../../src/Redux/store/hooks/redux';
 import type { availableChains } from '../../../src/utils/GlobalConst';
 
 import styles from './style.module.css';
-import { changeNetwork } from '../../../Redux/store/reducers/ActionCreators';
+import { changeNetwork } from '../../../src/Redux/store/reducers/ActionCreators';
 
 const ChangeNetwork = () => {
     const [openList] = useState(false);
@@ -37,13 +37,11 @@ const ChangeNetwork = () => {
                 </div>
             ) : (
                 <div className={styles.selected}>
-                    {networks['43114']?.title}
-                    <Image
-                        src="/images/networks/avalanche.svg"
-                        width={32}
-                        height={32}
-                        quality={100}
-                        alt=""
+                    Undefined Chain
+                    <i
+                        className="fa fa-question-circle fa-2x"
+                        aria-hidden="true"
+                        style={{ color: '#fff', marginRight: '.3rem' }}
                     />
                 </div>
             )}
