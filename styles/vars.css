@@ -1,0 +1,39 @@
+:root {
+  --black: #101010;
+  --gray: #a3a3a3;
+  --color-3: #1e1e1e;
+  --color-4: #edf2f7;
+  --color-5: #f9f8f8;
+  --color-6: #ececec;
+  --color-7: #282b30;
+  --color-8: #e7e7e7;
+  --color-9: #2c2f38;
+  --color-10: #222222;
+  --color-11: #121212;
+  --color-12: #191a1d;
+  --color-13: #373c42;
+  --color-14: #484e56;
+  --color-15: #3b4048;
+  --color-16: #5f6265;
+  --color-17: #989898;
+  --color-18: #e9e9e9;
+  --color-19: #161616;
+  --green: #5bc15f;
+  --red: #c8534f;
+  --white: #ffffff;
+}
+
+@custom-media --media-xs-max (max-width: 360px);
+@custom-media --media-xs (min-width: 361px);
+@custom-media --media-sm-max (max-width: 624px);
+@custom-media --media-sm (min-width: 625px);
+@custom-media --media-md-max (max-width: 767px);
+@custom-media --media-md (min-width: 768px);
+@custom-media --media-lg-max (max-width: 991px);
+@custom-media --media-lg (min-width: 992px);
+@custom-media --media-xl-max (max-width: 1139px);
+@custom-media --media-xl (min-width: 1140px);
+@custom-media --media-2xl-max (max-width: 1199px);
+@custom-media --media-2xl (min-width: 1200px);
+@custom-media --media-3xl (min-width: 1300px);
+@custom-media --media-4xl (min-width: 1400px);

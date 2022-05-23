@@ -12,7 +12,7 @@
     padding: 4px 4px 4px 18px;
     min-width: 130px;
     border-radius: 18px;
-    border: 1px solid #2C2F38;
+    border: 1px solid var(--color-9);
     cursor: pointer;
 }
 
@@ -30,7 +30,7 @@
     width: 100%;
     z-index: 3;
     background-color: var(--color-3);
-    border: 1px solid #2C2F38;
+    border: 1px solid var(--color-9);
     padding: 10px 5px;
     border-radius: 12px;
 }
@@ -48,7 +48,7 @@
 }
 
 .network:hover {
-    background-color: #222222;
+    background-color: var(--color-10);
     border-radius: 6px;
 }
 
