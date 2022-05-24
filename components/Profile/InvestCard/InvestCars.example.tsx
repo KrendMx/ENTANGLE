@@ -70,7 +70,7 @@ const InvestCardExp: React.FC<IState> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Price</p>
-                    <p className={styles.itemValue}>{Number(price.toFixed(6))}</p>
+                    <p className={styles.itemValue}>{price}</p>
                     <p className={styles.undertitle}>
                         {networks[chainId].currencyMin}
                     </p>

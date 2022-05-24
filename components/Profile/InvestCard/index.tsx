@@ -81,8 +81,8 @@ const InvestCard: React.FC<IProps> = ({
                             key={key}
                             chainId={el.chainId as availableChains}
                             description={el.description}
-                            positions={el.position}
-                            price={el.price}
+                            positions={Number(el.position.toFixed(2))}
+                            price={Number(el.price.toFixed(6))}
                         />
                     ) : undefined))
             )}
