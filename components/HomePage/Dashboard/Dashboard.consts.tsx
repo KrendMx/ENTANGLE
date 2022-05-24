@@ -7,32 +7,32 @@ import SolanaContainer from './DashboardItem/containers/SolanaContainer';
 
 const ITEMS = [
     {
-        filter: [43114, 250, 56, 1],
+        filter: 43114,
         query: ['usdc-usdc.e', 'avalanche', 'avax', 'ava', 'joe'],
         element: (isFiltered: boolean, key: number) => <AvalancheContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: [43114, 250, 56, 1],
+        filter: 250,
         query: ['mim-usdc', 'fantom', 'ftm', 'spirit'],
         element: (isFiltered: boolean, key: number) => <FantomContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: [43114, 250, 56, 1],
+        filter: 1,
         query: ['mim-ust', 'etherem', 'ether', 'convexfinance'],
         element: (isFiltered: boolean, key: number) => <ETHContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: [43114, 250, 56, 1],
+        filter: 56,
         query: ['usdt-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
         element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: [],
+        filter: 2,
         query: ['ust-usdc', 'sunny'],
         element: (isFiltered: boolean, key: number) => <SolanaContainer isFiltered={isFiltered} key={key} />,
     },
     {
-        filter: [],
+        filter: 3,
         query: ['ust', 'anchor'],
         element: (isFiltered: boolean, key: number) => <USDContainer isFiltered={isFiltered} key={key} />,
     },
