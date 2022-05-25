@@ -1,62 +1,14 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { availableChains } from '../../../utils/GlobalConst';
-import type { ProviderType } from '../../types';
+import type {
+    initStateType,
+    payDataActionType,
+    ImportTypes,
+    positionSumType,
+    profitSumType,
+} from '../interfaces/User.interfaces';
 import { networks } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
-
-interface payDataType {
-    '43114': {
-        available: string | null;
-        totalAvailable: string | null;
-        price: string | null;
-    };
-    '250': {
-        available: string | null;
-        totalAvailable: string | null;
-        price: string | null;
-    };
-    '56': {
-        available: string | null;
-        totalAvailable: string | null;
-        price: string | null;
-    };
-}
-
-type payDataActionType = {
-    key: availableChains;
-    data: { available: string; totalAvailable: string; price: string };
-};
-
-type initStateType = {
-    positionSumObj: Map<string, number>;
-    profits: Map<string, { value: number; change: number }>;
-    deposit: Map<string, number>;
-    avgPrices: {
-        '250': string | null;
-        '43114': string | null;
-    };
-    txLoading: boolean;
-    positionSum: string | number;
-    payData: payDataType;
-    isOpenModal: boolean;
-};
-
-type ImportTypes = {
-    chainId: availableChains;
-    provider: ProviderType;
-};
-
-type positionSumType = {
-    n: number;
-    key: availableChains;
-};
-
-type profitSumType = {
-    n: number,
-    change: number,
-    key: string
-};
 
 const initialState: initStateType = {
     positionSumObj: new Map(),
@@ -132,7 +84,10 @@ const userSlice = createSlice({
         },
         setProfit(state, action: PayloadAction<profitSumType>) {
             state.profits = new Map(
-                state.profits.set(action.payload.key, { value: action.payload.n, change: action.payload.change }),
+                state.profits.set(action.payload.key, {
+                    value: action.payload.n,
+                    change: action.payload.change,
+                }),
             );
         },
         setDeposit(state, action: PayloadAction<positionSumType>) {

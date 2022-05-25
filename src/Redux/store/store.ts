@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
     walletReducer,
 });
 
+// Store initialization
 export const setupStore = () =>
     configureStore({
         reducer: rootReducer,

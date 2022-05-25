@@ -1,19 +1,10 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type WalletConnectProvider from '@walletconnect/web3-provider';
-
-import type { ProviderType, walletKeyType, setWalletType } from '../../types';
+import type { initialStateType } from '../interfaces/Wallet.interfaces';
+import type { ProviderType, setWalletType } from '../../types';
 import { changeNetwork, setWallet } from './ActionCreators';
 import type { availableChains } from '../../../utils/GlobalConst';
 
-type initialStateType = {
-    walletKey: walletKeyType,
-    provider: ProviderType,
-    account: string | null,
-    chainId: availableChains,
-    preLoader: boolean;
-    connect: WalletConnectProvider;
-}
 const initialState: initialStateType = {
     walletKey: null,
     provider: null,

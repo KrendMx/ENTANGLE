@@ -50,7 +50,7 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                                         height={30}
                                         className={styles.metamaskBtnImg}
                                         quality={100}
-                                        src="/images/connectors/metamask.svg"
+                                        src="/images/connectors/MetaMask.svg"
                                         alt=""
                                     />
                                 </div>

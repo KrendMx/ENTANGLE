@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { ServiceConfigOptions } from '../context/ServiceContext/ServiceContext.interfaces';
 
+// Service initialization for sending requests
 export default class Service {
     private readonly _apiBase: string;
 
