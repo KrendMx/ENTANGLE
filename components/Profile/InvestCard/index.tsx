@@ -6,6 +6,8 @@ import { CardsOrder } from './InvestCards.const';
 import type { availableChains } from '@/src/utils/GlobalConst';
 import type { IProps, ICard } from './InvestCard.interfaces';
 
+import styles from './style.module.css';
+
 const InvestCard: React.FC<IProps> = ({
     balances,
     filter,
@@ -75,16 +77,18 @@ const InvestCard: React.FC<IProps> = ({
                     You do not have purchased synth
                 </h2>
             ) : (
-                cards.map((el, key) =>
-                    (Number(el.position) ? (
-                        <InvestCardExp
-                            key={key}
-                            chainId={el.chainId as availableChains}
-                            description={el.description}
-                            positions={el.position}
-                            price={el.price}
-                        />
-                    ) : undefined))
+                <div className={styles.cardsWrapper}>
+                    {cards.map((el, key) =>
+                        (Number(el.position) ? (
+                            <InvestCardExp
+                                key={key}
+                                chainId={el.chainId as availableChains}
+                                description={el.description}
+                                positions={el.position}
+                                price={el.price}
+                            />
+                        ) : undefined))}
+                </div>
             )}
         </div>
     );

@@ -8,10 +8,12 @@
     inset 0 -4px 4px rgba(255, 255, 255, 0.25),
     inset 0 0 68px rgba(255, 255, 255, 0.05),
     inset 0 4px 4px rgba(255, 255, 255, 0.15);
+    max-width: 355px;
+    margin: 0 auto;
 }
 
 .root + .root {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .list {
@@ -40,7 +42,7 @@
 
 .pare,
 .itemValue {
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .undertitle {
@@ -75,29 +77,47 @@
 }
 
 @media (min-width: 576px) {
-    .root {
+    .root + .root {
+      margin-top: 0;
     }
-
-    .list {
+    .cardsWrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
     }
-
     .undertitle {
         max-width: 270px;
         margin: 0 auto;
     }
 }
 
-@media (min-width: 768px) {
-}
-
 @media (min-width: 992px) {
+    .cardsWrapper {
+      column-gap: 20px;
+      row-gap: 30px;
+    }
+
+    .root {
+      max-width: 85%;
+    }
+
+    .pare,
+    .itemValue {
+      font-size: 24px;
+    }
 }
 
 @media (min-width: 1200px) {
+    .cardsWrapper {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 30px;
+    }
+
     .root {
         display: grid;
         grid-template-columns: max-content max-content 1fr 1fr 1fr 1fr;
         grid-column-gap: 40px;
+        max-width: 100%;
     }
 
     .logoWrapper {
@@ -128,5 +148,3 @@
     }
 }
 
-@media (min-width: 1400px) {
-}

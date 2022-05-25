@@ -6,7 +6,8 @@
 
 .loaderWrapper {
   position: relative;
-  width: 50.5rem;
+  max-width: 740px;
+  width: 100%;
 }
 
 .loaderBlock {
