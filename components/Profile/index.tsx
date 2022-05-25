@@ -198,6 +198,7 @@ const Profile = () => {
                     </div>
                 </div>
             </section>
+
             <section className={styles.section}>
                 <div className={styles.panel}>
                     <Typography type="title">Your Entangle Assets</Typography>
@@ -221,6 +222,7 @@ const Profile = () => {
                     />
                 )}
             </section>
+
             <section className={styles.section}>
                 <TransactionHistory />
             </section>
