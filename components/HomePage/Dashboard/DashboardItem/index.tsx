@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from './style.module.css';
 import GradientButton from '@/ui-kit/GradientButton';
 import TextLoader from '@/ui-kit/TextLoader/TextLoader';
-import { networks, synths } from '@/src/utils/GlobalConst';
+import { synths } from '@/src/utils/GlobalConst';
 import {
     useAppDispatch,
     useAppSelector,
@@ -143,7 +143,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     {heading}
                     <div className={styles.addImgWrapper}>
                         <CopyBtn
-                            text={networks[chainId].synth}
+                            text={synths[chainId][localName]}
                             wrapperClassName={styles.metamaskBtnImg}
                         />
                     </div>

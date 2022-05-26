@@ -4,24 +4,12 @@ import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { opToken } from '../../../ChainService/abi';
 
-import { toChainId } from '../../../utils';
+import toChainId from '../../../utils/toChainId';
 import type { availableChains } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 import type { ProviderType, walletKeyType } from '../../types';
-import type { ErrorI } from '@/components/Modal/ErrorModal/ErrorModal.interfaces';
-import { setError, setErrorStack } from './AppSlice';
-import { useAppDispatch } from '../hooks/redux';
+import type { ErrorI } from '../interfaces/App.interfaces';
 
-export const useErrorHandler = (e: ErrorI, returnValue: any) => {
-    const dispatch = useAppDispatch();
-    dispatch(setErrorStack({ e }));
-    if ((e.code as number) === -32002) {
-        localStorage.removeItem('wallet');
-        return returnValue;
-    }
-    dispatch(setError({ e }));
-    return returnValue;
-};
 /*
     Asynchronously changes the network
     (if the network is not in the injected wallet, then it adds it)
@@ -34,26 +22,36 @@ export const changeNetwork = createAsyncThunk(
     }: {
         chainId: availableChains;
         provider: Web3Provider;
-    }): Promise<{ chainId: availableChains; newProvider: ProviderType }> => {
-        if (provider) {
-            try {
-                await provider.send('wallet_switchEthereumChain', [
-                    { chainId: toChainId(chainId) },
-                ]);
-            } catch (switchError: any) {
-                if (switchError.code === 4902) {
-                    try {
+    }): Promise<{
+        chainId: availableChains;
+        newProvider: ProviderType;
+        error: ErrorI | null;
+    }> => {
+        try {
+            if (provider) {
+                try {
+                    await provider.send('wallet_switchEthereumChain', [
+                        { chainId: toChainId(chainId) },
+                    ]);
+                } catch (switchError: any) {
+                    if (switchError.code === 4902) {
                         await provider.send('wallet_addEthereumChain', [
                             ethereumNetworksConfig[chainId],
                         ]);
-                    } catch (addError) {
-                        throw new Error(switchError);
                     }
                 }
             }
+            const newProvider = new ethers.providers.Web3Provider(
+                window.ethereum,
+            );
+            return { chainId, newProvider, error: null };
+        } catch (e) {
+            return {
+                chainId: null,
+                newProvider: null,
+                error: e,
+            };
         }
-        const newProvider = new ethers.providers.Web3Provider(window.ethereum);
-        return { chainId, newProvider };
     },
 );
 /*
@@ -63,53 +61,64 @@ export const changeNetwork = createAsyncThunk(
 export const setWallet = createAsyncThunk(
     'wallet/setWallet',
     async ({ walletKey }: { walletKey: walletKeyType }) => {
-        if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
-        if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
-        if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) {
-            return;
+        try {
+            if (walletKey === 'MetaMask' && !window.ethereum.isMetaMask) return;
+            if (walletKey === 'Coin98' && !window.ethereum.isCoin98) return;
+            if (walletKey === 'CoinBase' && !window.ethereum.isCoinbaseWallet) {
+                return;
+            }
+            let [account, newChainId, provider, connect] = [
+                null,
+                null,
+                null,
+                null,
+            ];
+            if (walletKey === 'WalletConnect') {
+                connect = new WalletConnectProvider({
+                    rpc: {
+                        1: 'https://rpc.ankr.com/eth',
+                        56: 'https://bsc-dataseed2.binance.org',
+                        43114: 'https://api.avax.network/ext/bc/C/rpc',
+                        250: 'https://rpc.ftm.tools',
+                    },
+                });
+                await connect.enable();
+                account = connect.accounts[0];
+                newChainId = connect.chainId.toString();
+                provider = new ethers.providers.Web3Provider(connect);
+            } else {
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+
+                account = (await provider.send('eth_requestAccounts', []))[0] || null;
+                if (!account) return;
+
+                const networkData = await provider.getNetwork();
+                if (!networkData) return;
+
+                newChainId = parseInt(
+                    networkData.chainId.toString(),
+                    10,
+                ).toString() as availableChains;
+            }
+            localStorage.setItem('wallet', walletKey);
+            return {
+                connect,
+                walletKey,
+                newChainId,
+                provider,
+                account,
+                error: null,
+            };
+        } catch (e) {
+            return {
+                connect: null,
+                walletKey: null,
+                newChainId: null,
+                provider: null,
+                account: null,
+                error: e,
+            };
         }
-        let [account, newChainId, provider, connect] = [null, null, null, null];
-        if (walletKey === 'WalletConnect') {
-            connect = new WalletConnectProvider({
-                rpc: {
-                    1: 'https://rpc.ankr.com/eth',
-                    56: 'https://bsc-dataseed2.binance.org',
-                    43114: 'https://api.avax.network/ext/bc/C/rpc',
-                    250: 'https://rpc.ftm.tools',
-                },
-            });
-            await connect.enable();
-            account = connect.accounts[0];
-            newChainId = connect.chainId.toString();
-            provider = new ethers.providers.Web3Provider(connect);
-        } else {
-            provider = new ethers.providers.Web3Provider(window.ethereum);
-
-            account = (
-                await provider
-                    .send('eth_requestAccounts', [])
-                    .catch((e: any) => useErrorHandler(e, []))
-            )[0] || null;
-            if (!account) return;
-
-            const networkData = await provider
-                .getNetwork()
-                .catch((e: any) => useErrorHandler(e, []));
-            if (!networkData) return;
-
-            newChainId = parseInt(
-                networkData.chainId.toString(),
-                10,
-            ).toString() as availableChains;
-        }
-        localStorage.setItem('wallet', walletKey);
-        return {
-            connect,
-            walletKey,
-            newChainId,
-            provider,
-            account,
-        };
     },
 );
 
@@ -125,29 +134,31 @@ export const importToken = createAsyncThunk(
         synthAddress: string;
         provider: ProviderType;
     }): Promise<any> => {
-        if (provider) {
-            const options = {
-                type: 'ERC20',
-                options: {
-                    address: synthAddress,
-                    symbol: 'SYNTH',
-                    decimals: 18,
-                },
-            };
-            try {
-                // @ts-ignore
-                await provider.send('wallet_watchAsset', options);
-            } catch (switchError: any) {
-                if (switchError.code === 4902) {
-                    try {
+        try {
+            if (provider) {
+                const options = {
+                    type: 'ERC20',
+                    options: {
+                        address: synthAddress,
+                        symbol: 'SYNTH',
+                        decimals: 18,
+                    },
+                };
+                try {
+                    // @ts-ignore
+                    await provider.send('wallet_watchAsset', options);
+                } catch (switchError: any) {
+                    if (switchError.code === 4902) {
                         await provider.send('wallet_addEthereumChain', [
                             ethereumNetworksConfig[chainId],
                         ]);
-                    } catch (addError) {
-                        throw new Error(switchError);
                     }
                 }
             }
+        } catch (e) {
+            return {
+                error: e,
+            };
         }
     },
 );

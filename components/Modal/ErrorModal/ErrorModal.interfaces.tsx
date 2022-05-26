@@ -1,12 +1,8 @@
-import type { MetamaskErrorUserMessages } from './ErrorModal.constants';
+import type { ErrorI } from '@/src/Redux/store/interfaces/App.interfaces';
 
 type ErrorModalProps = {
     error: ErrorI;
     handleClose: () => any;
 };
 
-interface ErrorI extends Error {
-    code: keyof typeof MetamaskErrorUserMessages
-}
-
-export type { ErrorModalProps, ErrorI };
+export type { ErrorModalProps };

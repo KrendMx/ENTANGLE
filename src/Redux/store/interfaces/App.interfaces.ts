@@ -10,8 +10,10 @@ type AppState = {
 
 type TransactionInfo = { value: number, symbol: string, isReceived: boolean }
 
-interface ErrorI extends Error {
-    code: keyof typeof MetamaskErrorUserMessages
+interface ErrorI {
+    code?: keyof typeof MetamaskErrorUserMessages;
+    head?: string;
+    message?: string;
 }
 
 export type { AppState, ErrorI, TransactionInfo };

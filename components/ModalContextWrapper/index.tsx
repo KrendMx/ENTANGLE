@@ -10,6 +10,7 @@ import {
     setSucInfo,
     setIsOpenSelectWalletModal,
 } from '@/src/Redux/store/reducers/AppSlice';
+import { setUserError } from '@/src/Redux/store/reducers/WalletSlice';
 import { setWallet } from '@/src/Redux/store/reducers/ActionCreators';
 
 const ModalContextWrapper = () => {
@@ -17,6 +18,9 @@ const ModalContextWrapper = () => {
     const [termsModal, setTermsModal] = useState(false);
     const { error, sucInfo, isOpenSelectWalletModal } = useAppSelector(
         (state) => state.appReducer,
+    );
+    const { userError } = useAppSelector(
+        (state) => state.walletReducer,
     );
     const handleClose = () => { localStorage.setItem('terms', 'true'); setTermsModal(false); };
 
@@ -27,11 +31,12 @@ const ModalContextWrapper = () => {
     }, []);
     return (
         <>
-            {error && (
+            {(error || userError) && (
                 <ErrorModal
-                    error={error}
+                    error={error || userError}
                     handleClose={() => {
                         dispatch(setError(null));
+                        dispatch(setUserError({ error: null }));
                     }}
                 />
             )}

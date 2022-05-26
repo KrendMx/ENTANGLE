@@ -13,11 +13,13 @@ import ChainService from '@/src/ChainService/ChainService';
 import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
+import { setErrorStack, setError } from '@/src/Redux/store/reducers/AppSlice';
 
 const FantomContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
     const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
+    const { error } = useAppSelector((state) => state.appReducer);
     const { getProfit } = useContext(ServiceContext);
 
     const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
@@ -62,14 +64,31 @@ const FantomContainer = ({ isFiltered = false }) => {
         if (!preLoader) {
             (async () => {
                 setState({ available: null, totalAvailable: null });
-                const {
+                let [apr,
                     available,
                     totalAvailable,
                     totalDeposits,
                     currentDeposits,
-                    apr,
-                    price,
-                } = await Service.getCardData(account ? farms[chainId]?.FTM : '9');
+                    price] = [0, 0, 0, 0, 0, 0];
+                try {
+                    const cardData = await Service.getCardData(
+                        account ? farms[chainId]?.FTM : '9',
+                    );
+                    apr = cardData.apr;
+                    available = cardData.available;
+                    totalAvailable = cardData.totalAvailable;
+                    totalDeposits = cardData.totalDeposits;
+                    currentDeposits = cardData.currentDeposits;
+                    price = cardData.price;
+                } catch (e) {
+                    if (!error) {
+                        dispatch(setError({ e: { head: 'Error', message: e.message } }));
+                    }
+                    dispatch(setErrorStack({ e: { head: 'Error', message: e.message } }));
+                    if ((e.code as number) === -32002) {
+                        localStorage.removeItem('wallet');
+                    }
+                }
                 const percentage = Math.ceil((available / currentDeposits) * 100);
                 dispatch(setPayData({
                     key: '250',
@@ -100,10 +119,23 @@ const FantomContainer = ({ isFiltered = false }) => {
         (async () => {
             if (account) {
                 setState({ positions: null, totalPositions: null });
-                const { positions, totalPositions } = await Service.getPersonalData(
-                    account,
-                    account ? farms[chainId]?.FTM : '67',
-                );
+                let [positions, totalPositions] = [0, 0];
+                try {
+                    const personalData = await Service.getPersonalData(
+                        account,
+                        account ? farms[chainId]?.FTM : '67',
+                    );
+                    positions = personalData.positions;
+                    totalPositions = personalData.totalPositions;
+                } catch (e: any) {
+                    if (!error) {
+                        dispatch(setError({ e: { head: 'Error', message: e.message } }));
+                    }
+                    dispatch(setErrorStack({ e: { head: 'Error', message: e.message } }));
+                    if ((e.code as number) === -32002) {
+                        localStorage.removeItem('wallet');
+                    }
+                }
                 const yieldTime = await getProfit(account, 8);
                 setPositionSum({ n: positions, key: '250' });
                 setState({

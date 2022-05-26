@@ -18,7 +18,11 @@ export const appSlice = createSlice({
             state.isLoaded = action.payload;
         },
         setError(state, action: PayloadAction<{e: ErrorI}>) {
-            state.error = action.payload.e;
+            if (action.payload?.e) {
+                state.error = action.payload.e;
+            } else {
+                state.error = null;
+            }
         },
         setErrorStack(state, action: PayloadAction<{e: ErrorI}>) {
             state.errorStack.push(action.payload.e);

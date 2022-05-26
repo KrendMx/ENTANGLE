@@ -9,32 +9,35 @@ import styles from './style.module.css';
 const ErrorModalContent: React.FC<ErrorModalProps> = ({
     error,
     handleClose,
-}) => {
-    const errorText = Object.keys(MetamaskErrorUserMessages).includes(
-        String(error.code),
-    )
-        ? MetamaskErrorUserMessages[error.code]
-        : 'Something went wrong.';
-    return (
-        <div className={styles.wrapper}>
-            <div className={styles.closeWrapper}>
+}) => (
+    <div className={styles.wrapper}>
+        <div className={styles.closeWrapper}>
+            <Image
+                width={15}
+                height={15}
+                className={styles.closeImg}
+                onClick={handleClose}
+                quality={100}
+                src="/images/close.svg"
+                alt="closeImg"
+            />
+        </div>
+        <div className={styles.content}>
+            <div className={styles.warning}>
                 <Image
-                    width={20}
-                    height={20}
-                    className={styles.closeImg}
-                    onClick={handleClose}
+                    width={49}
+                    height={49}
                     quality={100}
-                    src="/images/close.svg"
-                    alt="closeImg"
+                    src="/images/warning.svg"
+                    alt="warning"
                 />
             </div>
             <div className={styles.errorText}>
-                Sorry.
-                {' '}
-                {errorText}
+                <h3>{MetamaskErrorUserMessages[error?.code]?.head || error?.head}</h3>
+                <h5>{MetamaskErrorUserMessages[error?.code]?.message || error?.message}</h5>
             </div>
         </div>
-    );
-};
+    </div>
+);
 
 export default ErrorModalContent;
