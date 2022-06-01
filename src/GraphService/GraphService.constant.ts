@@ -11,7 +11,8 @@ const getGraphData = async (account: string, url: string, type = 'buy') => {
                 from
                 to
                 amount
-                }`,
+                }
+            }`,
     };
     return axios.post(url, body, {
         headers: {
