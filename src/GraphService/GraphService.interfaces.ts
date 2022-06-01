@@ -1,16 +1,8 @@
-import type { availableChains } from '../utils/GlobalConst';
+import type { TransactionHistoryEntity } from '../context/ServiceContext/ServiceContext.interfaces';
 
 interface IGraphService {
     getBuyTransactions: () => Promise<IConfiguredBuyTransactionsData[]>;
-    getAllTransactions: () => Promise<IConfiguredHistoryData[]>;
-}
-
-interface IConfiguredHistoryData {
-    amount: number
-    blockNumber: number;
-    crypto: availableChains;
-    time: number;
-    type: 'buy' | 'sell';
+    getAllTransactions: () => Promise<TransactionHistoryEntity[]>;
 }
 
 interface IConfiguredBuyTransactionsData {
@@ -35,6 +27,5 @@ interface IQueryResponse {
 export type {
     IGraphService,
     IQueryResponse,
-    IConfiguredHistoryData,
     IConfiguredBuyTransactionsData,
 };

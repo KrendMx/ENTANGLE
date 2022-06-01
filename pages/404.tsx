@@ -1,18 +1,15 @@
 import type { NextPage, GetStaticProps } from 'next';
-import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import HomePage from '../components/HomePage';
+import { useTranslation } from 'next-i18next';
 
-const Home: NextPage = () => (
-    <div>
-        <Head>
-            <title>Index | Entangle</title>
-        </Head>
-        <main>
-            <HomePage />
-        </main>
-    </div>
-);
+const NotFound: NextPage = () => {
+    const { t } = useTranslation('404');
+    return (
+        <div style={{ marginTop: '200px', marginBottom: '200px' }}>
+            <h1 style={{ textAlign: 'center', fontSize: '5rem' }}>{t('soon')}</h1>
+        </div>
+    );
+};
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     props: {
@@ -24,4 +21,4 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     },
 });
 
-export default Home;
+export default NotFound;
