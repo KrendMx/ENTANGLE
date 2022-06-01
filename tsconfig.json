@@ -1,5 +1,5 @@
 {
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next-18next.config.js", "locales.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next-i18next.config.js", "locales.js"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "baseUrl": ".",

@@ -8,20 +8,21 @@ import Dropout from './Dropout';
 import ChangeNetwork from './ChangeNetwork';
 import MenuBtn from './MenuBtn/MenuBtn';
 import type { walletKeyType } from '@/src/Redux/types';
+import locales from '../../locales';
 import {
     removeWallet,
     setPreloader,
     changeNetworkWC,
 } from '@/src/Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
+import { setIsOpenSelectWalletModal, setLanguage } from '@/src/Redux/store/reducers/AppSlice';
 import { setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
 import { chainToNameConfig } from '@/src/utils/GlobalConst';
 import {
     setWallet,
     changeNetwork,
 } from '@/src/Redux/store/reducers/ActionCreators';
-import type { availableChains } from '@/src/utils/GlobalConst';
+import type { availableChains, languages } from '@/src/utils/GlobalConst';
 
 const Header = () => {
     const {
@@ -29,6 +30,7 @@ const Header = () => {
         provider,
         connect: walletConnectProvider,
     } = useAppSelector((state) => state.walletReducer);
+    const { language } = useAppSelector((state) => state.appReducer);
     const dispatch = useAppDispatch();
     const connect = () => account || dispatch(setIsOpenSelectWalletModal(true));
     const disconnect = async () => {
@@ -79,6 +81,23 @@ const Header = () => {
             }
         }());
     }, []);
+
+    const mapLanguage = (locale: languages) => {
+        switch (locale) {
+        case 'en':
+            return 'ENG';
+        case 'ru':
+            return 'RUS';
+        case 'ch':
+            return 'CHN';
+        default:
+            return 'undfined lang';
+        }
+    };
+
+    const handleClick = (el: languages) => {
+        dispatch(setLanguage({ lang: el }));
+    };
 
     const networkBtns = (
         <div
@@ -140,7 +159,7 @@ const Header = () => {
     );
     const langSwitcher = (
         <Dropout
-            title="ENG"
+            title={mapLanguage(language)}
             wrapperListClassName={styles.langList}
             arrowImg={(
                 <Image
@@ -151,7 +170,13 @@ const Header = () => {
                 />
             )}
         >
-            <p>ENG</p>
+            <>
+                {
+                    locales.map((el: languages, key: number) => (
+                        <p key={key} onClick={() => handleClick(el)}>{mapLanguage(el)}</p>
+                    ))
+                }
+            </>
         </Dropout>
     );
     return (
@@ -182,7 +207,7 @@ const Header = () => {
                         >
                             <div className={styles.selectorsWrapper}>
                                 <Dropout
-                                    title="Synthetic LP Vaults"
+                                    title="Synthetic Vaults"
                                     wrapperClassName={classNames(
                                         styles.heading,
                                         styles.syntheticSelect,
@@ -211,6 +236,7 @@ const Header = () => {
                                     <Dropout
                                         title="enUSD"
                                         isSoon
+                                        textClassName={styles.dropSoon}
                                         wrapperListClassName={
                                             styles.displayNone
                                         }

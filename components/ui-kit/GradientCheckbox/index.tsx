@@ -14,7 +14,6 @@ const GradientCheckbox: React.FC<IProps> = ({
     text,
     isChecked,
     onClickHandler,
-    gradient,
     additionalClass,
 }) => (
     <div className={classNames(additionalClass, styles.container)}>
@@ -24,7 +23,6 @@ const GradientCheckbox: React.FC<IProps> = ({
             onClick={onClickHandler}
             checked={isChecked}
             className={classNames(styles.checkBox)}
-            style={{ background: gradient }}
         />
         <label htmlFor="confirmCheck" className={styles.text}>
             {text}

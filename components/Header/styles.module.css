@@ -61,6 +61,10 @@
     color: var(--color-5);
 }
 
+.dropSoon {
+  display: flex;
+  flex-direction: column;
+}
 
 .navigate {
   display: flex;

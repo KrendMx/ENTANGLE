@@ -120,8 +120,10 @@ const synths = {
     },
 };
 
+type languages = 'en' | 'ru' | 'ch';
+
 export {
     synths, chainToNameConfig, namesConfig, farms, networks,
 };
 
-export type { availableChains };
+export type { availableChains, languages };

@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import { useMemo } from 'react';
 import { Provider } from 'react-redux';
+import { appWithTranslation } from 'next-i18next';
 
 import { setupStore } from '@/src/Redux/store/store';
 import Layout from '@/src/HOC/Layout';
@@ -34,4 +35,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     );
 };
 
-export default MyApp;
+export default appWithTranslation(MyApp);

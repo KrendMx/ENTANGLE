@@ -1,6 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { AppState, ErrorI, TransactionInfo } from '../interfaces/App.interfaces';
+import type { languages } from '../../../utils/GlobalConst';
+import type {
+    AppState,
+    ErrorI,
+    TransactionInfo,
+} from '../interfaces/App.interfaces';
 
 const initialState: AppState = {
     isLoaded: false,
@@ -8,6 +13,7 @@ const initialState: AppState = {
     errorStack: [],
     sucInfo: null,
     isOpenSelectWalletModal: false,
+    language: 'en',
 };
 
 export const appSlice = createSlice({
@@ -17,15 +23,18 @@ export const appSlice = createSlice({
         appLoaded(state, action: PayloadAction<boolean>) {
             state.isLoaded = action.payload;
         },
-        setError(state, action: PayloadAction<{e: ErrorI}>) {
+        setError(state, action: PayloadAction<{ e: ErrorI }>) {
             if (action.payload?.e) {
                 state.error = action.payload.e;
             } else {
                 state.error = null;
             }
         },
-        setErrorStack(state, action: PayloadAction<{e: ErrorI}>) {
+        setErrorStack(state, action: PayloadAction<{ e: ErrorI }>) {
             state.errorStack.push(action.payload.e);
+        },
+        setLanguage(state, action: PayloadAction<{ lang: languages }>) {
+            state.language = action.payload.lang;
         },
         setSucInfo(state, action: PayloadAction<TransactionInfo>) {
             state.sucInfo = action.payload;
@@ -37,6 +46,11 @@ export const appSlice = createSlice({
 });
 
 export const {
-    appLoaded, setError, setErrorStack, setSucInfo, setIsOpenSelectWalletModal,
+    appLoaded,
+    setError,
+    setErrorStack,
+    setSucInfo,
+    setIsOpenSelectWalletModal,
+    setLanguage,
 } = appSlice.actions;
 export default appSlice.reducer;
