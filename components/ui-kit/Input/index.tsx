@@ -1,4 +1,5 @@
 import type { InputHTMLAttributes } from 'react';
+import Image from 'next/image';
 import React from 'react';
 import styles from './styles.module.css';
 
@@ -9,7 +10,7 @@ type InputProps = {
     title?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     otherProps?: InputHTMLAttributes<HTMLInputElement>;
-    getMax: () => void;
+    getMax?: () => void;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -37,6 +38,20 @@ const Input: React.FC<InputProps> = ({
                     max
                 </p>
             )}
+            {
+                type === 'text' && (
+                    <button type="submit">
+                        <Image
+                            width={23}
+                            height={23}
+                            quality={100}
+                            className={styles.searchIcon}
+                            src="/images/searchIcon.svg"
+                            alt=""
+                        />
+                    </button>
+                )
+            }
         </div>
     </>
 );

@@ -36,18 +36,7 @@ const ActionPanel: React.FC<IActionProps> = ({
                     onChange={handleChangeSearch}
                     value={search}
                     type="text"
-                >
-                    <button type="submit">
-                        <Image
-                            width={23}
-                            height={23}
-                            quality={100}
-                            className={styles.searchIcon}
-                            src="/images/searchIcon.svg"
-                            alt=""
-                        />
-                    </button>
-                </Input>
+                />
             </div>
         </div>
     );
