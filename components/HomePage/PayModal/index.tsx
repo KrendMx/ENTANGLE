@@ -6,8 +6,9 @@ import classNames from 'classnames';
 import styles from './style.module.css';
 import { networks, farms } from '@/src/utils/GlobalConst';
 import type { PayModalPropsType } from './PayModal.interfaces';
-import Deposit from './Deposit';
-import Withdraw from './Withdraw';
+import Deposit from './Tabs/Deposit';
+import Withdraw from './Tabs/Withdraw';
+import Tabs from '@/ui-kit/Tabs/index';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
 import { setSucInfo } from '@/src/Redux/store/reducers/AppSlice';
@@ -125,21 +126,7 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
                     alt="closeImg"
                 />
             </div>
-            <div className={styles.tabsBg}>
-                <div className={styles.tabsWrapper}>
-                    {buttons.map((title, idx) => (
-                        <div
-                            key={title}
-                            onClick={() => setActiveTab(idx)}
-                            className={classNames(styles.tabWrapper, {
-                                [styles.active]: idx === activeTab,
-                            })}
-                        >
-                            <p className={styles.tab}>{title}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <Tabs switchHandler={(idx: number) => setActiveTab(idx)} activeTab={activeTab} />
             {
                 activeTab
                     ? (

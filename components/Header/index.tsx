@@ -245,14 +245,11 @@ const Header = () => {
                                     </Dropout>
                                     <Dropout title="Stake">
                                         <>
-                                            <p>
-                                                Entangle
-                                                <span
-                                                    className={styles.soonText}
-                                                >
-                                                    (soon)
-                                                </span>
-                                            </p>
+                                            <Link href="/stake-entangle" passHref>
+                                                <p className={styles.dropItem}>
+                                                    Entangle
+                                                </p>
+                                            </Link>
                                             <p>
                                                 Stablecoins
                                                 <span

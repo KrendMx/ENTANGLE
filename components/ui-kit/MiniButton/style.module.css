@@ -1,0 +1,19 @@
+.miniButton {
+    width: 75px;
+    height: 40px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #5F6265;
+    cursor: pointer;
+    background: #282B30;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+    border-radius: 12px;
+}
+
+.active {
+    background: linear-gradient(180deg, #484E56 17.71%, #3B4048 90.44%)!important;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35)!important;
+    color: rgba(255, 255, 255, 1)!important;
+}

@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import React, { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { Contract, providers } from 'ethers';
-import styles from './style.module.css';
+import styles from '../style.module.css';
 import Input from '@/ui-kit/Input';
 import GradientButton from '@/ui-kit/GradientButton';
-import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/types';
+import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
 import { networks, farms, namesConfig } from '@/src/utils/GlobalConst';
 import type { availableChains } from '@/src/utils/GlobalConst';
 import { ChainConfig } from '@/src/ChainService/config';
@@ -189,13 +189,10 @@ const Withdraw: React.FC<propsType> = (props) => {
                         }
                     }}
                     placeholder="Enter amount"
-                    type="text"
                     otherProps={{ autoFocus: true }}
-                >
-                    <p className={styles.gradientText} onClick={getMax}>
-                        max
-                    </p>
-                </Input>
+                    type="number"
+                    getMax={getMax}
+                />
                 {maxError && (
                     <p className={styles.error}>Not enought Synth LP</p>
                 )}

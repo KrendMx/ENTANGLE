@@ -6,30 +6,39 @@ type InputProps = {
     value: string;
     placeholder: string;
     type: string;
+    title?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     otherProps?: InputHTMLAttributes<HTMLInputElement>;
-    children: JSX.Element
+    getMax: () => void;
 };
 
 const Input: React.FC<InputProps> = ({
     value,
     onChange,
     placeholder,
-    children,
+    getMax,
     type,
     otherProps,
+    title,
 }) => (
-    <div className={styles.wrapper}>
-        <input
-            type={type}
-            value={value}
-            placeholder={placeholder}
-            onChange={onChange}
-            className={styles.input}
-            {...otherProps}
-        />
-        {children}
-    </div>
+    <>
+        {title && <p className={styles.inputTitle}>{title}</p>}
+        <div className={styles.wrapper}>
+            <input
+                type={type}
+                value={value}
+                placeholder={placeholder}
+                onChange={onChange}
+                className={styles.input}
+                {...otherProps}
+            />
+            {type === 'number' && (
+                <p className={styles.gradientText} onClick={getMax}>
+                    max
+                </p>
+            )}
+        </div>
+    </>
 );
 
 export default Input;
