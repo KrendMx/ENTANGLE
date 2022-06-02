@@ -15,7 +15,10 @@ import {
     changeNetworkWC,
 } from '@/src/Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import { setIsOpenSelectWalletModal, setLanguage } from '@/src/Redux/store/reducers/AppSlice';
+import {
+    setIsOpenSelectWalletModal,
+    setLanguage,
+} from '@/src/Redux/store/reducers/AppSlice';
 import { setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
 import { chainToNameConfig } from '@/src/utils/GlobalConst';
 import {
@@ -171,11 +174,11 @@ const Header = () => {
             )}
         >
             <>
-                {
-                    locales.map((el: languages, key: number) => (
-                        <p key={key} onClick={() => handleClick(el)}>{mapLanguage(el)}</p>
-                    ))
-                }
+                {locales.map((el: languages, key: number) => (
+                    <p key={key} onClick={() => handleClick(el)}>
+                        {mapLanguage(el)}
+                    </p>
+                ))}
             </>
         </Dropout>
     );
@@ -219,12 +222,11 @@ const Header = () => {
                                                 Buy & Sell Synth-LP
                                             </p>
                                         </Link>
-                                        <p>
-                                            Mint & Burn Synth-LP
-                                            <span className={styles.soonText}>
-                                                (soon)
-                                            </span>
-                                        </p>
+                                        <Link href="/mint" passHref>
+                                            <p className={styles.dropItem}>
+                                                Mint & Burn Synth-LP
+                                            </p>
+                                        </Link>
                                     </>
                                 </Dropout>
                                 <nav

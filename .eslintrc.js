@@ -17,6 +17,7 @@ module.exports = {
     },
     plugins: ['react', '@typescript-eslint'],
     rules: {
+        'linebreak-style': 0,
         'no-param-reassign': ['error', { props: false }],
         'max-len': ['error', { code: 120 }],
         indent: ['error', 4],
