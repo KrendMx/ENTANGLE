@@ -22,21 +22,21 @@ const InvestCard: React.FC<IProps> = ({
         {
             chainId: '250',
             description:
-                'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
+                'Generates yield by running an autocompound MIM/USDC strategy on spookyswap.finance',
             position: balances?.FTM?.positions,
             price: balances?.FTM?.price,
         },
         {
             chainId: '43114',
             description:
-                'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
+                'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
             position: balances?.AVAX?.positions,
             price: balances?.AVAX?.price,
         },
         {
             chainId: '56',
             description:
-                'Generates yield by running an autocompound UST/USDC strategy on sunny.ag',
+                'Generates yield by running an autocompound USDT/BUSD strategy on pancakeswap.finance',
             position: balances?.BSC?.positions,
             price: balances?.BSC?.price,
         },

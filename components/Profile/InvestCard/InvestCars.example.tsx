@@ -8,7 +8,8 @@ import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import styles from './style.module.css';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import type { availableChains } from '@/src/utils/GlobalConst';
-import { setPrices, setProfit } from '@/src/Redux/store/reducers/UserSlice';
+import { setProfit } from '@/src/Redux/store/reducers/UserSlice';
+import QueryRequests from '@/src/GraphService/queryRequests';
 
 interface IState {
     chainId: availableChains;
@@ -24,23 +25,20 @@ const InvestCardExp: React.FC<IState> = ({
     description,
 }) => {
     const dispatch = useAppDispatch();
-    const { account } = useAppSelector((state) => state.walletReducer);
-    const { profits, avgPrices } = useAppSelector((state) => state.userReducer);
-    const { getProfit, getAVGPrice } = useContext(ServiceContext);
+    const {
+        profits, avgPrices, txHistory, txLoading,
+    } = useAppSelector((state) => state.userReducer);
 
     useEffect(() => {
-        (async function GetAvg() {
-            if (account) {
-                const avgData = await getAVGPrice(account);
-                dispatch(setPrices({
-                    '250': avgData.fantomSynth.toFixed(3),
-                    '43114': avgData.avaxSynth.toFixed(3),
-                }));
-                const data = await getProfit(account, networks[chainId].farm);
-                dispatch(setProfit({ n: data.stable, change: data.percentage, key: chainId }));
+        (async function GetProfit() {
+            if (txHistory.length) {
+                const { percentage, stable } = await QueryRequests.calculateProfit(txHistory, price, chainId);
+                console.log(percentage);
+                console.log(stable);
+                dispatch(setProfit({ n: stable, change: percentage, key: chainId }));
             }
         }());
-    }, []);
+    }, [txHistory, txLoading]);
 
     return (
         <div className={styles.root}>
@@ -61,7 +59,7 @@ const InvestCardExp: React.FC<IState> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Your Position</p>
-                    <p className={styles.itemValue}>{positions}</p>
+                    <p className={styles.itemValue}>{Number(positions.toFixed(2))}</p>
                     <p className={styles.undertitle}>
                         {networks[chainId].currency}
                     </p>
@@ -70,7 +68,7 @@ const InvestCardExp: React.FC<IState> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>Price</p>
-                    <p className={styles.itemValue}>{price}</p>
+                    <p className={styles.itemValue}>{Number(price.toFixed(6))}</p>
                     <p className={styles.undertitle}>
                         {networks[chainId].currencyMin}
                     </p>
@@ -86,7 +84,7 @@ const InvestCardExp: React.FC<IState> = ({
                                 {avgPrices[chainId]}
                             </p>
                             <p className={styles.undertitle}>
-                                fUSDT/USDC Synthetic LP
+                                {networks[chainId].currency}
                             </p>
                         </>
                     ) : (

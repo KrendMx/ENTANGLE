@@ -81,6 +81,7 @@ module.exports = {
         'no-restricted-globals': 'off',
         'no-await-in-loop': 'off',
         'import/no-unresolved': 'off',
+        'no-return-await': 'off',
     },
     settings: {
         'import/resolver': {

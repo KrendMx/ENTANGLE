@@ -9,6 +9,7 @@ const networks = {
         icon: 'avalanche.svg',
         currency: 'USDC/USDC.e Synthetic LP',
         currencyMin: 'USDC/USDC.e',
+        description: 'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
         dex: '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
         fiat: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
         rpc: 'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
@@ -25,6 +26,7 @@ const networks = {
         icon: 'binance.svg',
         currency: 'USDT/BUSD Synthetic LP',
         currencyMin: 'USDT-BUSD',
+        description: 'Generates yield by running an autocompound USDT/BUSD strategy on pancakeswap.finance',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8', // ?
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // ?
         rpc: 'https://rpc.ankr.com/bsc',
@@ -41,6 +43,7 @@ const networks = {
         icon: 'ethereum.svg',
         currency: 'MIM/USDC Synthetic LP',
         currencyMin: 'MIM-UST',
+        description: 'Generates yield by running autocompounded aDAI/aSUSD strategy on convexfinance.com',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8', // ?
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', // ?
         rpc: 'https://rpc.ankr.com/eth',
@@ -57,6 +60,7 @@ const networks = {
         icon: 'fantom.svg',
         currency: 'MIM/USDC Synthetic LP',
         currencyMin: 'MIM/USDC',
+        description: 'Generates yield by running an autocompound MIM/USDC strategy on spookyswap.finance',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
         rpc: 'https://rpc.fantom.network',

@@ -15,7 +15,8 @@ import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 import { networks } from '@/src/utils/GlobalConst';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
+import { getAverageBuyPrice } from '@/src/Redux/store/reducers/UserSlice';
 import { SortArray, calculatePosPrice, loader } from './Profile.constant';
 import type { IFilter } from './Profile.interfaces';
 
@@ -23,6 +24,7 @@ const Profile = () => {
     const { positionSum, profits } = useAppSelector(
         (state) => state.userReducer,
     );
+    const dispatch = useAppDispatch();
     const { getProfit } = useContext(ServiceContext);
     const [balance, setBalance] = useState<number>(0);
     useEffect(() => {
@@ -66,12 +68,7 @@ const Profile = () => {
     useEffect(() => {
         (async function getAvg() {
             if (account) {
-                const avaxChange = await getProfit(account, 67);
-                const ftmChange = await getProfit(account, 8);
-                setChange([
-                    avaxChange.stable + ftmChange.stable,
-                    avaxChange.percentage + ftmChange.percentage,
-                ]);
+                dispatch(getAverageBuyPrice({ account }));
             }
         }());
     }, [account]);

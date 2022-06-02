@@ -1,5 +1,5 @@
 import { Contract, providers } from 'ethers';
-import { getGraphData } from './GraphService.constant';
+import QueryRequests from './queryRequests';
 import { GRAPH_CONFIG } from './config';
 import type {
     IQueryResponse,
@@ -41,10 +41,9 @@ class GraphService implements IGraphService {
                     address: this.account,
                     abi: synthAbi,
                 });
-                const { data: BuyData }: { data: IQueryResponse } = await getGraphData(
+                const { data: BuyData }: { data: IQueryResponse } = await QueryRequests.getGraphDataBuyData(
                     this.account,
                     chainNames[chain][netId],
-                    'buy',
                 );
                 for (let i = 0; i < BuyData.data.exchanges.length; i++) {
                     if (BuyData.data.exchanges[i]) {
@@ -79,15 +78,13 @@ class GraphService implements IGraphService {
                     address: this.account,
                     abi: synthAbi,
                 });
-                const { data: BuyData }: { data: IQueryResponse } = await getGraphData(
+                const { data: BuyData }: { data: IQueryResponse } = await QueryRequests.getGraphDataBuyData(
                     this.account,
-                    GRAPH_CONFIG[chain][netId],
-                    'buy',
+                    GRAPH_CONFIG[chain][netId].url,
                 );
-                const { data: SellData }: { data: IQueryResponse } = await getGraphData(
-                    this.account,
-                    GRAPH_CONFIG[chain][netId],
-                    'sell',
+                const { data: SellData }: { data: IQueryResponse } = await QueryRequests.getGraphDataTxData(
+                    GRAPH_CONFIG[chain][netId].fee,
+                    GRAPH_CONFIG[chain][netId].url,
                 );
                 const max = Math.max(
                     SellData.data.exchanges?.length,
@@ -96,23 +93,25 @@ class GraphService implements IGraphService {
                 if (max !== 0) {
                     for (let i = 0; i < max; i++) {
                         if (SellData.data.exchanges[i]) {
-                            const time = (
-                                await contract.provider.getBlock(
-                                    Number(SellData.data.exchanges[i].block),
-                                )
-                            ).timestamp;
-                            configuredData.push({
-                                type: 'sell',
-                                amount: (
-                                    Number(SellData.data.exchanges[i].amount)
-                                / 10 ** 18
-                                ).toString(),
-                                crypto: Number(netId as availableChains),
-                                time: time * 1000,
-                            });
+                            const user = (await contract.provider.getTransaction(SellData.data.exchanges[i].id)).from;
+                            if (user.toLowerCase() === this.account) {
+                                const time = (
+                                    await contract.provider.getBlock(
+                                        Number(SellData.data.exchanges[i].block),
+                                    )
+                                ).timestamp;
+                                configuredData.push({
+                                    type: 'sell',
+                                    amount: (
+                                        Number(SellData.data.exchanges[i].amount)
+                                    / 10 ** 18
+                                    ).toString(),
+                                    crypto: Number(netId as availableChains),
+                                    time: time * 1000,
+                                });
+                            }
                         }
                         if (BuyData.data.exchanges[i]) {
-                            console.log(BuyData.data.exchanges[i].block);
                             const time = (
                                 await contract.provider.getBlock(
                                     Number(BuyData.data.exchanges[i].block),
@@ -122,7 +121,7 @@ class GraphService implements IGraphService {
                                 type: 'buy',
                                 amount: (
                                     Number(BuyData.data.exchanges[i].amount)
-                                / 10 ** 18
+                                        / 10 ** 18
                                 ).toString(),
                                 crypto: Number(netId as availableChains),
                                 time: time * 1000,
@@ -132,7 +131,6 @@ class GraphService implements IGraphService {
                 }
             }
         }
-        console.log(configuredData);
         return configuredData.sort((a, b) => (a.time > b.time ? 1 : -1));
     };
 }

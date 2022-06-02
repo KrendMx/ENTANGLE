@@ -33,8 +33,7 @@ const HistoryCard: React.FC<CardProps> = ({ chainId, date, price }) => {
             <div className={styles.main}>
                 <p className={styles.pare}>{networks[chainId].currencyMin}</p>
                 <p className={styles.undertitle}>
-                    Generates yield by running an autocompound UST/USDC strategy
-                    on sunny.ag
+                    {networks[chainId].description}
                 </p>
             </div>
             <ul className={styles.list}>

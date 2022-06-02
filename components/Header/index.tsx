@@ -235,7 +235,7 @@ const Header = () => {
                                 >
                                     <Dropout title="enUSD">
                                         <p>
-                                            enUSD
+                                            Borrow
                                             <span
                                                 className={styles.soonText}
                                             >

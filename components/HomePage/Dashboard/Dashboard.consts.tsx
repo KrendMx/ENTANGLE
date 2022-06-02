@@ -31,11 +31,11 @@ const ITEMS = [
         query: ['ust-usdc', 'sunny'],
         element: (isFiltered: boolean, key: number) => <SolanaContainer isFiltered={isFiltered} key={key} />,
     },
-    {
-        filter: 3,
-        query: ['ust', 'anchor'],
-        element: (isFiltered: boolean, key: number) => <USDContainer isFiltered={isFiltered} key={key} />,
-    },
+    // {
+    //     filter: 3,
+    //     query: ['ust', 'anchor'],
+    //     element: (isFiltered: boolean, key: number) => <USDContainer isFiltered={isFiltered} key={key} />,
+    // },
 ];
 
 export default ITEMS;

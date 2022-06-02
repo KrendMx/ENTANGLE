@@ -1,17 +1,11 @@
-import React, {
-    useContext, useEffect, useState, useMemo,
-} from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import classNames from 'classnames';
 import Typography from '@/ui-kit/Typography';
 import Select, { Option } from '@/ui-kit/Select';
 import Pager from './Pager/Pager';
 import styles from './style.module.css';
-import type {
-    iService,
-    TransactionHistoryEntity,
-} from '@/src/context/ServiceContext/ServiceContext.interfaces';
+import type { TransactionHistoryEntity } from '@/src/context/ServiceContext/ServiceContext.interfaces';
 import GraphService from '@/src/GraphService';
-import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import HistoryCard from './HistoryCard/HistoryCard';
 import type { networks } from '@/src/utils/GlobalConst';
 import {
@@ -19,10 +13,10 @@ import {
     TransactionOrder,
 } from './TransactionHistory.constants';
 import { loader } from '../Profile.constant';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
+import { setTxHistory } from '@/src/Redux/store/reducers/UserSlice';
 
 const TransactionHistory: React.FC = () => {
-    const service = useContext<iService>(ServiceContext);
     const [transactions, setTransactions] = useState<
         TransactionHistoryEntity[]
     >([]);
@@ -31,13 +25,17 @@ const TransactionHistory: React.FC = () => {
     >([]);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const { account } = useAppSelector((state) => state.walletReducer);
+    const dispatch = useAppDispatch();
 
     const Graph = useMemo(() => new GraphService(account), [account]);
 
     const updateHistory = () => {
         if (!account) return;
         Graph.getAllTransactions()
-            .then((res) => setTransactions(res))
+            .then((res) => {
+                setTransactions(res);
+                dispatch(setTxHistory(res));
+            })
             .finally(() => setIsLoaded(true));
     };
 

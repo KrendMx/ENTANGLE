@@ -9,17 +9,17 @@ import type {
 } from '../interfaces/User.interfaces';
 import { networks } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
+import QueryRequests from '../../../GraphService/queryRequests';
+import type { TransactionHistoryEntity } from '../../../context/ServiceContext/ServiceContext.interfaces';
 
 const initialState: initStateType = {
     positionSumObj: new Map(),
     profits: new Map(),
     deposit: new Map(),
-    avgPrices: {
-        '250': null,
-        '43114': null,
-    },
+    avgPrices: {},
     txLoading: false,
     positionSum: 0,
+    txHistory: [],
     payData: {
         '43114': {
             available: null,
@@ -70,6 +70,11 @@ const importToken = createAsyncThunk(
     },
 );
 
+export const getAverageBuyPrice = createAsyncThunk(
+    'uesr/getAverageBuyPrice',
+    async ({ account }: {account: string}): Promise<any> => (await QueryRequests.calculateAVG(account)),
+);
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -95,9 +100,12 @@ const userSlice = createSlice({
                 state.deposit.set(action.payload.key, action.payload.n),
             );
         },
+        setTxHistory(state, action: PayloadAction<TransactionHistoryEntity[]>) {
+            state.txHistory = action.payload;
+        },
         setPrices(
             state,
-            action: PayloadAction<{ '250': string; '43114': string }>,
+            action: PayloadAction<{[key: string]: number}>,
         ) {
             state.avgPrices = action.payload;
         },
@@ -112,6 +120,9 @@ const userSlice = createSlice({
         builder.addCase(importToken.fulfilled, (state, action) => {
             state.positionSumObj = action.payload;
         });
+        builder.addCase(getAverageBuyPrice.fulfilled, (state, action) => {
+            state.avgPrices = action.payload;
+        });
     },
 });
 
@@ -123,5 +134,6 @@ export const {
     setProfit,
     setPayData,
     setIsOpenModal,
+    setTxHistory,
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -23,7 +23,7 @@
       "@/components/*": ["./components/*"],
       "@/pages/*": ["./pages/*"],
       "@/src/*": ["./src/*"],
-      "@/ui-kit/*": ["./components/ui-kit/*"]
+      "@/ui-kit/*": ["./components/ui-kit/*"],
     }
   }
 }
