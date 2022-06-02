@@ -233,18 +233,17 @@ const Header = () => {
                                         styles.directionColumn,
                                     )}
                                 >
-                                    <Dropout
-                                        title="enUSD"
-                                        isSoon
-                                        textClassName={styles.dropSoon}
-                                        wrapperListClassName={
-                                            styles.displayNone
-                                        }
-                                        wrapperPickerClassName={
-                                            styles.displayNone
-                                        }
-                                    />
-                                    <Dropout title="STAKE">
+                                    <Dropout title="enUSD">
+                                        <p>
+                                            enUSD
+                                            <span
+                                                className={styles.soonText}
+                                            >
+                                                (soon)
+                                            </span>
+                                        </p>
+                                    </Dropout>
+                                    <Dropout title="Stake">
                                         <>
                                             <p>
                                                 Entangle

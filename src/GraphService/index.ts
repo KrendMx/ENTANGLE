@@ -9,7 +9,7 @@ import type {
 import type { TransactionHistoryEntity } from '../context/ServiceContext/ServiceContext.interfaces';
 import synthAbi from './abi/synth.json';
 import type { availableChains } from '../utils/GlobalConst';
-import { networks } from '../utils/GlobalConst';
+import { networks, namesConfig } from '../utils/GlobalConst';
 
 class GraphService implements IGraphService {
     private account;
@@ -46,18 +46,18 @@ class GraphService implements IGraphService {
                     chainNames[chain][netId],
                     'buy',
                 );
-                for (let i = 0; i < BuyData.data.exchange.length; i++) {
-                    if (BuyData.data.exchange[i]) {
+                for (let i = 0; i < BuyData.data.exchanges.length; i++) {
+                    if (BuyData.data.exchanges[i]) {
                         const date = new Date(
                             (
                                 await localProvider.getBlock(
-                                    BuyData.data.exchange[i].block,
+                                    BuyData.data.exchanges[i].block,
                                 )
                             ).timestamp,
                         );
                         configuredData.push({
                             price:
-                                Number(BuyData.data.exchange[i].amount)
+                                Number(BuyData.data.exchanges[i].amount)
                                 / Number(await contract.dec()),
                             date,
                         });
@@ -71,15 +71,11 @@ class GraphService implements IGraphService {
     public getAllTransactions = async () => {
         const configuredData: TransactionHistoryEntity[] = [];
         const chainNames = Object.keys(GRAPH_CONFIG);
-        console.log(chainNames);
         for (const chain of chainNames) {
-            console.log(GRAPH_CONFIG[chain]);
             const netIds = Object.keys(GRAPH_CONFIG[chain]);
             for (const netId of netIds) {
-                console.log(netId);
-                const localProvider = this.createProvider(netId as availableChains);
                 const contract = this.createContracts({
-                    chainId: netId as availableChains,
+                    chainId: namesConfig[chain] as availableChains,
                     address: this.account,
                     abi: synthAbi,
                 });
@@ -94,45 +90,49 @@ class GraphService implements IGraphService {
                     'sell',
                 );
                 const max = Math.max(
-                    SellData.data.exchange.length,
-                    BuyData.data.exchange.length,
+                    SellData.data.exchanges?.length,
+                    BuyData.data.exchanges?.length,
                 );
-                for (let i = 0; i < max; i++) {
-                    if (SellData.data.exchange[i]) {
-                        const time = (
-                            await localProvider.getBlock(
-                                SellData.data.exchange[i].block,
-                            )
-                        ).timestamp;
-                        configuredData.push({
-                            type: 'sell',
-                            amount: (
-                                Number(SellData.data.exchange[i].amount)
-                                / Number(await contract.dec())
-                            ).toString(),
-                            crypto: Number(netId as availableChains),
-                            time,
-                        });
-                    }
-                    if (BuyData.data.exchange[i]) {
-                        const time = (
-                            await localProvider.getBlock(
-                                BuyData.data.exchange[i].block,
-                            )
-                        ).timestamp;
-                        configuredData.push({
-                            type: 'buy',
-                            amount: (
-                                Number(BuyData.data.exchange[i].amount)
-                                / Number(await contract.dec())
-                            ).toString(),
-                            crypto: Number(netId as availableChains),
-                            time,
-                        });
+                if (max !== 0) {
+                    for (let i = 0; i < max; i++) {
+                        if (SellData.data.exchanges[i]) {
+                            const time = (
+                                await contract.provider.getBlock(
+                                    Number(SellData.data.exchanges[i].block),
+                                )
+                            ).timestamp;
+                            configuredData.push({
+                                type: 'sell',
+                                amount: (
+                                    Number(SellData.data.exchanges[i].amount)
+                                / 10 ** 18
+                                ).toString(),
+                                crypto: Number(netId as availableChains),
+                                time: time * 1000,
+                            });
+                        }
+                        if (BuyData.data.exchanges[i]) {
+                            console.log(BuyData.data.exchanges[i].block);
+                            const time = (
+                                await contract.provider.getBlock(
+                                    Number(BuyData.data.exchanges[i].block),
+                                )
+                            ).timestamp;
+                            configuredData.push({
+                                type: 'buy',
+                                amount: (
+                                    Number(BuyData.data.exchanges[i].amount)
+                                / 10 ** 18
+                                ).toString(),
+                                crypto: Number(netId as availableChains),
+                                time: time * 1000,
+                            });
+                        }
                     }
                 }
             }
         }
+        console.log(configuredData);
         return configuredData.sort((a, b) => (a.time > b.time ? 1 : -1));
     };
 }

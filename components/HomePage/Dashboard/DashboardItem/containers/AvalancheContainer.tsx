@@ -98,7 +98,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     data: {
                         available: `${
                             state.localChain === chainId
-                                ? 'Infinity'
+                                ? 'Unlimited'
                                 : Number(available.toFixed(5))
                         }`,
                         price: `${Number(price.toFixed(6))}`,
@@ -111,7 +111,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
                     available: `${
                         state.localChain === chainId
-                            ? 'Infinity'
+                            ? 'Unlimited'
                             : Number(available.toFixed(5))
                     }`,
                     totalAvailable:

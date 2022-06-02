@@ -20,7 +20,7 @@ interface IBlockData {
 
 interface IQueryResponse {
     data: {
-        exchange: IBlockData[]
+        exchanges: IBlockData[]
     }
 }
 

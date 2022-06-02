@@ -92,7 +92,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     data: {
                         available: `${
                             state.localChain === chainId
-                                ? 'Infinity'
+                                ? 'Unlimited'
                                 : Number(available.toFixed(5))
                         }`,
                         price: `${Number(price.toFixed(6))}`,
@@ -103,7 +103,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     apr: `${apr}%`,
                     totalDeposits: `${totalDeposits} USDT/BUSD LP`,
                     currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                    available: `${state.localChain === chainId ? 'Infinity' : Number(available.toFixed(5))}`,
+                    available: `${state.localChain === chainId ? 'Unlimited' : Number(available.toFixed(5))}`,
                     totalAvailable: state.localChain === chainId ? '' : `$${totalAvailable.toFixed(5)}`,
                     price: `${Number(price.toFixed(6))}`,
                     rowGradient: `linear-gradient(90deg, #FF9501 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
