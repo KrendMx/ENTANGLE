@@ -27,7 +27,11 @@ const AvalanceContainer: React.FC<PropType> = ({ isFiltered = false }) => {
         currentDeposits: '168’000',
     });
     return (
-        <DashboardItem {...data} isFiltered={isFiltered} />
+        <DashboardItem
+            {...data}
+            isFiltered={isFiltered}
+            changeActiveData={data}
+        />
     );
 };
 export default AvalanceContainer;

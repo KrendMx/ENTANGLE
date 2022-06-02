@@ -1,11 +1,9 @@
-import type { ChainIdType } from '../../Redux/types';
-
 export type MintDashboardItemCardType = {
-    chainId?: ChainIdType;
+    chainId?: string;
     bgGradient: string;
     icon: string;
     heading: string;
-    description: JSX.Element;
+    description?: JSX.Element;
     priceCurrency: string;
     disabled: boolean;
     apr: string | null;
