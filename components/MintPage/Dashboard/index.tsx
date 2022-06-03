@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import type { ChainIdType } from '../../../Redux/types';
 // import {
 //     useAppDispatch,
@@ -10,13 +10,15 @@ import styles from './style.module.css';
 import type { IDashboardProps } from '@/components/HomePage/Dashboard/Dashboard.interfaces';
 import ITEMS from './Dashboard.consts';
 
-// type DasboardCardType = {
-//     chainId: ChainIdType
-// }
+type DasboardCardType = {
+    chainId?: string;
+    handleClose: () => void;
+} & IDashboardProps;
 
-const DashboardCards: React.FC<IDashboardProps> = ({
+const DashboardCards: React.FC<DasboardCardType> = ({
     filter = '',
     query = '',
+    handleClose,
 }) => {
     // const { account } = useAppSelector((state) => state.walletReducer);
     // const { txLoading } = useAppSelector((state) => state.userReducer);
@@ -27,11 +29,21 @@ const DashboardCards: React.FC<IDashboardProps> = ({
     //     console.log(userSlice);
     // }, []);
 
+    const modal = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) =>
+            e.target === modal.current && handleClose();
+
+        window.addEventListener('mousedown', handleClick);
+
+        return () => window.removeEventListener('mousedown', handleClick);
+    }, []);
+
     const newItems = filter !== ''
         ? ITEMS.sort((item) => (item.filter === Number(filter) ? -1 : 1))
         : ITEMS;
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} ref={modal}>
             {newItems.map((i, key) => {
                 let isFiltered = false;
                 if (query !== '') {

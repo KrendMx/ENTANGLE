@@ -1,17 +1,12 @@
-.sidebarContainer {
-    width: 400px;
-    position: fixed;
-    height: calc(100% + 56px);
-    z-index: 48;
-    right: 0px;
-    top: 100px;
-    overflow-x: hidden;
-}
 
 .sidebar {
     margin: auto;
-    height: 100%;
-    width: 100%;
+    width: 400px;
+    position: fixed;
+    z-index: 1;
+    right: 0px;
+    top: 100px;
+    height: calc(100% + 56px);
     backdrop-filter: blur(20px);
     transition: all 0.4s;
     border-left: 1px solid rgba(128, 128, 128, 0.473);
@@ -211,10 +206,28 @@
     font-size: 12px;
 }
 
-@media (max-width: 800px) {
-    .sidebarContainer {
-        width: 100vw;
-        top: 100px;
-    }
+.closeButtonMobile {
+    display: none;
 }
 
+
+@media (max-width: 800px) {
+    .sidebar {
+        top:0;
+        z-index: 90;
+        width: 100vw;
+        height: 100vh;
+    }
+    .section {
+        margin: 18px auto;
+    }
+
+    .closeButtonMobile {
+        display: block;
+        z-index: 49;
+        color: white;
+        position: absolute;
+        right: -30px;
+        top: -50px;
+    }
+}
