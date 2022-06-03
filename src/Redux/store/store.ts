@@ -4,7 +4,6 @@ import { enableMapSet } from 'immer';
 import userReducer from './reducers/UserSlice';
 import appReducer from './reducers/AppSlice';
 import walletReducer from './reducers/WalletSlice';
-import SidebarReducer from './reducers/MintSidebarSlice';
 
 enableMapSet();
 
