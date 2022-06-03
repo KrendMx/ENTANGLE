@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { MintDashboardItemCardType } from '@/components/MintPage/types';
 import type { languages } from '../../../utils/GlobalConst';
 import type {
     AppState,
@@ -14,6 +15,7 @@ const initialState: AppState = {
     sucInfo: null,
     isOpenSelectWalletModal: false,
     language: 'en',
+    activeCard: null,
 };
 
 export const appSlice = createSlice({
@@ -42,6 +44,12 @@ export const appSlice = createSlice({
         setIsOpenSelectWalletModal(state, action: PayloadAction<boolean>) {
             state.isOpenSelectWalletModal = action.payload;
         },
+        changeActiveCard(
+            state,
+            action: PayloadAction<MintDashboardItemCardType | null>,
+        ) {
+            state.activeCard = action.payload;
+        },
     },
 });
 
@@ -52,5 +60,6 @@ export const {
     setSucInfo,
     setIsOpenSelectWalletModal,
     setLanguage,
+    changeActiveCard,
 } = appSlice.actions;
 export default appSlice.reducer;

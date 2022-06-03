@@ -222,12 +222,11 @@ const Header = () => {
                                                 Buy & Sell Synth-LP
                                             </p>
                                         </Link>
-                                        <p>
-                                            Mint & Burn Synth-LP
-                                            <span className={styles.soonText}>
-                                                (soon)
-                                            </span>
-                                        </p>
+                                        <Link href="/mint" passHref>
+                                            <p className={styles.dropItem}>
+                                                Mint & Burn Synth-LP
+                                            </p>
+                                        </Link>
                                     </>
                                 </Dropout>
                                 <nav
