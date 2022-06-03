@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import classNames from 'classnames';
-import { VALIDATOR_DATA, STAKE_DATE } from './Entangle.conts';
+import { VALIDATOR_DATA, STAKE_DATE } from './Entangle.const';
 
 import Tabs from '@/ui-kit/Tabs';
 import Input from '@/ui-kit/Input';
 import ValidatorBar from './ValidatorBar';
-import GradientButton from '@/components/ui-kit/GradientButton';
+import GradientButton from '@/ui-kit/GradientButton';
 import MiniButton from '@/ui-kit/MiniButton/index';
 import Select, { Option } from '@/ui-kit/Select/index';
 import GlowLine from '@/ui-kit/GlowLine';
 import Typography from '@/ui-kit/Typography';
 import StakeTextArea from '@/ui-kit/StakeTextArea/index';
+import ChartWrapperWithText from '@/ui-kit/ChartWrapperWithText/index';
+import TextGroupStake from '@/ui-kit/TextGropStake';
 
 import styles from './style.module.css';
 
-const EntangleStacking: React.FC = () => {
+const StakeEntangle: React.FC = () => {
     const [amount, setAmount] = useState<string>();
     const [activeTab, setActiveTab] = useState(0);
     const [stakeDate, setStakeDate] = useState<string>('no lock');
@@ -41,21 +42,11 @@ const EntangleStacking: React.FC = () => {
                         Entangle
                     </p>
                     <div className={styles.graphData}>
-                        <div>
-                            <div className={styles.graphText}>
-                                <StakeTextArea title="Total EN Staked">
-                                    13&apos;000&apos;000
-                                </StakeTextArea>
-                                <p className={styles.cur}>EN</p>
-                            </div>
-                            <Image
-                                src="/images/fakeGraphs/ent-stake.svg"
-                                width={250}
-                                height={144}
-                                quality={100}
-                                alt="fake-graph"
-                            />
-                        </div>
+                        <ChartWrapperWithText
+                            title="Total EN Staked"
+                            value="13'000'000"
+                            extraText="EN"
+                        />
                         <div className={styles.validatorData}>
                             <div className={styles.desItem}>
                                 <StakeTextArea title="Active Validators">
@@ -74,6 +65,7 @@ const EntangleStacking: React.FC = () => {
                     <Tabs
                         switchHandler={(idx: number) => setActiveTab(idx)}
                         activeTab={activeTab}
+                        buttons={['Deposit', 'Withdraw']}
                     />
                     <div className={styles.formItem}>
                         <Select
@@ -112,15 +104,7 @@ const EntangleStacking: React.FC = () => {
                             30%
                         </StakeTextArea>
                     </div>
-                    <div
-                        className={classNames(
-                            styles.formItem,
-                            styles.shareText,
-                        )}
-                    >
-                        <p>Your share of Validator&apos;s pool</p>
-                        <p>0.011%</p>
-                    </div>
+                    <TextGroupStake title="Your share of Validator&apos;s pool" value="0.011%" />
                     <GradientButton title="Stake Entangle" onClick={() => {}} />
                 </div>
             </div>
@@ -138,4 +122,4 @@ const EntangleStacking: React.FC = () => {
     );
 };
 
-export default EntangleStacking;
+export default StakeEntangle;

@@ -15,7 +15,10 @@ import {
     changeNetworkWC,
 } from '@/src/Redux/store/reducers/WalletSlice';
 import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import { setIsOpenSelectWalletModal, setLanguage } from '@/src/Redux/store/reducers/AppSlice';
+import {
+    setIsOpenSelectWalletModal,
+    setLanguage,
+} from '@/src/Redux/store/reducers/AppSlice';
 import { setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
 import { chainToNameConfig } from '@/src/utils/GlobalConst';
 import {
@@ -171,11 +174,11 @@ const Header = () => {
             )}
         >
             <>
-                {
-                    locales.map((el: languages, key: number) => (
-                        <p key={key} onClick={() => handleClick(el)}>{mapLanguage(el)}</p>
-                    ))
-                }
+                {locales.map((el: languages, key: number) => (
+                    <p key={key} onClick={() => handleClick(el)}>
+                        {mapLanguage(el)}
+                    </p>
+                ))}
             </>
         </Dropout>
     );
@@ -234,30 +237,33 @@ const Header = () => {
                                     )}
                                 >
                                     <Dropout title="enUSD">
-                                        <p>
-                                            Borrow
-                                            <span
-                                                className={styles.soonText}
-                                            >
-                                                (soon)
-                                            </span>
-                                        </p>
+                                        <Link
+                                            href="/mint-entangle-usd"
+                                            passHref
+                                        >
+                                            <p className={styles.dropItem}>
+                                                Borrow
+                                            </p>
+                                        </Link>
                                     </Dropout>
                                     <Dropout title="Stake">
                                         <>
-                                            <Link href="/stake-entangle" passHref>
+                                            <Link
+                                                href="/stake-entangle"
+                                                passHref
+                                            >
                                                 <p className={styles.dropItem}>
                                                     Entangle
                                                 </p>
                                             </Link>
-                                            <p>
-                                                Stablecoins
-                                                <span
-                                                    className={styles.soonText}
-                                                >
-                                                    (soon)
-                                                </span>
-                                            </p>
+                                            <Link
+                                                href="/stake-stablecoin"
+                                                passHref
+                                            >
+                                                <p className={styles.dropItem}>
+                                                    Stablecoin
+                                                </p>
+                                            </Link>
                                         </>
                                     </Dropout>
                                 </nav>

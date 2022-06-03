@@ -1,4 +1,4 @@
-.extraBlock {
+.graphText {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -6,7 +6,7 @@
     width: 15.8rem;
 }
 
-.extraText {
+.cur {
     font-style: normal;
     font-weight: 300;
     font-size: 12px;
@@ -14,18 +14,5 @@
     display: flex;
     align-items: center;
     color: #ECECEC;
-}
-
-.title {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    color: rgba(163, 163, 163, 1);
-}
-
-.content {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 33px;
+    padding-bottom: .2rem;
 }

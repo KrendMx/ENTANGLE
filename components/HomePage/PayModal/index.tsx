@@ -16,15 +16,14 @@ import { ChainConfig } from '@/src/ChainService/config';
 
 const PayModal: React.FC<PayModalPropsType> = (props) => {
     const {
-        handleClose,
-        price,
-        available,
-        totalAvailable,
+        handleClose, price, available, totalAvailable,
     } = props;
     const [activeTab, setActiveTab] = useState(0);
     const buttons = ['Deposit', 'Withdraw'];
     const dispatch = useAppDispatch();
-    const { chainId, provider } = useAppSelector((state) => state.walletReducer);
+    const { chainId, provider } = useAppSelector(
+        (state) => state.walletReducer,
+    );
 
     useEffect(() => {
         if (!(chainId in networks)) {
@@ -35,14 +34,10 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
     const buyToken = async (value: number) => {
         try {
             const contracts = (
-            ChainConfig[sessionStorage.getItem('card')]
-                .SYNTH as any
+                ChainConfig[sessionStorage.getItem('card')].SYNTH as any
             ).find(
                 (el: any) =>
-                    el.ID
-                === farms[chainId][
-                    sessionStorage.getItem('card')
-                ],
+                    el.ID === farms[chainId][sessionStorage.getItem('card')],
             );
             const buyContract = new Contract(
                 contracts.CONTRACTS.FEE.address,
@@ -55,8 +50,12 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
                 (provider as Web3Provider).getSigner(),
             );
 
-            const amount = BigInt(Math.floor(value * 10 ** (await stableContract.decimals())));
-            const response = await buyContract.buyWithFee(amount, { gasLimit: 1500000 });
+            const amount = BigInt(
+                Math.floor(value * 10 ** (await stableContract.decimals())),
+            );
+            const response = await buyContract.buyWithFee(amount, {
+                gasLimit: 1500000,
+            });
             if (response) {
                 dispatch(changeLoadingTx(true));
             }
@@ -64,11 +63,13 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
 
             if (res?.status) {
                 dispatch(changeLoadingTx(false));
-                dispatch(setSucInfo({
-                    value,
-                    symbol: networks[chainId].currencyMin,
-                    isReceived: true,
-                }));
+                dispatch(
+                    setSucInfo({
+                        value,
+                        symbol: networks[chainId].currencyMin,
+                        isReceived: true,
+                    }),
+                );
             }
         } catch (e) {
             throw new Error('Buy synth internal error');
@@ -78,14 +79,10 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
     const sellToken = async (value: number) => {
         try {
             const contracts = (
-                ChainConfig[sessionStorage.getItem('card')]
-                    .SYNTH as any
+                ChainConfig[sessionStorage.getItem('card')].SYNTH as any
             ).find(
                 (el: any) =>
-                    el.ID
-                    === farms[chainId][
-                        sessionStorage.getItem('card')
-                    ],
+                    el.ID === farms[chainId][sessionStorage.getItem('card')],
             );
             const sellContract = new Contract(
                 contracts.CONTRACTS.FEE.address,
@@ -93,7 +90,7 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
                 (provider as Web3Provider).getSigner(),
             );
             // eslint-disable-next-line
-            const amount = BigInt((value * Math.pow(10, 18)));
+            const amount = BigInt(value * Math.pow(10, 18));
             const response = await sellContract.sellWithFee(amount);
             if (response) {
                 dispatch(changeLoadingTx(true));
@@ -102,11 +99,13 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
 
             if (res?.status) {
                 dispatch(changeLoadingTx(false));
-                dispatch(setSucInfo({
-                    value,
-                    symbol: networks[chainId].currencyMin,
-                    isReceived: false,
-                }));
+                dispatch(
+                    setSucInfo({
+                        value,
+                        symbol: networks[chainId].currencyMin,
+                        isReceived: false,
+                    }),
+                );
                 handleClose();
             }
         } catch (e) {
@@ -126,26 +125,26 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
                     alt="closeImg"
                 />
             </div>
-            <Tabs switchHandler={(idx: number) => setActiveTab(idx)} activeTab={activeTab} />
-            {
-                activeTab
-                    ? (
-                        <Withdraw
-                            price={price}
-                            available={available}
-                            totalAvailable={totalAvailable}
-                            sellToken={sellToken}
-                        />
-                    )
-                    : (
-                        <Deposit
-                            price={price}
-                            available={available}
-                            totalAvailable={totalAvailable}
-                            buyToken={buyToken}
-                        />
-                    )
-            }
+            <Tabs
+                switchHandler={(idx: number) => setActiveTab(idx)}
+                activeTab={activeTab}
+                buttons={['Deposit', 'Withdraw']}
+            />
+            {activeTab ? (
+                <Withdraw
+                    price={price}
+                    available={available}
+                    totalAvailable={totalAvailable}
+                    sellToken={sellToken}
+                />
+            ) : (
+                <Deposit
+                    price={price}
+                    available={available}
+                    totalAvailable={totalAvailable}
+                    buyToken={buyToken}
+                />
+            )}
         </div>
     );
 };

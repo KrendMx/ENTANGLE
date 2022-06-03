@@ -6,7 +6,7 @@ const NotFound: NextPage = () => {
     const { t } = useTranslation('404');
     return (
         <div style={{ marginTop: '200px', marginBottom: '200px' }}>
-            <h1 style={{ textAlign: 'center', fontSize: '5rem' }}>{t('soon')}</h1>
+            <h1 style={{ textAlign: 'center', fontSize: '5rem' }}>{t('404')}</h1>
         </div>
     );
 };

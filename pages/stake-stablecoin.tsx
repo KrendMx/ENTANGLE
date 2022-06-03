@@ -3,15 +3,15 @@ import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import StakeEntangle from '@/components/Stake/Entangle/index';
+import StakeStable from '@/components/Stake/Stable/index';
 
-const StakeEntanglePage: NextPage = () => (
+const StakeStablePage: NextPage = () => (
     <div>
         <Head>
-            <title>Stake Ent. Token | Entangle</title>
+            <title>Stake Stable Token | Entangle</title>
         </Head>
         <main>
-            <StakeEntangle />
+            <StakeStable />
         </main>
     </div>
 );
@@ -26,4 +26,4 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     },
 });
 
-export default StakeEntanglePage;
+export default StakeStablePage;

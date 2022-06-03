@@ -8,12 +8,20 @@
     justify-content: space-between;
 }
 
+.graphData {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+} 
+
 .description {
     max-width: 674px;
     width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-top: 5rem;
 }
 
 .descriptItem {
@@ -24,23 +32,6 @@
     color: #FFFFFF;
     opacity: 0.8;
     margin-bottom: 1rem;
-}
-
-.graphData {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.cur {
-    font-style: normal;
-    font-weight: 300;
-    font-size: 12px;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
-    color: #ECECEC;
-    padding-bottom: .2rem;
 }
 
 .validatorData {
@@ -55,21 +46,15 @@
     margin-bottom: 2rem;
 }
 
-.graphText {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
 .formItem {
-    margin: 1rem 0;
+    margin-top: 1rem;
 }
 
 .miniButtonsContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin: 1rem 0;
 }
 
 .stakeForm {
@@ -83,28 +68,6 @@
     width: 100%;
     max-height: 546px;
     height: 100%;
-}
-
-.shareText {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.shareText p:not(:first-child) {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
-    color: rgba(163, 163, 163, 1);
-}
-
-.shareText p:first-child {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    color: rgba(255, 255, 255, 1);
 }
 
 @media (max-width: 900px) {
@@ -122,6 +85,5 @@
 
     .stakeForm {
         margin: 2rem auto;
-
     }
 }

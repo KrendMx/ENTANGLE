@@ -1,0 +1,16 @@
+.formItem {
+    margin-bottom: 1rem;
+}
+
+.inputBlock {
+    margin: 1rem 0;
+}
+
+.iBlock {
+    display: flex;
+    flex-direction: row;
+}
+
+.mBtm {
+    margin: 1rem 0;
+}
