@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import {
-    changeActiveCard,
-} from '@/src/Redux/store/reducers/AppSlice';
+import { changeActiveCard } from '@/src/Redux/store/reducers/AppSlice';
 import ActionPanel from '../HomePage/ActionPanel';
 import SidebarRow from '../MintSidebar';
 import DashboardCards from './Dashboard';
@@ -14,13 +12,16 @@ const MintPage: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const sliderReference = useRef();
-    const { activeCard } = useAppSelector((state) => state.appReducer);
-    function closeSidebar(e: React.MouseEvent<HTMLElement>) {
-        if (e.target !== sliderReference.current && activeCard)dispatch(changeActiveCard(null));
-    }
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) => e.target !== sliderReference.current && dispatch(changeActiveCard(null));
+
+        window.addEventListener('mousedown', handleClick);
+
+        return () => window.removeEventListener('mousedown', handleClick);
+    }, []);
 
     return (
-        <div className={styles.wrapper} onClick={(e) => { closeSidebar(e); }}>
+        <div className={styles.wrapper}>
             <SidebarRow ref={sliderReference} />
             <ActionPanel
                 search={search}
