@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
+import React, { useState } from 'react';
+import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { changeActiveCard } from '@/src/Redux/store/reducers/AppSlice';
-import ActionPanel from '../HomePage/ActionPanel';
+import ActionPanel from '../../../HomePage/ActionPanel';
 
 import DashboardCards from './Dashboard';
 import styles from './style.module.css';
@@ -18,8 +18,8 @@ const MintPage: React.FC = () => {
 
     return (
         <div className={styles.wrapper}>
-            <Sidebar hanldeClose={closeSidebar} />
-            <div onClick={() => { closeSidebar(); }}>
+            <Sidebar handleClose={closeSidebar} />
+            <div>
                 <ActionPanel
                     search={search}
                     filter={filter}
@@ -27,7 +27,7 @@ const MintPage: React.FC = () => {
                     setSearch={setSearch}
                 />
             </div>
-            <DashboardCards filter={filter} query={search} handleClose={closeSidebar} />
+            <DashboardCards filter={filter} query={search} />
         </div>
     );
 };

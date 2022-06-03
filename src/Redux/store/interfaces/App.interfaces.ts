@@ -1,4 +1,4 @@
-import type { MintDashboardItemCardType } from '@/components/MintPage/types';
+import type { MintDashboardItemCardType } from '@/components/Mint/Demand/MintPage/types';
 import type { MetamaskErrorUserMessages } from '@/components/Modal/ErrorModal/ErrorModal.constants';
 
 import type { languages } from '../../../utils/GlobalConst';

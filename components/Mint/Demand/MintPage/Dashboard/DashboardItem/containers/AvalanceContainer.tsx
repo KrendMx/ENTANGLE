@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import DashboardItem from './DashboardItem';
-import type { MintDashboardItemCardType } from '../../types';
-import styles from './style.module.css';
+import DashboardItem from '../DashboardItem';
+import type { MintDashboardItemCardType } from '../../../types';
 
 type PropType = {
     isFiltered: boolean;
@@ -14,13 +13,8 @@ const AvalanceContainer: React.FC<PropType> = ({ isFiltered = false }) => {
         heading: 'USDT-USDT.e',
         chainId: '43114',
         priceCurrency: 'USDT/USDT Synthetic LP',
-        description: (
-            <div className={styles.description}>
-                Generates yield by running an autocompound fUSDT/USDC strategy
-                on
-                <span style={{ color: 'white' }}>&nbsp;spookyswap.finance</span>
-            </div>
-        ),
+        description: 'Generates yield by running an autocompound USDT/USDT strategyon',
+        vendor: 'traderjoexyz.com',
         disabled: false,
         apr: '16.8%',
         price: '1.356',

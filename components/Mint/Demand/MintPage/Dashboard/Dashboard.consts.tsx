@@ -1,7 +1,7 @@
-import AvalanceContainer from './DashboardContainer/AvalanceContainer';
-import FantomContainer from './DashboardContainer/FantomContainer';
-import ETHContainer from './DashboardContainer/ETHContainer';
-import SolanaContainer from './DashboardContainer/SolanaContainer';
+import AvalanceContainer from './DashboardItem/containers/AvalanceContainer';
+import FantomContainer from './DashboardItem/containers/FantomContainer';
+import ETHContainer from './DashboardItem/containers/ETHContainer';
+import SolanaContainer from './DashboardItem/containers/SolanaContainer';
 
 const ITEMS = [
     {

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import styles from './style.module.css';
 import Select, { Option } from '@/ui-kit/Select';
 import Input from '@/ui-kit/Input';

@@ -1,9 +1,12 @@
+import type { availableChains } from '@/src/utils/GlobalConst';
+
 export type MintDashboardItemCardType = {
-    chainId?: string;
+    chainId?: availableChains;
     bgGradient: string;
     icon: string;
     heading: string;
-    description?: JSX.Element;
+    description: string;
+    vendor: string;
     priceCurrency: string;
     disabled: boolean;
     apr: string | null;

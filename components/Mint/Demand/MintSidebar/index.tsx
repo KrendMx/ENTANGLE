@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import classNames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 
 import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import styles from './style.module.css';
-import GradientButton from '../ui-kit/GradientButton';
-import Input from '../ui-kit/Input';
+import GradientButton from '@/ui-kit/GradientButton/index';
+import Input from '@/ui-kit/Input/index';
+import Tabs from '@/ui-kit/Tabs/index';
 
 type SidebarProps = {
-    hanldeClose: ()=>void
+    handleClose: () => void
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ hanldeClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({ handleClose }) => {
     const { activeCard } = useAppSelector((state) => state.appReducer);
 
     const [activeTab, setActiveTab] = useState<number>(0);
@@ -25,6 +25,16 @@ const Sidebar: React.FC<SidebarProps> = ({ hanldeClose }) => {
     );
 
     const buttons = ['Mint', 'Burn'];
+
+    const modal = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) =>
+            modal.current && !modal.current.contains((e.target as Node)) && handleClose();
+
+        window.addEventListener('mousedown', handleClick);
+
+        return () => window.removeEventListener('mousedown', handleClick);
+    }, []);
 
     const handleChangeValue = ({
         target,
@@ -45,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ hanldeClose }) => {
             }}
         >
 
-            <div className={styles.sidebar}>
+            <div className={styles.sidebar} ref={modal}>
                 <div className={styles.wrapper}>
                     <div className={styles.topBg}>
                         <div
@@ -54,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ hanldeClose }) => {
                         />
                     </div>
                     <div className={styles.top}>
-                        <button className={styles.closeButtonMobile} onClick={() => { hanldeClose(); }}>
+                        <button className={styles.closeButtonMobile} onClick={() => { handleClose(); }}>
                             <Image
                                 src="/images/close.svg"
                                 quality={100}
@@ -109,20 +119,12 @@ const Sidebar: React.FC<SidebarProps> = ({ hanldeClose }) => {
                         ) : null}
                     </div>
                 </div>
-                <div className={styles.tabsBg}>
-                    <div className={styles.tabsWrapper}>
-                        {buttons.map((title, idx) => (
-                            <div
-                                key={title}
-                                onClick={() => setActiveTab(idx)}
-                                className={classNames(styles.tabWrapper, {
-                                    [styles.active]: idx === activeTab,
-                                })}
-                            >
-                                <p className={styles.tab}>{title}</p>
-                            </div>
-                        ))}
-                    </div>
+                <div className={styles.section}>
+                    <Tabs
+                        buttons={buttons}
+                        activeTab={activeTab}
+                        switchHandler={(idx: number) => setActiveTab(idx)}
+                    />
                 </div>
                 <div className={styles.section}>
                     <div className={styles.searchWrapper}>
@@ -131,11 +133,8 @@ const Sidebar: React.FC<SidebarProps> = ({ hanldeClose }) => {
                             onChange={handleChangeValue}
                             value={inputValue}
                             type="number"
-                        >
-                            <button type="submit">
-                                <p className={styles.submitText}>max</p>
-                            </button>
-                        </Input>
+                            getMax={() => {}}
+                        />
                     </div>
                 </div>
                 <div className={styles.section}>

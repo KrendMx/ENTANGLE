@@ -2,8 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './style.module.css';
 import type { MintDashboardItemCardType } from '../../types';
-import TextLoader from '../../../ui-kit/TextLoader/TextLoader';
-import GradientButton from '../../../ui-kit/GradientButton';
+import TextLoader from '../../../../../ui-kit/TextLoader/TextLoader';
+import GradientButton from '../../../../../ui-kit/GradientButton';
 import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { changeActiveCard } from '@/src/Redux/store/reducers/AppSlice';
 
@@ -17,6 +17,7 @@ const MintDashboardItem: React.FC<MintDashBoardItemProps> = ({
     icon,
     heading,
     description,
+    vendor,
     priceCurrency,
     disabled,
     apr,
@@ -67,17 +68,22 @@ const MintDashboardItem: React.FC<MintDashBoardItemProps> = ({
                         />
                     </div>
                 </div>
-                <div className={styles.description}>{description}</div>
+                <div className={styles.description}>
+                    <div className={styles.description}>
+                        {description}
+                        <span style={{ color: 'white' }}>
+                            &nbsp;
+                            {vendor}
+                        </span>
+                    </div>
+                </div>
                 <div className={styles.section}>
                     <p className={styles.sectionTitle}>Price</p>
                     <div className={styles.sectionRow}>
                         {price ? (
                             <>
-                                <p
-                                    className={styles.sectionValue}
-                                >
+                                <p className={styles.sectionValue}>
                                     {`$${price}`}
-
                                 </p>
                                 <p className={styles.sectionSubValue}>
                                     {priceCurrency}
