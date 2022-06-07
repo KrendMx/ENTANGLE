@@ -1,5 +1,5 @@
 import React, {
-    useContext, useEffect, useState,
+    useEffect, useState,
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
@@ -9,7 +9,6 @@ import Typography from '@/ui-kit/Typography';
 import Select, { Option } from '@/ui-kit/Select';
 import InfoBlock from '@/ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from '@/ui-kit/InfoBlock/InfoBlock.constants';
-import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
@@ -25,11 +24,7 @@ const Profile = () => {
         (state) => state.userReducer,
     );
     const dispatch = useAppDispatch();
-    const { getProfit } = useContext(ServiceContext);
     const [balance, setBalance] = useState<number>(0);
-    useEffect(() => {
-        setBalance(Number(positionSum));
-    }, [positionSum]);
     const [bestProfit, setBestProfit] = useState<{
         value: number;
         change: number;
@@ -90,8 +85,9 @@ const Profile = () => {
                         Balance.positions += Number(positions.toFixed(2));
                         Balance.price += price;
                     }
+                    Balance.price /= Object.keys(ChainConfig).length;
                     balances[key] = Balance;
-                    setBalance((prev) => prev + Balance.price);
+                    setBalance((prev) => prev + Balance.positions * Balance.price);
                 }
                 setCryptoBalances(balances);
                 setCardLoaded(true);
