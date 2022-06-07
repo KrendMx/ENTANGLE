@@ -26,11 +26,11 @@ const ITEMS = [
         query: ['usdt-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
         element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
     },
-    {
-        filter: 2,
-        query: ['ust-usdc', 'sunny'],
-        element: (isFiltered: boolean, key: number) => <SolanaContainer isFiltered={isFiltered} key={key} />,
-    },
+    // {
+    //     filter: 2,
+    //     query: ['ust-usdc', 'sunny'],
+    //     element: (isFiltered: boolean, key: number) => <SolanaContainer isFiltered={isFiltered} key={key} />,
+    // },
     // {
     //     filter: 3,
     //     query: ['ust', 'anchor'],

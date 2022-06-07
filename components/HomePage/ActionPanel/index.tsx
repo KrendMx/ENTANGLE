@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './style.module.css';
-import Select, { Option } from '@/ui-kit/Select';
+import Select, { Option } from '@/ui-kit/Select/index';
 import Input from '@/ui-kit/Input';
 import type { IActionProps } from './ActionPanel.interfaces';
 import { networks } from '@/src/utils/GlobalConst';
