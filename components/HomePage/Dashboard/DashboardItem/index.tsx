@@ -188,7 +188,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                         )}
                     </div>
                 </div>
-                <div className={styles.section}>
+                {/* <div className={styles.section}>
                     <div className={styles.sectionTitle}>
                         <p>Available</p>
                         <HintModal>
@@ -230,7 +230,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             margin="0.87rem 0"
                         />
                     )}
-                </div>
+                </div> */}
                 <div className={styles.section}>
                     <p className={styles.sectionTitle}>Price</p>
                     <div className={styles.sectionRow}>
