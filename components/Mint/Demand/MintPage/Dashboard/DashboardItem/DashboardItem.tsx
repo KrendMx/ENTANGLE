@@ -6,6 +6,7 @@ import TextLoader from '../../../../../ui-kit/TextLoader/TextLoader';
 import GradientButton from '../../../../../ui-kit/GradientButton';
 import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { changeActiveCard } from '@/src/Redux/store/reducers/AppSlice';
+import HintModal from '@/components/HintModal';
 
 type MintDashBoardItemProps = {
     isFiltered: boolean;
@@ -105,7 +106,10 @@ const MintDashboardItem: React.FC<MintDashBoardItemProps> = ({
                     </div>
                 </div>
                 <div className={styles.section}>
-                    <p className={styles.sectionTitle}>Current Deposits</p>
+                    <div className={styles.sectionTitle}>
+                        <p>Value of LPs Staked</p>
+                        <HintModal><p>LPS value that is available in the account</p></HintModal>
+                    </div>
                     <div className={styles.sectionRow}>
                         <p className={styles.sectionValue}>{currentDeposits}</p>
                         <p className={styles.sectionSubValue}>

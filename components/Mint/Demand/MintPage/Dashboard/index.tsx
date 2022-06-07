@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import styles from './style.module.css';
 import type { IDashboardProps } from '@/components/HomePage/Dashboard/Dashboard.interfaces';
 import ITEMS from './Dashboard.consts';
@@ -10,6 +10,7 @@ type DasboardCardType = {
 const DashboardCards: React.FC<DasboardCardType> = ({
     filter = '',
     query = '',
+    sort = '',
 }) => {
     const newItems = filter !== ''
         ? ITEMS.sort((item) => (item.filter === Number(filter) ? -1 : 1))

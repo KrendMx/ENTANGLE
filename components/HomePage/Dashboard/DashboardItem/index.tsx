@@ -20,6 +20,7 @@ import CopyBtn from '@/ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '@/ui-kit/HoverTooltip/HoverTooltip';
 import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
 import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
+import HintModal from '@/components/HintModal';
 
 type DashboardItemProps = {
     chainId: availableChains;
@@ -39,8 +40,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     heading,
     description,
     apr,
-    currentDeposits,
-    totalDeposits,
     available,
     totalAvailable,
     price,
@@ -175,7 +174,12 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 </div>
                 <p className={styles.description}>{description}</p>
                 <div className={styles.section}>
-                    <p className={styles.sectionTitle}>Current Projected APR</p>
+                    <div className={styles.sectionTitle}>
+                        <p>Current Projected APR </p>
+                        <HintModal>
+                            <p>The current annual percentage received on this farm</p>
+                        </HintModal>
+                    </div>
                     <div className={styles.sectionRow}>
                         {apr ? (
                             <p className={styles.sectionValue}>{apr}</p>
@@ -185,22 +189,13 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     </div>
                 </div>
                 <div className={styles.section}>
-                    <p className={styles.sectionTitle}>Current Deposits</p>
-                    <div className={styles.sectionRow}>
-                        {currentDeposits ? (
-                            <p className={styles.sectionValue}>
-                                {currentDeposits}
-                            </p>
-                        ) : (
-                            <TextLoader bgGradient={bgGradient} />
-                        )}
-                        <p className={styles.sectionSubValue}>
-                            {totalDeposits}
-                        </p>
+                    <div className={styles.sectionTitle}>
+                        <p>Available</p>
+                        <HintModal>
+                            <p>The number of tokens available for purchase</p>
+                        </HintModal>
+
                     </div>
-                </div>
-                <div className={styles.section}>
-                    <p className={styles.sectionTitle}>Available</p>
                     {available ? (
                         <>
                             <div

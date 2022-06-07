@@ -3,15 +3,18 @@ import styles from './style.module.css';
 import Select, { Option } from '@/ui-kit/Select';
 import Input from '@/ui-kit/Input';
 import type { IActionProps } from './ActionPanel.interfaces';
-import { networks } from '@/src/utils/GlobalConst';
+import { networks, sortVar } from '@/src/utils/GlobalConst';
 
 const ActionPanel: React.FC<IActionProps> = ({
     search,
     filter,
+    sort,
     setFilter,
     setSearch,
+    setSort,
 }) => {
     const handleChangeFilter = (value: string) => setFilter(value);
+    const handleChangeSort = (value: string) => setSort(value);
     const handleChangeSearch = ({
         target,
     }: React.ChangeEvent<HTMLInputElement>) =>
@@ -26,6 +29,19 @@ const ActionPanel: React.FC<IActionProps> = ({
                     <Option value=""> Filter by</Option>
                     {Object.keys(networks).map((el, key: number) => (
                         <Option value={el} key={key}>{networks[el].title}</Option>
+                    ))}
+                </Select>
+            </div>
+            <div className={styles.filterWrapper}>
+                <Select value={sort} onChange={handleChangeSort}>
+                    <Option value="">Sort by</Option>
+                    {sortVar.map((el, key: number) => (
+                        <>
+                            <Option value={el} key={key}>{el}</Option>
+                            <Option value={`${el} desk`} key={key}>
+                                {`${el} Desk`}
+                            </Option>
+                        </>
                     ))}
                 </Select>
             </div>

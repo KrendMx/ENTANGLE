@@ -7,6 +7,7 @@ import SummaryInfoBoard from './SummaryInfoBoard/SummaryInfoBoard';
 const HomePage = () => {
     const [filter, setFilter] = useState<string>('');
     const [search, setSearch] = useState<string>('');
+    const [sort, setSort] = useState<string>('');
 
     return (
         <div className={styles.wrapper}>
@@ -15,8 +16,10 @@ const HomePage = () => {
                 search={search}
                 setFilter={setFilter}
                 setSearch={setSearch}
+                sort={sort}
+                setSort={setSort}
             />
-            <Dashboard filter={filter} query={search} />
+            <Dashboard filter={filter} query={search} sort={sort} />
             <SummaryInfoBoard />
         </div>
     );
