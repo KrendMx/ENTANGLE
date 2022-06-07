@@ -23,7 +23,7 @@ Server is located at [http://localhost:3000](http://localhost:3000).
 
 Build the project in ".next/build" director
 
-#### `yarn dev`
+#### `yarn start`
 
 Runs the app in the background.
 Server is located on port 3000.
