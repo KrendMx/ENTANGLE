@@ -45,11 +45,6 @@
     position:relative;
 }
 
-.checkbox{
-    width:14px;
-    height: 14px;
-    background-color: red;
-}
 .disabled {
     pointer-events: none;
     opacity: 0.5;

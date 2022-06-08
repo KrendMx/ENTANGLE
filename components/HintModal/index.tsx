@@ -16,8 +16,15 @@ const HintModal: React.FC<Props> = ({ children }) => {
                 <div
                     onMouseEnter={() => { setVisible(true); }}
                     onMouseLeave={() => { setVisible(false); }}
-                    className={styles.addImgWrapper}
+                    className={styles.tooltip}
                 >
+                    {visible ? (
+                        <div
+                            className={styles.tooltiptext}
+                        >
+                            {children}
+                        </div>
+                    ) : null}
                     <Image
                         src="/images/i.svg"
                         width={14}
@@ -25,13 +32,7 @@ const HintModal: React.FC<Props> = ({ children }) => {
                         quality={100}
                         alt=""
                     />
-                    {visible ? (
-                        <div
-                            className={styles.textBlock}
-                        >
-                            {children}
-                        </div>
-                    ) : null}
+
                 </div>
             </div>
         </div>

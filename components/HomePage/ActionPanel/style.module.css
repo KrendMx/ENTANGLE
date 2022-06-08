@@ -13,11 +13,11 @@
 }
 
 .checkbox{
-  width:16px;
-  height: 16px;
+  width:20px;
+  height: 20px;
   border: 1px solid #AEAEB2;
   border-radius: 4px;
-  margin-right: 14px;
+  margin-right: 15px;
 }
 .activeCheckbox{
   background-color: #AEAEB2;
