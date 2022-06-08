@@ -6,6 +6,7 @@ type SelectProps = {
     value: string | undefined;
     children: React.ReactNode[];
     onChange: any;
+    className: string;
 };
 
 type OptionProps = {
@@ -14,10 +15,11 @@ type OptionProps = {
     extraSymbol?: JSX.Element;
 };
 
-export const Option: React.FC<OptionProps> = ({ value, children, extraSymbol }) => (
+export const Option: React.FC<OptionProps> = ({
+    value, children, extraSymbol, className,
+}) => (
     <li data-select-value={value}>
         {children}
-        {' '}
         {extraSymbol}
     </li>
 );

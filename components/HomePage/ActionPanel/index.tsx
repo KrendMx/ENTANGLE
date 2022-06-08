@@ -31,8 +31,6 @@ const ActionPanel: React.FC<IActionProps> = ({
                         <Option value={el} key={key}>{networks[el].title}</Option>
                     ))}
                 </Select>
-            </div>
-            <div className={styles.filterWrapper}>
                 <Select value={sort} onChange={handleChangeSort}>
                     <Option value="">Sort by</Option>
                     {sortVar.map((el, key: number) => (

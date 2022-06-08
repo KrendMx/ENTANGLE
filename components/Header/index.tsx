@@ -209,26 +209,16 @@ const Header = () => {
                             })}
                         >
                             <div className={styles.selectorsWrapper}>
-                                <Dropout
-                                    title="Synthetic Vaults"
-                                    wrapperClassName={classNames(
-                                        styles.heading,
-                                        styles.syntheticSelect,
-                                    )}
-                                >
-                                    <>
-                                        <Link href="/" passHref>
-                                            <p className={styles.dropItem}>
-                                                Buy & Sell Synth-LP
-                                            </p>
-                                        </Link>
-                                        <Link href="/mint" passHref>
-                                            <p className={styles.dropItem}>
-                                                Mint & Burn Synth-LP
-                                            </p>
-                                        </Link>
-                                    </>
-                                </Dropout>
+                                <Link href="/" passHref>
+                                    <p
+                                        className={classNames(
+                                            styles.dropItem,
+                                            styles.aloneLink,
+                                        )}
+                                    >
+                                        Synthetic Vaults
+                                    </p>
+                                </Link>
                                 <nav
                                     className={classNames(
                                         styles.navigate,
