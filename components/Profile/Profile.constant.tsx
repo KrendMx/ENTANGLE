@@ -31,8 +31,9 @@ const calculatePosPrice = async (account: string, key: string, i: number) => {
         ),
     );
     const dec = await synthContract.decimals();
-    const rate = await dexContract.rate();
-    const price = 1 / (Number(rate.toBigInt()) / 10 ** 18);
+    const price = 1
+    / (((await dexContract.rate())
+        / 10 ** (await dexContract.rateDecimals())));
     const accountBalance = await synthContract.balanceOf(
         account,
     );

@@ -11,5 +11,12 @@ export const api = createApi({
                 url: 'metrics/tvl',
             }),
         }),
+        getPrices: build.query({
+            query: () => ({
+                url: 'metrics/price',
+            }),
+        }),
     }),
 });
+
+export const { useGetPricesQuery, useGetTotalValueLockedQuery } = api;
