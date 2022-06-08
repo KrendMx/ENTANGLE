@@ -10,7 +10,7 @@ import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
-import { setErrorStack, setError } from '@/src/Redux/store/reducers/AppSlice';
+import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
 
 const BUSDContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
@@ -146,6 +146,17 @@ const BUSDContainer = ({ isFiltered = false }) => {
             }
         })();
     }, [account, txLoading, chainId]);
+
+    useEffect(() => {
+        (async () => {
+            const cardData = await Service.getCardData(
+                account ? farms[chainId]?.BSC : '7',
+            );
+            const apr = cardData.apr;
+            const available = cardData.available;
+            dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
+        })();
+    }, []);
 
     return (
         <>

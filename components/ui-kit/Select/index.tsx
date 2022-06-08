@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import classNames from 'classnames';
 import styles from './styles.module.css';
 
 type SelectProps = {
     value: string | undefined;
     children: React.ReactNode[];
     onChange: any;
-    className: string;
+    customClassName?: any;
+    disabled?:boolean;
 };
 
 type OptionProps = {
@@ -16,15 +18,17 @@ type OptionProps = {
 };
 
 export const Option: React.FC<OptionProps> = ({
-    value, children, extraSymbol, className,
+    value, children, extraSymbol,
 }) => (
     <li data-select-value={value}>
-        {children}
         {extraSymbol}
+        {children}
     </li>
 );
 
-const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
+const Select: React.FC<SelectProps> = ({
+    value, onChange, children, customClassName, disabled,
+}) => {
     const [selected, setSelected] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const selectWrapperNode = useRef<HTMLDivElement>(null);
@@ -55,7 +59,12 @@ const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
     }, [isOpen]);
 
     return (
-        <div className={styles.wrapper} ref={selectWrapperNode}>
+        <div
+            className={
+                classNames(styles.wrapper, customClassName, [disabled ? styles.disabled : ''])
+            }
+            ref={selectWrapperNode}
+        >
             <label className={styles.label}>{selected}</label>
             <Image
                 width={13}

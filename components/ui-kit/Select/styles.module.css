@@ -1,7 +1,7 @@
 .wrapper {
   padding: 12px 22px 12px 16px;
   flex: 1;
-  background-color: var(--color-3);
+  background-color: #1E1E1E;
   border-radius: 12px;
   font-size: 16px;
   letter-spacing: 0.5px;
@@ -28,7 +28,7 @@
     list-style: none;
     position: absolute;
     top: calc(100% + 3px);
-    background-color: var(--color-3);
+    background-color: #1E1E1E;
     border-radius: 12px;
     left: 0;
     width: 100%;
@@ -37,9 +37,22 @@
 }
 
 .options li{
+    display: flex;
+    align-items: center;
     padding: 8px;
     border-radius: 8px;
-    background-color: var(--color-3);
+    background-color: #1E1E1E;
+    position:relative;
+}
+
+.checkbox{
+    width:14px;
+    height: 14px;
+    background-color: red;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .options li:hover {

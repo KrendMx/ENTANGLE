@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { Children, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './style.module.css';
 
@@ -7,27 +7,28 @@ type Props = {
     children: JSX.Element,
   };
 
-const HintModal: React.FC<Props> = (props) => {
-    const { children } = props;
-    const [vis, setVis] = useState<boolean>(false);
+const HintModal: React.FC<Props> = ({ children }) => {
+    const [visible, setVisible] = useState<boolean>(false);
 
     return (
         <div className={styles.modal}>
             <div>
                 <div
-                    onMouseEnter={() => { setVis(true); }}
-                    onMouseLeave={() => { setVis(false); }}
+                    onMouseEnter={() => { setVisible(true); }}
+                    onMouseLeave={() => { setVisible(false); }}
                     className={styles.addImgWrapper}
                 >
                     <Image
-                        src="/images/question.svg"
+                        src="/images/i.svg"
                         width={14}
                         height={14}
                         quality={100}
                         alt=""
                     />
-                    {vis ? (
-                        <div className={styles.textBlock}>
+                    {visible ? (
+                        <div
+                            className={styles.textBlock}
+                        >
                             {children}
                         </div>
                     ) : null}

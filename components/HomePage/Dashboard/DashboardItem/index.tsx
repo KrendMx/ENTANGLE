@@ -60,7 +60,9 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         provider,
         chainId: selectedChainId,
     } = useAppSelector((state) => state.walletReducer);
+
     const dispatch = useAppDispatch();
+
     const [addingToken, setAddingToken] = useState(false);
     const [tooltipVisible, setTooltipVisible] = useState(false);
     useEffect(() => {
@@ -188,6 +190,21 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                         )}
                     </div>
                 </div>
+                <div className={styles.section}>
+                    <div className={styles.sectionTitle}>
+                        <p>Value of LPs Staked </p>
+                        <HintModal>
+                            <p>The current annual percentage received on this farm</p>
+                        </HintModal>
+                    </div>
+                    <div className={styles.sectionRow}>
+                        {available ? (
+                            <p className={styles.sectionValue}>{available}</p>
+                        ) : (
+                            <TextLoader bgGradient={bgGradient} />
+                        )}
+                    </div>
+                </div>
                 {/* <div className={styles.section}>
                     <div className={styles.sectionTitle}>
                         <p>Available</p>
@@ -251,7 +268,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 </div>
                 {account ? (
                     <>
-                        <div className={styles.section}>
+                        {/* <div className={styles.section}>
                             <p className={styles.sectionTitle}>Your Position</p>
                             <div className={classNames(styles.sectionRow)}>
                                 {positions ? (
@@ -265,7 +282,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                                     {totalPositions}
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
                         <div className={styles.section}>
                             <p className={styles.sectionTitle}>
                                 Real Time Yield

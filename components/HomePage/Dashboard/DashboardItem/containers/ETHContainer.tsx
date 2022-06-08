@@ -1,8 +1,12 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
+import { addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
+import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
 
 const ETHContainer = ({ isFiltered = false }) => {
+    const dispatch = useAppDispatch();
+
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -37,7 +41,22 @@ const ETHContainer = ({ isFiltered = false }) => {
         ...state,
     } as const;
 
+    useEffect(() => {
+        (async () => {
+            // const cardData = await Service.getCardData(
+            //     account ? farms[chainId]?.BSC : '7',
+            // );
+            // const apr = cardData.apr;
+            // const available = cardData.available;
+
+            dispatch(addSortingCard({ name: data.heading, APR: 0, staked: 0 }));
+        })();
+    }, []);
+
     return <DashboardItem {...data} isFiltered={isFiltered} />;
 };
 
 export default ETHContainer;
+// function dispatch(arg0: any) {
+//     throw new Error('Function not implemented.');
+// }

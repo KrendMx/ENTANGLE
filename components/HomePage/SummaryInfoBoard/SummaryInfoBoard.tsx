@@ -81,7 +81,7 @@ const SummaryInfoBoard = () => {
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <InfoBlock
-                    info="Total Value Locked (USD)"
+                    info="Total Profit of Entangle Users"
                     value={
                         totalValueLockedData
                             ? totalValueLockedData.amount
@@ -91,23 +91,9 @@ const SummaryInfoBoard = () => {
                     isShort
                 />
                 <InfoBlock
-                    info="Change (24h)"
-                    value={
-                        totalValueLockedData
-                            ? totalValueLockedData.change
-                            : null
-                    }
-                    type={InfoBlockTypes.PERCENTAGE}
-                />
-                <InfoBlock
-                    info="Current enUSD Minted"
-                    value={0}
+                    info="Total Value Deposited"
+                    value={123523442}
                     type={InfoBlockTypes.MONEY}
-                />
-                <InfoBlock
-                    info="Change (24h)"
-                    value={0}
-                    type={InfoBlockTypes.PERCENTAGE}
                 />
             </div>
         </div>

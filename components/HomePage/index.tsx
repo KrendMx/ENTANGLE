@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import ActionPanel from './ActionPanel';
 import Dashboard from './Dashboard';
@@ -19,8 +19,8 @@ const HomePage = () => {
                 sort={sort}
                 setSort={setSort}
             />
-            <Dashboard filter={filter} query={search} sort={sort} />
             <SummaryInfoBoard />
+            <Dashboard filter={filter} query={search} sort={sort} />
         </div>
     );
 };
