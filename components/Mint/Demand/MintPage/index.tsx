@@ -10,6 +10,8 @@ import Sidebar from '../MintSidebar';
 const MintPage: React.FC = () => {
     const [filter, setFilter] = useState<string>('');
     const [search, setSearch] = useState<string>('');
+    const [sort, setSort] = useState<string>('');
+
     const dispatch = useAppDispatch();
 
     const closeSidebar = () => {
@@ -23,11 +25,13 @@ const MintPage: React.FC = () => {
                 <ActionPanel
                     search={search}
                     filter={filter}
+                    sort={sort}
                     setFilter={setFilter}
                     setSearch={setSearch}
+                    setSort={setSort}
                 />
             </div>
-            <DashboardCards filter={filter} query={search} />
+            <DashboardCards filter={filter} query={search} sort={sort} />
         </div>
     );
 };
