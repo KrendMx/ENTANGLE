@@ -13,7 +13,7 @@ import ChainService from '@/src/ChainService/ChainService';
 import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
-import { setErrorStack, setError } from '@/src/Redux/store/reducers/AppSlice';
+import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
 
 const FantomContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
@@ -148,6 +148,18 @@ const FantomContainer = ({ isFiltered = false }) => {
             }
         })();
     }, [account, txLoading, chainId]);
+
+    useEffect(() => {
+        (async () => {
+            const cardData = await Service.getCardData(
+                account ? farms[chainId]?.FTM : '9',
+            );
+            const apr = cardData.apr;
+            const available = cardData.available;
+
+            dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
+        })();
+    }, []);
 
     return (
         <>

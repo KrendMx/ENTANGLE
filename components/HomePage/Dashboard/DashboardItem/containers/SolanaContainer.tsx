@@ -1,8 +1,11 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
+import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 
 const SolanaContainer = ({ isFiltered = false }) => {
+    const dispatch = useAppDispatch();
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -37,6 +40,12 @@ const SolanaContainer = ({ isFiltered = false }) => {
         disabled: true,
         ...state,
     } as const;
+
+    useEffect(() => {
+        (async () => {
+            dispatch(addSortingCard({ name: data.heading, APR: 11.95, staked: 1 }));
+        })();
+    }, []);
 
     return <DashboardItem {...data} isFiltered={isFiltered} />;
 };

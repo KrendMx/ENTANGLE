@@ -11,9 +11,16 @@ type AppState = {
     isOpenSelectWalletModal: boolean;
     language: languages;
     activeCard: MintDashboardItemCardType | null;
+    sortingObject: any
 };
 
 type TransactionInfo = { value: number; symbol: string; isReceived: boolean };
+
+type sortingCard = {
+    name: string;
+    APR: number;
+    staked: number | string;
+}
 
 interface ErrorI {
     code?: keyof typeof MetamaskErrorUserMessages;
@@ -21,4 +28,6 @@ interface ErrorI {
     message?: string;
 }
 
-export type { AppState, ErrorI, TransactionInfo };
+export type {
+    AppState, ErrorI, TransactionInfo, sortingCard,
+};

@@ -126,10 +126,8 @@ const synths = {
 
 type languages = 'en' | 'ru' | 'ch';
 
-const sortVar = ['APR', 'Deposite'];
-
 export {
-    synths, chainToNameConfig, namesConfig, farms, networks, sortVar,
+    synths, chainToNameConfig, namesConfig, farms, networks,
 };
 
 export type { availableChains, languages };

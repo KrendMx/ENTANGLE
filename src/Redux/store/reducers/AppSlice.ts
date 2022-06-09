@@ -6,6 +6,7 @@ import type {
     AppState,
     ErrorI,
     TransactionInfo,
+    sortingCard,
 } from '../interfaces/App.interfaces';
 
 const initialState: AppState = {
@@ -16,6 +17,7 @@ const initialState: AppState = {
     isOpenSelectWalletModal: false,
     language: 'en',
     activeCard: null,
+    sortingObject: {},
 };
 
 export const appSlice = createSlice({
@@ -50,6 +52,9 @@ export const appSlice = createSlice({
         ) {
             state.activeCard = action.payload;
         },
+        addSortingCard(state, action: PayloadAction<sortingCard>) {
+            if (!state.sortingObject[action.payload.name])state.sortingObject[action.payload.name] = action.payload;
+        },
     },
 });
 
@@ -60,6 +65,7 @@ export const {
     setSucInfo,
     setIsOpenSelectWalletModal,
     setLanguage,
+    addSortingCard,
     changeActiveCard,
 } = appSlice.actions;
 export default appSlice.reducer;

@@ -13,13 +13,13 @@ import { farms } from '@/src/utils/GlobalConst';
 import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
-import { setErrorStack, setError } from '@/src/Redux/store/reducers/AppSlice';
+import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
     const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
-    const { error } = useAppSelector((state) => state.appReducer);
+    const { error, sortingObject } = useAppSelector((state) => state.appReducer);
     const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
@@ -124,6 +124,21 @@ const AvalancheContainer = ({ isFiltered = false }) => {
             })();
         }
     }, [txLoading, chainId, preLoader]);
+
+    useEffect(() => {
+        (async () => {
+            const cardData = await Service.getCardData(
+                account ? farms[chainId]?.AVAX : '68',
+            );
+            const apr = cardData.apr;
+            const available = cardData.available;
+            dispatch(addSortingCard({
+                name: data.heading,
+                APR: Number(apr),
+                staked: Number(available).toFixed(5),
+            }));
+        })();
+    }, []);
 
     useEffect(() => {
         (async () => {
