@@ -33,8 +33,6 @@ const InvestCardExp: React.FC<IState> = ({
         (async function GetProfit() {
             if (txHistory.length) {
                 const { percentage, stable } = await QueryRequests.calculateProfit(txHistory, price, chainId);
-                console.log(percentage);
-                console.log(stable);
                 dispatch(setProfit({ n: stable, change: percentage, key: chainId }));
             }
         }());

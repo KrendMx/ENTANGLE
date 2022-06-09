@@ -13,7 +13,7 @@ import ChainService from '@/src/ChainService/ChainService';
 import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
-import { setErrorStack, setError } from '@/src/Redux/store/reducers/AppSlice';
+import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
 
 const FantomContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
@@ -90,6 +90,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     }
                 }
                 const percentage = Math.ceil((available / currentDeposits) * 100);
+                dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
                 dispatch(setPayData({
                     key: '250',
                     data: {

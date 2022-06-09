@@ -190,6 +190,12 @@ div.dashboardList {
     display: flex;
 }
 
+.aloneLink {
+  color:var(--gray);
+  cursor: pointer;
+  padding: 10px 0;
+}
+
 .block {
     display: block;
 }
@@ -209,6 +215,10 @@ div.dashboardList {
 @media screen and (max-width: 1024px) {
   .langList {
     left: 0;
+  }
+
+  .aloneLink {
+    font-size: 16px;
   }
 
   .langList p {

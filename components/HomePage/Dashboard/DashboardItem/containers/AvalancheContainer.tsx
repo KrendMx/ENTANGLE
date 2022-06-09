@@ -13,7 +13,7 @@ import { farms } from '@/src/utils/GlobalConst';
 import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
-import { setErrorStack, setError } from '@/src/Redux/store/reducers/AppSlice';
+import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
@@ -93,6 +93,11 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,
                 );
+                dispatch(addSortingCard({
+                    name: data.heading,
+                    APR: Number(apr),
+                    staked: Number(available).toFixed(5),
+                }));
                 dispatch(setPayData({
                     key: '43114',
                     data: {

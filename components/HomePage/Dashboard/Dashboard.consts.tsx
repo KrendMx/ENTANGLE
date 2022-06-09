@@ -8,29 +8,25 @@ import SolanaContainer from './DashboardItem/containers/SolanaContainer';
 const ITEMS = [
     {
         filter: 43114,
-        APR: 9,
-        Deposite: 2,
+        name: 'USDC-USDC.e',
         query: ['usdc-usdc.e', 'avalanche', 'avax', 'ava', 'joe'],
         element: (isFiltered: boolean, key: number) => <AvalancheContainer isFiltered={isFiltered} key={key} />,
     },
     {
         filter: 250,
-        APR: 6,
-        Deposite: 1,
+        name: 'MIM-USDC',
         query: ['mim-usdc', 'fantom', 'ftm', 'spirit'],
         element: (isFiltered: boolean, key: number) => <FantomContainer isFiltered={isFiltered} key={key} />,
     },
     {
         filter: 1,
-        APR: 0,
-        Deposite: 3,
+        name: 'aDAI-aSUSD',
         query: ['mim-ust', 'etherem', 'ether', 'convexfinance'],
         element: (isFiltered: boolean, key: number) => <ETHContainer isFiltered={isFiltered} key={key} />,
     },
     {
         filter: 56,
-        APR: 3,
-        Deposite: 4,
+        name: 'USDT-BUSD',
         query: ['usdt-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
         element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
     },

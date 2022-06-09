@@ -19,8 +19,8 @@ const HomePage = () => {
                 sort={sort}
                 setSort={setSort}
             />
-            <Dashboard filter={filter} query={search} sort={sort} />
             <SummaryInfoBoard />
+            <Dashboard filter={filter} query={search} sort={sort} />
         </div>
     );
 };
