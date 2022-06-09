@@ -6,8 +6,8 @@ import styles from './styles.module.css';
 type SelectProps = {
     value: string | undefined;
     children: React.ReactNode[];
-    onChange: any;
-    customClassName?: any;
+    onChange: (HTMLElement) => void;
+    customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     disabled?:boolean;
 };
 

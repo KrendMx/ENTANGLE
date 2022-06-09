@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Contract } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
-import classNames from 'classnames';
 import styles from './style.module.css';
 import { networks, farms } from '@/src/utils/GlobalConst';
 import type { PayModalPropsType } from './PayModal.interfaces';

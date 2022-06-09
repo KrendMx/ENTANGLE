@@ -1,11 +1,10 @@
 import React, {
-    useReducer, useContext, useMemo, useEffect,
+    useReducer, useMemo, useEffect,
 } from 'react';
 import ChainService from '@/src/ChainService/ChainService';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 import { farms } from '@/src/utils/GlobalConst';
-import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
@@ -17,7 +16,6 @@ const BUSDContainer = ({ isFiltered = false }) => {
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
     const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
     const { error } = useAppSelector((state) => state.appReducer);
-    const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,
@@ -87,6 +85,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     }
                 }
                 const percentage = Math.ceil((available / currentDeposits) * 100);
+                dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
                 dispatch(setPayData({
                     key: '56',
                     data: {
@@ -146,17 +145,6 @@ const BUSDContainer = ({ isFiltered = false }) => {
             }
         })();
     }, [account, txLoading, chainId]);
-
-    useEffect(() => {
-        (async () => {
-            const cardData = await Service.getCardData(
-                account ? farms[chainId]?.BSC : '7',
-            );
-            const apr = cardData.apr;
-            const available = cardData.available;
-            dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
-        })();
-    }, []);
 
     return (
         <>

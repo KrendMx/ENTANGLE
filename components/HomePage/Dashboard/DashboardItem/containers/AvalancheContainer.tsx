@@ -19,7 +19,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
     const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
-    const { error, sortingObject } = useAppSelector((state) => state.appReducer);
+    const { error } = useAppSelector((state) => state.appReducer);
     const { getProfit } = useContext(ServiceContext);
     const [state, setState] = useReducer(
         (
@@ -93,6 +93,11 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,
                 );
+                dispatch(addSortingCard({
+                    name: data.heading,
+                    APR: Number(apr),
+                    staked: Number(available).toFixed(5),
+                }));
                 dispatch(setPayData({
                     key: '43114',
                     data: {
@@ -124,21 +129,6 @@ const AvalancheContainer = ({ isFiltered = false }) => {
             })();
         }
     }, [txLoading, chainId, preLoader]);
-
-    useEffect(() => {
-        (async () => {
-            const cardData = await Service.getCardData(
-                account ? farms[chainId]?.AVAX : '68',
-            );
-            const apr = cardData.apr;
-            const available = cardData.available;
-            dispatch(addSortingCard({
-                name: data.heading,
-                APR: Number(apr),
-                staked: Number(available).toFixed(5),
-            }));
-        })();
-    }, []);
 
     useEffect(() => {
         (async () => {

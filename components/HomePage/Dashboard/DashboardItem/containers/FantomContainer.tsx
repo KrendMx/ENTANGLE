@@ -90,6 +90,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     }
                 }
                 const percentage = Math.ceil((available / currentDeposits) * 100);
+                dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
                 dispatch(setPayData({
                     key: '250',
                     data: {
@@ -148,18 +149,6 @@ const FantomContainer = ({ isFiltered = false }) => {
             }
         })();
     }, [account, txLoading, chainId]);
-
-    useEffect(() => {
-        (async () => {
-            const cardData = await Service.getCardData(
-                account ? farms[chainId]?.FTM : '9',
-            );
-            const apr = cardData.apr;
-            const available = cardData.available;
-
-            dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
-        })();
-    }, []);
 
     return (
         <>
