@@ -23,17 +23,17 @@ type propsType = {
     sellToken: (value: number) => void;
     balanceSynth: Promise<number>;
     chainThings: {genered: any, contract: Contract};
-    apr: string;
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
 const Withdraw: React.FC<propsType> = ({
-    sellToken, balanceSynth, chainThings, apr,
+    sellToken, balanceSynth, chainThings,
 }) => {
     const dispatch = useAppDispatch();
     const { chainId, account, provider } = useAppSelector(
         (state) => state.walletReducer,
     );
     const { payData, txLoading } = useAppSelector((state) => state.userReducer);
+    const { sortingObject } = useAppSelector((state) => state.appReducer);
     const [synthAmount, setSynthAmount] = useState('');
     const [amount, setAmount] = useState<string>('');
     const [synthBalance, setSynthBalance] = useState<string>('');
@@ -142,7 +142,7 @@ const Withdraw: React.FC<propsType> = ({
                 The approximate transaction execution time is 15 seconds!
             </p>
             <div className={styles.mg2}>
-                <Text title="Current Projected APR" content={apr} />
+                <Text title="Current Projected APR" content={sortingObject[localChain].APR.toString()} />
                 <br />
                 <Text title="Your SynthLP Balance" content={`${synthBalance} SynthLP`} />
             </div>

@@ -23,17 +23,17 @@ type propsType = {
     balanceUSDC: Promise<number>;
     balanceSynth: Promise<number>;
     chainThings: {genered: any, contract: Contract}
-    apr: string;
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
 const Deposit: React.FC<propsType> = ({
-    buyToken, chainThings, balanceSynth, balanceUSDC, apr,
+    buyToken, chainThings, balanceSynth, balanceUSDC,
 }) => {
     const dispatch = useAppDispatch();
     const { chainId, account, provider } = useAppSelector(
         (state) => state.walletReducer,
     );
     const { payData, txLoading } = useAppSelector((state) => state.userReducer);
+    const { sortingObject } = useAppSelector((state) => state.appReducer);
     const [amount, setAmount] = useState('');
     const [synthAmount, setSynthAmount] = useState('');
     const [balances, setBalances] = useState<{usdc: string, synth: string}>({ usdc: '', synth: '' });
@@ -137,7 +137,7 @@ const Deposit: React.FC<propsType> = ({
                     5-30 minutes!
                 </p>
             )}
-            <Text title="Current Projected APR" content={apr} />
+            <Text title="Current Projected APR" content={`${sortingObject[localChain]?.APR}%`} />
             <Text title="Your SynthLP Balance" content={`${balances.synth} SynthLP`} />
             <Text title="Your USDC balance " content={`${balances.usdc} USDC`} />
             <ModalInput

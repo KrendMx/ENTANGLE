@@ -159,7 +159,6 @@ const FantomContainer = ({ isFiltered = false }) => {
                         totalAvailable={state.totalAvailable}
                         price={state.price}
                         handleClose={closeModal}
-                        apr={state.apr}
                     />
                 </Modal>
             )}

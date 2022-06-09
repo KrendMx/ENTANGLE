@@ -14,7 +14,7 @@ import { setSucInfo } from '@/src/Redux/store/reducers/AppSlice';
 import { ChainConfig } from '@/src/ChainService/config';
 
 const PayModal: React.FC<PayModalPropsType> = ({
-    handleClose, price, available, totalAvailable, apr,
+    handleClose, price, available, totalAvailable,
 }) => {
     const [activeTab, setActiveTab] = useState(0);
     const dispatch = useAppDispatch();
@@ -196,7 +196,6 @@ const PayModal: React.FC<PayModalPropsType> = ({
                     sellToken={sellToken}
                     balanceSynth={balanceSynth}
                     chainThings={chainThingsSynth}
-                    apr={apr}
                 />
             ) : (
                 <Deposit
@@ -207,7 +206,6 @@ const PayModal: React.FC<PayModalPropsType> = ({
                     balanceUSDC={balanceUSDC}
                     balanceSynth={balanceSynth}
                     chainThings={chainThingsStable}
-                    apr={apr}
                 />
             )}
         </div>

@@ -2,7 +2,6 @@ import type { ContainerStateType } from '../Dashboard/DashboardItem/containers/t
 
 type PayModalPropsType = {
     handleClose: () => void;
-    apr: string;
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>
 
 export type { PayModalPropsType };
