@@ -33,7 +33,7 @@ const ETHContainer = ({ isFiltered = false }) => {
         bgGradient:
             'linear-gradient(90deg, rgba(152,152,152,0.2) 0%, rgba(246, 246, 246, 0) 96.87%)',
         heading: 'aDAI-aSUSD',
-        chainId: '43114',
+        chainId: '1',
         priceCurrency: 'aDAI/aSUSD Synthetic LP',
         description:
             'Generates yield by running autocompounded aDAI/aSUSD strategy on convexfinance.com',
@@ -49,7 +49,7 @@ const ETHContainer = ({ isFiltered = false }) => {
             // const apr = cardData.apr;
             // const available = cardData.available;
 
-            dispatch(addSortingCard({ name: data.heading, APR: 0, staked: 0 }));
+            dispatch(addSortingCard({ chainId: data.chainId, APR: 0, staked: 0 }));
         })();
     }, []);
 

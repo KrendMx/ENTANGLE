@@ -122,6 +122,11 @@ const synths = {
         'AVAX': '0x901D6D195f9fF29051E499792291186B9A9CdBFc',
         'FTM': '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
     },
+    '1': {
+        'BSC': '',
+        'AVAX': '',
+        'FTM': '',
+    },
 };
 
 type languages = 'en' | 'ru' | 'ch';

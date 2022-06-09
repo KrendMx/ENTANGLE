@@ -53,7 +53,9 @@ export const appSlice = createSlice({
             state.activeCard = action.payload;
         },
         addSortingCard(state, action: PayloadAction<sortingCard>) {
-            if (!state.sortingObject[action.payload.name])state.sortingObject[action.payload.name] = action.payload;
+            if (!state.sortingObject[action.payload.chainId]) {
+                state.sortingObject[action.payload.chainId] = action.payload;
+            }
         },
     },
 });

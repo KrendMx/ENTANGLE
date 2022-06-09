@@ -43,7 +43,7 @@ const SolanaContainer = ({ isFiltered = false }) => {
 
     useEffect(() => {
         (async () => {
-            dispatch(addSortingCard({ name: data.heading, APR: 11.95, staked: 1 }));
+            dispatch(addSortingCard({ chainId: data.chainId, APR: 11.95, staked: 1 }));
         })();
     }, []);
 

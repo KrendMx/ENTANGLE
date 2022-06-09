@@ -5,18 +5,22 @@ import type { IDashboardProps } from './Dashboard.interfaces';
 import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import type { sortingCard } from '@/src/Redux/store/interfaces/App.interfaces';
 
-const Dashboard: React.FC<IDashboardProps> = ({ filter = '', query = '', sort = '' }) => {
+const Dashboard: React.FC<IDashboardProps> = ({ filter = '', query = '', sorts = '' }) => {
     const { sortingObject } = useAppSelector((state) => state.appReducer);
 
     function sortingCard() {
-        return Object.values(sortingObject).sort((elA, elB) => (elA[sort] < elB[sort] ? 1 : -1));
+        return (Object.values(sortingObject)).sort((a, b) => (a[sorts] > b[sorts] ? 1 : -1));
     }
 
     function sortAndFilter() {
         let arr = [];
         arr = ITEMS;
-        if (sort !== '') {
-            arr = sortingCard().map((el:sortingCard) => ITEMS.filter((e) => e.name === el.name)[0]);
+        if (sorts !== '') {
+            arr = sortingCard().map((el:sortingCard) => {
+                const elo = ITEMS.filter((e) => e.filter === Number(el.chainId));
+                console.log(elo);
+                return elo[0];
+            });
         }
         if (filter !== '') arr.sort((item) => (item.filter === Number(filter) ? -1 : 1));
         return arr;
@@ -24,7 +28,6 @@ const Dashboard: React.FC<IDashboardProps> = ({ filter = '', query = '', sort = 
 
     const newItems = sortAndFilter();
 
-    useEffect(() => { console.log(sortingObject); });
     return (
         <div className={styles.wrapper}>
             {newItems.map((i, key) => {

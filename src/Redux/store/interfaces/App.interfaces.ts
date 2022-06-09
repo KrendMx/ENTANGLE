@@ -1,7 +1,7 @@
 import type { MintDashboardItemCardType } from '@/components/Mint/Demand/MintPage/types';
 import type { MetamaskErrorUserMessages } from '@/components/Modal/ErrorModal/ErrorModal.constants';
 
-import type { languages } from '../../../utils/GlobalConst';
+import type { availableChains, languages } from '../../../utils/GlobalConst';
 
 type AppState = {
     isLoaded: boolean;
@@ -11,13 +11,13 @@ type AppState = {
     isOpenSelectWalletModal: boolean;
     language: languages;
     activeCard: MintDashboardItemCardType | null;
-    sortingObject: any
+    sortingObject: {[key: string]:sortingCard}
 };
 
 type TransactionInfo = { value: number; symbol: string; isReceived: boolean };
 
 type sortingCard = {
-    name: string;
+    chainId: string;
     APR: number;
     staked: number | string;
 }

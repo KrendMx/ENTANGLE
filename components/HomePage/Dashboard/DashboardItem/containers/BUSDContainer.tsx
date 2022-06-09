@@ -85,7 +85,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     }
                 }
                 const percentage = Math.ceil((available / currentDeposits) * 100);
-                dispatch(addSortingCard({ name: data.heading, APR: Number(apr), staked: Number(available) }));
+                dispatch(addSortingCard({ chainId: data.chainId, APR: Number(apr), staked: Number(available) }));
                 dispatch(setPayData({
                     key: '56',
                     data: {

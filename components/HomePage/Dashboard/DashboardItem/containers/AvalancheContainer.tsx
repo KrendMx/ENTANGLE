@@ -94,7 +94,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     (available / currentDeposits) * 100,
                 );
                 dispatch(addSortingCard({
-                    name: data.heading,
+                    chainId: data.chainId,
                     APR: Number(apr),
                     staked: Number(available).toFixed(5),
                 }));
