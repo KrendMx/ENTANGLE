@@ -10,7 +10,6 @@ type DasboardCardType = {
 const DashboardCards: React.FC<DasboardCardType> = ({
     filter = '',
     query = '',
-    sort = '',
 }) => {
     const newItems = filter !== ''
         ? ITEMS.sort((item) => (item.filter === Number(filter) ? -1 : 1))

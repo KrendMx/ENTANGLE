@@ -31,7 +31,7 @@ const MintPage: React.FC = () => {
                     setSort={setSort}
                 />
             </div>
-            <DashboardCards filter={filter} query={search} sort={sort} />
+            <DashboardCards filter={filter} query={search} sorts={sort} />
         </div>
     );
 };
