@@ -12,6 +12,7 @@ const Dropout: React.FC<DropoutProps> = ({
     wrapperListClassName,
     wrapperPickerClassName,
     textClassName,
+    offset = '0px',
     isSoon = false,
     arrowImg,
 }) => {
@@ -68,7 +69,7 @@ const Dropout: React.FC<DropoutProps> = ({
                         </div>
                     )}
                 </div>
-                <div className={classNames(wrapperListClassName, styles.list)}>{children}</div>
+                <div className={classNames(wrapperListClassName, styles.list)} style={{ left: offset }}>{children}</div>
             </label>
         </div>
     );

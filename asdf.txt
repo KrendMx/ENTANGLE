@@ -1,0 +1,128 @@
+{ /* <>
+            <div className={styles.section}>
+                <p className={styles.sectionTitle}>Available</p>
+                <div
+                    className={classNames(
+                        styles.sectionRow,
+                        styles.sectionAvailable,
+                    )}
+                >
+                    <p className={styles.sectionValue}>
+                        {payData[localChain as availableChains]?.available || (
+                            <i className="fa fa-spinner fa-spin" />
+                        )}
+                    </p>
+                    <p className={styles.sectionSubValue}>Synth-LP</p>
+                    <p
+                        className={classNames(
+                            styles.sectionSubValue,
+                            styles.sectionGraySubValue,
+                        )}
+                    >
+                        {payData[chainId]?.totalAvailable || ''}
+                    </p>
+                </div>
+                <div
+                    className={styles.rowGradient}
+                    style={
+                        {
+                            '--percentage': `${percentage}%`,
+                            '--colorFrom': `${networks[chainId]?.mainColor}`,
+                        } as React.CSSProperties
+                    }
+                />
+            </div>
+            <div className={styles.section}>
+                <p className={styles.sectionTitle}>Price</p>
+                <div className={styles.sectionRow}>
+                    <p className={styles.sectionValue}>
+                        {payData[localChain as availableChains]?.price || (
+                            <i className="fa fa-spinner fa-spin" />
+                        )}
+                    </p>
+                    <p
+                        className={classNames(
+                            styles.sectionSubValue,
+                            styles.networkIconWrapper,
+                        )}
+                    >
+                        <Image
+                            width={15}
+                            height={25}
+                            quality={100}
+                            className={styles.networkIcon}
+                            src={`/images/networks/${
+                                networks[localChain as availableChains]?.icon
+                            }`}
+                            alt=""
+                        />
+                        {networks[localChain as availableChains]?.currency}
+                    </p>
+                </div>
+            </div>
+            <div
+                className={
+                    maxError ? styles.inputWrapperError : styles.inputWrapper
+                }
+            >
+                <Input
+                    value={amount}
+                    onChange={({ target }) => {
+                        const value = target.value.replace(',', '.').trim();
+                        if (Number(value) >= 0 && value.length <= 6) {
+                            setAmount(value);
+                        }
+                    }}
+                    placeholder="Enter amount"
+                    otherProps={{ autoFocus: true }}
+                    type="number"
+                    getMax={getMax}
+                />
+                {maxError && <p className={styles.error}>Not enought USDC</p>}
+            </div>
+            <div className={styles.section}>
+                <p className={styles.sectionTitle}>You get</p>
+                <div className={styles.sectionRow}>
+                    <p className={styles.sectionValue}>
+                        {(amount && price
+                            ? Number(amount) / Number(price)
+                            : 0
+                        ).toFixed(6)}
+                    </p>
+                    <p className={styles.sectionSubValue}>
+                        {networks[localChain as availableChains]?.currency}
+                    </p>
+                </div>
+            </div>
+            {txLoading || maxError ? (
+                <GradientButton
+                    title={maxError ? 'Add funds' : 'Waiting'}
+                    onClick={() => {}}
+                    disabled
+                    loader={
+                        !maxError ? (
+                            <i
+                                className="fa fa-spinner fa-spin"
+                                style={{ marginLeft: '5px' }}
+                            />
+                        ) : undefined
+                    }
+                />
+            ) : (
+                <GradientButton
+                    title={
+                        allowance > 0
+                            ? payData[localChain as availableChains]?.price
+                                ? 'Add funds'
+                                : 'Data Loading'
+                            : 'Approve'
+                    }
+                    onClick={
+                        allowance > 0
+                            ? () => buyToken(parseFloat(amount))
+                            : () => handleApprove()
+                    }
+                    disabled={!payData[localChain as availableChains]?.price || !amount}
+                />
+            )}
+        </> */ }

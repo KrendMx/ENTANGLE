@@ -30,12 +30,13 @@ const ITEMS = [
         query: ['usdt-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
         element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
     },
-    {
-        filter: 2,
-        name: 'UST-USDC',
-        query: ['ust-usdc', 'sunny'],
-        element: (isFiltered: boolean, key: number) => <SolanaContainer isFiltered={isFiltered} key={key} />,
-    },
+    // {
+    //     filter: 2,
+    //     APR: 12,
+    //     Deposite: 5,
+    //     query: ['ust-usdc', 'sunny'],
+    //     element: (isFiltered: boolean, key: number) => <SolanaContainer isFiltered={isFiltered} key={key} />,
+    // },
 ];
 
 export default ITEMS;

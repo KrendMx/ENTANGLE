@@ -209,23 +209,20 @@ const Header = () => {
                             })}
                         >
                             <div className={styles.selectorsWrapper}>
-                                <Link href="/" passHref>
-                                    <p
-                                        className={classNames(
-                                            styles.dropItem,
-                                            styles.aloneLink,
-                                        )}
-                                    >
-                                        Synthetic Vaults
-                                    </p>
-                                </Link>
                                 <nav
                                     className={classNames(
                                         styles.navigate,
                                         styles.directionColumn,
                                     )}
                                 >
-                                    <Dropout title="enUSD">
+                                    <div className={styles.dropElemFirst}>
+                                        <Link href="/" passHref>
+                                            <p className={styles.dropItemOne}>
+                                                Synthetic Vaults
+                                            </p>
+                                        </Link>
+                                    </div>
+                                    <Dropout title="enUSD" offset="25px">
                                         <Link
                                             href="/mint-entangle-usd"
                                             passHref
@@ -235,7 +232,7 @@ const Header = () => {
                                             </p>
                                         </Link>
                                     </Dropout>
-                                    <Dropout title="Stake">
+                                    <Dropout title="Stake" offset="25px">
                                         <>
                                             <Link
                                                 href="/stake-entangle"

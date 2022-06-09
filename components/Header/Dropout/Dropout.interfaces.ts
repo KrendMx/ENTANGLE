@@ -8,6 +8,7 @@ type DropoutProps = {
     wrapperListClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     textClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     isSoon?: boolean;
+    offset?: string;
     arrowImg?: React.ReactElement;
     children?: JSX.Element;
 };

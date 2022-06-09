@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
 import { networks } from '@/src/utils/GlobalConst';
-import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import type { availableChains } from '@/src/utils/GlobalConst';
 import { setProfit } from '@/src/Redux/store/reducers/UserSlice';
 import QueryRequests from '@/src/GraphService/queryRequests';
+import Loader from '@/ui-kit/Loader';
 
 interface IState {
     chainId: availableChains;
@@ -87,7 +87,7 @@ const InvestCardExp: React.FC<IState> = ({
                         </>
                     ) : (
                         <p className={styles.itemValue}>
-                            <i className="fa fa-spinner fa-spin" />
+                            <Loader />
                         </p>
                     )}
                 </li>
@@ -122,7 +122,7 @@ const InvestCardExp: React.FC<IState> = ({
                         </>
                     ) : (
                         <p className={styles.itemValue}>
-                            <i className="fa fa-spinner fa-spin" />
+                            <Loader />
                         </p>
                     )}
                 </li>

@@ -10,28 +10,32 @@ const SelectWalletModalContent: React.FC<SelectWalletProps> = ({
     handleClose,
 }) => (
     <div className={styles.wrapper}>
-        <div className={styles.closeWrapper}>
-            <Image
-                width={20}
-                height={20}
-                className={styles.closeImg}
-                onClick={handleClose}
-                quality={100}
-                src="/images/close.svg"
-                alt="closeImg"
-            />
+        <div className={styles.header}>
+            <h1 className={styles.headerText}>Connect to a Wallet</h1>
+            <div className={styles.closeWrapper}>
+                <Image
+                    width={14}
+                    height={14}
+                    className={styles.closeImg}
+                    onClick={handleClose}
+                    quality={100}
+                    src="/images/close.svg"
+                    alt="closeImg"
+                />
+            </div>
         </div>
-        <div className={styles.errorText}>Select wallet connector.</div>
-        <div className={styles.walletWrapper}>
-            {Object.keys(WalletProviderNames).map((i) => (
-                <div key={i}>
-                    <div
-                        className={styles.BtnWrapper}
-                        onClick={() => {
-                            selectWallet(i as keyof typeof WalletProviderNames);
-                            handleClose();
-                        }}
-                    >
+        <div className={styles.content}>
+            {Object.keys(WalletProviderNames).map((i, key) => (
+                <div
+                    key={key}
+                    className={styles.walletElement}
+                    onClick={() => {
+                        selectWallet(i as keyof typeof WalletProviderNames);
+                        handleClose();
+                    }}
+                >
+                    <p className={styles.name}>{WalletProviderNames[i]}</p>
+                    <div className={styles.logo}>
                         <Image
                             width={32}
                             height={32}
@@ -40,9 +44,6 @@ const SelectWalletModalContent: React.FC<SelectWalletProps> = ({
                             src={`/images/connectors/${i}.svg`}
                             alt=""
                         />
-                        <div className={styles.BtnText}>
-                            {WalletProviderNames[i]}
-                        </div>
                     </div>
                 </div>
             ))}

@@ -19,28 +19,9 @@
     z-index: -1;
 }
 
-.modalChildWrap {
-    padding: 16px 16px 0 32px;
-    max-width: 404px;
-    width: 100%;
-    border-radius: 12px;
-    position: relative;
-    background-color: var(--black);
-    border: 1px solid #121212;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-        inset 0px -4px 4px rgba(255, 255, 255, 0.25),
-        inset 0px 0px 68px rgba(255, 255, 255, 0.05),
-        inset 0px 4px 4px rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(62px);
-}
-
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
     .wrapper::before {
         backdrop-filter: blur(20px);
         background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    .modalChildWrap {
-        background-color: rgba(30, 30, 30, 0.1);
     }
 }

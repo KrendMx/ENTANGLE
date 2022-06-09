@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { Contract } from 'ethers';
+import { Contract, providers } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import styles from './style.module.css';
 import { networks, farms } from '@/src/utils/GlobalConst';
@@ -13,22 +13,78 @@ import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
 import { setSucInfo } from '@/src/Redux/store/reducers/AppSlice';
 import { ChainConfig } from '@/src/ChainService/config';
 
-const PayModal: React.FC<PayModalPropsType> = (props) => {
-    const {
-        handleClose, price, available, totalAvailable,
-    } = props;
+const PayModal: React.FC<PayModalPropsType> = ({
+    handleClose, price, available, totalAvailable, apr,
+}) => {
     const [activeTab, setActiveTab] = useState(0);
-    const buttons = ['Deposit', 'Withdraw'];
     const dispatch = useAppDispatch();
-    const { chainId, provider } = useAppSelector(
+    const { chainId, provider, account } = useAppSelector(
         (state) => state.walletReducer,
     );
+    const { txLoading } = useAppSelector((state) => state.userReducer);
 
     useEffect(() => {
         if (!(chainId in networks)) {
             handleClose();
         }
     }, [chainId]);
+
+    const chainThingsStable = useMemo(() => {
+        const genered = (
+            ChainConfig[sessionStorage.getItem('card')].SYNTH as any
+        ).find(
+            (el: any) =>
+                el.ID === farms[chainId][sessionStorage.getItem('card')],
+        );
+        const contract = new Contract(
+            genered.CONTRACTS.STABLE.address,
+            genered.CONTRACTS.STABLE.abi,
+            new providers.JsonRpcProvider(networks[chainId]?.rpc),
+        );
+
+        return {
+            genered,
+            contract,
+        };
+    }, [account, chainId]);
+
+    const balanceUSDC = useMemo(
+        async () =>
+            Number(
+                (
+                    await chainThingsStable.contract.balanceOf(account)
+                ).toBigInt()
+                    / BigInt(10 ** (await chainThingsStable.contract.decimals())),
+            ),
+        [account, txLoading, chainId],
+    );
+
+    const chainThingsSynth = useMemo(() => {
+        const genered = (
+            ChainConfig[sessionStorage.getItem('card')].SYNTH as any
+        ).find(
+            (el: any) =>
+                el.ID === farms[chainId][sessionStorage.getItem('card')],
+        );
+        const contract = new Contract(
+            genered.CONTRACTS.SYNTH.address,
+            genered.CONTRACTS.SYNTH.abi,
+            new providers.JsonRpcProvider(networks[chainId].rpc),
+        );
+
+        return {
+            genered,
+            contract,
+        };
+    }, [account, chainId]);
+
+    const balanceSynth = useMemo(async () =>
+        Number(
+            (
+                await chainThingsSynth.contract.balanceOf(account)
+            ).toBigInt()
+                    / BigInt(10 ** (await chainThingsSynth.contract.decimals())),
+        ), [account, txLoading, chainId]);
 
     const buyToken = async (value: number) => {
         try {
@@ -114,20 +170,23 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.close}>
-                <Image
-                    width={14}
-                    height={14}
-                    onClick={handleClose}
-                    quality={100}
-                    src="/images/close.svg"
-                    alt="closeImg"
-                />
+            <div className={styles.header}>
+                <h1 className={styles.headerText}>Synthetic Vaults</h1>
+                <div className={styles.close}>
+                    <Image
+                        width={14}
+                        height={14}
+                        onClick={handleClose}
+                        quality={100}
+                        src="/images/close.svg"
+                        alt="closeImg"
+                    />
+                </div>
             </div>
             <Tabs
                 switchHandler={(idx: number) => setActiveTab(idx)}
                 activeTab={activeTab}
-                buttons={['Deposit', 'Withdraw']}
+                buttons={['Buy', 'Sell']}
             />
             {activeTab ? (
                 <Withdraw
@@ -135,6 +194,9 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
                     available={available}
                     totalAvailable={totalAvailable}
                     sellToken={sellToken}
+                    balanceSynth={balanceSynth}
+                    chainThings={chainThingsSynth}
+                    apr={apr}
                 />
             ) : (
                 <Deposit
@@ -142,6 +204,10 @@ const PayModal: React.FC<PayModalPropsType> = (props) => {
                     available={available}
                     totalAvailable={totalAvailable}
                     buyToken={buyToken}
+                    balanceUSDC={balanceUSDC}
+                    balanceSynth={balanceSynth}
+                    chainThings={chainThingsStable}
+                    apr={apr}
                 />
             )}
         </div>

@@ -1,9 +1,9 @@
-import classNames from 'classnames';
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { Contract, providers } from 'ethers';
+import type { Contract } from 'ethers';
+import { providers } from 'ethers';
 import styles from '../style.module.css';
-import Input from '@/ui-kit/Input';
+import ModalInput from '../ModalInput/index';
 import GradientButton from '@/ui-kit/GradientButton';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
 import { networks, farms, namesConfig } from '@/src/utils/GlobalConst';
@@ -15,55 +15,34 @@ import {
     approve,
 } from '@/src/Redux/store/reducers/ActionCreators';
 import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
+import Text from '../Text/index';
+import Loader from '@/ui-kit/Loader/index';
 
 type propsType = {
     buyToken: (value: number) => void;
+    balanceUSDC: Promise<number>;
+    balanceSynth: Promise<number>;
+    chainThings: {genered: any, contract: Contract}
+    apr: string;
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
-const Deposit: React.FC<propsType> = (props) => {
+const Deposit: React.FC<propsType> = ({
+    buyToken, chainThings, balanceSynth, balanceUSDC, apr,
+}) => {
     const dispatch = useAppDispatch();
     const { chainId, account, provider } = useAppSelector(
         (state) => state.walletReducer,
     );
-    const { payData, txLoading, deposit } = useAppSelector(
-        (state) => state.userReducer,
-    );
-    const { available, price, buyToken } = props;
+    const { payData, txLoading } = useAppSelector((state) => state.userReducer);
     const [amount, setAmount] = useState('');
+    const [synthAmount, setSynthAmount] = useState('');
+    const [balances, setBalances] = useState<{usdc: string, synth: string}>({ usdc: '', synth: '' });
     const [allowance, setAllowance] = useState<number>(0);
     const [maxError, setMaxError] = useState<boolean>(false);
 
     const localChain = useMemo(
         () => namesConfig[sessionStorage.getItem('card')],
         [chainId],
-    );
-
-    const chainThings = useMemo(() => {
-        const genered = (
-            ChainConfig[sessionStorage.getItem('card')].SYNTH as any
-        ).find(
-            (el: any) =>
-                el.ID === farms[chainId][sessionStorage.getItem('card')],
-        );
-        const contract = new Contract(
-            genered.CONTRACTS.STABLE.address,
-            genered.CONTRACTS.STABLE.abi,
-            new providers.JsonRpcProvider(networks[chainId]?.rpc),
-        );
-
-        return {
-            genered,
-            contract,
-        };
-    }, [account, chainId]);
-
-    const balance = useMemo(
-        async () =>
-            Number(
-                (await chainThings.contract.balanceOf(account)).toBigInt()
-                    / BigInt(10 ** (await chainThings.contract.decimals())),
-            ),
-        [account, txLoading, chainId],
     );
 
     useEffect(() => {
@@ -82,13 +61,21 @@ const Deposit: React.FC<propsType> = (props) => {
 
     useEffect(() => {
         (async function checkMax() {
-            if (Number(amount) > Number(await balance)) {
+            if (Number(amount) > Number(await balanceUSDC)) {
                 setMaxError(true);
             } else {
                 setMaxError(false);
             }
         }());
     }, [amount, chainId]);
+
+    useEffect(() => {
+        (async function calcBalances() {
+            const firstBalance = String(await balanceUSDC);
+            const secondBalance = String(await balanceSynth);
+            setBalances({ usdc: firstBalance, synth: secondBalance });
+        }());
+    }, [balanceSynth, balanceUSDC]);
 
     const handleApprove = async () => {
         dispatch(
@@ -110,107 +97,78 @@ const Deposit: React.FC<propsType> = (props) => {
     };
 
     const getMax = async () => {
-        setAmount((await balance).toString() || '0');
+        setAmount((await balanceUSDC).toString() || '0');
     };
-    const percentage = Math.ceil((Number(available) / deposit[chainId]) * 100);
 
     return (
-        <>
-            <div className={styles.section}>
-                <p className={styles.sectionTitle}>Available</p>
-                <div
-                    className={classNames(
-                        styles.sectionRow,
-                        styles.sectionAvailable,
-                    )}
-                >
-                    <p className={styles.sectionValue}>
-                        {payData[localChain as availableChains]?.available || (
-                            <i className="fa fa-spinner fa-spin" />
-                        )}
-                    </p>
-                    <p className={styles.sectionSubValue}>Synth-LP</p>
-                    <p
-                        className={classNames(
-                            styles.sectionSubValue,
-                            styles.sectionGraySubValue,
-                        )}
-                    >
-                        {payData[chainId]?.totalAvailable || ''}
-                    </p>
-                </div>
-                <div
-                    className={styles.rowGradient}
-                    style={
-                        {
-                            '--percentage': `${percentage}%`,
-                            '--colorFrom': `${networks[chainId]?.mainColor}`,
-                        } as React.CSSProperties
-                    }
-                />
-            </div>
-            <div className={styles.section}>
-                <p className={styles.sectionTitle}>Price</p>
-                <div className={styles.sectionRow}>
-                    <p className={styles.sectionValue}>
-                        {payData[localChain as availableChains]?.price || (
-                            <i className="fa fa-spinner fa-spin" />
-                        )}
-                    </p>
-                    <p
-                        className={classNames(
-                            styles.sectionSubValue,
-                            styles.networkIconWrapper,
-                        )}
-                    >
-                        <Image
-                            width={15}
-                            height={25}
-                            quality={100}
-                            className={styles.networkIcon}
-                            src={`/images/networks/${
-                                networks[localChain as availableChains]?.icon
-                            }`}
-                            alt=""
-                        />
-                        {networks[localChain as availableChains]?.currency}
-                    </p>
-                </div>
-            </div>
+        <div className={styles.container}>
             <div
-                className={
-                    maxError ? styles.inputWrapperError : styles.inputWrapper
+                className={styles.priceBlock}
+                style={
+                    {
+                        '--colorFrom': `${networks[localChain]?.mainColor}`,
+                    } as React.CSSProperties
                 }
             >
-                <Input
-                    value={amount}
-                    onChange={({ target }) => {
-                        const value = target.value.replace(',', '.').trim();
-                        if (Number(value) >= 0 && value.length <= 6) {
-                            setAmount(value);
-                        }
-                    }}
-                    placeholder="Enter amount"
-                    otherProps={{ autoFocus: true }}
-                    type="number"
-                    getMax={getMax}
-                />
-                {maxError && <p className={styles.error}>Not enought USDC</p>}
-            </div>
-            <div className={styles.section}>
-                <p className={styles.sectionTitle}>You get</p>
-                <div className={styles.sectionRow}>
-                    <p className={styles.sectionValue}>
-                        {(amount && price
-                            ? Number(amount) / Number(price)
-                            : 0
-                        ).toFixed(6)}
-                    </p>
-                    <p className={styles.sectionSubValue}>
-                        {networks[localChain as availableChains]?.currency}
+                <div className={styles.priceContent}>
+                    <p>Price</p>
+                    <p>
+                        $
+                        {payData[localChain]?.price || <Loader />}
                     </p>
                 </div>
+                <div className={styles.logo}>
+                    <Image
+                        width={57}
+                        height={57}
+                        quality={100}
+                        src={`/images/networks/${networks[localChain]?.icon}`}
+                        alt={`${networks[localChain]?.title}-logo`}
+                    />
+                </div>
             </div>
+            {true ? (
+                <p className={styles.warn}>
+                    The approximate transaction execution time is 15 seconds!
+                </p>
+            ) : (
+                <p className={styles.warnScd}>
+                    Transaction for more than xxxx SynthLPs can take between
+                    5-30 minutes!
+                </p>
+            )}
+            <Text title="Current Projected APR" content={apr} />
+            <Text title="Your SynthLP Balance" content={`${balances.synth} SynthLP`} />
+            <Text title="Your USDC balance " content={`${balances.usdc} USDC`} />
+            <ModalInput
+                currencyReceive={networks[chainId as availableChains].currency}
+                currencySend="USDC"
+                titleReceive="You get SynthLP"
+                titleSend="Enter USDC amount"
+                sendValue={amount}
+                receiveValue={synthAmount}
+                onReceiveChange={(e) => {
+                    if (e.target.value.length <= 6) {
+                        setAmount(e.target.value
+                            ? String(Number(e.target.value)
+                                  / Number(payData[localChain]?.price))
+                            : '');
+                        setSynthAmount(e.target.value);
+                    }
+                }}
+                onSendChange={(e) => {
+                    if (e.target.value.length <= 6) {
+                        setAmount(e.target.value);
+                        setSynthAmount(
+                            e.target.value
+                                ? String(Number(e.target.value)
+                                      * Number(payData[localChain]?.price))
+                                : '',
+                        );
+                    }
+                }}
+                getMax={getMax}
+            />
             {txLoading || maxError ? (
                 <GradientButton
                     title={maxError ? 'Add funds' : 'Waiting'}
@@ -239,10 +197,13 @@ const Deposit: React.FC<propsType> = (props) => {
                             ? () => buyToken(parseFloat(amount))
                             : () => handleApprove()
                     }
-                    disabled={!payData[localChain as availableChains]?.price || !amount}
+                    disabled={
+                        !payData[localChain as availableChains]?.price
+                        || !amount
+                    }
                 />
             )}
-        </>
+        </div>
     );
 };
 

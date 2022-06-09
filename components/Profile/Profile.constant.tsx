@@ -1,4 +1,5 @@
 import { Contract, providers } from 'ethers';
+import Loader from '../ui-kit/Loader';
 import { ChainConfig, NETWORKS } from '@/src/ChainService/config';
 
 const SortArray = ['Price increase', 'Price decrease', 'Profit increase', 'Profit decrease'] as const;
@@ -55,7 +56,7 @@ const loader = (
             fontSize: '3rem',
         }}
     >
-        <i className="fa fa-spinner fa-spin" />
+        <Loader />
     </div>
 );
 

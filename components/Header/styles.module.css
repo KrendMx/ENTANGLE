@@ -59,6 +59,12 @@
     font-size: 14px;
     letter-spacing: 0.07em;
     color: var(--color-5);
+    cursor: pointer;
+}
+
+.dropElemFirst {
+  align-items: center;
+  display: flex;
 }
 
 .dropSoon {
@@ -160,11 +166,20 @@ div.dashboardList {
     min-height: 42px;
 }
 
-.selectorsWrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.dropItemOne {
+    color: var(--gray);
+    letter-spacing: 0.07em;
+    padding: 10px 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.selectorsWrapperOne {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray);
 }
 
 .headerHeight {
