@@ -47,7 +47,7 @@ const ActionPanel: React.FC<IActionProps> = ({
                     value={sort}
                     onChange={handleChangeSort}
                     customClassName={styles.filterWrapperSelect}
-                    disabled={Object.keys(sortingObject).length < 5}
+                    disabled={Object.keys(sortingObject).length < 4}
                 >
                     <Option value="">Sort by</Option>
                     {sortVariable.map((el, key: number) => (
