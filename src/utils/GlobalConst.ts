@@ -15,7 +15,7 @@ const networks = {
         rpc: 'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
         synth: '0x901D6D195f9fF29051E499792291186B9A9CdBFc',
         dexAbi: avaDex,
-        mainColor: '#0f598e',
+        mainColor: 'rgba(233, 48, 56, 0.2)',
         order: 0,
         farm: 8,
         mainIcon: '/images/networks/avalancheDashboard.png',
@@ -32,7 +32,7 @@ const networks = {
         rpc: 'https://rpc.ankr.com/bsc',
         synth: '0xBD289C7596e4130B367dE865e3d87E239eCB2438', // ?
         dexAbi: ftmDex, // ?
-        mainColor: '#E93038',
+        mainColor: 'rgba(255, 199, 0, 0.2)',
         order: 1,
         farm: 7,
         mainIcon: '/images/networks/fantomDashboard.svg',
@@ -49,7 +49,7 @@ const networks = {
         rpc: 'https://rpc.ankr.com/eth',
         synth: '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71', // ?
         dexAbi: ftmDex, // ?
-        mainColor: '#E93038',
+        mainColor: '#121212;',
         order: 3,
         farm: 0,
         mainIcon: '/images/networks/fantomDashboard.svg',
@@ -66,7 +66,7 @@ const networks = {
         rpc: 'https://rpcapi.fantom.network',
         synth: '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
         dexAbi: ftmDex,
-        mainColor: '#E93038',
+        mainColor: 'rgba(15, 89, 142, 0.2)',
         order: 4,
         farm: 67,
         mainIcon: '/images/networks/fantomDashboard.svg',

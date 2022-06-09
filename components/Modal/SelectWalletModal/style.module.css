@@ -1,107 +1,68 @@
+.wrapper {
+  width: 448px;
+  height: 408px;
+  inset: 0;
+  background: rgba(30, 30, 30, 0.5);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 12px;
+  padding: 24px 32px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
 .closeWrapper {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.closeImg {
-  width: 20px;
-  margin-bottom: 16px;
   cursor: pointer;
 }
 
-.BtnWrapper:hover {
-  opacity: 0.6;
+.headerText {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  color: #FCFCFD;
 }
 
-.BtnWrapper {
+.content {
   display: flex;
   flex-direction: column;
-  opacity: 1;
-  transition: all 0.4s ease-in-out;
+  justify-content: space-between;
+  height: 82%;
+}
+
+.walletElement {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  width: 384px;
+  height: 56px;
+  background: #101010;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   cursor: pointer;
-  flex: 1;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 8px;
+  transition: all .5s;
 }
 
-.flex1 {
-  flex: 1;
+.walletElement:hover {
+  background: #1010107a;
 }
 
-.flex4 {
-  flex: 4;
+.name {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FCFCFD;
 }
 
-.ml0 {
-  margin-left: 0rem;
-}
-
-.ml1 {
-  margin-left: 1rem;
-}
-
-.flex2 {
-  flex: 2;
-}
-
-.btnActionWrapper {
-  display: flex;
-}
-
-.gradientBtnWrapper {
-  padding-top: 16px;
-}
-
-.BtnImg {
-  height: 32px;
-}
-
-.errorText {
-  color: var(--color-6);
-  font-weight: 600;
-  padding: 0 16px;
-  font-size: 24px;
-  line-height: 1em;
-  text-align: center;
-}
-
-.valueText {
-  color: var(--color-6);
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1em;
-}
-
-.valueTextWrapper {
-  padding: 0 16px;
-  font-size: 12px;
-  color: var(--color-6);
-  font-weight: 300;
-}
-
-.errorTextContent {
-  margin: 16px 0;
-  text-align: left;
-  font-weight: inherit;
-  color: var(--gray);
-  font-size: 16px;
-}
-
-.walletWrapper>div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  margin: 0 auto;
-}
-
-.BtnText {
-  text-align: center;
-}
-
-.walletWrapper {
-  display: grid;
-  padding-top: 16px;
-  grid-template-columns: 1fr 1fr;
+.logo {
+  margin: 41.5% 0 40% 0;
 }

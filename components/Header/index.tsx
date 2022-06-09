@@ -209,33 +209,20 @@ const Header = () => {
                             })}
                         >
                             <div className={styles.selectorsWrapper}>
-                                <Dropout
-                                    title="Synthetic Vaults"
-                                    wrapperClassName={classNames(
-                                        styles.heading,
-                                        styles.syntheticSelect,
-                                    )}
-                                >
-                                    <>
-                                        <Link href="/" passHref>
-                                            <p className={styles.dropItem}>
-                                                Buy & Sell Synth-LP
-                                            </p>
-                                        </Link>
-                                        <Link href="/mint" passHref>
-                                            <p className={styles.dropItem}>
-                                                Mint & Burn Synth-LP
-                                            </p>
-                                        </Link>
-                                    </>
-                                </Dropout>
                                 <nav
                                     className={classNames(
                                         styles.navigate,
                                         styles.directionColumn,
                                     )}
                                 >
-                                    <Dropout title="enUSD">
+                                    <div className={styles.dropElemFirst}>
+                                        <Link href="/" passHref>
+                                            <p className={styles.dropItemOne}>
+                                                Synthetic Vaults
+                                            </p>
+                                        </Link>
+                                    </div>
+                                    <Dropout title="enUSD" offset="25px">
                                         <Link
                                             href="/mint-entangle-usd"
                                             passHref
@@ -245,7 +232,7 @@ const Header = () => {
                                             </p>
                                         </Link>
                                     </Dropout>
-                                    <Dropout title="Stake">
+                                    <Dropout title="Stake" offset="25px">
                                         <>
                                             <Link
                                                 href="/stake-entangle"

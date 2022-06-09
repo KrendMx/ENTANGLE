@@ -1,4 +1,5 @@
 import ChartWrapper from '../../ui-kit/ChartWrapper/ChartWrapper';
+import Loader from '@/ui-kit/Loader/index';
 import styles from './style.module.css';
 
 const ChartLoader = (
@@ -9,7 +10,7 @@ const ChartLoader = (
             data={[]}
         />
         <div className={styles.loaderBlock}>
-            <i className="fa fa-spinner fa-spin fa-5x" />
+            <Loader />
         </div>
     </div>
 );
