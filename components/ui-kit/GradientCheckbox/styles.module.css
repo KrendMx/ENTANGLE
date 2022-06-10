@@ -16,6 +16,7 @@
     background-repeat: no-repeat;
     pointer-events: none;
     background-position: center;
+    
 }
 
 .checkBox + label {
@@ -26,6 +27,7 @@
     position: relative;
     height: 20px;
     line-height: 1.7em;
+    border-radius: 9px;
   }
 .checkBox + label::before {
     z-index: 2;
@@ -37,6 +39,7 @@
     display: block;
     content: "";
     position: absolute;
+    border-radius: 9px;
   }
 .checkBox + label::after {
     z-index: 2;
@@ -48,8 +51,10 @@
     display: block;
     content: "";
     position: absolute;
+    border-radius: 9px;
   }
 
 .text {
+  font-size: 14px;
     color: #fff;
 }

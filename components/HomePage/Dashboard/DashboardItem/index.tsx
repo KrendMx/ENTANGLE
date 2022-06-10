@@ -194,7 +194,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     <div className={styles.sectionTitle}>
                         <p>Value of LPs Staked </p>
                         <HintModal>
-                            <p>The current annual percentage received on this farm</p>
+                            <p>The amount of currency available for purchase without creating a new one</p>
                         </HintModal>
                     </div>
                     <div className={styles.sectionRow}>
@@ -205,49 +205,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                         )}
                     </div>
                 </div>
-                {/* <div className={styles.section}>
-                    <div className={styles.sectionTitle}>
-                        <p>Available</p>
-                        <HintModal>
-                            <p>The number of tokens available for purchase</p>
-                        </HintModal>
-
-                    </div>
-                    {available ? (
-                        <>
-                            <div
-                                className={classNames(
-                                    styles.sectionRow,
-                                    styles.sectionAvailable,
-                                )}
-                            >
-                                <p className={styles.sectionValue}>
-                                    {available}
-                                </p>
-                                <p className={styles.sectionSubValue}>
-                                    Synth-LP
-                                </p>
-                                <p
-                                    className={classNames(
-                                        styles.sectionSubValue,
-                                        styles.sectionGraySubValue,
-                                    )}
-                                >
-                                    {totalAvailable}
-                                </p>
-                            </div>
-                            <div
-                                style={{ background: rowGradient }}
-                                className={styles.rowGradient}
-                            />
-                        </>
-                    ) : (
-                        <TextLoader
-                            bgGradient={bgGradient}
-                            margin="0.87rem 0"
-                        />
-                    )}
-                </div> */}
                 <div className={styles.section}>
                     <p className={styles.sectionTitle}>Price</p>
                     <div className={styles.sectionRow}>
@@ -267,37 +224,23 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     </div>
                 </div>
                 {account ? (
-                    <>
-                        {/* <div className={styles.section}>
-                            <p className={styles.sectionTitle}>Your Position</p>
-                            <div className={classNames(styles.sectionRow)}>
-                                {positions ? (
-                                    <p className={styles.sectionValue}>
-                                        {positions}
-                                    </p>
-                                ) : (
-                                    <TextLoader bgGradient={bgGradient} />
-                                )}
-                                <p className={styles.sectionSubValue}>
-                                    {totalPositions}
-                                </p>
-                            </div>
-                        </div> */}
-                        <div className={styles.section}>
-                            <p className={styles.sectionTitle}>
-                                Real Time Yield
-                            </p>
-                            <div className={styles.sectionRow}>
-                                {yieldTime ? (
-                                    <p className={styles.sectionValue}>
-                                        {yieldTime}
-                                    </p>
-                                ) : (
-                                    <TextLoader bgGradient={bgGradient} />
-                                )}
-                            </div>
+                    <div className={styles.section}>
+                        <div className={styles.sectionTitle}>
+                            <p>Real Time Yield</p>
+                            <HintModal>
+                                <p>The resulting profit if you invest right now</p>
+                            </HintModal>
                         </div>
-                    </>
+                        <div className={styles.sectionRow}>
+                            {yieldTime ? (
+                                <p className={styles.sectionValue}>
+                                    {yieldTime}
+                                </p>
+                            ) : (
+                                <TextLoader bgGradient={bgGradient} />
+                            )}
+                        </div>
+                    </div>
                 ) : (
                     <div className={styles.section}>
                         <p className={styles.sectionTitle}>

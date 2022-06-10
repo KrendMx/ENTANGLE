@@ -90,7 +90,13 @@ const FantomContainer = ({ isFiltered = false }) => {
                     }
                 }
                 const percentage = Math.ceil((available / currentDeposits) * 100);
-                dispatch(addSortingCard({ chainId: data.chainId, APR: Number(apr), staked: Number(available) }));
+                dispatch(addSortingCard({
+                    chainId: data.chainId,
+                    APR: Number(apr),
+                    staked: state.localChain === chainId
+                        ? 10000000000
+                        : Number(available.toFixed(5)),
+                }));
                 dispatch(setPayData({
                     key: '250',
                     data: {

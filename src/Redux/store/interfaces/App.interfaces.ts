@@ -19,7 +19,7 @@ type TransactionInfo = { value: number; symbol: string; isReceived: boolean };
 type sortingCard = {
     chainId: string;
     APR: number;
-    staked: number | string;
+    staked: number;
 }
 
 interface ErrorI {

@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import styles from './style.module.css';
 import Select, { Option } from '@/ui-kit/Select/index';
 import Input from '@/ui-kit/Input';
@@ -49,21 +48,11 @@ const ActionPanel: React.FC<IActionProps> = ({
                     customClassName={styles.filterWrapperSelect}
                     disabled={(Object.values(sortingObject)).length < 3}
                 >
-                    <Option value="">Sort by</Option>
+                    <Option value="">All</Option>
                     {sortVariable.map((el, key: number) => (
                         <Option
                             value={el.stateName}
                             key={key}
-                            extraSymbol={(
-                                <div
-                                    className={
-                                        classNames(
-                                            styles.checkbox,
-                                            el.stateName === sort ? styles.activeCheckbox : null,
-                                        )
-                                    }
-                                />
-                            )}
                         >
                             {el.title}
 

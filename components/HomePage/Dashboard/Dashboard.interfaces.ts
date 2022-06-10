@@ -1,7 +1,7 @@
 interface IDashboardProps {
     filter: string;
     query: string;
-    sorts: string;
+    sort: string;
 }
 
 export type { IDashboardProps };

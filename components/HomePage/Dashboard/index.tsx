@@ -1,24 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './style.module.css';
 import ITEMS from './Dashboard.consts';
 import type { IDashboardProps } from './Dashboard.interfaces';
 import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import type { sortingCard } from '@/src/Redux/store/interfaces/App.interfaces';
 
-const Dashboard: React.FC<IDashboardProps> = ({ filter = '', query = '', sorts = '' }) => {
+const Dashboard: React.FC<IDashboardProps> = ({ filter = '', query = '', sort = '' }) => {
     const { sortingObject } = useAppSelector((state) => state.appReducer);
 
     function sortingCard() {
-        return (Object.values(sortingObject)).sort((a, b) => (a[sorts] > b[sorts] ? 1 : -1));
+        return (Object.values(sortingObject)).sort((a, b) => (a[sort] < b[sort] ? 1 : -1));
     }
 
     function sortAndFilter() {
         let arr = [];
         arr = ITEMS;
-        if (sorts !== '') {
+        if (sort !== '') {
             arr = sortingCard().map((el:sortingCard) => {
                 const elo = ITEMS.filter((e) => e.filter === Number(el.chainId));
-                console.log(elo);
                 return elo[0];
             });
         }

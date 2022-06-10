@@ -96,7 +96,9 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 dispatch(addSortingCard({
                     chainId: data.chainId,
                     APR: Number(apr),
-                    staked: Number(available).toFixed(5),
+                    staked: state.localChain === chainId
+                        ? 10000000000
+                        : Number(available.toFixed(5)),
                 }));
                 dispatch(setPayData({
                     key: '43114',

@@ -77,9 +77,6 @@ const StakeEntangle: React.FC = () => {
             <div>
                 {actionType === 0 ? <Borrow /> : <Repay />}
             </div>
-            <div className={styles.helper}>
-                <GradientButton title="Mint Synth-LP" onClick={() => {}} />
-            </div>
         </>
     );
 };

@@ -8,6 +8,7 @@ type SelectProps = {
     children: React.ReactNode[];
     onChange: (HTMLElement) => void;
     customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
+    customOptionClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     disabled?:boolean;
 };
 
