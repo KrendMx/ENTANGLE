@@ -34,6 +34,7 @@
     display: none;
     row-gap: 10px;
     padding: 15px 5px 15px 15px;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
 }
 
 .wrapper:hover .list {

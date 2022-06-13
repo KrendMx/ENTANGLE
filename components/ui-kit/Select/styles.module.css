@@ -39,6 +39,7 @@
 }
 
 .options li{
+    z-index: 8;
     display: flex;
     align-items: center;
     padding: 8px;
@@ -50,6 +51,10 @@
 .disabled {
     pointer-events: none;
     opacity: 0.5;
+}
+
+.rotate{
+    transform: rotate(180deg);
 }
 
 .options li:hover {

@@ -16,14 +16,22 @@ type OptionProps = {
     value: string;
     children: string;
     extraSymbol?: JSX.Element;
+    state?: string;
 };
 
 export const Option: React.FC<OptionProps> = ({
-    value, children, extraSymbol,
+    value, children, extraSymbol, ...props
 }) => (
     <li data-select-value={value}>
-        {extraSymbol}
         {children}
+        {(() => {
+            if (props.state?.includes(value)) {
+                if (props.state?.includes('desk')) {
+                    return <div className={styles.rotate}>{extraSymbol}</div>;
+                }
+                return <div>{extraSymbol}</div>;
+            }
+        })()}
     </li>
 );
 
@@ -33,6 +41,7 @@ const Select: React.FC<SelectProps> = ({
     const [selected, setSelected] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const selectWrapperNode = useRef<HTMLDivElement>(null);
+    console.log(value);
 
     useEffect(() => {
         React.Children.forEach<React.ReactElement<OptionProps, 'li'>>(

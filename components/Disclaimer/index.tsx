@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ScrollLock from 'react-scrolllock';
-import Image from 'next/image';
 import styles from './styles.module.css';
 import GradientButton from '@/ui-kit/GradientButton';
 import GradientCheckbox from '@/ui-kit/GradientCheckbox';
