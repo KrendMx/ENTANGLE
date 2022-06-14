@@ -54,8 +54,8 @@ const SyntOption: React.FC<PropOptionTypes> = ({
                 <Image
                     alt=""
                     src="/images/arrowIcon.svg"
-                    width={16}
-                    height={16}
+                    width={10}
+                    height={10}
                     quality={100}
                 />
             </div>
@@ -123,8 +123,8 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                             <Image
                                 alt=""
                                 src="/images/arrowIcon.svg"
-                                width={12}
-                                height={12}
+                                width={10}
+                                height={10}
                                 quality={100}
                             />
                         </div>

@@ -39,9 +39,10 @@
     padding: 20px 20px 35px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     z-index: 5;
 }
+
 
 .actionCard:nth-child(n) {
     min-height: calc(293 / 2) px;
@@ -51,13 +52,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .infoDescription {
     background: #111111;
     width: 90%;
-    height: 50%;
+    top: 100px;
+    height: 60%;
     position: absolute;
     z-index: 50;
     text-align: center;
@@ -87,7 +88,7 @@
     width: 40px;
     height: 40px;
     left: -33px;
-    top: calc((100% - 40px) / 2)px;
+    top: calc((100% - 40px) / 2) px;
     z-index: 50;
     transform: rotate(-90deg);
 }
@@ -102,7 +103,6 @@
 .customButton {
     background: #1e1e1e !important;
 }
-
 
 @media screen and (max-width: 1124px) {
     .wrapper {
@@ -132,19 +132,22 @@
     .arrow {
         display: block;
         transform: rotate(0deg);
-        top: -33px;
+        top: -30px;
         left: calc((100% - 40px) / 2);
     }
     .wrapper > .actionCard:last-child > .arrow {
         display: block;
         transform: rotate(0deg);
-        top: -33px;
+        top: -30px;
         left: calc((100% - 40px) / 2);
     }
     .actionCard {
         min-width: 95vw;
         margin: auto;
-        min-height: 230px;
+        height: 100%;
+    }
+    .actionCard > div {
+        min-height: 50%;
     }
     .helper {
         width: 70%;

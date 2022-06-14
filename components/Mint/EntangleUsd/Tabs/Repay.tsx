@@ -86,22 +86,11 @@ const Repay: React.FC<IRepayProps> = () => {
                         >
                             Unlocked Synth-LP
                         </p>
-                        <Input
-                            type="number"
-                            placeholder="Unlocked Synth-LP"
-                            onChange={() => {}}
-                        />
+
+                        <Input type="number" placeholder="Unlocked Synth-LP" onChange={() => {}} />
                     </div>
-                    <div>
-                        <Text
-                            title="Curren AVG collaterization"
-                            content={`${state.AVGCollaterization}%`}
-                        />
-                        <Text
-                            title="Exchange rate"
-                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                        />
-                    </div>
+                    <Text title="Curren AVG collaterization" content={`${state.AVGCollaterization}%`} />
+                    <Text title="Exchange rate" content={`1 SynthLP = ${state.exchangeRate} enUSD`} />
                 </div>
             </div>
             <div className={styles.helper}>

@@ -77,58 +77,54 @@ const Borrow: React.FC<IBorrowProps> = () => {
                             alt="arrow-icon"
                         />
                     </div>
-                    <div>
-                        <div className={styles.infoContainer}>
-                            <p
-                                className={classNames(
-                                    styles.sectionTitle,
-                                    styles.white,
-                                )}
-                            >
-                                Set LTV Rate
-                            </p>
-                            <div style={{ width: '30%' }}>
-                                <GradientButton
-                                    title="info"
-                                    active={isOpen}
-                                    titleClass={styles.noPadding}
-                                    onClick={() => {
-                                        setIsOpen(!isOpen);
-                                    }}
-                                />
-                            </div>
+                    <div className={styles.infoContainer}>
+                        <p
+                            className={classNames(
+                                styles.white,
+                            )}
+                        >
+                            Set LTV Rate
+                        </p>
+                        <div style={{ width: '30%' }}>
+                            <GradientButton
+                                title="info"
+                                active={isOpen}
+                                titleClass={styles.noPadding}
+                                onClick={() => {
+                                    setIsOpen(!isOpen);
+                                }}
+                            />
                         </div>
-                        {isOpen ? (
-                            <div className={styles.infoDescription}>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry.
-                                    Lorem Ipsum has been the industrys standard dummy
-                                    text ever since the 1500s,
-                                    when an unknown printer took a galley of type and scrambled
-                                </p>
-                            </div>
-                        ) : null}
-                        <GradientSlider
-                            min={50}
-                            max={90}
-                            extraSymbol="%"
-                            outsideVariable={state.LTVRate}
-                            setOutsideVariable={changeLTVRate}
-                        />
                     </div>
-                    <div>
-                        <Text
-                            title="Curren LTV Rate"
-                            content={`${state.LTVRate}%`}
-                            hasTooltip
-                            tooltipText="Test"
-                        />
-                        <Text
-                            title="Liquidation commission"
-                            content={`${state.commision}%`}
-                        />
-                    </div>
+                    {isOpen ? (
+                        <div className={styles.infoDescription}>
+                            <p>
+                                Lorem Ipsum is simply dummy text of the
+                                printing and typesetting industry.
+                                Lorem Ipsum has been the industrys standard dummy
+                                text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled
+                            </p>
+                        </div>
+                    ) : null}
+                    <GradientSlider
+                        min={50}
+                        max={90}
+                        extraSymbol="%"
+                        outsideVariable={state.LTVRate}
+                        setOutsideVariable={changeLTVRate}
+                    />
+
+                    <Text
+                        title="Curren LTV Rate"
+                        content={`${state.LTVRate}%`}
+                        hasTooltip
+                        tooltipText="Test"
+                    />
+                    <Text
+                        title="Liquidation commission"
+                        content={`${state.commision}%`}
+                    />
                 </div>
                 <div className={styles.actionCard}>
                     <div className={styles.arrow}>
@@ -154,17 +150,18 @@ const Borrow: React.FC<IBorrowProps> = () => {
                             placeholder="You will get EnUSD"
                             onChange={() => {}}
                         />
+
                     </div>
-                    <div>
-                        <Text
-                            title="Curren AVG collaterization"
-                            content={`${state.AVGCollaterization}%`}
-                        />
-                        <Text
-                            title="Exchange rate"
-                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                        />
-                    </div>
+
+                    <Text
+                        title="Curren AVG collaterization"
+                        content={`${state.AVGCollaterization}%`}
+                    />
+                    <Text
+                        title="Exchange rate"
+                        content={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                    />
+
                 </div>
             </div>
             <div className={styles.helper}>
