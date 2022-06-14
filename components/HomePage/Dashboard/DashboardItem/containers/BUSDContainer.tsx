@@ -14,7 +14,7 @@ import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reduc
 const BUSDContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
-    const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
+    const { txLoading, isOpenModal, profits } = useAppSelector((state) => state.userReducer);
     const { error } = useAppSelector((state) => state.appReducer);
     const [state, setState] = useReducer(
         (
@@ -132,15 +132,13 @@ const BUSDContainer = ({ isFiltered = false }) => {
                         localStorage.removeItem('wallet');
                     }
                 }
-                // const yieldTime = await getProfit(account, 67);
-                const yieldTime = { stable: '' };
                 dispatch(setPositionSum({ n: positions, key: '56' }));
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,
                     totalPositions: `${Number(
                         totalPositions.toFixed(5),
                     )} USDT/BUSD Synthetic LP`,
-                    yieldTime: `$${Number(yieldTime.stable || 0).toFixed(4)}`,
+                    yieldTime: String(profits.get(data.chainId)?.value || ''),
                 });
             }
         })();

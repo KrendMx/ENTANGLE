@@ -7,8 +7,10 @@ import { opToken } from '../../../ChainService/abi';
 import toChainId from '../../../utils/toChainId';
 import type { availableChains } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
-import type { ProviderType, walletKeyType } from '../../types';
+import type { ProviderType, walletKeyType, IBalances } from '../../types';
 import type { ErrorI } from '../interfaces/App.interfaces';
+import { ChainConfig } from '@/src/ChainService/config';
+import { calculatePosPrice } from '@/components/Profile/Profile.constant';
 
 /*
     Asynchronously changes the network
@@ -160,6 +162,34 @@ export const importToken = createAsyncThunk(
                 error: e,
             };
         }
+    },
+);
+
+export const calculateBalances = createAsyncThunk(
+    'user/calculate-balances',
+    async ({ account }: {account: string}): Promise<{balances: IBalances, totalBalance: number}> => {
+        const balances: IBalances = {};
+        let totalBalance = 0;
+        const keys = Object.keys(ChainConfig);
+        for (const key of keys) {
+            const Balance: { price: number, positions: number } = { price: 0, positions: 0 };
+            for (
+                let i = 0;
+                i < ChainConfig[key].SYNTH.length;
+                i++
+            ) {
+                const { positions, price } = await calculatePosPrice(account, key, i);
+                Balance.positions += Number(positions.toFixed(2));
+                Balance.price += price;
+            }
+            Balance.price /= Object.keys(ChainConfig).length;
+            balances[key] = Balance;
+            totalBalance += Balance.positions * Balance.price;
+        }
+        return {
+            balances,
+            totalBalance,
+        };
     },
 );
 

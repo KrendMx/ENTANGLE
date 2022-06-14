@@ -18,7 +18,7 @@ import type { availableChains } from '@/src/utils/GlobalConst';
 import type { ContainerStateType } from './containers/types';
 import CopyBtn from '@/ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '@/ui-kit/HoverTooltip/HoverTooltip';
-import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
+import { WalletProviderNames } from '@/components/Modal/SelectWalletModal/SelectWalletModal.constants';
 import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
 import HintModal from '@/components/HintModal';
 
@@ -60,6 +60,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         provider,
         chainId: selectedChainId,
     } = useAppSelector((state) => state.walletReducer);
+    const { profits } = useAppSelector((state) => state.userReducer);
 
     const dispatch = useAppDispatch();
 
@@ -267,37 +268,23 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     </div>
                 </div>
                 {account ? (
-                    <>
-                        {/* <div className={styles.section}>
-                            <p className={styles.sectionTitle}>Your Position</p>
-                            <div className={classNames(styles.sectionRow)}>
-                                {positions ? (
-                                    <p className={styles.sectionValue}>
-                                        {positions}
-                                    </p>
-                                ) : (
-                                    <TextLoader bgGradient={bgGradient} />
-                                )}
-                                <p className={styles.sectionSubValue}>
-                                    {totalPositions}
-                                </p>
-                            </div>
-                        </div> */}
-                        <div className={styles.section}>
-                            <p className={styles.sectionTitle}>
-                                Real Time Yield
-                            </p>
-                            <div className={styles.sectionRow}>
-                                {yieldTime ? (
-                                    <p className={styles.sectionValue}>
-                                        {yieldTime}
-                                    </p>
-                                ) : (
-                                    <TextLoader bgGradient={bgGradient} />
-                                )}
-                            </div>
+                    <div className={styles.section}>
+                        <div className={styles.sectionTitle}>
+                            <p>Real Time Yield</p>
+                            <HintModal>
+                                <p>The resulting profit if you invest right now</p>
+                            </HintModal>
                         </div>
-                    </>
+                        <div className={styles.sectionRow}>
+                            {yieldTime ? (
+                                <p className={styles.sectionValue}>
+                                    {yieldTime}
+                                </p>
+                            ) : (
+                                <TextLoader bgGradient={bgGradient} />
+                            )}
+                        </div>
+                    </div>
                 ) : (
                     <div className={styles.section}>
                         <p className={styles.sectionTitle}>

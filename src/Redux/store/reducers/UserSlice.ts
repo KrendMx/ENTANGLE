@@ -11,6 +11,7 @@ import { networks } from '../../../utils/GlobalConst';
 import ethereumNetworksConfig from '../../ethereumNetworksConfig';
 import QueryRequests from '../../../GraphService/queryRequests';
 import type { TransactionHistoryEntity } from '../../../context/ServiceContext/ServiceContext.interfaces';
+import { calculateBalances } from './ActionCreators';
 
 const initialState: initStateType = {
     positionSumObj: new Map(),
@@ -19,7 +20,11 @@ const initialState: initStateType = {
     avgPrices: {},
     txLoading: false,
     positionSum: 0,
+    cardLoaded: false,
+    totalBalance: 0,
+    balances: {},
     txHistory: [],
+    txLoaded: false,
     payData: {
         '43114': {
             available: null,
@@ -94,6 +99,20 @@ const userSlice = createSlice({
                     change: action.payload.change,
                 }),
             );
+            if (!state.profits.get('1')) {
+                state.profits = new Map(
+                    state.profits.set('1', {
+                        value: 0,
+                        change: 0,
+                    }),
+                );
+            }
+        },
+        setTxLoaded(state, action: PayloadAction<boolean>) {
+            state.txLoaded = action.payload;
+        },
+        setCardLoaded(state, action: PayloadAction<boolean>) {
+            state.cardLoaded = action.payload;
         },
         setDeposit(state, action: PayloadAction<positionSumType>) {
             state.deposit = new Map(
@@ -123,6 +142,12 @@ const userSlice = createSlice({
         builder.addCase(getAverageBuyPrice.fulfilled, (state, action) => {
             state.avgPrices = action.payload;
         });
+        builder.addCase(calculateBalances.fulfilled, (state, action) => {
+            const { totalBalance, balances } = action.payload;
+            state.totalBalance = totalBalance;
+            state.balances = balances;
+            state.cardLoaded = true;
+        });
     },
 });
 
@@ -135,5 +160,7 @@ export const {
     setPayData,
     setIsOpenModal,
     setTxHistory,
+    setCardLoaded,
+    setTxLoaded,
 } = userSlice.actions;
 export default userSlice.reducer;

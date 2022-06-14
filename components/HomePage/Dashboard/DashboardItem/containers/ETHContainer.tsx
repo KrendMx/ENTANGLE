@@ -22,7 +22,7 @@ const ETHContainer = ({ isFiltered = false }) => {
             positions: '$0',
             totalPositions: 'aDAI/aSUSD Synthetic LP',
             rowGradient: '',
-            yieldTime: '$0',
+            yieldTime: '0',
             localChain: '1',
             localName: 'ETH',
         },

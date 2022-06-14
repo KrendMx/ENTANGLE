@@ -1,5 +1,5 @@
 import type { availableChains } from '../../../utils/GlobalConst';
-import type { ProviderType } from '../../types';
+import type { ProviderType, IBalances } from '../../types';
 import type { TransactionHistoryEntity } from '../../../context/ServiceContext/ServiceContext.interfaces';
 
 interface payDataType {
@@ -31,10 +31,14 @@ type initStateType = {
     deposit: Map<string, number>;
     avgPrices: {[key: string]: number};
     txLoading: boolean;
+    cardLoaded: boolean;
+    totalBalance: number;
+    balances: IBalances;
     positionSum: string | number;
     payData: payDataType;
     isOpenModal: boolean;
     txHistory: TransactionHistoryEntity[];
+    txLoaded: boolean;
 };
 
 type ImportTypes = {

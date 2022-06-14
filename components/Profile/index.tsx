@@ -14,17 +14,16 @@ import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 import { networks } from '@/src/utils/GlobalConst';
-import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import { getAverageBuyPrice } from '@/src/Redux/store/reducers/UserSlice';
-import { SortArray, calculatePosPrice, loader } from './Profile.constant';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
+import { SortArray, loader } from './Profile.constant';
 import type { IFilter } from './Profile.interfaces';
 
 const Profile = () => {
-    const { positionSum, profits } = useAppSelector(
+    const {
+        profits, totalBalance, balances, cardLoaded,
+    } = useAppSelector(
         (state) => state.userReducer,
     );
-    const dispatch = useAppDispatch();
-    const [balance, setBalance] = useState<number>(0);
     const [bestProfit, setBestProfit] = useState<{
         value: number;
         change: number;
@@ -50,50 +49,11 @@ const Profile = () => {
         setBestProfit(data.reduce((l, e) => (e.value > l.value ? e : l)));
         setWorstProfit(data.reduce((l, e) => (e.value < l.value ? e : l)));
     }, [profits]);
-    const [cryptoBalances, setCryptoBalances] = useState<{}>();
-    const [cardLoaded, setCardLoaded] = useState<boolean>(false);
     const [change, setChange] = useState<number[]>([]);
-    const { account } = useAppSelector((state) => state.walletReducer);
-    const { txLoading } = useAppSelector((state) => state.userReducer);
 
     const [filter, setFilter] = React.useState<IFilter>('Sort by');
 
     const handleChangeFilter = (value: IFilter) => setFilter(value);
-
-    useEffect(() => {
-        (async function getAvg() {
-            if (account) {
-                dispatch(getAverageBuyPrice({ account }));
-            }
-        }());
-    }, [account]);
-
-    useEffect(() => {
-        (async () => {
-            if (account) {
-                setCardLoaded(false);
-                const balances: { [key: string]: { price: number, positions: number } } = {};
-                const keys = Object.keys(ChainConfig);
-                for (const key of keys) {
-                    const Balance: { price: number, positions: number } = { price: 0, positions: 0 };
-                    for (
-                        let i = 0;
-                        i < ChainConfig[key].SYNTH.length;
-                        i++
-                    ) {
-                        const { positions, price } = await calculatePosPrice(account, key, i);
-                        Balance.positions += Number(positions.toFixed(2));
-                        Balance.price += price;
-                    }
-                    Balance.price /= Object.keys(ChainConfig).length;
-                    balances[key] = Balance;
-                    setBalance((prev) => prev + Balance.positions * Balance.price);
-                }
-                setCryptoBalances(balances);
-                setCardLoaded(true);
-            }
-        })();
-    }, [account, txLoading]);
 
     return (
         <div>
@@ -123,7 +83,7 @@ const Profile = () => {
                             >
                                 <InfoBlock
                                     info="Current balance"
-                                    value={balance}
+                                    value={totalBalance}
                                     type={InfoBlockTypes.BALANCE}
                                     options={{ changeValue: change[1] || 0 }}
                                 />
@@ -210,7 +170,7 @@ const Profile = () => {
                     loader
                 ) : (
                     <InvestCard
-                        balances={cryptoBalances}
+                        balances={balances}
                         filter={filter}
                     />
                 )}
