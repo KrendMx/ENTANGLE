@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
 import { networks } from '@/src/utils/GlobalConst';
 
 import styles from './style.module.css';
-import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import type { availableChains } from '@/src/utils/GlobalConst';
-import { setProfit } from '@/src/Redux/store/reducers/UserSlice';
-import QueryRequests from '@/src/GraphService/queryRequests';
 import Loader from '@/ui-kit/Loader';
 
 interface IState {
@@ -24,19 +22,9 @@ const InvestCardExp: React.FC<IState> = ({
     chainId,
     description,
 }) => {
-    const dispatch = useAppDispatch();
     const {
-        profits, avgPrices, txHistory, txLoading,
+        profits, avgPrices,
     } = useAppSelector((state) => state.userReducer);
-
-    useEffect(() => {
-        (async function GetProfit() {
-            if (txHistory.length) {
-                const { percentage, stable } = await QueryRequests.calculateProfit(txHistory, price, chainId);
-                dispatch(setProfit({ n: stable, change: percentage, key: chainId }));
-            }
-        }());
-    }, [txHistory, txLoading]);
 
     return (
         <div className={styles.root}>

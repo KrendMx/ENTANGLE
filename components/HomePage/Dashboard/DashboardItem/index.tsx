@@ -18,7 +18,7 @@ import type { availableChains } from '@/src/utils/GlobalConst';
 import type { ContainerStateType } from './containers/types';
 import CopyBtn from '@/ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '@/ui-kit/HoverTooltip/HoverTooltip';
-import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
+import { WalletProviderNames } from '@/components/Modal/SelectWalletModal/SelectWalletModal.constants';
 import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
 import HintModal from '@/components/ui-kit/HintModal';
 
@@ -60,6 +60,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         provider,
         chainId: selectedChainId,
     } = useAppSelector((state) => state.walletReducer);
+    const { profits } = useAppSelector((state) => state.userReducer);
 
     const dispatch = useAppDispatch();
 

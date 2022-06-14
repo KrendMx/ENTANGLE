@@ -11,6 +11,8 @@ export type walletKeyType =
     | 'WalletConnect'
     | null;
 
+export type IBalances = { [key: string]: { price: number, positions: number } };
+
 export type setWalletType = {
     connect: WalletConnectProvider | null;
     walletKey: walletKeyType;

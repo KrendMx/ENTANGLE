@@ -5,22 +5,33 @@ import type { IDashboardProps } from './Dashboard.interfaces';
 import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import type { sortingCard } from '@/src/Redux/store/interfaces/App.interfaces';
 
-const Dashboard: React.FC<IDashboardProps> = ({ filter = '', query = '', sort = '' }) => {
+const Dashboard: React.FC<IDashboardProps> = ({
+    filter = '',
+    query = '',
+    sorts = '',
+}) => {
     const { sortingObject } = useAppSelector((state) => state.appReducer);
 
     function deskDetect() {
-        return sort.includes('desk') ? -1 : 1;
+        return sorts.includes('desk') ? -1 : 1;
     }
 
     function sortingCard() {
         const arr = Object.values(sortingObject);
-        return arr.sort((a, b) => ((a[sort.split(' ')[0]] < b[sort.split(' ')[0]] ? 1 : -1) * deskDetect()));
+        return arr.sort(
+            (a, b) =>
+                (a[sorts.split(' ')[0]] < b[sorts.split(' ')[0]] ? 1 : -1)
+                * deskDetect(),
+        );
     }
 
     function sortAndFilter() {
         let arr = ITEMS;
-        if (sort !== '') {
-            arr = sortingCard().map((el:sortingCard) => ITEMS.filter((e) => e.filter === Number(el.chainId))[0]);
+        if (sorts !== '') {
+            arr = sortingCard().map(
+                (el: sortingCard) =>
+                    ITEMS.filter((e) => e.filter === Number(el.chainId))[0],
+            );
         }
         if (filter !== '') {
             arr.sort((item) => (item.filter === Number(filter) ? -1 : 1));

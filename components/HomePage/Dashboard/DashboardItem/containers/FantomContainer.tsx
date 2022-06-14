@@ -1,5 +1,4 @@
 import React, {
-    useContext,
     useEffect,
     useMemo,
     useReducer,
@@ -10,7 +9,6 @@ import { farms } from '@/src/utils/GlobalConst';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import ChainService from '@/src/ChainService/ChainService';
-import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
 import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
@@ -18,9 +16,8 @@ import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reduc
 const FantomContainer = ({ isFiltered = false }) => {
     const dispatch = useAppDispatch();
     const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
-    const { txLoading, isOpenModal } = useAppSelector((state) => state.userReducer);
+    const { txLoading, isOpenModal, profits } = useAppSelector((state) => state.userReducer);
     const { error } = useAppSelector((state) => state.appReducer);
-    const { getProfit } = useContext(ServiceContext);
 
     const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
     const openModal = () => dispatch(setIsOpenModal(true));
@@ -143,14 +140,13 @@ const FantomContainer = ({ isFiltered = false }) => {
                         localStorage.removeItem('wallet');
                     }
                 }
-                const yieldTime = await getProfit(account, 8);
                 setPositionSum({ n: positions, key: '250' });
                 setState({
                     positions: `$${Number(positions.toFixed(2))}`,
                     totalPositions: `${Number(
                         totalPositions.toFixed(5),
                     )} MIM/USDC Synthetic LP`,
-                    yieldTime: `$${Number(yieldTime.stable || 0).toFixed(4)}`,
+                    yieldTime: String(profits.get(data.chainId)?.value || ''),
                 });
             }
         })();

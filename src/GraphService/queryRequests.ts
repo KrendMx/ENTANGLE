@@ -54,13 +54,13 @@ class QueryRequests implements IQueryRequests {
             if (filteredTxs[j].type === 'buy') {
                 Sin += Number(filteredTxs[j].amount) / 10 ** 18;
             } else {
-                Sout -= Number(filteredTxs[j].amount) / 10 ** 18;
+                Sout += Number(filteredTxs[j].amount) / 10 ** 18;
             }
         }
         const stable = (balance + Sout) - (Sstrt + Sin);
         return {
             stable: Number(stable.toFixed(6)),
-            percentage: Number((Sstrt / stable).toFixed(6)),
+            percentage: Number((stable / Sstrt).toFixed(6)),
         };
     };
 }

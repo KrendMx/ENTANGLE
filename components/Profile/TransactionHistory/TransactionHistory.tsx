@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Typography from '@/ui-kit/Typography';
 import Select, { Option } from '@/ui-kit/Select';
 import Pager from './Pager/Pager';
 import styles from './style.module.css';
 import type { TransactionHistoryEntity } from '@/src/context/ServiceContext/ServiceContext.interfaces';
-import GraphService from '@/src/GraphService';
 import HistoryCard from './HistoryCard/HistoryCard';
 import type { networks } from '@/src/utils/GlobalConst';
 import {
@@ -13,43 +12,13 @@ import {
     TransactionOrder,
 } from './TransactionHistory.constants';
 import { loader } from '../Profile.constant';
-import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import { setTxHistory } from '@/src/Redux/store/reducers/UserSlice';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 
 const TransactionHistory: React.FC = () => {
-    const [transactions, setTransactions] = useState<
-        TransactionHistoryEntity[]
-    >([]);
     const [transactionsPrepared, setTransactionsPrepared] = useState<
         TransactionHistoryEntity[]
     >([]);
-    const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const { account } = useAppSelector((state) => state.walletReducer);
-    const dispatch = useAppDispatch();
-
-    const Graph = useMemo(() => new GraphService(account), [account]);
-
-    const updateHistory = () => {
-        if (!account) return;
-        Graph.getAllTransactions()
-            .then((res) => {
-                setTransactions(res);
-                dispatch(setTxHistory(res));
-            })
-            .finally(() => setIsLoaded(true));
-    };
-
-    const updateData = () => {
-        updateHistory();
-    };
-
-    useEffect(() => {
-        updateData();
-    }, [account]);
-
-    useEffect(() => {
-        updateData();
-    }, []);
+    const { txLoaded, txHistory: transactions } = useAppSelector((state) => state.userReducer);
 
     const [filter, setFilter] = useState<keyof typeof TransactionFilters>(
         Object.keys(TransactionFilters)[0] as keyof typeof TransactionFilters,
@@ -114,7 +83,7 @@ const TransactionHistory: React.FC = () => {
                     </div>
                 </div>
             </div>
-            {!isLoaded ? (
+            {!txLoaded ? (
                 loader
             ) : (
                 <div>
