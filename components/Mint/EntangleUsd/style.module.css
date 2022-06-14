@@ -84,8 +84,10 @@
 .arrow {
     position: absolute;
     display: block;
-    left: -35px;
-    top: 40%;
+    width: 60px;
+    height: 60px;
+    left: -40px;
+    top: calc((100% - 60px) / 2)px;
     z-index: 50;
     transform: rotate(-90deg);
 }
@@ -114,7 +116,7 @@
     .wrapper > .actionCard:nth-child(3) > .arrow {
         top: -30px;
         transform: rotate(45deg);
-        left: 90%;
+        left: 94%;
     }
     .helper {
         width: 70%;
@@ -131,13 +133,13 @@
         display: block;
         transform: rotate(0deg);
         top: -40px;
-        left: 40%;
+        left: calc((100% - 60px) / 2);
     }
     .wrapper > .actionCard:last-child > .arrow {
         display: block;
         transform: rotate(0deg);
         top: -40px;
-        left: 40%;
+        left: calc((100% - 60px) / 2);
     }
     .actionCard {
         min-width: 95vw;

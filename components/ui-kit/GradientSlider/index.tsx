@@ -9,11 +9,13 @@ type PropTypes = {
     setOutsideVariable: (x: string) => void;
 };
 
-const GradientSlider: React.FC<PropTypes> = (props) => {
-    const {
-        min, max, setOutsideVariable, outsideVariable, ...otherProps
-    } = props;
-
+const GradientSlider: React.FC<PropTypes> = ({
+    min,
+    max,
+    setOutsideVariable,
+    outsideVariable,
+    ...props
+}) => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [xCoordinate, setXCoordinate] = useState<number>(50);
 
@@ -46,7 +48,7 @@ const GradientSlider: React.FC<PropTypes> = (props) => {
             ) : null}
             <p>
                 {min}
-                {otherProps.extraSymbol}
+                {props.extraSymbol}
             </p>
             <input
                 type="range"
@@ -55,7 +57,13 @@ const GradientSlider: React.FC<PropTypes> = (props) => {
                 onMouseDown={() => {
                     setIsVisible(true);
                 }}
+                onTouchStart={() => {
+                    setIsVisible(true);
+                }}
                 onMouseUp={() => {
+                    setIsVisible(false);
+                }}
+                onTouchEnd={() => {
                     setIsVisible(false);
                 }}
                 onChange={(e) => {
@@ -69,7 +77,7 @@ const GradientSlider: React.FC<PropTypes> = (props) => {
             />
             <p>
                 {max}
-                {otherProps.extraSymbol}
+                {props.extraSymbol}
             </p>
         </div>
     );

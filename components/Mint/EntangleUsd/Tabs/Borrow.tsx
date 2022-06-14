@@ -99,8 +99,8 @@ const Borrow: React.FC<PropType> = () => {
                     <div className={styles.arrow}>
                         <Image
                             src="/images/Arrow.svg"
-                            width={55}
-                            height={55}
+                            width={100}
+                            height={100}
                             quality={100}
                             alt="arrow-icon"
                         />
@@ -162,8 +162,8 @@ const Borrow: React.FC<PropType> = () => {
                     <div className={styles.arrow}>
                         <Image
                             src="/images/Arrow.svg"
-                            width={55}
-                            height={55}
+                            width={100}
+                            height={100}
                             quality={100}
                             alt="arrow-icon"
                         />
