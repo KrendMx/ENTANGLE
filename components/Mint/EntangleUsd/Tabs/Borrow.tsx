@@ -92,7 +92,6 @@ const Borrow: React.FC<PropType> = () => {
                             type="number"
                             placeholder="Enter amount of Synth-LP"
                             onChange={() => {}}
-                            value={state.synthLpLock}
                         />
                     </div>
                 </div>

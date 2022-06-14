@@ -49,7 +49,7 @@ const StakeEntangle: React.FC = () => {
     const buttons:string[] = ['Borrow', 'Repay'];
 
     return (
-        <>
+        <div style={{ marginBottom: '5rem' }}>
             <div className={styles.wrapper}>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>SynthLP in Collateral</p>
@@ -71,13 +71,15 @@ const StakeEntangle: React.FC = () => {
                         activeTab={actionType}
                         switchHandler={switchHandler}
                         buttons={buttons}
+                        customClassTabName={styles.customTabs}
+                        customClassButtonName={styles.customButton}
                     />
                 </div>
             </div>
             <div>
                 {actionType === 0 ? <Borrow /> : <Repay />}
             </div>
-        </>
+        </div>
     );
 };
 

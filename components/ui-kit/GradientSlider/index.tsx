@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './style.module.css';
 
 type PropTypes = {
@@ -14,8 +14,14 @@ const GradientSlider: React.FC<PropTypes> = (props) => {
         min, max, setOutsideVariable, outsideVariable, ...otherProps
     } = props;
 
+    const [isVisible, setIsVisible] = useState<boolean>(false);
+    const [xCoordinate, setXCoordinate] = useState<number>(50);
+
     const returnActualChange = (value: number): number =>
         Math.floor(((max - min) * value) / 100 + min);
+
+    const getStatusPosition = (value: number): number =>
+        ((79 - 6) * value) / 100 + 6;
 
     function changeColor(e: React.ChangeEvent<HTMLInputElement>): void {
         e.target.style.background = `linear-gradient(to right, rgba(0, 0, 0, 0) 0%, 
@@ -27,6 +33,17 @@ const GradientSlider: React.FC<PropTypes> = (props) => {
 
     return (
         <div className={styles.wrapper}>
+            {isVisible ? (
+                <div
+                    className={styles.progressStatus}
+                    style={{ left: `${getStatusPosition(xCoordinate)}%` }}
+                >
+                    <span style={{ position: 'relative' }}>
+                        {outsideVariable}
+                        <div className={styles.pointer} />
+                    </span>
+                </div>
+            ) : null}
             <p>
                 {min}
                 {otherProps.extraSymbol}
@@ -35,8 +52,15 @@ const GradientSlider: React.FC<PropTypes> = (props) => {
                 type="range"
                 min={0}
                 max={100}
+                onMouseDown={() => {
+                    setIsVisible(true);
+                }}
+                onMouseUp={() => {
+                    setIsVisible(false);
+                }}
                 onChange={(e) => {
                     changeColor(e);
+                    setXCoordinate(Number(e.target.value));
                     setOutsideVariable(
                         returnActualChange(Number(e.target.value)).toString(),
                     );

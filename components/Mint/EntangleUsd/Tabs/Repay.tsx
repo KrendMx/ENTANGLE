@@ -84,7 +84,7 @@ const Repay: React.FC<PropType> = () => {
                         >
                             Repay EnUSD Amount
                         </p>
-                        <Input type="number" placeholder="Enter amount of EnUSD" onChange={() => {}} value="" />
+                        <Input type="number" placeholder="Enter amount of EnUSD" onChange={() => {}} />
                     </div>
                 </div>
                 <div className={classNames(styles.actionCard)}>
@@ -104,7 +104,7 @@ const Repay: React.FC<PropType> = () => {
                         >
                             Unlocked Synth-LP
                         </p>
-                        <Input type="number" placeholder="Unlocked Synth-LP" onChange={() => {}} value="" />
+                        <Input type="number" placeholder="Unlocked Synth-LP" onChange={() => {}} />
                     </div>
                     <div>
                         <Text title="Curren AVG collaterization" content={`${state.AVGCollaterization}%`} />
@@ -112,29 +112,6 @@ const Repay: React.FC<PropType> = () => {
                     </div>
 
                 </div>
-                {/* <div className={styles.actionCard}>
-                    <div className={styles.arrow}>
-                        <Image
-                            src="/images/Arrow.svg"
-                            width={55}
-                            height={55}
-                            quality={100}
-                            alt="arrow-icon"
-                        />
-                    </div>
-                    <div>
-                        <p className={
-                            classNames(styles.sectionTitle, styles.white)
-                        }
-                        >
-                            Set LTV Rate
-                        </p>
-                        <Input type="" placeholder="Set LTV Rate" onChange={() => {}} value="" />
-                    </div>
-                    <div>
-                        <Text title="Current LTV Rate" content={`${state.currentLTVRate}%`} bigFont />
-                    </div>
-                </div> */}
             </div>
             <div className={styles.helper}>
                 <GradientButton title="Mint Synth-LP" onClick={() => {}} />
