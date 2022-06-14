@@ -7,41 +7,13 @@ import Text from '@/components/HomePage/PayModal/Text';
 import GradientButton from '@/components/ui-kit/GradientButton';
 import SyntSelect from '@/ui-kit/SynteticSelector';
 import GradientSlider from '@/components/ui-kit/GradientSlider';
+import type { IBorrowProps, BorrowState } from './Tabs.interfaces';
 
-type PropType = {};
-
-type RepayState = {
-    synthLp: string;
-    synthLpLock: string;
-    getEnUSD: string;
-    LTVRate: string;
-    AVGCollaterization: string;
-    commision: string;
-    exchangeRate: string;
-};
-
-type RepayAction =
-    | { type: 'setSynthLp'; value: string }
-    | { type: 'setSynthLpLock'; value: number }
-    | { type: 'setGetEnUSD'; value: number }
-    | { type: 'setLTVRate'; value: string }
-    | { type: 'setAVGCollaterization'; value: number }
-    | { type: 'setCommision'; value: string }
-    | { type: 'setCurrentLTVRate'; value: number };
-
-const Borrow: React.FC<PropType> = () => {
-    function reducer(state: RepayState, action: RepayAction) {
-        switch (action.type) {
-        case 'setSynthLp':
-            return { ...state, synthLp: action.value };
-        case 'setLTVRate':
-            return { ...state, LTVRate: action.value };
-        default:
-            return state;
-        }
-    }
-
-    const [state, dispatch] = useReducer(reducer, {
+const Borrow: React.FC<IBorrowProps> = () => {
+    const [state, dispatch] = useReducer((oldState: BorrowState, newState: Partial<BorrowState>) => ({
+        ...oldState,
+        ...newState,
+    }), {
         synthLp: '',
         synthLpLock: '',
         getEnUSD: '',
@@ -52,11 +24,11 @@ const Borrow: React.FC<PropType> = () => {
     });
 
     const changeCurrency = useCallback((currency: string) => {
-        dispatch({ type: 'setSynthLp', value: currency });
+        dispatch({ synthLp: currency });
     }, []);
 
     const changeLTVRate = useCallback((value: string) => {
-        dispatch({ type: 'setLTVRate', value });
+        dispatch({ LTVRate: value });
     }, []);
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
