@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './styles.module.css';
 
 type InputProps = {
-    value: string;
+    value?: string;
     placeholder: string;
     type: string;
     title?: string;

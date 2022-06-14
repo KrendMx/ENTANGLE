@@ -41,7 +41,6 @@ const Select: React.FC<SelectProps> = ({
     const [selected, setSelected] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const selectWrapperNode = useRef<HTMLDivElement>(null);
-    console.log(value);
 
     useEffect(() => {
         React.Children.forEach<React.ReactElement<OptionProps, 'li'>>(

@@ -1,8 +1,6 @@
-import classNames from 'classnames';
 import React, { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import type { Contract } from 'ethers';
-import { providers } from 'ethers';
 import styles from '../style.module.css';
 import Text from '../Text/index';
 import ModalInput from '../ModalInput';

@@ -20,7 +20,7 @@ import CopyBtn from '@/ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '@/ui-kit/HoverTooltip/HoverTooltip';
 import { WalletProviderNames } from '../../../Modal/SelectWalletModal/SelectWalletModal.constants';
 import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
-import HintModal from '@/components/HintModal';
+import HintModal from '@/components/ui-kit/HintModal';
 
 type DashboardItemProps = {
     chainId: availableChains;

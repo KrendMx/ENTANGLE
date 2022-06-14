@@ -1,84 +1,90 @@
 import classNames from 'classnames';
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer, useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/ui-kit/Input';
 import styles from '../style.module.css';
-import Select, { Option } from '@/components/ui-kit/Select';
 import Text from '@/components/HomePage/PayModal/Text';
 import GradientButton from '@/components/ui-kit/GradientButton';
+import SyntSelect from '@/ui-kit/SynteticSelector';
+import GradientSlider from '@/components/ui-kit/GradientSlider';
 
-type PropType = {
-
-}
+type PropType = {};
 
 type RepayState = {
-    synthLp: string,
-    synthLpLock: string,
-    getEnUSD: string,
-    LTVRateUser: string,
-    AVGCollaterization: string,
-    exchangeRate: string,
-    currentLTVRate: string
-}
+    synthLp: string;
+    synthLpLock: string;
+    getEnUSD: string;
+    LTVRate: string;
+    AVGCollaterization: string;
+    commision: string;
+    exchangeRate: string;
+};
 
 type RepayAction =
-{type: 'setSynthLp', value: {}}
-|
-{type: 'setSynthLpLock', value: number}
-|
-{type: 'setGetEnUSD', value: number}
-|
-{type: 'setLTVRateUser', value: number}
-|
-{type: 'setAVGCollaterization', value: number}
-|
-{type: 'setExchangeRate', value: number}
-|
-{type: 'setCurrentLTVRate', value: number}
+    | { type: 'setSynthLp'; value: string }
+    | { type: 'setSynthLpLock'; value: number }
+    | { type: 'setGetEnUSD'; value: number }
+    | { type: 'setLTVRate'; value: string }
+    | { type: 'setAVGCollaterization'; value: number }
+    | { type: 'setCommision'; value: string }
+    | { type: 'setCurrentLTVRate'; value: number };
 
 const Borrow: React.FC<PropType> = () => {
-    function reducer(state:RepayState, action:RepayAction) {
+    function reducer(state: RepayState, action: RepayAction) {
         switch (action.type) {
+        case 'setSynthLp':
+            return { ...state, synthLp: action.value };
+        case 'setLTVRate':
+            return { ...state, LTVRate: action.value };
         default:
             return state;
         }
     }
 
-    const [state, action] = useReducer(reducer, {
-        synthLp: '1',
+    const [state, dispatch] = useReducer(reducer, {
+        synthLp: '',
         synthLpLock: '',
         getEnUSD: '',
-        LTVRateUser: '',
+        LTVRate: '70',
         AVGCollaterization: '88,55',
-        exchangeRate: '1,36',
-        currentLTVRate: '90',
+        commision: '3-5',
+        exchangeRate: '1.542',
     });
 
+    const changeCurrency = useCallback((currency: string) => {
+        dispatch({ type: 'setSynthLp', value: currency });
+    }, []);
+
+    const changeLTVRate = useCallback((value: string) => {
+        dispatch({ type: 'setLTVRate', value });
+    }, []);
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     return (
         <>
             <div className={styles.wrapper}>
                 <div className={classNames(styles.actionCard)}>
                     <div>
-                        <p className={
-                            classNames(styles.sectionTitle, styles.white)
-                        }
+                        <p
+                            className={classNames(
+                                styles.sectionTitle,
+                                styles.white,
+                            )}
                         >
                             Select your Synth-Lp
-
                         </p>
-                        <Select
-                            onChange={() => {}}
-                            value={state.synthLp}
-                        >
-                            <Option value="2">Select your Synth-Lp</Option>
-                            <Option value="1">Select your Synth-Lp</Option>
-                        </Select>
+                        <SyntSelect
+                            currenc={state.synthLp}
+                            func={changeCurrency}
+                            currencSymbol="SYNTHUSDC"
+                        />
                     </div>
                     <div>
-
-                        <p className={
-                            classNames(styles.sectionTitle, styles.white)
-                        }
+                        <p
+                            className={classNames(
+                                styles.sectionTitle,
+                                styles.white,
+                            )}
                         >
                             Lock Synth-LP Amount
                         </p>
@@ -101,22 +107,56 @@ const Borrow: React.FC<PropType> = () => {
                         />
                     </div>
                     <div>
-                        <p className={
-                            classNames(styles.sectionTitle, styles.white)
-                        }
-                        >
-                            You will get enUSD
-                        </p>
-                        <Input
-                            type="number"
-                            placeholder="You will get enUSD"
-                            onChange={() => {}}
-                            value={state.getEnUSD}
+                        <div className={styles.infoContainer}>
+                            <p
+                                className={classNames(
+                                    styles.sectionTitle,
+                                    styles.white,
+                                )}
+                            >
+                                Set LTV Rate
+                            </p>
+                            <div style={{ width: '30%' }}>
+                                <GradientButton
+                                    title="info"
+                                    active={isOpen}
+                                    titleClass={styles.noPadding}
+                                    onClick={() => {
+                                        setIsOpen(!isOpen);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        {isOpen ? (
+                            <div className={styles.infoDescription}>
+                                <p>
+                                    Lorem Ipsum is simply dummy text of the
+                                    printing and typesetting industry.
+                                    Lorem Ipsum has been the industrys standard dummy
+                                    text ever since the 1500s,
+                                    when an unknown printer took a galley of type and scrambled
+                                </p>
+                            </div>
+                        ) : null}
+                        <GradientSlider
+                            min={50}
+                            max={90}
+                            extraSymbol="%"
+                            outsideVariable={state.LTVRate}
+                            setOutsideVariable={changeLTVRate}
                         />
                     </div>
                     <div>
-                        <Text title="Curren AVG collaterization" content={`${state.AVGCollaterization}%`} />
-                        <Text title="Exchange rate" content={`1 SynthLP = ${state.exchangeRate} enUSD`} />
+                        <Text
+                            title="Curren LTV Rate"
+                            content={`${state.LTVRate}%`}
+                            hasTooltip
+                            tooltipText="Test"
+                        />
+                        <Text
+                            title="Liquidation commission"
+                            content={`${state.commision}%`}
+                        />
                     </div>
                 </div>
                 <div className={styles.actionCard}>
@@ -130,21 +170,29 @@ const Borrow: React.FC<PropType> = () => {
                         />
                     </div>
                     <div>
-                        <p className={
-                            classNames(styles.sectionTitle, styles.white)
-                        }
+                        <p
+                            className={classNames(
+                                styles.sectionTitle,
+                                styles.white,
+                            )}
                         >
-                            Set LTV Rate
+                            Amount of EnUSD to be borrowed
                         </p>
                         <Input
-                            type=""
-                            placeholder="Set LTV Rate"
+                            type="number"
+                            placeholder="You will get EnUSD"
                             onChange={() => {}}
-                            value={state.LTVRateUser}
                         />
                     </div>
                     <div>
-                        <Text title="Current LTV Rate" content={`${state.currentLTVRate}%`} bigFont />
+                        <Text
+                            title="Curren AVG collaterization"
+                            content={`${state.AVGCollaterization}%`}
+                        />
+                        <Text
+                            title="Exchange rate"
+                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                        />
                     </div>
                 </div>
             </div>

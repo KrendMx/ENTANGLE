@@ -1,10 +1,11 @@
 import classNames from 'classnames';
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer } from 'react';
 import Image from 'next/image';
 import Input from '@/components/ui-kit/Input';
 import styles from '../style.module.css';
 import Text from '@/components/HomePage/PayModal/Text';
 import GradientButton from '@/components/ui-kit/GradientButton';
+import SyntSelect from '@/components/ui-kit/SynteticSelector';
 
 type PropType = {
 
@@ -12,7 +13,7 @@ type PropType = {
 
 type RepayState = {
     enterEnUSD: string,
-    synthLpUnlock: string,
+    synthLp: string,
     balanceOfEnUSD: string,
     LTVRateUser: string,
     AVGCollaterization: string,
@@ -23,7 +24,7 @@ type RepayState = {
 type RepayAction =
 {type: 'setEnterEnUSD', value: {}}
 |
-{type: 'setSynthLpUnlock', value: number}
+{type: 'setSynthLp', value: string}
 |
 {type: 'setBalanceOfEnUSD', value: number}
 |
@@ -35,17 +36,19 @@ type RepayAction =
 |
 {type: 'setCurrentLTVRate', value: number}
 
-const Repay: React.FC<PropType> = (props) => {
+const Repay: React.FC<PropType> = () => {
     function reducer(state:RepayState, action:RepayAction) {
         switch (action.type) {
+        case 'setSynthLp':
+            return { ...state, synthLp: action.value };
         default:
             return state;
         }
     }
 
-    const [state, action] = useReducer(reducer, {
+    const [state, dispatch] = useReducer(reducer, {
         enterEnUSD: '',
-        synthLpUnlock: '',
+        synthLp: '',
         balanceOfEnUSD: '',
         LTVRateUser: '',
         AVGCollaterization: '88,55',
@@ -53,9 +56,13 @@ const Repay: React.FC<PropType> = (props) => {
         currentLTVRate: '90',
     });
 
+    const changeCurrency = useCallback((value: string) => {
+        dispatch({ type: 'setSynthLp', value });
+    }, []);
+
     return (
         <>
-            <div className={styles.wrapper}>
+            <div className={styles.wrapper} style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
                 <div className={classNames(styles.actionCard)}>
                     <div>
                         <p className={
@@ -64,10 +71,20 @@ const Repay: React.FC<PropType> = (props) => {
                         >
                             Enter amount of enUSD
                         </p>
-                        <Input type="number" placeholder="Enter amount of enUSD" onChange={() => {}} value="" />
+                        <SyntSelect
+                            currenc={state.synthLp}
+                            func={changeCurrency}
+                            currencSymbol="EnUSD"
+                        />
                     </div>
                     <div>
-                        <Text title="Your Balance of enUSD" content="150 enUSD" />
+                        <p className={
+                            classNames(styles.sectionTitle, styles.white)
+                        }
+                        >
+                            Repay EnUSD Amount
+                        </p>
+                        <Input type="number" placeholder="Enter amount of EnUSD" onChange={() => {}} value="" />
                     </div>
                 </div>
                 <div className={classNames(styles.actionCard)}>
@@ -95,7 +112,7 @@ const Repay: React.FC<PropType> = (props) => {
                     </div>
 
                 </div>
-                <div className={styles.actionCard}>
+                {/* <div className={styles.actionCard}>
                     <div className={styles.arrow}>
                         <Image
                             src="/images/Arrow.svg"
@@ -117,7 +134,7 @@ const Repay: React.FC<PropType> = (props) => {
                     <div>
                         <Text title="Current LTV Rate" content={`${state.currentLTVRate}%`} bigFont />
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className={styles.helper}>
                 <GradientButton title="Mint Synth-LP" onClick={() => {}} />
