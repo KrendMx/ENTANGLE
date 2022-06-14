@@ -6,7 +6,7 @@ import TextLoader from '../../../../../ui-kit/TextLoader/TextLoader';
 import GradientButton from '../../../../../ui-kit/GradientButton';
 import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { changeActiveCard } from '@/src/Redux/store/reducers/AppSlice';
-import HintModal from '@/components/HintModal';
+import HintModal from '@/components/ui-kit/HintModal';
 
 type MintDashBoardItemProps = {
     isFiltered: boolean;

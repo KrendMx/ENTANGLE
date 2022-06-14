@@ -8,6 +8,7 @@ type SelectProps = {
     children: React.ReactNode[];
     onChange: (HTMLElement) => void;
     customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
+    customOptionClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     disabled?:boolean;
 };
 
@@ -15,14 +16,22 @@ type OptionProps = {
     value: string;
     children: string;
     extraSymbol?: JSX.Element;
+    state?: string;
 };
 
 export const Option: React.FC<OptionProps> = ({
-    value, children, extraSymbol,
+    value, children, extraSymbol, ...props
 }) => (
     <li data-select-value={value}>
-        {extraSymbol}
         {children}
+        {(() => {
+            if (props.state?.includes(value)) {
+                if (props.state?.includes('desk')) {
+                    return <div className={styles.rotate}>{extraSymbol}</div>;
+                }
+                return <div>{extraSymbol}</div>;
+            }
+        })()}
     </li>
 );
 

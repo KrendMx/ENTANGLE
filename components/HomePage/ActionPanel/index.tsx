@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import Image from 'next/image';
 import styles from './style.module.css';
 import Select, { Option } from '@/ui-kit/Select/index';
 import Input from '@/ui-kit/Input';
@@ -15,8 +15,20 @@ const ActionPanel: React.FC<IActionProps> = ({
     setSearch,
     setSort,
 }) => {
-    const handleChangeFilter = (value: string) => setFilter(value);
-    const handleChangeSort = (value: string) => setSort(value);
+    const handleChangeFilter = (value: string) => {
+        if (Object.prototype.hasOwnProperty.call(networks, value) || value === '') {
+            setFilter(value);
+        }
+    };
+    const handleChangeSort = (value: string) => {
+        if (value === 'APR' || value === 'staked' || value === '') {
+            if (value === sort) {
+                setSort(`${value} desk`);
+            } else {
+                setSort(value);
+            }
+        }
+    };
     const handleChangeSearch = ({
         target,
     }: React.ChangeEvent<HTMLInputElement>) =>
@@ -49,24 +61,25 @@ const ActionPanel: React.FC<IActionProps> = ({
                     customClassName={styles.filterWrapperSelect}
                     disabled={(Object.values(sortingObject)).length < 3}
                 >
-                    <Option value="">Sort by</Option>
+                    <Option value="">All</Option>
                     {sortVariable.map((el, key: number) => (
                         <Option
+                            state={sort}
                             value={el.stateName}
                             key={key}
                             extraSymbol={(
-                                <div
-                                    className={
-                                        classNames(
-                                            styles.checkbox,
-                                            el.stateName === sort ? styles.activeCheckbox : null,
-                                        )
-                                    }
-                                />
+                                <div style={{ padding: '0px 8px' }}>
+                                    <Image
+                                        alt=""
+                                        quality={100}
+                                        src="/images/selectArrowIcon.svg"
+                                        width={10}
+                                        height={10}
+                                    />
+                                </div>
                             )}
                         >
                             {el.title}
-
                         </Option>
                     ))}
                 </Select>

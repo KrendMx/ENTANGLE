@@ -20,7 +20,7 @@ const HomePage = () => {
                 setSort={setSort}
             />
             <SummaryInfoBoard />
-            <Dashboard filter={filter} query={search} sorts={sort} />
+            <Dashboard filter={filter} query={search} sort={sort} />
         </div>
     );
 };

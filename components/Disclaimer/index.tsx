@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ScrollLock from 'react-scrolllock';
-import Image from 'next/image';
 import styles from './styles.module.css';
 import GradientButton from '@/ui-kit/GradientButton';
 import GradientCheckbox from '@/ui-kit/GradientCheckbox';
@@ -17,21 +16,7 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                 <div className={styles.content}>
                     <div>
                         <div className={styles.header}>
-                            <Image
-                                src="/images/attention.svg"
-                                width={40}
-                                height={50}
-                                quality={100}
-                                alt="attention"
-                            />
                             <h1 className={styles.headerText}>Disclaimer</h1>
-                            <Image
-                                src="/images/attention.svg"
-                                width={40}
-                                height={50}
-                                quality={100}
-                                alt="attention"
-                            />
                         </div>
                         <div className={styles.mainContent}>
                             <p className={styles.blockText}>
@@ -47,13 +32,11 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                     ) as there have been no audits of any smart
                                     contracts on the protocol.
                                 </p>
-                                {' '}
                                 <p className={styles.paragraph}>
                                     Welcome to Entangle Protocol. Entangle
                                     allows trustless exposure to cross-chain
                                     yields via Synthetic LP Vaults.
                                 </p>
-                                {' '}
                                 <p className={styles.paragraph}>
                                     In the near future, Entangle Protocol will
                                     allows you to borrow Entangle USD (
@@ -64,13 +47,12 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                     stable-coin against your synthetic yield
                                     bearing assets.
                                 </p>
-                                {' '}
+
                                 <p className={styles.paragraph}>
                                     No representation or warranty is made
                                     concerning any aspect of the Entangle
                                     Protocol.
                                 </p>
-                                {' '}
                                 <p className={styles.paragraph}>
                                     You take full responsibility for your use of
                                     the Entangle Protocol, and acknowledge that
@@ -78,11 +60,9 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                     without solicitation or inducement by
                                     contributors.
                                 </p>
-                                {' '}
                                 <p className={styles.paragraph}>
                                     Entangle Protocol is not available to
-                                    residents of
-                                    {' '}
+                                    residents of&nbsp;
                                     <span className={styles.highLight}>
                                         Belarus, the Central African Republic,
                                         the Democratic Republic of Congo, the
@@ -95,7 +75,6 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                         prohibited (“Prohibited Jurisdictions”).
                                     </span>
                                 </p>
-                                {' '}
                                 <p className={styles.paragraph}>
                                     By Using Entangle , you confirm that you are
                                     not located in, incorporated or otherwise

@@ -33,10 +33,12 @@
 }
 
 .filterWrapperSelect {
+  border: 1px solid #2C2F38;
+  box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.9);
   max-width: 260px;
   z-index: 47;
   background-color: #101010 !important;
-  border: 1px solid #1E1E1E
+
 }
 
 @media screen and (max-width: 660px) {

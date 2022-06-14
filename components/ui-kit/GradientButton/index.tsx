@@ -11,6 +11,7 @@ type GradientButtonProps = {
     onClick: () => void;
     disabled?: boolean;
     loader?: JSX.Element
+    active?: boolean
 };
 
 const GradientButton: React.FC<GradientButtonProps> = ({
@@ -22,6 +23,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({
     disabled,
     loader,
     gradient = 'linear-gradient(90deg, #FF5EBA 0%, #6831D6DE 87%, #0094FF 100%)',
+    ...props
 }) => (
     <div
         onClick={onClick}
@@ -33,7 +35,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({
         {titleElement ? (
             <div className={classNames(titleClass, styles.titleElement)}>{titleElement}</div>
         ) : (
-            <p className={styles.title}>
+            <p className={classNames(styles.title, titleClass || null, { [styles.active]: props?.active })}>
                 {title}
                 {loader}
             </p>

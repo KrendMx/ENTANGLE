@@ -36,15 +36,12 @@ const Dashboard: React.FC<IDashboardProps> = ({
         if (filter !== '') {
             arr.sort((item) => (item.filter === Number(filter) ? -1 : 1));
         }
-        if (filter !== '') arr.sort((item) => (item.filter === Number(filter) ? -1 : 1));
         return arr;
     }
 
-    const newItems = sortAndFilter();
-
     return (
         <div className={styles.wrapper}>
-            {newItems.map((i, key) => {
+            {sortAndFilter().map((i, key) => {
                 let isFiltered = false;
                 if (query !== '') {
                     isFiltered = isFiltered

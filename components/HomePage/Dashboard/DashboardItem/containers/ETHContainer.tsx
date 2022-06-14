@@ -13,10 +13,10 @@ const ETHContainer = ({ isFiltered = false }) => {
             stateUpdate: Partial<ContainerStateType>,
         ) => ({ ...containerState, ...stateUpdate }),
         {
-            apr: 'TBA',
+            apr: '14.23',
             currentDeposits: '$0',
             totalDeposits: '0 aDAI/aSUSD LP',
-            available: '0',
+            available: '103',
             totalAvailable: '$0',
             price: '0',
             positions: '$0',
@@ -49,7 +49,11 @@ const ETHContainer = ({ isFiltered = false }) => {
             // const apr = cardData.apr;
             // const available = cardData.available;
 
-            dispatch(addSortingCard({ chainId: data.chainId, APR: 0, staked: 0 }));
+            dispatch(addSortingCard({
+                chainId: data.chainId,
+                APR: Number(state.apr),
+                staked: Number(state.available),
+            }));
         })();
     }, []);
 

@@ -1,8 +1,7 @@
 .text {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+    justify-content: flex-start;
 }
 
 .text p:first-child {
@@ -12,15 +11,20 @@
     line-height: 22px;
     display: flex;
     align-items: center;
-    color: #A3A3A3;
+    color: #a3a3a3;
 }
 
 .text p:not(:first-child) {
     font-style: normal;
+    margin-left: auto;
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
     display: flex;
     align-items: center;
-    color: #ECECEC;
+    color: #ececec;
+}
+
+.bigFont {
+    font-size: 24px !important;
 }

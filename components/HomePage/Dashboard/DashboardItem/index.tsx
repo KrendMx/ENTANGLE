@@ -20,7 +20,7 @@ import CopyBtn from '@/ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from '@/ui-kit/HoverTooltip/HoverTooltip';
 import { WalletProviderNames } from '@/components/Modal/SelectWalletModal/SelectWalletModal.constants';
 import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
-import HintModal from '@/components/HintModal';
+import HintModal from '@/components/ui-kit/HintModal';
 
 type DashboardItemProps = {
     chainId: availableChains;
@@ -195,7 +195,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     <div className={styles.sectionTitle}>
                         <p>Value of LPs Staked </p>
                         <HintModal>
-                            <p>The current annual percentage received on this farm</p>
+                            <p>The amount of currency available for purchase without creating a new one</p>
                         </HintModal>
                     </div>
                     <div className={styles.sectionRow}>
@@ -206,49 +206,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                         )}
                     </div>
                 </div>
-                {/* <div className={styles.section}>
-                    <div className={styles.sectionTitle}>
-                        <p>Available</p>
-                        <HintModal>
-                            <p>The number of tokens available for purchase</p>
-                        </HintModal>
-
-                    </div>
-                    {available ? (
-                        <>
-                            <div
-                                className={classNames(
-                                    styles.sectionRow,
-                                    styles.sectionAvailable,
-                                )}
-                            >
-                                <p className={styles.sectionValue}>
-                                    {available}
-                                </p>
-                                <p className={styles.sectionSubValue}>
-                                    Synth-LP
-                                </p>
-                                <p
-                                    className={classNames(
-                                        styles.sectionSubValue,
-                                        styles.sectionGraySubValue,
-                                    )}
-                                >
-                                    {totalAvailable}
-                                </p>
-                            </div>
-                            <div
-                                style={{ background: rowGradient }}
-                                className={styles.rowGradient}
-                            />
-                        </>
-                    ) : (
-                        <TextLoader
-                            bgGradient={bgGradient}
-                            margin="0.87rem 0"
-                        />
-                    )}
-                </div> */}
                 <div className={styles.section}>
                     <p className={styles.sectionTitle}>Price</p>
                     <div className={styles.sectionRow}>

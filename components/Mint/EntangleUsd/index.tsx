@@ -1,78 +1,74 @@
-import React, { useState } from 'react';
-
-import Mint from './Tabs/Mint';
-import Burn from './Tabs/Burn';
+import React, { useReducer, useState } from 'react';
+import styles from './style.module.css';
 import Tabs from '@/ui-kit/Tabs';
-
-import GlowLine from '@/ui-kit/GlowLine';
-import Typography from '@/ui-kit/Typography';
-import ChartWrapperWithText from '@/ui-kit/ChartWrapperWithText/index';
-
-import styles from '../../Stake/Entangle/style.module.css';
-import localStyles from './style.module.css';
+import Borrow from './Tabs/Borrow';
+import type { infoReducer } from './MintEnt.interfaces';
+import Repay from './Tabs/Repay';
 
 const StakeEntangle: React.FC = () => {
-    const [amount, setAmount] = useState<string>();
-    const [activeTab, setActiveTab] = useState(0);
-    const [dropValue, setDropValue] = useState<string>('');
+    const [actionType, setActionType] = useState<number>(0);
 
-    const handleChangeSynthDrop = (value: string) => setDropValue(value);
+    const [infoValuesState, infoValuesDispatcher] = useReducer(
+        (oldState: infoReducer, newState: Partial<infoReducer>) => ({
+            ...oldState,
+            ...newState,
+        }),
+        {
+            slpInCollateral: 201.55,
+            slpBalance: 201.55,
+            EnUSDBorrowed: 201.55,
+        },
+    );
 
-    const getMax = () => setAmount('100');
+    const switchHandler = (): void =>
+        (actionType === 0 ? setActionType(1) : setActionType(0));
+
+    const buttons = ['Borrow', 'Repay'];
 
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.container}>
-                <div className={styles.description}>
-                    <Typography type="title">
-                        Mint Entangle USD (enUSD) v Synth-LP Holdings
-                    </Typography>
-                    <GlowLine />
-                    <p className={styles.descriptItem}>
-                        enuSD is Entangle’s native stablecoin. Mint at dynamic
-                        LTV rates against your Synth-LP holdings.
+        <div style={{ marginBottom: '5rem' }}>
+            <div className={styles.wrapper}>
+                <div className={styles.blockWrapper}>
+                    <p className={styles.sectionTitle}>SynthLP in Collateral</p>
+                    <p
+                        className={styles.sectionValue}
+                    >
+                        {`$${infoValuesState.slpInCollateral}`}
+
                     </p>
-                    <p className={styles.descriptItem}>
-                        Post mint users can burn their enUSD to release their
-                        Synth-LP which is held as collateral against their
-                        minted EnUSD.
-                    </p>
-                    <div className={localStyles.graphData}>
-                        <ChartWrapperWithText
-                            title="Total SynthLp Locked"
-                            value="568'530'000"
-                            extraText="Synth LP"
-                        />
-                        <ChartWrapperWithText
-                            title="Total enUSD Cirulation Supply"
-                            value="475'123'477"
-                            extraText="enUSD"
-                        />
-                    </div>
                 </div>
-                <div className={localStyles.stakeForm}>
-                    <Tabs
-                        switchHandler={(idx: number) => setActiveTab(idx)}
-                        activeTab={activeTab}
-                        buttons={['Mint', 'Burn']}
-                    />
-                    {!activeTab ? (
-                        <Mint
-                            amount={amount}
-                            handleChangeSynthDrop={handleChangeSynthDrop}
-                            dropValue={dropValue}
-                            setAmount={setAmount}
-                            getMax={getMax}
-                        />
-                    ) : (
-                        <Burn
-                            amount={amount}
-                            setAmount={setAmount}
-                            getMax={getMax}
-                        />
-                    )}
+                <div className={styles.blockWrapper}>
+                    <p className={styles.sectionTitle}>SynthLP Balance</p>
+                    <p
+                        className={styles.sectionValue}
+                    >
+                        {`$${infoValuesState.slpBalance}`}
+
+                    </p>
+                </div>
+                <div className={styles.blockWrapper}>
+                    <p className={styles.sectionTitle}>EnUSD Borrowed</p>
+                    <p
+                        className={styles.sectionValue}
+                    >
+                        {`$${infoValuesState.EnUSDBorrowed}`}
+
+                    </p>
                 </div>
             </div>
+            <div className={styles.switcher}>
+                <h1>Get started</h1>
+                <div>
+                    <Tabs
+                        activeTab={actionType}
+                        switchHandler={switchHandler}
+                        buttons={buttons}
+                        customClassTabName={styles.customTabs}
+                        customClassButtonName={styles.customButton}
+                    />
+                </div>
+            </div>
+            <div>{actionType === 0 ? <Borrow /> : <Repay />}</div>
         </div>
     );
 };
