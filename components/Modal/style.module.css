@@ -25,3 +25,9 @@
         background-color: rgba(0, 0, 0, 0.1);
     }
 }
+
+@supports not ((backdrop-filter: none)) {
+    .wrapper::before {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}

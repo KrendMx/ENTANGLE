@@ -2,6 +2,7 @@ import type { ChangeEvent } from 'react';
 import Image from 'next/image';
 import React from 'react';
 import styles from './style.module.css';
+import Input from '../Input/index';
 
 interface IModalInput {
     titleSend: string;
@@ -31,12 +32,10 @@ const ModalInput: React.FC<IModalInput> = ({
             <div className={styles.inputContent}>
                 <p>{titleSend}</p>
                 <div className={styles.inputElem}>
-                    <input
-                        type="number"
+                    <Input
                         onChange={onSendChange}
                         className={styles.input}
                         value={sendValue}
-                        placeholder="0.0"
                     />
                     <p className={styles.currency}>{currencySend}</p>
                 </div>
@@ -60,12 +59,10 @@ const ModalInput: React.FC<IModalInput> = ({
             <div className={styles.inputContent}>
                 <p>{titleReceive}</p>
                 <div className={styles.inputElem}>
-                    <input
-                        type="number"
+                    <Input
                         onChange={onReceiveChange}
                         className={styles.input}
                         value={receiveValue}
-                        placeholder="0.0"
                     />
                     <p className={styles.currency}>{currencyReceive}</p>
                 </div>

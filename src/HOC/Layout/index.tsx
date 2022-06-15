@@ -93,8 +93,8 @@ const Layout: React.FC<ILayoutProps> = ({ children }) => {
             <Header />
             <div className={styles.layout}>
                 <main>{children}</main>
-                <Footer />
             </div>
+            <Footer />
         </div>
     );
 };

@@ -12,6 +12,7 @@
     width: 100%;
     font-size: 16px;
     letter-spacing: .5px;
+    -moz-appearance: textfield;
 }
 
 .inputTitle {

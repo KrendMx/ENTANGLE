@@ -42,7 +42,8 @@
     font-size: 17px;
     line-height: 23px;
     color: #FFFFFF;
-    width: 5rem;
+    width: 3ch;
+    -moz-appearance:textfield;
 }
 
 .input::-webkit-outer-spin-button,
@@ -57,6 +58,10 @@
     font-size: 17px;
     line-height: 23px;
     color: #FFFFFF;
+}
+
+.currencyBlock p:first-child {
+    margin-right: .5rem;
 }
 
 .maxButtonBlock {

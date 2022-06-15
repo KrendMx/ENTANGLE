@@ -20,12 +20,19 @@
     z-index: -1;
 }
 
-/* @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
     .wrapper::before {
         backdrop-filter: blur(62px);
         background-color: rgba(0, 0, 0, 0.1);
     }
-} */
+}
+
+@supports not ((backdrop-filter: none)) {
+    .wrapper::before {
+        background-color: rgba(0, 0, 0, 0.1);
+        opacity: .4rem;
+    }
+}
 
 .header {
     display: flex;

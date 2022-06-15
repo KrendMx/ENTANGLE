@@ -1,14 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import type { Contract } from 'ethers';
-import { providers } from 'ethers';
 import styles from '../style.module.css';
 import ModalInput from '../ModalInput/index';
 import GradientButton from '@/ui-kit/GradientButton';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
-import { networks, farms, namesConfig } from '@/src/utils/GlobalConst';
+import { networks, namesConfig } from '@/src/utils/GlobalConst';
 import type { availableChains } from '@/src/utils/GlobalConst';
-import { ChainConfig } from '@/src/ChainService/config';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import {
     getAllowance,
@@ -26,7 +24,7 @@ type propsType = {
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
 const Deposit: React.FC<propsType> = ({
-    buyToken, chainThings, balanceSynth, balanceUSDC,
+    buyToken, chainThings, balanceSynth, balanceUSDC, available,
 }) => {
     const dispatch = useAppDispatch();
     const { chainId, account, provider } = useAppSelector(
@@ -76,6 +74,13 @@ const Deposit: React.FC<propsType> = ({
             setBalances({ usdc: firstBalance, synth: secondBalance });
         }());
     }, [balanceSynth, balanceUSDC]);
+
+    const moreThenAvailable = useMemo(() => {
+        if (Number(synthAmount) > Number(available)) {
+            return true;
+        }
+        return false;
+    }, [synthAmount]);
 
     const handleApprove = async () => {
         dispatch(
@@ -127,19 +132,23 @@ const Deposit: React.FC<propsType> = ({
                     />
                 </div>
             </div>
-            {true ? (
+            {!moreThenAvailable ? (
                 <p className={styles.warn}>
                     The approximate transaction execution time is 15 seconds!
                 </p>
             ) : (
                 <p className={styles.warnScd}>
-                    Transaction for more than xxxx SynthLPs can take between
+                    Transaction for more than
+                    {' '}
+                    {Number(synthAmount).toFixed(3)}
+                    {' '}
+                    SynthLPs can take between
                     5-30 minutes!
                 </p>
             )}
-            <Text title="Current Projected APR" content={`${sortingObject[localChain]?.APR}%`} />
-            <Text title="Your SynthLP Balance" content={`${balances.synth} SynthLP`} />
-            <Text title="Your USDC balance " content={`${balances.usdc} USDC`} />
+            <Text title="Current Projected APR" content={`${sortingObject[localChain]?.APR}%`} classText={styles.mgT} />
+            <Text title="Your SynthLP Balance" content={`${balances.synth} SynthLP`} classText={styles.mgT} />
+            <Text title="Your USDC balance " content={`${balances.usdc} USDC`} classText={styles.mgT} />
             <ModalInput
                 currencyReceive={networks[chainId as availableChains].currency}
                 currencySend="USDC"

@@ -85,7 +85,7 @@
     line-height: 16px;
     text-align: center;
     color: #FFFFFF;
-    margin: 1rem 0;
+    margin: 1.08rem 0;
 }
 
 .warnScd {
@@ -96,8 +96,13 @@
     text-align: center;
     color: #FFFFFF;
     margin: .5rem 0;
+    color: red;
 }
 
 .mg2 {
     margin: 1.5rem 0;
+}
+
+.mgT {
+    margin: .64rem 0;
 }
