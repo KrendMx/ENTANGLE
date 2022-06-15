@@ -38,8 +38,8 @@ export const ChainConfig = {
         NAME: 'MIM/USDC LP',
         SYNTH: [
             {
-                ID: '67',
-                FARMID: '67',
+                ID: '67', // synt id
+                FARMID: '67', // farm id
                 CROSSCHAIN: true,
                 CONTRACTS: {
                     SYNTH: {

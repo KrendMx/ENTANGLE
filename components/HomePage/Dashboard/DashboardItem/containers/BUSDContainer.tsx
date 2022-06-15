@@ -1,7 +1,7 @@
 import React, {
     useReducer, useMemo, useEffect,
 } from 'react';
-import ChainService from '@/src/ChainService/ChainService';
+import CardService from '@/src/ChainService/CardService';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 import { farms } from '@/src/utils/GlobalConst';
@@ -53,7 +53,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
         ...state,
     } as const;
 
-    const Service = useMemo(() => new ChainService('BSC'), []);
+    const Service = useMemo(() => new CardService('BSC'), []);
 
     useEffect(() => {
         if (!preLoader) {

@@ -1,9 +1,12 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
+import { Contract, ethers } from 'ethers';
 import styles from './style.module.css';
 import Tabs from '@/ui-kit/Tabs';
 import Borrow from './Tabs/Borrow';
 import type { infoReducer } from './MintEnt.interfaces';
 import Repay from './Tabs/Repay';
+import { spiritChef } from '@/src/ChainService/abi';
+import ChainService from '@/src/ChainService/ChainService';
 
 const StakeEntangle: React.FC = () => {
     const [actionType, setActionType] = useState<number>(0);
@@ -19,6 +22,14 @@ const StakeEntangle: React.FC = () => {
             EnUSDBorrowed: 201.55,
         },
     );
+    /*-----------------------------------------*/
+    useEffect(() => {
+        (async () => {
+            const testVar = await ChainService.getTVDForBuyAndSell();
+            console.log(testVar);
+        })();
+    }, []);
+    /*-----------------------------------------*/
 
     const switchHandler = (): void =>
         (actionType === 0 ? setActionType(1) : setActionType(0));
@@ -30,29 +41,20 @@ const StakeEntangle: React.FC = () => {
             <div className={styles.wrapper}>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>SynthLP in Collateral</p>
-                    <p
-                        className={styles.sectionValue}
-                    >
+                    <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpInCollateral}`}
-
                     </p>
                 </div>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>SynthLP Balance</p>
-                    <p
-                        className={styles.sectionValue}
-                    >
+                    <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpBalance}`}
-
                     </p>
                 </div>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>EnUSD Borrowed</p>
-                    <p
-                        className={styles.sectionValue}
-                    >
+                    <p className={styles.sectionValue}>
                         {`$${infoValuesState.EnUSDBorrowed}`}
-
                     </p>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import type { ContainerStateType } from './types';
 import { farms } from '@/src/utils/GlobalConst';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
-import ChainService from '@/src/ChainService/ChainService';
+import CardService from '@/src/ChainService/CardService';
 import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
 import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
 import { setErrorStack, setError, addSortingCard } from '@/src/Redux/store/reducers/AppSlice';
@@ -55,7 +55,7 @@ const FantomContainer = ({ isFiltered = false }) => {
         ...state,
     } as const;
 
-    const Service = useMemo(() => new ChainService('FTM'), []);
+    const Service = useMemo(() => new CardService('FTM'), []);
 
     useEffect(() => {
         if (!preLoader) {

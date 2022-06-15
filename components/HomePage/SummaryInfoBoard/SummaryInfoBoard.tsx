@@ -10,6 +10,7 @@ import type {
 import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
+import ChainService from '@/src/ChainService/ChainService';
 
 // TODO MIGRATE TO INFO BLOCK from UI
 const InfoBlock: React.FC<InfoBlockProps> = ({
@@ -56,6 +57,7 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
 const SummaryInfoBoard = () => {
     const service = useContext<iService>(ServiceContext);
     const [totalValueLockedData, setTotalValueLockedData] = useState<TotalValueLockedData | null>(null);
+    const [TVD, setTVD] = useState<number | null>(null);
 
     const updateTVL = () => {
         service.getTotalValueLocked().then(setTotalValueLockedData);
@@ -67,6 +69,10 @@ const SummaryInfoBoard = () => {
 
     useEffect(() => {
         updateData();
+        (async () => {
+            const res = await ChainService.getTVDForBuyAndSell();
+            setTVD(res);
+        })();
     }, []);
 
     useEffect(() => {
@@ -92,7 +98,7 @@ const SummaryInfoBoard = () => {
                 />
                 <InfoBlock
                     info="Total Value Deposited"
-                    value={123523442}
+                    value={TVD || null}
                     type={InfoBlockTypes.MONEY}
                 />
             </div>
