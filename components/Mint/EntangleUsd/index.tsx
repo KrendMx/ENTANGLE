@@ -1,12 +1,9 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { Contract, ethers } from 'ethers';
+import React, { useReducer, useState } from 'react';
 import styles from './style.module.css';
 import Tabs from '@/ui-kit/Tabs';
 import Borrow from './Tabs/Borrow';
 import type { infoReducer } from './MintEnt.interfaces';
 import Repay from './Tabs/Repay';
-import { spiritChef } from '@/src/ChainService/abi';
-import ChainService from '@/src/ChainService/ChainService';
 
 const StakeEntangle: React.FC = () => {
     const [actionType, setActionType] = useState<number>(0);
@@ -23,12 +20,6 @@ const StakeEntangle: React.FC = () => {
         },
     );
     /*-----------------------------------------*/
-    useEffect(() => {
-        (async () => {
-            const testVar = await ChainService.getTVDForBuyAndSell();
-            console.log(testVar);
-        })();
-    }, []);
     /*-----------------------------------------*/
 
     const switchHandler = (): void =>
