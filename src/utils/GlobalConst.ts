@@ -94,6 +94,13 @@ const farms = {
     },
 } as const;
 
+const STABLES = {
+    'USDC': {
+        full: 'USDC Coin',
+        img: 'usdc.svg',
+    },
+};
+
 const namesConfig = {
     'BSC': '56',
     'AVAX': '43114',
@@ -132,7 +139,7 @@ const synths = {
 type languages = 'en' | 'ru' | 'ch';
 
 export {
-    synths, chainToNameConfig, namesConfig, farms, networks,
+    synths, chainToNameConfig, namesConfig, farms, networks, STABLES,
 };
 
 export type { availableChains, languages };
