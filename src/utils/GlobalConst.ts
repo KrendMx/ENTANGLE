@@ -12,7 +12,7 @@ const networks = {
         description: 'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
         dex: '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
         fiat: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
-        rpc: 'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
+        rpc: 'https://rpc.ankr.com/avalanche',
         synth: '0x901D6D195f9fF29051E499792291186B9A9CdBFc',
         dexAbi: avaDex,
         mainColor: 'rgba(233, 48, 56, 0.2)',

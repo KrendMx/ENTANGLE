@@ -233,9 +233,10 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             </HintModal>
                         </div>
                         <div className={styles.sectionRow}>
-                            {yieldTime ? (
+                            {profits.get(localChain)?.value ? (
                                 <p className={styles.sectionValue}>
-                                    {yieldTime}
+                                    $
+                                    {profits.get(localChain)?.value}
                                 </p>
                             ) : (
                                 <TextLoader bgGradient={bgGradient} />

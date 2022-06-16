@@ -23,7 +23,7 @@ export const NETWORKS = {
         rpc: 'https://rpc.ftm.tools',
     },
     43114: {
-        rpc: 'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
+        rpc: 'https://rpc.ankr.com/avalanche',
     },
     56: {
         rpc: 'https://bsc-dataseed2.binance.org',
