@@ -1,3 +1,4 @@
+import type { HTMLAttributes } from 'react';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -9,7 +10,7 @@ type TypographyProps = {
     type: TypographyType,
     children: React.ReactNode | string,
     underline?: boolean,
-    classNameModifier?: string
+    classNameModifier?: HTMLAttributes<HTMLTextAreaElement>['className']
 }
 
 const Typography: React.FC<TypographyProps> = ({

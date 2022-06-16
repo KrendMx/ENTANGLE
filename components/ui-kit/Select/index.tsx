@@ -60,8 +60,8 @@ const Select: React.FC<SelectProps> = ({
                 onChange(target.getAttribute('data-select-value'));
                 setIsOpen(!isOpen);
             }
-            if (target === selectWrapperNode.current) setIsOpen(!isOpen);
-            if (target !== selectWrapperNode.current) setIsOpen(false);
+            if (selectWrapperNode.current.contains(target as Node)) setIsOpen(!isOpen);
+            if (!selectWrapperNode.current.contains(target as Node)) setIsOpen(false);
         };
         window.addEventListener('click', handleClick);
         return () => window.removeEventListener('click', handleClick);
