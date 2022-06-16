@@ -72,7 +72,6 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     const cardData = await Service.getCardData(
                         account ? farms[chainId]?.AVAX : '68',
                     );
-                    const test = await Service.getTotalValueDeposited();
                     apr = cardData.apr;
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;

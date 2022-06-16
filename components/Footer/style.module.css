@@ -21,6 +21,7 @@
 }
 
 .logo {
+  cursor: pointer;
     display: flex;
 }
 

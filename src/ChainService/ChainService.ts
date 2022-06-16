@@ -1,10 +1,9 @@
 import { Contract, providers } from 'ethers';
 import { ChainConfig, NETWORKS } from './config';
 import type {
-    IChain,
-    SynthContracts,
     IChainService,
 } from './ChainService.interface';
+import { networks } from '../utils/GlobalConst';
 
 class ChainService implements IChainService {
     public static readonly SynthsContractsArray: { [key: string]: Contract } = {};
@@ -56,6 +55,12 @@ class ChainService implements IChainService {
             );
         }
         return Math.round(finalArr.reduce((pr, cr) => Number(pr) + Number(cr)));
+    };
+
+    private static createProvider = (chainId: keyof typeof networks) =>
+        new providers.JsonRpcProvider(networks[chainId].rpc);
+
+    public static getTPForBuyAndSell = async () => {
     };
 }
 

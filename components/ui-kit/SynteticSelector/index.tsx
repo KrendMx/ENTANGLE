@@ -1,30 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+    useEffect, useReducer, useRef, useState,
+} from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './style.module.css';
-
-type PropSelectTypes = {
-    currenc: string;
-    func: any;
-    currencSymbol: string;
-};
-
-type PropOptionTypes = {
-    key?: number;
-    isOpen: boolean;
-    handleClick: () => void;
-    icon: string;
-    name: string;
-    currencSymbol: string;
-    price: string | number;
-    customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-};
-
-type currencyObject = {
-    name: string;
-    icon: string;
-    price: number;
-};
+import type {
+    PropSelectTypes,
+    PropOptionTypes,
+    currencyObject,
+    priceObject,
+} from './SynteticSelector.types';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 
 const SyntOption: React.FC<PropOptionTypes> = ({
     icon,
@@ -76,27 +62,35 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
     currencSymbol,
 }) => {
     const currencyObject = {
-        USDC: {
-            name: 'fUSDT-USDC',
-            icon: '/images/networks/avalancheDashboard.png',
-        },
-        BUSD: {
+        'BSC': {
             name: 'UST-BUSD',
             icon: '/images/networks/pancakeDashboard.png',
         },
-        UST: { name: 'UST', icon: '/images/networks/anchorDashboard.png' },
+        'AVAX': {
+            name: 'fUSDT-USDC',
+            icon: '/images/networks/avalancheDashboard.png',
+        },
     };
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const changeIsOpen = () => {
-        if (isOpen) {
-            setIsOpen(false);
-            return;
-        }
-        setIsOpen(true);
-    };
+    const { balances } = useAppSelector((state) => state.userReducer);
+
+    const changeIsOpen = () => { setIsOpen(!isOpen); };
+
+    const [priceState, priceDispatcher] = useReducer(
+        (oldState: priceObject, newState: Partial<priceObject>) => ({
+            ...oldState,
+            ...newState,
+        }),
+        {
+            'AVAX': '~',
+            'BSC': '~',
+        },
+    );
+
     const modal = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         const handleClick = (e: MouseEvent) =>
             modal.current
@@ -107,6 +101,11 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
 
         return () => window.removeEventListener('mousedown', handleClick);
     }, []);
+
+    useEffect(() => {
+        if (balances.AVAX) { priceDispatcher({ ...priceState, 'AVAX': balances.AVAX.positions.toString() }); }
+        if (balances.BSC) { priceDispatcher({ ...priceState, 'BSC': balances.BSC.positions.toString() }); }
+    }, [balances]);
 
     return (
         <div ref={modal} style={{ width: '100%', position: 'relative' }}>
@@ -133,7 +132,7 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                     <SyntOption
                         {...currencyObject[currenc]}
                         handleClick={changeIsOpen}
-                        price={123}
+                        price={priceState[currenc]}
                         customClassName={styles.noPadding}
                         currencSymbol={currencSymbol}
                     />
@@ -149,10 +148,10 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                                 func(Object.keys(currencyObject)[index]);
                                 changeIsOpen();
                             }}
+                            price={priceState[Object.keys(currencyObject)[index]]}
                             isOpen={isOpen}
                             currencSymbol={currencSymbol}
                             icon={el.icon}
-                            price={123}
                         />
                     ))}
                 </div>

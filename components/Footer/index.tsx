@@ -10,7 +10,13 @@ const Footer = () => (
         <div className={styles.content}>
             <Link href="/" passHref>
                 <span className={styles.logo}>
-                    <Image width={205} height={38} quality={100} src="/images/logo.svg" alt="" />
+                    <Image
+                        width={205}
+                        height={38}
+                        quality={100}
+                        src="/images/logo.svg"
+                        alt=""
+                    />
                 </span>
             </Link>
             <nav className={styles.navigate}>
