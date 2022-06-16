@@ -1,141 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import classNames from 'classnames';
-import { STAKE_DATE } from './Stable.const';
-import { networks } from '@/src/utils/GlobalConst';
+import { CHART_DATA_TEST, initState } from './Stable.const';
+import AssetItem from './AssetItem';
+import Select, { Option } from '@/components/ui-kit/Select';
+import type { IAssetItem } from './Stable.interfaces';
 
-import Input from '@/ui-kit/Input';
-import GradientButton from '@/components/ui-kit/GradientButton';
-import MiniButton from '@/ui-kit/MiniButton/index';
-import Select, { Option } from '@/ui-kit/Select/index';
-import GlowLine from '@/ui-kit/GlowLine';
-import Typography from '@/ui-kit/Typography';
-import TextGroupStake from '@/ui-kit/TextGropStake/index';
-import ChartWrapperWithText from '@/ui-kit/ChartWrapperWithText/index';
+import Typography from '@/components/ui-kit/Typography';
+import ChartWrapper from '@/components/ui-kit/ChartWrapperNew/ChartWrapper';
 
-import styles from '../Entangle/style.module.css';
-import localStyles from './style.module.css';
+import styles from './style.module.css';
 
 const StakeStable: React.FC = () => {
-    const [amount, setAmount] = useState<string>();
-    const [stakeDate, setStakeDate] = useState<string>('1 Month');
-    const [dropSynthValue, setDropSynthValue] = useState<string>('');
-    const [dropStableValue, setDropStableValue] = useState<string>('');
+    const [stableState, setStableState] = useState<IAssetItem[]>(initState);
+    const [filterValue, setFilterValue] = useState<string>('');
+    const [sortValue, setSortValue] = useState<string>('');
 
-    const handleChangeSynthDrop = (value: string) => setDropSynthValue(value);
-    const handleChangeStableDrop = (value: string) => setDropStableValue(value);
+    const addOneStable = () => {};
 
-    const getMax = () => setAmount('100');
+    const filterSortStables = () => {};
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.container}>
-                <div className={styles.description}>
-                    <Typography type="title">
-                        Stake Stablecoins for Synth-LP Liquidity
-                    </Typography>
-                    <GlowLine />
-                    <p className={styles.descriptItem}>
-                        Users are able to deposit their stablecoins (single
-                        sided liquidity) for the minting of Synthetic-LPs which
-                        are made available to trade. Earn rewards in Entangle
-                        tokens and receive a share of the protocol revenue,
-                    </p>
-                    <div className={styles.graphData}>
-                        <ChartWrapperWithText
-                            title="Total TVL"
-                            value="568'530'000"
-                        />
-                        <ChartWrapperWithText
-                            title="Total Synth-LP Circulation Supply"
-                            value="475'123'477"
-                            extraText="SynthLps"
-                        />
-                    </div>
-                    <div className={localStyles.mBtm}>
-                        <Typography type="title">Backers Breakdown</Typography>
-                        <GlowLine />
-                    </div>
-                    <div className={styles.graphData}>
-                        <ChartWrapperWithText
-                            title="Locked for 1 month"
-                            value="$110'000'000"
-                        />
-                        <ChartWrapperWithText
-                            title="Locked for 3 months"
-                            value="$74'565'555"
-                        />
-                    </div>
-                    <div className={styles.graphData}>
-                        <ChartWrapperWithText
-                            title="Locked for 6 months"
-                            value="$80'450'000"
-                        />
-                        <ChartWrapperWithText
-                            title="Locked for 12 months"
-                            value="$63'170'000"
-                        />
-                    </div>
-                </div>
-                <div className={styles.stakeForm}>
-                    <div className={localStyles.formItem}>
-                        <Select
-                            value={dropStableValue}
-                            onChange={handleChangeStableDrop}
-                        >
-                            <Option value="">Select Stablecoin</Option>
-                            <Option value="usdc">USDC</Option>
-                        </Select>
-                    </div>
-                    <div className={styles.formItem}>
-                        <Select
-                            value={dropSynthValue}
-                            onChange={handleChangeSynthDrop}
-                        >
-                            <Option value="">Select Synth-LP</Option>
-                            {Object.keys(networks).map((el, idx) => (
-                                <Option key={idx} value={networks[el].abbr}>
-                                    {networks[el].title}
-                                </Option>
-                            ))}
-                        </Select>
-                    </div>
-                    <div className={localStyles.inputBlock}>
-                        <Input
-                            type="number"
-                            placeholder="Amount"
-                            value={amount}
-                            onChange={({ target }) => setAmount(target.value)}
-                            title="Amount USDC"
-                            getMax={getMax}
-                        />
-                    </div>
-                    <div
-                        className={classNames(
-                            styles.formItem,
-                            styles.miniButtonsContainer,
-                        )}
+            <Typography type="title" classNameModifier={styles.textHeader}>
+                Stake Stablecoins for Synth-LP Liquidity
+            </Typography>
+            <div className={styles.chartBlock}>
+                {/* <ChartWrapper label="TVL" data={CHART_DATA_TEST} total="1568'530'000" percentChange={54.345} /> */}
+            </div>
+            <div className={styles.assetHeader}>
+                <Typography type="title" classNameModifier={styles.textHeader}>
+                    Assets
+                </Typography>
+                <div className={styles.filterBlock}>
+                    <Select
+                        value={filterValue}
+                        onChange={setFilterValue}
+                        disabled
+                        customClassName={classNames(styles.select, styles.mgr)}
                     >
-                        {STAKE_DATE.map((el, idx) => (
-                            <MiniButton
-                                title={el}
-                                active={stakeDate === el}
-                                clickHandler={() => setStakeDate(el)}
-                                key={idx}
-                            />
-                        ))}
-                    </div>
-                    <TextGroupStake
-                        title="Current Average Utilization Rate"
-                        value="88%"
-                    />
-                    <TextGroupStake
-                        title="Past 24h Volume"
-                        value="$10’000’000"
-                    />
-                    <TextGroupStake title="Fees 24h" value="$40’000" />
-                    <TextGroupStake title="APR" value="25%" hintText="test" />
-                    <GradientButton title="Stake" onClick={() => {}} />
+                        <Option value="">Filter by</Option>
+                        <Option value="1">Filter by</Option>
+                    </Select>
+                    <Select
+                        value={sortValue}
+                        onChange={setSortValue}
+                        disabled
+                        customClassName={styles.select}
+                    >
+                        <Option value="">Sort by</Option>
+                        <Option value="1">Sort by</Option>
+                    </Select>
                 </div>
+            </div>
+            <div className={styles.assetWrapper}>
+                {stableState.map((el, idx) => (
+                    <AssetItem
+                        key={idx}
+                        title={el.title}
+                        apr={el.apr}
+                        availableNetworks={el.availableNetworks}
+                        volume={el.volume}
+                    />
+                ))}
             </div>
         </div>
     );

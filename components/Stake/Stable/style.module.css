@@ -1,16 +1,36 @@
-.formItem {
-    margin-bottom: 1rem;
+.wrapper {
+    margin-top: 1rem;
 }
 
-.inputBlock {
-    margin: 1rem 0;
+.textHeader {
+    font-size: 35px;
+    line-height: 48px;
 }
 
-.iBlock {
+.chartBlock {}
+
+.assetHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.filterBlock {
+    width: 40%;
     display: flex;
     flex-direction: row;
 }
 
-.mBtm {
-    margin: 1rem 0;
+.assetWrapper {}
+
+.mgr {
+    margin-right: 1rem;
+}
+
+.select {
+    border: 1px solid #1E1E1E !important;
+    box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.9) !important;
+    max-width: 271px !important;
+    border-radius: 12px !important;
+    background-color: transparent !important;
 }
