@@ -23,9 +23,9 @@ const SyntOption: React.FC<PropOptionTypes> = ({
 }) => (
     <div
         key={props?.key}
-        className={classNames(styles.item, props?.customClassName)}
+        className={classNames(styles.item, { [styles.disabled]: price === '~' }, props?.customClassName)}
         onClick={() => {
-            handleClick();
+            if (price !== '~')handleClick();
         }}
     >
         <Image alt="" src={icon} width={22} height={22} />
@@ -34,7 +34,9 @@ const SyntOption: React.FC<PropOptionTypes> = ({
             <div
                 className={classNames(
                     styles.wrapperImage,
-                    isOpen ? styles.wrapperImageOpen : null,
+                    {
+                        [styles.wrapperImageOpen]: isOpen,
+                    },
                 )}
             >
                 <Image
@@ -78,17 +80,6 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
 
     const changeIsOpen = () => { setIsOpen(!isOpen); };
 
-    const [priceState, priceDispatcher] = useReducer(
-        (oldState: priceObject, newState: Partial<priceObject>) => ({
-            ...oldState,
-            ...newState,
-        }),
-        {
-            'AVAX': '~',
-            'BSC': '~',
-        },
-    );
-
     const modal = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -101,11 +92,6 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
 
         return () => window.removeEventListener('mousedown', handleClick);
     }, []);
-
-    useEffect(() => {
-        if (balances.AVAX) { priceDispatcher({ ...priceState, 'AVAX': balances.AVAX.positions.toString() }); }
-        if (balances.BSC) { priceDispatcher({ ...priceState, 'BSC': balances.BSC.positions.toString() }); }
-    }, [balances]);
 
     return (
         <div ref={modal} style={{ width: '100%', position: 'relative' }}>
@@ -132,7 +118,7 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                     <SyntOption
                         {...currencyObject[currenc]}
                         handleClick={changeIsOpen}
-                        price={priceState[currenc]}
+                        price={balances[currenc] ? balances[currenc].positions : '~'}
                         customClassName={styles.noPadding}
                         currencSymbol={currencSymbol}
                     />
@@ -148,7 +134,9 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                                 func(Object.keys(currencyObject)[index]);
                                 changeIsOpen();
                             }}
-                            price={priceState[Object.keys(currencyObject)[index]]}
+                            price={balances[Object.keys(currencyObject)[index]]
+                                ? balances[Object.keys(currencyObject)[index]].positions
+                                : '~'}
                             isOpen={isOpen}
                             currencSymbol={currencSymbol}
                             icon={el.icon}

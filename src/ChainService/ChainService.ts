@@ -45,12 +45,12 @@ class ChainService implements IChainService {
                         key,
                         ChainService.contracts[key].farmid,
                     ))
-                        / 10
-                            ** Number(
-                                await ChainService.contracts[
-                                    key
-                                ].STABLESYNTCHEF.decimals(),
-                            ),
+                    / 10
+                    ** Number(
+                        await ChainService.contracts[
+                            key
+                        ].STABLESYNTCHEF.decimals(),
+                    ),
                 ),
             );
         }

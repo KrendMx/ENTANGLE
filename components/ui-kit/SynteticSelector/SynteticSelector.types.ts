@@ -24,8 +24,9 @@ type currencyObject = {
 };
 
 type priceObject = {
-    AVAX: string;
-    BSC: string;
+    AVAX: Object;
+    BSC: Object;
+    FTM: Object;
 }
 
 export type {

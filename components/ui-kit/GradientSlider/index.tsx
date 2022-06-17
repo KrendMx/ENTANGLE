@@ -41,7 +41,7 @@ const GradientSlider: React.FC<PropTypes> = ({
                     style={{ left: `${getStatusPosition(xCoordinate)}%` }}
                 >
                     <span style={{ position: 'relative' }}>
-                        {outsideVariable}
+                        {`${outsideVariable}%`}
                         <div className={styles.pointer} />
                     </span>
                 </div>
@@ -54,6 +54,7 @@ const GradientSlider: React.FC<PropTypes> = ({
                 type="range"
                 min={0}
                 max={100}
+                step={100 / (max - min)}
                 onMouseDown={() => {
                     setIsVisible(true);
                 }}
