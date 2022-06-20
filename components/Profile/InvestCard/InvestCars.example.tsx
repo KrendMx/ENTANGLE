@@ -1,37 +1,99 @@
-import React from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
-import { networks } from '@/src/utils/GlobalConst';
+import { farms, networks } from '@/src/utils/GlobalConst';
 
 import styles from './style.module.css';
 import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import type { availableChains } from '@/src/utils/GlobalConst';
 import Loader from '@/ui-kit/Loader';
+import HintModal from '@/components/ui-kit/HintModal';
+import GradientButton from '@/components/ui-kit/GradientButton';
+
+import PayModal from '../../HomePage/PayModal/index';
+import Modal from '@/components/Modal';
+import CardService from '@/src/ChainService/CardService';
 
 interface IState {
     chainId: availableChains;
     description: string;
     positions: number;
     price: number;
+    bgGradient: string;
+    cardType: string;
+    cardTypeLabelBg:string,
+    cardTypeLabelColor:string,
+    currencyName: string,
+}
+
+type ValueStateType = {
+    available: string,
+    totalAvailable: string,
+    price: string
 }
 
 const InvestCardExp: React.FC<IState> = ({
     positions,
+    cardType,
     price,
     chainId,
     description,
+    bgGradient,
+    cardTypeLabelBg,
+    cardTypeLabelColor,
+    currencyName,
 }) => {
     const {
         profits, avgPrices,
     } = useAppSelector((state) => state.userReducer);
 
+    const [isClose, setIsClose] = useState<boolean>(false);
+
+    const Service = useMemo(() => new CardService(currencyName), []);
+
+    const [state, dispatch] = useReducer((
+        valueState: ValueStateType,
+        stateUpdate: Partial<ValueStateType>,
+    ) => ({ ...valueState, ...stateUpdate }), {
+        available: '0',
+        totalAvailable: '0',
+        price: '1',
+    });
+
+    useEffect(() => {
+        (async () => {
+            let [
+                available,
+                totalAvailable,
+                price] = [0, 0, 0, 0, 0, 0];
+            try {
+                const cardData = await Service.getCardData(
+                    farms[chainId][currencyName],
+                );
+                apr = cardData.apr;
+                available = cardData.available;
+                totalAvailable = cardData.totalAvailable;
+                totalDeposits = cardData.totalDeposits;
+                currentDeposits = cardData.currentDeposits;
+                price = cardData.price;
+            } catch (e) {
+                console.log(e);
+            }
+        })();
+    }, []);
+
     return (
-        <div className={styles.root}>
+        <div className={styles.root} style={{ background: bgGradient || '' }}>
+            {isClose ? (
+                <Modal handleClose={() => { setIsClose(false); }}>
+                    <PayModal {...state} handleClose={() => { setIsClose(false); }} />
+                </Modal>
+            ) : null}
             <div className={styles.logoWrapper}>
                 <Image
-                    width={100}
-                    height={100}
+                    width={64}
+                    height={64}
                     quality={100}
                     src={`/images/networks/${networks[chainId].icon}`}
                     alt="alt"
@@ -39,7 +101,21 @@ const InvestCardExp: React.FC<IState> = ({
                 />
             </div>
             <div className={styles.main}>
-                <p className={styles.pare}>{networks[chainId].currencyMin}</p>
+                <div className={styles.pare}>
+                    <p>{`f${networks[chainId].currencyMin}`}</p>
+                    <span style={{ margin: '0 10px 0 5px' }}>
+                        <HintModal>
+                            <p>test</p>
+                        </HintModal>
+                    </span>
+                    <button
+                        className={styles.cardLabel}
+                        style={{ background: cardTypeLabelBg }}
+                    >
+                        <p style={{ color: cardTypeLabelColor }}>{cardType}</p>
+
+                    </button>
+                </div>
                 <p className={styles.undertitle}>{description}</p>
             </div>
             <ul className={styles.list}>
@@ -113,6 +189,18 @@ const InvestCardExp: React.FC<IState> = ({
                             <Loader />
                         </p>
                     )}
+                </li>
+            </ul>
+            <ul className={styles.list}>
+                <li className={styles.listItem}>
+                    <GradientButton
+                        title={cardType === 'Synthetic-LP' ? 'Buy/Sell' : 'Lock/Unlock'}
+                        onClick={() => {
+                            sessionStorage.setItem('card', currencyName);
+                            setIsClose(true);
+                        }}
+                        titleClass={styles.buttonTitleClass}
+                    />
                 </li>
             </ul>
         </div>

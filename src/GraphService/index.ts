@@ -12,7 +12,7 @@ import type { availableChains } from '../utils/GlobalConst';
 import { networks, namesConfig } from '../utils/GlobalConst';
 
 class GraphService implements IGraphService {
-    private account;
+    private account: string;
 
     constructor(account: string) {
         this.account = account;

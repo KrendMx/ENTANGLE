@@ -8,26 +8,26 @@ import type { sortingCard } from '@/src/Redux/store/interfaces/App.interfaces';
 const Dashboard: React.FC<IDashboardProps> = ({
     filter = '',
     query = '',
-    sorts = '',
+    sort = '',
 }) => {
     const { sortingObject } = useAppSelector((state) => state.appReducer);
 
     function deskDetect() {
-        return sorts.includes('desk') ? -1 : 1;
+        return sort.includes('desk') ? -1 : 1;
     }
 
     function sortingCard() {
         const arr = Object.values(sortingObject);
         return arr.sort(
             (a, b) =>
-                (a[sorts.split(' ')[0]] < b[sorts.split(' ')[0]] ? 1 : -1)
+                (a[sort.split(' ')[0]] < b[sort.split(' ')[0]] ? 1 : -1)
                 * deskDetect(),
         );
     }
 
     function sortAndFilter() {
         let arr = ITEMS;
-        if (sorts !== '') {
+        if (sort !== '') {
             arr = sortingCard().map(
                 (el: sortingCard) =>
                     ITEMS.filter((e) => e.filter === Number(el.chainId))[0],

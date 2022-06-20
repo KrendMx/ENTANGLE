@@ -43,4 +43,16 @@ const GRAPH_CONFIG = {
     },
 } as const;
 
-export { GRAPH_CONFIG };
+const CHEF_CONFIG = {
+    FTM: {
+        url: 'https://api.thegraph.com/subgraphs/name/krendmx/ftm-syntshef',
+    },
+    AVAX: {
+        url: 'https://api.thegraph.com/subgraphs/name/krendmx/avax-syntshef',
+    },
+    BSC: {
+        url: 'https://api.thegraph.com/subgraphs/name/krendmx/bsc-syntshef',
+    },
+} as const;
+
+export { GRAPH_CONFIG, CHEF_CONFIG };
