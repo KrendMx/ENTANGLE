@@ -13,7 +13,7 @@ type PropOptionTypes = {
     icon: string;
     name: string;
     currencSymbol: string;
-    price: string | number;
+    price: string;
     customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
 };
 

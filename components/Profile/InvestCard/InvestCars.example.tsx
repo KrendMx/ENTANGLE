@@ -1,4 +1,6 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, {
+    useEffect, useMemo, useReducer, useState,
+} from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
@@ -14,6 +16,7 @@ import GradientButton from '@/components/ui-kit/GradientButton';
 import PayModal from '../../HomePage/PayModal/index';
 import Modal from '@/components/Modal';
 import CardService from '@/src/ChainService/CardService';
+import type { IChain } from '@/src/ChainService/ChainService.interface';
 
 interface IState {
     chainId: availableChains;
@@ -24,7 +27,7 @@ interface IState {
     cardType: string;
     cardTypeLabelBg:string,
     cardTypeLabelColor:string,
-    currencyName: string,
+    currencyName: IChain,
 }
 
 type ValueStateType = {
@@ -48,7 +51,7 @@ const InvestCardExp: React.FC<IState> = ({
         profits, avgPrices,
     } = useAppSelector((state) => state.userReducer);
 
-    const [isClose, setIsClose] = useState<boolean>(false);
+    const [isClose, setIsClose] = useState<boolean | null>(null);
 
     const Service = useMemo(() => new CardService(currencyName), []);
 
@@ -63,20 +66,20 @@ const InvestCardExp: React.FC<IState> = ({
 
     useEffect(() => {
         (async () => {
-            let [
-                available,
-                totalAvailable,
-                price] = [0, 0, 0, 0, 0, 0];
+            const timless = {
+                available: '0',
+                totalAvailable: '0',
+                price: '0',
+            };
             try {
                 const cardData = await Service.getCardData(
                     farms[chainId][currencyName],
                 );
-                apr = cardData.apr;
-                available = cardData.available;
-                totalAvailable = cardData.totalAvailable;
-                totalDeposits = cardData.totalDeposits;
-                currentDeposits = cardData.currentDeposits;
-                price = cardData.price;
+                timless.available = cardData.available.toString();
+                timless.totalAvailable = cardData.totalAvailable.toString();
+                timless.price = cardData.price.toString();
+                dispatch({ ...timless });
+                setIsClose(false);
             } catch (e) {
                 console.log(e);
             }
@@ -195,6 +198,7 @@ const InvestCardExp: React.FC<IState> = ({
                 <li className={styles.listItem}>
                     <GradientButton
                         title={cardType === 'Synthetic-LP' ? 'Buy/Sell' : 'Lock/Unlock'}
+                        disabled={isClose === null}
                         onClick={() => {
                             sessionStorage.setItem('card', currencyName);
                             setIsClose(true);

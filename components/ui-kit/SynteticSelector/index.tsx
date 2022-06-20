@@ -1,5 +1,5 @@
 import React, {
-    useEffect, useReducer, useRef, useState,
+    useEffect, useRef, useState,
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
@@ -8,7 +8,6 @@ import type {
     PropSelectTypes,
     PropOptionTypes,
     currencyObject,
-    priceObject,
 } from './SynteticSelector.types';
 import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 
@@ -118,7 +117,7 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                     <SyntOption
                         {...currencyObject[currenc]}
                         handleClick={changeIsOpen}
-                        price={balances[currenc] ? balances[currenc].positions : '~'}
+                        price={balances[currenc] ? balances[currenc].positions.toString() : '~'}
                         customClassName={styles.noPadding}
                         currencSymbol={currencSymbol}
                     />
@@ -135,7 +134,7 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                                 changeIsOpen();
                             }}
                             price={balances[Object.keys(currencyObject)[index]]
-                                ? balances[Object.keys(currencyObject)[index]].positions
+                                ? balances[Object.keys(currencyObject)[index]].positions.toString()
                                 : '~'}
                             isOpen={isOpen}
                             currencSymbol={currencSymbol}

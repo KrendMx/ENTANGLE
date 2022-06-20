@@ -1,3 +1,4 @@
+import type { IChain } from '@/src/ChainService/ChainService.interface';
 import type { CardsOrder } from './InvestCards.const';
 
 interface IProps {
@@ -18,7 +19,7 @@ type ICard = {
     cardType: string;
     cardTypeLabelColor: string;
     cardTypeLabelBg: string;
-    currencyName: string
+    currencyName: IChain
 };
 
 export type { IProps, ICard };
