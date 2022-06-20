@@ -16,7 +16,8 @@
 }
 .sectionTitle {
     color: var(--gray);
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 25px;
     margin-bottom: 6px;
     margin-right: 5px;
 }

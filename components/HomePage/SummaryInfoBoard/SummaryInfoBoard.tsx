@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import type { InfoBlockProps } from './SummaryInfoBoard.interfaces';
 import { InfoBlockTypes, numberFormatter } from './SummaryInfoBoard.constants';
-import type {
-    iService,
-    TotalValueLockedData,
-} from '@/src/context/ServiceContext/ServiceContext.interfaces';
-import { ServiceContext } from '@/src/context/ServiceContext/ServiceContext';
 
 import styles from './style.module.css';
+import ChainService from '@/src/ChainService/ChainService';
 
 // TODO MIGRATE TO INFO BLOCK from UI
 const InfoBlock: React.FC<InfoBlockProps> = ({
@@ -54,27 +50,14 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
 };
 
 const SummaryInfoBoard = () => {
-    const service = useContext<iService>(ServiceContext);
-    const [totalValueLockedData, setTotalValueLockedData] = useState<TotalValueLockedData | null>(null);
-
-    const updateTVL = () => {
-        service.getTotalValueLocked().then(setTotalValueLockedData);
-    };
-
-    const updateData = () => {
-        updateTVL();
-    };
+    const [TVD, setTVD] = useState<number | null>(null);
 
     useEffect(() => {
-        updateData();
-    }, []);
-
-    useEffect(() => {
-        const updateTimer = setInterval(updateData, 10000);
-
-        return () => {
-            clearInterval(updateTimer);
-        };
+        (async () => {
+            const res = await ChainService.getTVDForBuyAndSell();
+            setTVD(res);
+            await ChainService.getTPForBuyAndSell();
+        })();
     }, []);
 
     return (
@@ -83,16 +66,14 @@ const SummaryInfoBoard = () => {
                 <InfoBlock
                     info="Total Profit of Entangle Users"
                     value={
-                        totalValueLockedData
-                            ? totalValueLockedData.amount
-                            : null
+                        123
                     }
                     type={InfoBlockTypes.MONEY}
                     isShort
                 />
                 <InfoBlock
                     info="Total Value Deposited"
-                    value={123523442}
+                    value={TVD || null}
                     type={InfoBlockTypes.MONEY}
                 />
             </div>

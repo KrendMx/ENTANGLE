@@ -1,30 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+    useEffect, useRef, useState,
+} from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './style.module.css';
-
-type PropSelectTypes = {
-    currenc: string;
-    func: any;
-    currencSymbol: string;
-};
-
-type PropOptionTypes = {
-    key?: number;
-    isOpen: boolean;
-    handleClick: () => void;
-    icon: string;
-    name: string;
-    currencSymbol: string;
-    price: string | number;
-    customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-};
-
-type currencyObject = {
-    name: string;
-    icon: string;
-    price: number;
-};
+import type {
+    PropSelectTypes,
+    PropOptionTypes,
+    currencyObject,
+} from './SynteticSelector.types';
+import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 
 const SyntOption: React.FC<PropOptionTypes> = ({
     icon,
@@ -37,9 +22,9 @@ const SyntOption: React.FC<PropOptionTypes> = ({
 }) => (
     <div
         key={props?.key}
-        className={classNames(styles.item, props?.customClassName)}
+        className={classNames(styles.item, { [styles.disabled]: price === '~' }, props?.customClassName)}
         onClick={() => {
-            handleClick();
+            if (price !== '~')handleClick();
         }}
     >
         <Image alt="" src={icon} width={22} height={22} />
@@ -48,7 +33,9 @@ const SyntOption: React.FC<PropOptionTypes> = ({
             <div
                 className={classNames(
                     styles.wrapperImage,
-                    isOpen ? styles.wrapperImageOpen : null,
+                    {
+                        [styles.wrapperImageOpen]: isOpen,
+                    },
                 )}
             >
                 <Image
@@ -76,27 +63,24 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
     currencSymbol,
 }) => {
     const currencyObject = {
-        USDC: {
-            name: 'fUSDT-USDC',
-            icon: '/images/networks/avalancheDashboard.png',
-        },
-        BUSD: {
+        'BSC': {
             name: 'UST-BUSD',
             icon: '/images/networks/pancakeDashboard.png',
         },
-        UST: { name: 'UST', icon: '/images/networks/anchorDashboard.png' },
+        'AVAX': {
+            name: 'fUSDT-USDC',
+            icon: '/images/networks/avalancheDashboard.png',
+        },
     };
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const changeIsOpen = () => {
-        if (isOpen) {
-            setIsOpen(false);
-            return;
-        }
-        setIsOpen(true);
-    };
+    const { balances } = useAppSelector((state) => state.userReducer);
+
+    const changeIsOpen = () => { setIsOpen(!isOpen); };
+
     const modal = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         const handleClick = (e: MouseEvent) =>
             modal.current
@@ -133,7 +117,7 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                     <SyntOption
                         {...currencyObject[currenc]}
                         handleClick={changeIsOpen}
-                        price={123}
+                        price={balances[currenc] ? balances[currenc].positions.toString() : '~'}
                         customClassName={styles.noPadding}
                         currencSymbol={currencSymbol}
                     />
@@ -149,10 +133,12 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                                 func(Object.keys(currencyObject)[index]);
                                 changeIsOpen();
                             }}
+                            price={balances[Object.keys(currencyObject)[index]]
+                                ? balances[Object.keys(currencyObject)[index]].positions.toString()
+                                : '~'}
                             isOpen={isOpen}
                             currencSymbol={currencSymbol}
                             icon={el.icon}
-                            price={123}
                         />
                     ))}
                 </div>

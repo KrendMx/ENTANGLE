@@ -19,7 +19,6 @@ const StakeEntangle: React.FC = () => {
             EnUSDBorrowed: 201.55,
         },
     );
-
     const switchHandler = (): void =>
         (actionType === 0 ? setActionType(1) : setActionType(0));
 
@@ -30,29 +29,20 @@ const StakeEntangle: React.FC = () => {
             <div className={styles.wrapper}>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>SynthLP in Collateral</p>
-                    <p
-                        className={styles.sectionValue}
-                    >
+                    <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpInCollateral}`}
-
                     </p>
                 </div>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>SynthLP Balance</p>
-                    <p
-                        className={styles.sectionValue}
-                    >
+                    <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpBalance}`}
-
                     </p>
                 </div>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>EnUSD Borrowed</p>
-                    <p
-                        className={styles.sectionValue}
-                    >
+                    <p className={styles.sectionValue}>
                         {`$${infoValuesState.EnUSDBorrowed}`}
-
                     </p>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import type { availableChains } from '@/src/utils/GlobalConst';
 import type { IProps, ICard } from './InvestCard.interfaces';
 
 import styles from './style.module.css';
+import type { IChain } from '@/src/ChainService/ChainService.interface';
 
 const InvestCard: React.FC<IProps> = ({
     balances,
@@ -25,6 +26,11 @@ const InvestCard: React.FC<IProps> = ({
                 'Generates yield by running an autocompound MIM/USDC strategy on spookyswap.finance',
             position: balances?.FTM?.positions,
             price: balances?.FTM?.price,
+            bgGradient: 'linear-gradient(90deg, rgba(0, 148, 255, 0.15) 0%, rgba(0, 148, 255, 0.04) 100%)',
+            cardType: 'Synthetic-LP',
+            cardTypeLabelColor: '#00AFFF',
+            cardTypeLabelBg: '#0094FF40',
+            currencyName: 'FTM' as IChain,
         },
         {
             chainId: '43114',
@@ -32,6 +38,11 @@ const InvestCard: React.FC<IProps> = ({
                 'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
             position: balances?.AVAX?.positions,
             price: balances?.AVAX?.price,
+            bgGradient: 'linear-gradient(90deg, rgba(241, 78, 86, 0.15) 0%, rgba(241, 78, 86, 0.04) 100%)',
+            cardType: 'Synthetic-LP',
+            cardTypeLabelColor: '#E7252E',
+            cardTypeLabelBg: 'linear-gradient(180deg, #F14E5640 -23.33%, #E7252E40 118.33%)',
+            currencyName: 'AVAX' as IChain,
         },
         {
             chainId: '56',
@@ -39,6 +50,11 @@ const InvestCard: React.FC<IProps> = ({
                 'Generates yield by running an autocompound USDT/BUSD strategy on pancakeswap.finance',
             position: balances?.BSC?.positions,
             price: balances?.BSC?.price,
+            bgGradient: 'linear-gradient(90deg, rgba(255, 199, 0, 0.15) 0%, rgba(255, 199, 0, 0.04) 100%)',
+            cardType: 'Synthetic-LP',
+            cardTypeLabelColor: '#FF8A00',
+            cardTypeLabelBg: 'linear-gradient(180deg, #FFC70045 -23.33%, #FF8A0045 118.33%)',
+            currencyName: 'BSC' as IChain,
         },
     ];
 
@@ -66,7 +82,7 @@ const InvestCard: React.FC<IProps> = ({
 
     return (
         <div>
-            {hasNoOne ? (
+            {!hasNoOne ? (
                 <h2
                     style={{
                         textAlign: 'center',
@@ -79,13 +95,18 @@ const InvestCard: React.FC<IProps> = ({
             ) : (
                 <div className={styles.cardsWrapper}>
                     {cards.map((el, key) =>
-                        (Number(el.position) ? (
+                        (!Number(el.position) ? (
                             <InvestCardExp
                                 key={key}
                                 chainId={el.chainId as availableChains}
                                 description={el.description}
                                 positions={el.position}
                                 price={el.price}
+                                bgGradient={el.bgGradient}
+                                cardType={el.cardType}
+                                cardTypeLabelBg={el.cardTypeLabelBg}
+                                cardTypeLabelColor={el.cardTypeLabelColor}
+                                currencyName={el.currencyName}
                             />
                         ) : undefined))}
                 </div>

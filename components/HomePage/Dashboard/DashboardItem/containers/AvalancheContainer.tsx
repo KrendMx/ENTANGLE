@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
-import ChainService from '@/src/ChainService/ChainService';
+import CardService from '@/src/ChainService/CardService';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
 import { farms } from '@/src/utils/GlobalConst';
@@ -56,7 +56,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         ...state,
     } as const;
 
-    const Service = useMemo(() => new ChainService('AVAX'), []);
+    const Service = useMemo(() => new CardService('AVAX'), []);
 
     useEffect(() => {
         if (!preLoader) {

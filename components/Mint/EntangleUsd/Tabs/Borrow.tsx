@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import type { ChangeEvent } from 'react';
 import React, { useCallback, useReducer, useState } from 'react';
 import Image from 'next/image';
 import Input from '@/components/ui-kit/Input';
@@ -28,13 +29,15 @@ const Borrow: React.FC<IBorrowProps> = () => {
         },
     );
 
-    const changeCurrency = useCallback((currency: string) => {
-        dispatch({ synthLp: currency });
+    const changeCurrency = useCallback((value: string) => {
+        dispatch({ synthLp: value });
     }, []);
 
     const changeLTVRate = useCallback((value: string) => {
         dispatch({ LTVRate: value });
     }, []);
+
+    const changeSLPAmount = (value: string) => { dispatch({ synthLpLock: value }); };
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     return (
@@ -67,8 +70,11 @@ const Borrow: React.FC<IBorrowProps> = () => {
                         </p>
                         <Input
                             type="number"
+                            value={state.synthLpLock}
                             placeholder="Enter amount of Synth-LP"
-                            onChange={() => {}}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                changeSLPAmount(e.target.value);
+                            }}
                         />
                     </div>
                 </div>
@@ -209,6 +215,7 @@ const Borrow: React.FC<IBorrowProps> = () => {
                             type="number"
                             placeholder="You will get EnUSD"
                             onChange={() => {}}
+                            value={((Number(state.synthLpLock) / 100) * Number(state.LTVRate)).toString()}
                         />
                     </div>
 
