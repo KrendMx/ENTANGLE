@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import { CHART_DATA_TEST, initState } from './Stable.const';
 import AssetItem from './AssetItem';
@@ -21,11 +22,39 @@ const StakeStable: React.FC = () => {
 
     return (
         <div className={styles.wrapper}>
-            <Typography type="title" classNameModifier={styles.textHeader}>
-                Stake Stablecoins for Synth-LP Liquidity
-            </Typography>
+            <div className={classNames(styles.glow, styles.blue)}>
+                <Image
+                    src="/images/GlowBlue.svg"
+                    height={631}
+                    width={552}
+                    quality={100}
+                    alt="glow-blue-asset"
+                />
+            </div>
+            <div className={styles.header}>
+                <Typography type="title" classNameModifier={styles.textHeader}>
+                    Stake Stablecoins for Synth-LP Liquidity
+                </Typography>
+            </div>
             <div className={styles.chartBlock}>
-                {/* <ChartWrapper label="TVL" data={CHART_DATA_TEST} total="1568'530'000" percentChange={54.345} /> */}
+                <div className={classNames(styles.chart, styles.mgr)}>
+                    <ChartWrapper
+                        label="TVL"
+                        data={Array.apply(null, {length: 10}).map(Function.call, Math.random)}
+                        labels={Array.from(Array(10).keys())}
+                        total="1568'530'000"
+                        percentChange={54.345}
+                    />
+                </div>
+                <div className={styles.chart}>
+                    <ChartWrapper
+                        label="Total Synth-LP Circulation Supply"
+                        data={Array.apply(null, {length: 10}).map(Function.call, Math.random)}
+                        labels={Array.from(Array(10).keys())}
+                        total="1568'530'000"
+                        percentChange={54.345}
+                    />
+                </div>
             </div>
             <div className={styles.assetHeader}>
                 <Typography type="title" classNameModifier={styles.textHeader}>
@@ -62,6 +91,27 @@ const StakeStable: React.FC = () => {
                         volume={el.volume}
                     />
                 ))}
+                <div className={styles.banner}>
+                    <div className={styles.soon}>
+                        <p>New assets coming soon</p>
+                    </div>
+                    <Image
+                        src="/images/coming.png"
+                        width={1267}
+                        height={345}
+                        quality={100}
+                        alt="coming-banner"
+                    />
+                </div>
+            </div>
+            <div className={classNames(styles.glow, styles.purple)}>
+                <Image
+                    src="/images/GlowPurple.svg"
+                    height={631}
+                    width={552}
+                    quality={100}
+                    alt="glow-purple-asset"
+                />
             </div>
         </div>
     );

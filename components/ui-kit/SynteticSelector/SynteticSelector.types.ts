@@ -2,7 +2,7 @@ import type React from 'react';
 
 type PropSelectTypes = {
     currenc: string;
-    func: any;
+    handleChange: (asset: string) => void;
     currencSymbol: string;
 };
 

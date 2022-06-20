@@ -8,12 +8,16 @@ type CopyBtnProps = {
     onCopy?: () => any;
     wrapperClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     text: string;
+    width?: number;
+    height?: number;
 };
 
 const CopyBtn: React.FC<CopyBtnProps> = ({
     onCopy = () => {},
     text,
     wrapperClassName,
+    width,
+    height,
 }) => {
     const [wasBeCopied, setWasBeCopied] = useState<boolean>(false);
     const [wasSaw, setWasSaw] = useState<boolean>(false);
@@ -64,8 +68,8 @@ const CopyBtn: React.FC<CopyBtnProps> = ({
                     Token address copied
                 </div>
                 <Image
-                    width={18}
-                    height={18}
+                    width={width ||18}
+                    height={height ||18}
                     className={styles.img}
                     quality={100}
                     src="/images/copy.svg"

@@ -1,0 +1,47 @@
+.chartBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.chart {
+    width: 600px;
+    height: 173px;
+}
+
+.mgr {
+    margin-right: 1rem;
+}
+
+.lockWrapper {
+    margin: 2rem 0;
+}
+
+.headerText {
+    font-weight: 700!important;
+    font-size: 35px!important;
+    line-height: 48px;
+    color: #ffffff;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.customTabs {
+    background: black !important;
+    margin-bottom: 0!important;
+}
+.customTabs > div {
+    padding: 0;
+    margin-bottom: 0!important;
+    background-color: black !important;
+}
+.customButton {
+    background: #1e1e1e !important;
+}

@@ -1,6 +1,8 @@
 interface ChartDataProps {
     label: string;
+    labels: number[];
     total: string;
+    miniGraph?: boolean;
     percentChange: number;
     data: number[];
 }

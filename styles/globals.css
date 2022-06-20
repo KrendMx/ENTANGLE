@@ -29,6 +29,7 @@ body {
   font-weight: 400;
   min-height: 100vh;
   background-color: var(--black);
+  overflow-x: hidden;
 }
 
 button,

@@ -101,41 +101,6 @@ const Borrow: React.FC<IBorrowProps> = () => {
                             />
                         </div>
                     </div>
-                    {/* <div className={local.spin}>
-                        <div className={local.back}>
-                            <div className={local.inner}>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry.
-                                    Lorem Ipsum has been the industrys standard dummy
-                                    text ever since the 1500s,
-                                    when an unknown printer took a galley of type and scrambled
-                                </p>
-                            </div>
-                        </div>
-                        <div className={local.front}>
-                            <div className={local.inner}>
-                                <GradientSlider
-                                    min={50}
-                                    max={90}
-                                    extraSymbol="%"
-                                    outsideVariable={state.LTVRate}
-                                    setOutsideVariable={changeLTVRate}
-                                />
-
-                                <Text
-                                    title="Curren LTV Rate"
-                                    content={`${state.LTVRate}%`}
-                                    hasTooltip
-                                    tooltipText="Test"
-                                />
-                                <Text
-                                    title="Liquidation commission"
-                                    content={`${state.commision}%`}
-                                />
-                            </div>
-                        </div>
-                            </div> */}
                     <div
                         className={local.fariaFlipBox}
                     >

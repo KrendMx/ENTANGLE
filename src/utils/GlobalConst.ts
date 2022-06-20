@@ -98,6 +98,11 @@ const STABLES = {
     'USDC': {
         full: 'USDC Coin',
         img: 'usdc.svg',
+        address: {
+            '43114': '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
+            '250': '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+            '56': '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+        },
     },
 };
 

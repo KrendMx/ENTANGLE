@@ -7,12 +7,8 @@ const initState = [
         title: 'USDC',
         apr: 948,
         volume: 10000000,
-        availableNetworks: ['43114', '56', '56', '56'],
+        availableNetworks: ['43114', '56', '250', '1'],
     },
 ];
 
-export {
-    STAKE_DATE,
-    CHART_DATA_TEST,
-    initState,
-};
+export { STAKE_DATE, CHART_DATA_TEST, initState };

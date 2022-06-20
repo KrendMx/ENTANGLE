@@ -58,7 +58,7 @@ const SyntOption: React.FC<PropOptionTypes> = ({
 );
 
 const SyntSelect: React.FC<PropSelectTypes> = ({
-    func,
+    handleChange,
     currenc,
     currencSymbol,
 }) => {
@@ -130,7 +130,7 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
                             name={el.name}
                             key={index}
                             handleClick={() => {
-                                func(Object.keys(currencyObject)[index]);
+                                handleChange(Object.keys(currencyObject)[index]);
                                 changeIsOpen();
                             }}
                             price={balances[Object.keys(currencyObject)[index]]
@@ -147,5 +147,4 @@ const SyntSelect: React.FC<PropSelectTypes> = ({
     );
 };
 
-export type { currencyObject };
 export default SyntSelect;

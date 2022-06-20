@@ -1,0 +1,65 @@
+.wrapper {
+    background: #121218;
+    border: 2px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(100px);
+    border-radius: 15px;
+    width: 600px;
+    height: 173px;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    align-items: center;
+}
+
+.chartBlock {
+    width: 600px;
+    height: 105px;
+}
+
+.changeBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 140%;
+    color: #ffffff;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+}
+
+.total {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 140%;
+    text-align: right;
+    color: #ffffff;
+}
+
+.change {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: right;
+    margin-right: 0.3rem;
+}
+
+.plus {
+    color: #11bb8d;
+}
+
+.minus {
+    color: var(--red);
+}

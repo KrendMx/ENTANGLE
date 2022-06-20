@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import GradientButton from '@/components/ui-kit/GradientButton';
 import type { IAssetItem } from '../Stable.interfaces';
 import { networks, STABLES } from '@/src/utils/GlobalConst';
@@ -62,12 +63,14 @@ const AssetItem: React.FC<IAssetItem> = ({
                 </p>
             </div>
             <div className={styles.button}>
-                <GradientButton
-                    title="View"
-                    onClick={() => {}}
-                    titleClass={styles.titleClass}
-                    wrapperClass={styles.blockClass}
-                />
+                <Link href={`/stake-stablecoin/${title}`} passHref>
+                    <GradientButton
+                        title="View"
+                        onClick={() => {}}
+                        titleClass={styles.titleClass}
+                        wrapperClass={styles.blockClass}
+                    />
+                </Link>
             </div>
         </div>
     </div>
