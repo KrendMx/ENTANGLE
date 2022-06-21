@@ -3,21 +3,7 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 
-type SelectProps = {
-    value: string | undefined;
-    children: React.ReactNode[];
-    onChange: (HTMLElement) => void;
-    customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    customOptionClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    disabled?:boolean;
-};
-
-type OptionProps = {
-    value: string;
-    children: string;
-    extraSymbol?: JSX.Element;
-    state?: string;
-};
+import type { OptionProps, SelectProps } from './Select.interfaces';
 
 export const Option: React.FC<OptionProps> = ({
     value, children, extraSymbol, ...props

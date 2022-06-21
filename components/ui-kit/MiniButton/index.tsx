@@ -16,7 +16,7 @@ const MiniButton: React.FC<IMiniButton> = ({ title, clickHandler, active }) => (
             [styles.active]: active,
         })}
     >
-        {title}
+        <div className={styles.container}>{title}</div>
     </button>
 );
 

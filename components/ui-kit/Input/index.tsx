@@ -1,5 +1,6 @@
 import type { InputHTMLAttributes } from 'react';
 import Image from 'next/image';
+import classNames from 'classnames';
 import React from 'react';
 import styles from './styles.module.css';
 
@@ -10,12 +11,14 @@ type InputProps = {
     title?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     otherProps?: InputHTMLAttributes<HTMLInputElement>;
+    classNameInputModifier?: InputHTMLAttributes<HTMLInputElement>['className'];
     getMax?: () => void;
 };
 
 const Input: React.FC<InputProps> = ({
     value,
     onChange,
+    classNameInputModifier,
     placeholder,
     getMax,
     type,
@@ -30,7 +33,7 @@ const Input: React.FC<InputProps> = ({
                 value={value}
                 placeholder={placeholder}
                 onChange={onChange}
-                className={styles.input}
+                className={classNames(styles.input, classNameInputModifier)}
                 {...otherProps}
             />
             {type === 'number' && (

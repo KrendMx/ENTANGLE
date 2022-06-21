@@ -110,12 +110,14 @@ const namesConfig = {
     'BSC': '56',
     'AVAX': '43114',
     'FTM': '250',
+    "ETH": '1',
 };
 
 const chainToNameConfig = {
     '56': 'BSC',
     '43114': 'AVAX',
     '250': 'FTM',
+    '1': "ETH"
 };
 
 const synths = {

@@ -4,6 +4,7 @@ import styles from './style.module.css';
 
 type ITabs = {
     activeTab: number;
+    isBlack?: boolean;
     switchHandler: (idx: number) => void;
     buttons: string[];
     customClassTabName?: React.HTMLAttributes<HTMLDivElement>['className'];
@@ -14,6 +15,7 @@ const Tabs: React.FC<ITabs> = ({
     switchHandler,
     activeTab,
     buttons,
+    isBlack=false,
     ...props
 }) => (
     <div

@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { MintDashboardItemCardType } from '@/components/Mint/Demand/MintPage/types';
+import type { MintDashboardItemCardType } from '@/components/enUSD/Demand/MintPage/types';
 import type { languages } from '../../../utils/GlobalConst';
 import type {
     AppState,

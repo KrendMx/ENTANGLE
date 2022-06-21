@@ -2,7 +2,7 @@ type IBorrowProps = {};
 
 type BorrowState = {
     synthLp: string;
-    synthLpLock: string;
+    lendSynthLp: string;
     getEnUSD: string;
     LTVRate: string;
     AVGCollaterization: string;
@@ -17,6 +17,8 @@ type RepayState = {
     synthLp: string,
     balanceOfEnUSD: string,
     LTVRateUser: string,
+    activeButtonRepay: string,
+    activeButtonUnlock: string,
     AVGCollaterization: string,
     exchangeRate: string,
     currentLTVRate: string

@@ -2,9 +2,12 @@ import React, { useReducer } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './style.module.css';
-import SyntSelect from '@/ui-kit/SynteticSelector';
+import TokenSelect, { TokenOption } from '@/ui-kit/TokenSelect';
 import GradientButton from '@/ui-kit/GradientButton';
 import Input from '@/components/ui-kit/Input';
+import { networks } from '@/src/utils/GlobalConst';
+import StakeTextArea from '@/components/ui-kit/StakeTextArea';
+import Text from '@/components/HomePage/PayModal/Text';
 
 import type { LockProps, ILockState } from './Tabs.interfaces';
 import Tabs from '@/components/ui-kit/Tabs';
@@ -33,26 +36,31 @@ const Lock: React.FC<LockProps> = ({ token }) => {
             >
                 <div className={classNames(styles.actionCard)}>
                     <div>
-                        <p
-                            className={classNames(
-                                styles.sectionTitle,
-                                styles.white,
-                            )}
+                        <TokenSelect
+                            defaultLabel="Select LP"
+                            value={state.network}
+                            onChange={(value: string) =>
+                                dispatch({ network: value })
+                            }
+                            title={'Select Network'}
+                            withBalance={false}
                         >
-                            Select Network
-                        </p>
-                        <SyntSelect
-                            currenc={state.network}
-                            handleChange={() => {}}
-                            currencSymbol="EnUSD"
-                        />
+                            {Object.keys(networks).map((el, idx) => (
+                                <TokenOption
+                                    value={el}
+                                    key={idx}
+                                >
+                                    {networks[el].currencyMin}
+                                </TokenOption>
+                            ))}
+                        </TokenSelect>
                     </div>
                     <div>
+                        <Typography type='textBody' classNameModifier={styles.mgb}>Choose lock period</Typography>
                         <Input
                             type="number"
                             placeholder={`Enter amount of ${token}`}
                             onChange={() => {}}
-                            title={`Enter Amount ${token}`}
                         />
                     </div>
                 </div>
@@ -67,7 +75,7 @@ const Lock: React.FC<LockProps> = ({ token }) => {
                         />
                     </div>
                     <div>
-                        <Typography type='textBody'>Choose lock period</Typography>
+                        <Typography type='textBody' classNameModifier={styles.mgb}>Choose lock period</Typography>
                         <Tabs
                             buttons={['3 Months', '6 Months', '12 Months']}
                             switchHandler={(tab: number) =>
@@ -77,6 +85,9 @@ const Lock: React.FC<LockProps> = ({ token }) => {
                             customClassTabName={styles.customTabsMonths}
                             customClassButtonName={styles.customButton}
                         />
+                        <Text title='You will get $ENTGL' content='3 $ENTGL' classText={styles.mgt} />
+                        <Text title='24h Trading Fee APR' content='92 $ENTGL' classText={styles.mgt} />
+                        <Text title='92 $ENTGL' content='25%' classText={styles.mgt} />
                     </div>
                 </div>
             </div>

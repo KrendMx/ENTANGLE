@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import MintEntangleUsd from '@/components/Mint/EntangleUsd/index';
+import MintEntangleUsd from '@/components/enUSD/Borrow/index';
 
 const MintEntangleUsdPage: NextPage = () => (
     <div>

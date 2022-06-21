@@ -82,7 +82,7 @@ const InvestCard: React.FC<IProps> = ({
 
     return (
         <div>
-            {!hasNoOne ? (
+            {hasNoOne ? (
                 <h2
                     style={{
                         textAlign: 'center',
@@ -95,7 +95,7 @@ const InvestCard: React.FC<IProps> = ({
             ) : (
                 <div className={styles.cardsWrapper}>
                     {cards.map((el, key) =>
-                        (!Number(el.position) ? (
+                        (Number(el.position) ? (
                             <InvestCardExp
                                 key={key}
                                 chainId={el.chainId as availableChains}

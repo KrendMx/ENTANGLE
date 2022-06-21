@@ -1,4 +1,6 @@
-.wrapper {
+.wrapper,
+.wrapperBorrow,
+.wrapperRepay {
     display: grid;
     grid-template-columns: repeat(3, 33%);
     padding: 0px 0 40px;
@@ -7,6 +9,7 @@
     justify-content: space-around;
     padding-top: 20px;
 }
+
 .blockWrapper {
     flex: 1;
     text-align: center;
@@ -43,7 +46,6 @@
     justify-content: space-evenly;
     z-index: 5;
 }
-
 
 .actionCard:nth-child(n) {
     min-height: calc(293 / 2) px;
@@ -94,6 +96,21 @@
     transform: rotate(-90deg);
 }
 
+.mgb {
+    margin-bottom: 1rem;
+}
+
+.mgt {
+    margin-top: 1rem;
+}
+
+.miniButtonsGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: .9rem;
+}
+
 .customTabs {
     background: black !important;
 }
@@ -119,16 +136,25 @@
         transform: rotate(45deg);
         left: 94%;
     }
+    .wrapperBorrow, .wrapperRepay {
+        padding-top: 55px;
+        display: flex;
+        flex-wrap: wrap;
+    }
     .helper {
         width: 70%;
     }
 }
 
 @media screen and (max-width: 900px) {
-    .wrapper {
+    .wrapperBorrow, .wrapperRepay {
         padding-top: 55px;
         display: flex;
         flex-wrap: wrap;
+    }
+
+    .wrapper {
+        grid-template-columns: repeat(1, 1fr);
     }
     .arrow {
         display: block;

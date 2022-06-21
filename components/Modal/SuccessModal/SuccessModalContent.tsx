@@ -16,75 +16,87 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
     handleClose,
 }) => {
     const dispatch = useAppDispatch();
-    const { chainId, provider } = useAppSelector((state) => state.walletReducer);
-    const directionText = `You ${transactionInfo.isReceived ? 'received' : 'spent'}:`;
+    const { chainId, provider } = useAppSelector(
+        (state) => state.walletReducer,
+    );
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.closeWrapper}>
-                <Image
-                    width={20}
-                    height={20}
-                    className={styles.closeImg}
-                    onClick={handleClose}
-                    quality={100}
-                    src="/images/close.svg"
-                    alt="closeImg"
-                />
+                <div className={styles.imgWrapper}>
+                    <Image
+                        src="/images/modal/secured.svg"
+                        width={230}
+                        height={236}
+                        quality={100}
+                        alt={'secured-icon'}
+                    />
+                </div>
+                <div className={styles.closeImgWrapper}>
+                    <Image
+                        width={16}
+                        height={16}
+                        className={styles.closeImg}
+                        onClick={handleClose}
+                        quality={100}
+                        src="/images/close.svg"
+                        alt="closeImg"
+                    />
+                </div>
             </div>
-            <div className={styles.errorText}>Success transaction.</div>
-            <div className={classNames(styles.errorText, styles.errorTextContent)}>{directionText}</div>
+            <div className={styles.errorText}>Success transaction!</div>
             <div className={styles.valueTextWrapper}>
-                <span className={styles.valueText}>{transactionInfo.value}</span>
-                {' '}
-                {transactionInfo.symbol}
+                <span className={styles.valueText}>
+                    You will recieve {transactionInfo.value}{' '}
+                    {transactionInfo.symbol}
+                </span>
             </div>
             <div className={styles.btnWrapper}>
-                {transactionInfo.isReceived && (
-                    <div className={classNames(styles.gradientBtnWrapper, styles.btnActionWrapper, styles.flex1)}>
-                        <GradientButton
-                            titleElement={(
-                                <div className={styles.metamaskBtnWrapper}>
-                                    <div>Add to MetaMask</div>
-                                    <Image
-                                        width={30}
-                                        height={30}
-                                        className={styles.metamaskBtnImg}
-                                        quality={100}
-                                        src="/images/connectors/MetaMask.svg"
-                                        alt=""
-                                    />
-                                </div>
-                            )}
-                            onClick={() => {
-                                const synthAddress = synths[chainId][sessionStorage.getItem('card')];
-                                dispatch(importToken({ chainId, synthAddress, provider }));
-                            }}
-                            title=""
-                        />
-                        <CopyToClipboard text={networks[chainId].synth}>
-                            <div className={styles.copyWrapper}>
+                <div
+                    className={classNames(
+                        styles.gradientBtnWrapper,
+                        styles.btnActionWrapper,
+                        styles.flex1,
+                    )}
+                >
+                    <GradientButton
+                        titleElement={
+                            <div className={styles.metamaskBtnWrapper}>
+                                <div className={styles.metamaskText}>Add to MetaMask</div>
                                 <Image
-                                    width={30}
-                                    height={30}
+                                    width={24}
+                                    height={24}
                                     className={styles.metamaskBtnImg}
                                     quality={100}
-                                    src="/images/copy.svg"
-                                    alt="Copy synth address"
+                                    src="/images/connectors/MetaMask.svg"
+                                    alt=""
                                 />
                             </div>
-                        </CopyToClipboard>
-                    </div>
-                )}
+                        }
+                        onClick={() => {
+                            const synthAddress =
+                                synths[chainId][sessionStorage.getItem('card')];
+                            dispatch(
+                                importToken({
+                                    chainId,
+                                    synthAddress,
+                                    provider,
+                                }),
+                            );
+                        }}
+                        title=""
+                    />
+                </div>
                 <div className={styles.gradientBtnWrapper}>
                     <GradientButton
                         onClick={() => {
                             handleClose();
                         }}
                         title="Ok"
+                        titleClass={styles.metamaskBtnWrapper}
                     />
                 </div>
             </div>
-
         </div>
     );
 };

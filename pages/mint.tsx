@@ -2,7 +2,7 @@ import React from 'react';
 import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import MintPage from '../components/Mint/Demand/MintPage';
+import MintPage from '../components/enUSD/Demand/MintPage';
 
 const Mint: NextPage = () => (
     <div style={{ position: 'relative' }}>

@@ -1,11 +1,11 @@
 import React, { useReducer, useState } from 'react';
 import styles from './style.module.css';
 import Tabs from '@/ui-kit/Tabs';
-import Borrow from './Tabs/Borrow';
-import type { infoReducer } from './MintEnt.interfaces';
-import Repay from './Tabs/Repay';
+import BorrowTab from './Tabs/Borrow.tab';
+import type { infoReducer } from './Borrow.intefaces';
+import RepayTab from './Tabs/Repay.tab';
 
-const StakeEntangle: React.FC = () => {
+const Borrow: React.FC = () => {
     const [actionType, setActionType] = useState<number>(0);
 
     const [infoValuesState, infoValuesDispatcher] = useReducer(
@@ -58,9 +58,9 @@ const StakeEntangle: React.FC = () => {
                     />
                 </div>
             </div>
-            <div>{actionType === 0 ? <Borrow /> : <Repay />}</div>
+            <div>{actionType === 0 ? <BorrowTab /> : <RepayTab />}</div>
         </div>
     );
 };
 
-export default StakeEntangle;
+export default Borrow;

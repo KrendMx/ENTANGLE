@@ -22,23 +22,25 @@ const Footer = () => (
             <nav className={styles.navigate}>
                 {NAVIGATE.map(({ title, to }, key) => (
                     <Link key={key} href={to} passHref>
-                        <span className={classNames(styles.link)}>
-                            {title}
-                        </span>
+                        <span className={classNames(styles.link)}>{title}</span>
                     </Link>
                 ))}
             </nav>
             <div className={styles.connection}>
                 {SOCIALS.map(({ to, icon }, key) => (
                     <a key={key} href={to} target="_blank" rel="noreferrer">
-                        <Image width={20} height={20} quality={100} src={icon} alt="" />
+                        <Image
+                            width={20}
+                            height={20}
+                            quality={100}
+                            src={icon}
+                            alt=""
+                        />
                     </a>
                 ))}
             </div>
         </div>
-        <p className={styles.product}>
-            2022. Entangle. All rights reserved
-        </p>
+        <p className={styles.product}>2022. Entangle. All rights reserved</p>
     </footer>
 );
 

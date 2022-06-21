@@ -224,7 +224,7 @@ const Header = () => {
                                     </div>
                                     <Dropout title="enUSD" offset="25px">
                                         <Link
-                                            href="/mint-entangle-usd"
+                                            href="/borrow"
                                             passHref
                                         >
                                             <p className={styles.dropItem}>

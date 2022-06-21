@@ -19,10 +19,11 @@ const ModalContextWrapper = () => {
     const { error, sucInfo, isOpenSelectWalletModal } = useAppSelector(
         (state) => state.appReducer,
     );
-    const { userError } = useAppSelector(
-        (state) => state.walletReducer,
-    );
-    const handleClose = () => { localStorage.setItem('terms', 'true'); setTermsModal(false); };
+    const { userError } = useAppSelector((state) => state.walletReducer);
+    const handleClose = () => {
+        localStorage.setItem('terms', 'true');
+        setTermsModal(false);
+    };
 
     useEffect(() => {
         if (!localStorage.getItem('terms')) {
@@ -50,19 +51,15 @@ const ModalContextWrapper = () => {
             )}
             {isOpenSelectWalletModal && (
                 <SelectWalletModal
-                    selectWallet={(
-                        walletProviderName: any,
-                    ) => dispatch(setWallet({ walletKey: walletProviderName }))}
+                    selectWallet={(walletProviderName: any) =>
+                        dispatch(setWallet({ walletKey: walletProviderName }))
+                    }
                     handleClose={() => {
                         dispatch(setIsOpenSelectWalletModal(false));
                     }}
                 />
             )}
-            {termsModal && (
-                <Disclaimer
-                    handleClose={handleClose}
-                />
-            )}
+            {termsModal && <Disclaimer handleClose={handleClose} />}
         </>
     );
 };

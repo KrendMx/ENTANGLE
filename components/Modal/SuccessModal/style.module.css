@@ -1,81 +1,71 @@
-.closeWrapper {
-  display: flex;
-  justify-content: flex-end;
+.wrapper {
+    padding: 2rem 3rem;
+    background: #121218;
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    min-width: 480px;
+    min-height: 431px;
+    width: 100%;
+    height: 100%;
 }
 
-.closeImg {
-  width: 20px;
-  margin-bottom: 16px;
-  cursor: pointer;
+.wrapper > * {
+  flex: 1;
+}
+
+.errorText {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 35px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.valueTextWrapper {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    color: #a3a3a3;
+}
+
+.imgWrapper {
+  position: absolute;
+  top: -80px;
+  left: 89px;
+}
+
+.closeImgWrapper {
+  position: absolute;
+  right: -20px;
+  top: -10px;
+}
+
+.closeWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 9rem;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
 }
 
 .btnWrapper {
   display: flex;
   flex-direction: column;
-}
-
-.flex1 {
-  flex: 1;
-}
-
-.flex2 {
-  flex: 2;
-}
-
-.btnActionWrapper {
-  display: flex;
-}
-
-.gradientBtnWrapper {
-  padding-top: 16px;
-}
-
-.metamaskBtnImg {
-  height: 32px;
-}
-
-.copyWrapper {
-  padding-left: 8px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  justify-content: space-around;
+  height: 9rem;
 }
 
 .metamaskBtnWrapper {
-  width: 70%;
+  padding: 1rem 0;
   display: flex;
-  justify-content: space-around;
-  padding: 8px 16px;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
-.errorText {
-  color: var(--color-6);
-  font-weight: 600;
-  padding: 0 16px;
-  font-size: 24px;
-  line-height: 1em;
-  text-align: center;
-}
-
-.valueText {
-  color: var(--color-6);
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1em;
-}
-
-.valueTextWrapper {
-  padding: 0 16px;
-  font-size: 12px;
-  color: var(--color-6);
-  font-weight: 300;
-}
-
-.errorTextContent {
-  margin: 16px 0;
-  text-align: left;
-  font-weight: inherit;
-  color: var(--gray);
-  font-size: 16px;
+.metamaskText {
+  margin-right: .5rem;
 }
