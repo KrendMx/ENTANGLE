@@ -19,9 +19,11 @@ const MintEntangleUsdPage: NextPage = () => (
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     props: {
         ...(await serverSideTranslations(locale!, [
+            'header',
+            'borrow',
             'index',
-            'profile',
-            '404',
+            'footer',
+            'stable',
         ])),
     },
 });

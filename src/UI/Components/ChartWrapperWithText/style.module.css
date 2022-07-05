@@ -1,0 +1,22 @@
+.graphText {
+	display: flex;
+	align-items: flex-end;
+	flex-direction: row;
+	justify-content: space-between;
+
+	width: 15.8rem;
+}
+
+.cur {
+	display: flex;
+	align-items: center;
+
+	padding-bottom: .2rem;
+
+	color: #ECECEC;
+
+	font-size: 12px;
+	font-weight: 300;
+	font-style: normal;
+	line-height: 16px;
+}

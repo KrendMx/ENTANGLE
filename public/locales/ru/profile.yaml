@@ -1,0 +1,19 @@
+currentBalance: Текущий баланс
+allProfit: Профит за все время
+bestPerformer: Лучший результат
+worstPermormer: Худший результат
+yourAssets: Ваши активы Entangle
+transactionHistory: История транзакций
+nowAsset: У вас пока нет активов
+nowTransaction: У вас пока нет транзакций
+sortBy: Сортировать по
+priceIn: Возрастанию цены
+priceDec: Убыванию цены
+profIn: Возрастанию профита
+profDec: Убыванию профита
+allActivity: Все действия
+buy: Покупка
+sell: Продажа
+recentLast: Сначала старые
+recentFirst: Сначала новые
+inDev: В разработке

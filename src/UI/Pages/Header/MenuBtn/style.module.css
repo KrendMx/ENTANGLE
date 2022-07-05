@@ -1,0 +1,56 @@
+.label {
+	--size: 32px;
+	--line-height: 1px;
+	--line-spacing: 3px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	width: var(--size);
+	height: var(--size);
+
+	cursor: pointer;
+}
+
+.label .bagete {
+	width: 100%;
+	height: var(--line-height);
+	margin: var(--line-spacing) 0;
+
+	transition: .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+	background: var(--gray);
+
+}
+
+.input {
+	display: none;
+}
+
+.input:checked ~ .bagete:nth-of-type(1) {
+	opacity: 0;
+}
+
+.input:checked ~ .bagete:nth-of-type(2) {
+	margin-bottom: calc(-1 * var(--line-height));
+
+	transform: rotate(-45deg);
+	transform-origin: center
+}
+
+.input:checked ~ .bagete:nth-of-type(3) {
+	margin: 0;
+
+	transform: rotate(45deg);
+	transform-origin: center
+}
+
+@media screen and (max-width: 1024px) {
+	.label {
+		--size: 27px;
+		--line-spacing: 2.5px;
+
+		margin-top: 4px;
+	}
+}

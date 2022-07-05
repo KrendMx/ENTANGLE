@@ -1,0 +1,140 @@
+.back {
+	display: flex;
+	flex-direction: row;
+
+	margin: 3rem 0;
+
+	cursor: pointer;
+}
+
+.dFlex {
+	display: flex;
+}
+
+.back p {
+	margin-left: .8rem;
+}
+
+.wrapper {
+	margin: 1rem 0;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	padding: 1rem 0;
+}
+
+.infoWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	width: 70%;
+}
+
+.assetData {
+	display: flex;
+	flex-direction: row;
+}
+
+.tokenData {
+	margin-left: 1rem;
+}
+
+.upperData {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
+.name {
+	color: #FFF;
+
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 33px;
+}
+
+.addImgWrapper {
+	height: 1.4rem;
+	margin-left: .3rem;
+
+	cursor: pointer;
+}
+
+.cpyButton {
+	width: 24px;
+	height: 24px;
+}
+
+.fullName {
+	color: #A3A3A3;
+
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 25px;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.infoHeader {
+	color: #A3A3A3;
+
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 25px;
+}
+
+.infoData {
+	color: #FFF;
+
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 33px;
+}
+
+@media screen and (max-width: 900px) {
+	.container {
+		flex-direction: column;
+	}
+
+	.assetData {
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+
+		text-align: center;
+	}
+
+	.tokenData {
+		margin: 0;
+	}
+
+	.infoWrapper {
+		flex-wrap: wrap;
+		justify-content: space-around;
+
+		width: 100%;
+		margin-top: 1rem;
+
+		text-align: center;
+	}
+
+	.info {
+		justify-content: center;
+
+		width: 8rem;
+		margin-top: 1rem;
+	}
+
+	.back {
+		margin: 5rem 0 0;
+	}
+}

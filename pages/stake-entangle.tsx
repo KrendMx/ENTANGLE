@@ -22,6 +22,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
             'index',
             'profile',
             '404',
+            'header',
         ])),
     },
 });

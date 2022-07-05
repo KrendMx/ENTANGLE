@@ -1,0 +1,38 @@
+.textBody {
+	font-size: 18px;
+}
+
+.title {
+	display: inline-block;
+
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.underline {
+	position: relative;
+}
+
+.underline::after {
+	position: absolute;
+	bottom: -20px;
+	left: 0;
+
+	width: 100%;
+	max-width: 250px;
+	height: 3px;
+
+	content: '';
+
+	border-radius: 18px;
+	background: linear-gradient(
+		90deg,
+		#FF5EBA 1.27%,
+		rgb(104 49 214 / 87%) 51.2%,
+		#0094FF 103.24%
+	);
+}
+
+.textBody + .textBody {
+	margin-top: 35px;
+}

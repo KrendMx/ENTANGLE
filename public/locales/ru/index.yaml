@@ -1,0 +1,35 @@
+filterBy: Фильтровать по
+sortBy: Сортировать по
+search: Поиск
+tpe: Общий начисленный доход 
+tvd: Общее количество инвестиций
+aprCard: APR проекта
+apr: Процентная ставка
+valueLP: Кол-во в стейкинге
+aprDesk: Годовая процентная ставка фермы. 
+valueLPCard: Доступно SynthLP
+valueLPDesk: Показатель максимального количества валюты, которое можно купить без выпуска новой
+desFirstPart: Генерирует доход за счет запуска автокомпаунда
+desSecPart: стратегии через
+price: Цена
+yourPosition: Ваш баланс
+copy: Скопировать адрес
+copied: Адрес скопирован
+metamask: Добавить в МетаМаск
+rty: Доход в реальном времени
+rtyDesk: Процент профита, если вы вложитесь прямо сейчас
+select: Выбрать
+highGas: Высокая стоимость газа
+notAvailable: Недоступно сейчас
+connectWallet: Добавить свой кошелек
+unlimited: Неограниченно
+yourSynthBalance: Ваш баланс SynthLP
+yourUSDCBalance: Ваш баланс USDC
+enterSynthAmount: Введите количество SynthLP
+youGetUSDC: Вы получите в USDC
+enterUSDCAmount: Введите количество USDC
+youGetSynt: Вы получите в SynthLP
+buyAndSell: Купить/Продать
+avgPrice: Высшая цена
+profit: Выручка
+back: Назад

@@ -1,0 +1,53 @@
+.upHover {
+	position: absolute;
+	z-index: 10;
+	bottom: 2rem;
+	left: -4rem;
+
+	visibility: hidden;
+
+	width: max-content;
+	padding: 8px 16px;
+
+	border-radius: 12px;
+	background-color: var(--color-7);
+
+	font-size: 14px;
+}
+
+.copyWrapper {
+	position: relative;
+
+	display: flex;
+	align-items: center;
+
+	padding-left: 4px;
+
+	cursor: pointer;
+}
+
+.copyWrapper:hover .upHover {
+	visibility: visible;
+}
+
+.img {
+	height: 100%;
+}
+
+.hideUpHover {
+	max-height: 0;
+
+	transition: none;
+
+	opacity: 0;
+}
+
+.showUpHover {
+	max-height: 150px;
+
+	transition: all .3s ease-in;
+
+	opacity: 1;
+}
+
+

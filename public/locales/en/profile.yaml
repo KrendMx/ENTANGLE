@@ -1,1 +1,19 @@
-
+currentBalance: Current Balance
+allProfit: All Time Profit
+bestPerformer: Best performer
+worstPermormer: Worst performer
+yourAssets: Your Entangle Assets
+transactionHistory: Transaction history
+nowAsset: You have no assets now
+nowTransaction: You have no transactions now
+sortBy: Sort by
+priceIn: Price increase
+priceDec: Price decrease
+profIn: Profit increase
+profDec: Profit decrease
+allActivity: All activity
+buy: Buy
+sell: Sell
+recentLast: Recent last
+recentFirst: Recent first
+inDev: In Development

@@ -20,14 +20,22 @@ const StakeStablePage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     props: {
-        ...(await serverSideTranslations(locale!, ['index', 'profile', '404'])),
+        ...(await serverSideTranslations(locale!, ['stake',
+            'header',
+            'footer',
+            'stable',
+            'index'])),
     },
 });
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
+    const paths = locales.map((locale) => ({
+        params: { stable: 'USDC' },
+        locale,
+    }));
     return {
-        paths: ['/stake-stablecoin/USDC'],
-        fallback: true,
+        paths,
+        fallback: false,
     };
 }
 

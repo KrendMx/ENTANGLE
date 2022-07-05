@@ -1,0 +1,66 @@
+.addImgWrapper {
+	position: relative;
+
+	cursor: pointer;
+}
+
+.modal {
+	z-index: 100;
+
+	margin-left: 4px;
+}
+
+.tooltip {
+	position: relative;
+	z-index: 100;
+
+	display: inline-block;
+
+	border-bottom:  1px doted #606060;
+}
+  
+.tooltip .tooltiptext {
+	position: absolute;
+	z-index: 100;
+	bottom: 140%;
+	left: -85px;
+
+	visibility: visible;
+
+	width: 200px;
+	margin-left: -30px;
+	padding: 15px;
+
+	text-align: center;
+
+	color: #FFF;
+	border: 1px solid #606060;
+	border-radius: 6px;
+	background-color: #1E1E1E;
+
+	font-size: 14px;
+}
+
+.tooltiptext::before {
+	position:absolute;
+	z-index: 1;
+	bottom:-8px;
+	left:113px;
+
+	width: 15px;
+	height: 15px;
+
+	content:''; 
+	transform: rotate(45deg);
+
+	border-right: solid 1px #606060;
+	border-bottom: solid 1px #606060;
+	border-bottom-right-radius: 30%;
+	background-color: #1E1E1E;
+}
+
+.title{
+	color: white;
+
+	font-size: 14px;
+}

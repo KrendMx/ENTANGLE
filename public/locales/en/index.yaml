@@ -1,0 +1,35 @@
+filterBy: Filter By
+sortBy: Sort By
+search: Search
+tpe: Total Revenue Accrued
+tvd: Total Value Deposited
+apr: APR
+aprCard: Current Projected APR
+aprDesk: The current annual percentage received on this farm
+valueLP: Value of LP Staked
+valueLPCard: Value of LPs Staked
+valueLPDesk: The amount of currency available for purchase without creating a new one
+desFirstPart: Generates yield by running an autocompound
+desSecPart: strategy on
+price: Price
+yourPosition: Your Position
+copy: Copy token address
+copied: Token address copied
+metamask: Add to MetaMask
+rty: Real Time Yield
+rtyDesk: Your Current Accrued Yield
+select: Select
+highGas: High Gas Fees. Excluded from MVP
+notAvailable: Not Available
+connectWallet: Connect Wallet
+unlimited: Unlimited
+yourSynthBalance: Your SynthLP Balance
+yourUSDCBalance: Your USDC Balance
+enterSynthAmount: Enter SynthLP amount
+youGetUSDC: You get USDC
+enterUSDCAmount: Enter USDC amount
+youGetSynt: You get SynthLP
+buyAndSell: Buy/Sell
+avgPrice: Avg Buy Price
+profit: Profit
+back: Back

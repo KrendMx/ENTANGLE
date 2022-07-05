@@ -1,5 +1,7 @@
 {
   "name": "entangle-main",
+  "version": "0.1.0",
+  "description": "Main repository of Entangle frontend project",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -7,8 +9,11 @@
     "start": "next start",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "stylelint": "npx stylelint \"**/*.css\""
   },
+  "author": "Daniil Savochkin <dsavochkin4@gmail.com>",
+  "license": "ISC",
   "browserslist": [
     "last 4 versions"
   ],
@@ -89,6 +94,11 @@
     "postcss-reporter": "^7.0.5",
     "postcss-sort-media-queries": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
+    "stylelint": "^14.9.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^26.0.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-order-config-standard": "^0.1.3",
     "ts-jest": "^28.0.4",
     "ts-node": "^10.8.1",
     "typescript": "^4.6.3"

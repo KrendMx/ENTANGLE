@@ -20,10 +20,11 @@
     "incremental": true,
     "noImplicitAny": false,
     "paths": {
-      "@/components/*": ["./components/*"],
-      "@/pages/*": ["./pages/*"],
-      "@/src/*": ["./src/*"],
-      "@/ui-kit/*": ["./components/ui-kit/*"],
+      "pages/*": [".src/UI/Pages/*"],
+      "core/*": ["./src/Core/*"],
+      "src/*": ["./src/*"],
+      "UI/*": ["./src/UI/*"],
+      "utils/*": ["./src/utils/*"],
     }
   }
 }

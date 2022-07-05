@@ -1,0 +1,27 @@
+stakeStablecoins:  Стейкинг стейблкоинов для ликвидности Synth-LP
+tvl: Количество валюты в локе
+slpSupply: Всего Synth-LP в обороте
+assets: Активы
+availableNetwork: Доступные сети
+pastVolume: Объем за последние 24 часа
+newAsset: Новые активы скоро появятся
+view: Больше
+walletBalance: Баланс кошелька
+currentlyLocked: Заморожено сейчас
+currentAPR: Текущий APR
+totalEarned: Всего создано
+lock: Заморозить
+withdraw: Отозвать
+select: Выбрать
+network: Сеть
+enterAmount: Введите значение
+ChooseLock: Выберете период заморозки
+MonthOne: Месяца
+MonthTwo: Месяцев
+YouGet: Вы получите в 
+TradingFee: Комиссия за торговлю за 24 часа
+Unlocked: Разблокировать
+AvaiableToUnlock: Доступно для разблокировки
+CurrentPrice: Текущая цена
+ProjectedAPR: Прогнозируемый APR
+StakeUSDC: Стэйкинг

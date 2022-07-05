@@ -1,0 +1,99 @@
+.section + .section {
+	margin-top: 65px;
+}
+
+.panel {
+	margin-bottom: 35px;
+}
+
+.selectWrapper {
+	width: 190px;
+	margin-top: 15px;
+}
+
+.selectWrapper + .selectWrapper {
+	margin-top: 15px;
+}
+
+.selects {
+	margin-top: 20px;
+}
+
+.horisontalWrapper {
+	display: flex;
+	gap: 16px;
+
+	flex-direction: column;
+}
+
+.verticalWrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.flex1 {
+	flex: 1;
+}
+
+.flex {
+	display: flex;
+}
+
+.pt2 {
+	padding-top: 50px;
+}
+
+@media (min-width: 768px) {
+	.panel {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.selects {
+		display: flex;
+		align-items: center;
+
+		margin-top: 0;
+	}
+
+	.selectWrapper {
+		margin-left: auto;
+	}
+
+	.selectWrapper + .selectWrapper {
+		margin-left: 30px;
+	}
+
+	.horisontalWrapper {
+		flex-direction: row;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.smRow {
+		flex-direction: row;
+	}
+
+	.smCol {
+		flex-direction: column;
+	}
+
+	.smFlex1 {
+		flex: 1;
+	}
+
+	.smFlex {
+		display: flex;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.panel {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+	}
+}

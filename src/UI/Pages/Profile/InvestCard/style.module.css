@@ -1,0 +1,223 @@
+.root, .rootLook {
+	width: 100%;
+	max-width: 355px;
+	margin: 0 auto;
+	padding: 17px 35px;
+
+	border-radius: 18px;
+}
+
+.root + .root {
+	margin-top: 30px;
+}
+
+.rootLook + .rootLook {
+	margin-top: 30px;
+}
+
+.list {
+	width: 100%;
+
+	text-align: center;
+}
+
+.logoWrapper {
+	display: flex;
+	align-items: center;
+
+	width: 64px;
+	margin: 0 auto 20px;
+}
+
+.logo {
+	width: 100%;
+
+	border-radius: 50%;
+}
+
+
+.cardLabel {
+	padding: 5px 10px;
+
+	border-radius: 14px;
+}
+
+.cardLabel > p {
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.pare {
+	display: flex;
+	justify-content: flex-start;
+
+	font-size: 22px !important;
+	font-weight: 700;
+}
+
+.itemValue {
+	font-size: 18px !important;
+	font-weight: 600;
+}
+
+
+.undertitle {
+	color: var(--gray);
+
+	font-size: 12px;
+	font-weight: 300;
+}
+
+.main {
+	justify-content: center;
+
+	margin-bottom: 20px;
+
+	text-align: center;
+}
+
+.list + .list {
+	margin-top: 20px;
+}
+
+.listItem {
+	display: flex;
+	justify-content: center;
+
+	height: 100%;
+
+	list-style: none;
+
+	text-align: left;
+}
+
+.undertitle.up {
+	color: var(--green);
+}
+
+.undertitle.loss {
+	color: var(--red);
+}
+
+.buttonTitleClass {
+	padding: 15px 10px;
+
+	font-size: 16px;
+}
+
+.wrapperButtonClass {
+	border-radius: 22px;
+}
+
+.flex {
+	display: flex;
+}
+
+.mxAuto {
+	margin: 0 auto;
+}
+
+.itemsCenter {
+	align-items: center;
+}
+  
+.my1 {
+	margin-top: 46px;
+	margin-bottom: 55px;
+}
+
+@media (min-width: 708px) {
+	.root + .root {
+		margin-top: 0;
+	}
+
+	.cardsWrapper {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 15px;
+	}
+
+	.undertitle {
+		max-width: 270px;
+		margin: 0 auto;
+	}
+}
+
+@media (min-width: 992px) {
+	.cardsWrapper {
+		column-gap: 20px;
+		row-gap: 30px;
+	}
+
+	.root {
+		max-width: 85%;
+	}
+
+	.pare,
+	.itemValue {
+		font-size: 24px;
+	}
+}
+
+@media (min-width: 1100px) {
+	.cardsWrapper {
+		grid-template-columns: repeat(1, 1fr);
+		gap: 30px;
+	}
+
+	.root {
+		display: grid;
+		grid-template-columns: 0.3fr max-content 1.4fr 1fr 0.9fr 0.9fr max-content;
+		grid-column-gap: 40px;
+
+		max-width: 100%;
+	}
+    
+	.rootLook {
+		display: grid;
+		grid-template-columns: repeat(9, auto);
+		grid-column-gap: 20px;
+
+		max-width: 100%;
+	}
+
+	.logoWrapper {
+		margin: 0;
+	}
+
+	.main {
+		margin-bottom: 0;
+
+		text-align: left;
+	}
+
+	.listItem,
+	.main {
+		display: flex;
+		flex-direction: column;
+        
+	}
+
+	.list + .list {
+		margin-top: 0;
+	}
+
+	.undertitle {
+		margin: 0;
+	}
+}
+
+
+@media screen and (max-width: 900px) {
+	.pare {
+		flex-direction: column;
+
+		margin-bottom: 1rem;
+	}
+
+	.listItem {
+		flex-direction: column;
+
+		text-align: center;
+	}
+}

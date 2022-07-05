@@ -1,0 +1,32 @@
+.soon {
+	position: absolute;
+	z-index: 1;
+
+	margin-top: 5rem;
+	margin-left: 20rem;
+
+	text-align: center;
+
+	color: white;
+
+	font-size: 64px;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.imgWrapper img {
+	width: 100%;
+}
+
+.imgWrapper {
+	position: relative;
+	z-index: 0;
+
+	display: flex;
+	flex-direction: column;
+
+	opacity: 0.4;
+}

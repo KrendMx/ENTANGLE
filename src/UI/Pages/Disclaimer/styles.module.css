@@ -1,0 +1,111 @@
+.wrapper {
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    
+}
+
+.wrapper::before {
+	position: absolute;
+	z-index: -1;
+
+	width: 100%;
+	height: 100%;
+
+	content: '';
+
+	background-color: rgb(0 0 0 / 60%);
+}
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+	.wrapper::before {
+		backdrop-filter: blur(62px);
+
+		background-color: rgb(0 0 0 / 10%);
+	}
+}
+
+@supports not ((backdrop-filter: none)) {
+	.wrapper::before {
+		opacity: .4rem;
+		background-color: rgb(0 0 0 / 10%);
+	}
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	margin: 20px 0;
+}
+
+
+.blockText {
+	color: #FFF;
+}
+
+.content {
+	max-width: 45rem;
+	padding: 25px 60px;
+
+	border: 1px solid rgb(255 255 255 / 10%);
+	border-radius: 20px;
+	background: linear-gradient(104.82deg, rgb(255 94 186 / 5.1%) 1.73%, rgb(0 240 255 / 5.4%) 100%), rgb(30 30 30 / 10%);
+	backdrop-filter: blur(15px);
+}
+
+.paragraph {
+	margin: 1.5rem 0;
+}
+
+.highLight {
+	color: #FFF;
+
+	font-weight: 700;
+}
+
+.blueText {
+	color: #04F0FF;
+
+	font-weight: bold;
+}
+
+.blockButton {
+	display: flex;
+	justify-content: center;
+}
+
+.btn {
+	width: 80%;
+	margin-bottom: 1rem;
+
+	font-weight: 700;
+}
+
+
+.extraForCheckbox {
+	margin-left: 2rem;
+}
+
+@media screen and (max-width: 750px) {
+	.content {
+		max-width: 23rem;
+		padding: 15px 30px;
+
+		font-size: .65rem;
+	}
+    
+	.extraForCheckbox {
+		margin-bottom: 3rem;
+		margin-left: 0;
+	}
+}
+

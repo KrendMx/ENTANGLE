@@ -1,0 +1,58 @@
+.chartBlock {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	margin-top: 3rem;
+}
+
+.chart {
+	width: 50%;
+	height: 173px;
+}
+
+.mgr {
+	margin-right: 1rem;
+}
+
+.lockWrapper {
+	margin: 2rem 0;
+}
+
+.headerText {
+	color: #FFF;
+
+	font-size: 35px!important;
+	font-weight: 700!important;
+	line-height: 48px;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+
+	margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 1025px) {
+	.chartBlock {
+		flex-direction: column;
+	}
+
+	.chart {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.header {
+		flex-direction: column;
+	}
+
+	.headerText {
+		margin: 1rem 0;
+	}
+
+}

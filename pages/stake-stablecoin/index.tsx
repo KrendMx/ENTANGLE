@@ -19,9 +19,11 @@ const StakeStablePage: NextPage = () => (
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     props: {
         ...(await serverSideTranslations(locale!, [
+            'stake',
+            'header',
+            'footer',
+            'stable',
             'index',
-            'profile',
-            '404',
         ])),
     },
 });

@@ -1,0 +1,61 @@
+.root {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+.block.selected::before {
+  opacity: 1;
+}
+
+.block::before {
+  position: absolute;
+  content: '';
+  margin-top: -1px;
+  margin-left: -1px;
+  min-width: 30px;
+  min-height: 30px;
+  transition: opacity 0.5s ease-out;
+  z-index: 10;
+  opacity: 0;
+}
+
+
+.block, .block > div {
+  transition: all .4s ease-in;
+}
+
+.block {
+  min-width: 40px;
+  min-height: 40px;
+  cursor: pointer;
+}
+
+.block > div {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  color: var(--color-17);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.block:hover > div {
+  color: var(--color-18);
+}
+
+.block.selected > div {
+  color: var(--color-18);
+  background-color: #1E1E1E;
+}
+
+.block.disabled:hover > div {
+  color: var(--color-17);
+}
+
+.disabled {
+  color: var(--gray);
+  cursor: not-allowed;
+}
+

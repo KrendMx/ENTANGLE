@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import HomePage from '../components/HomePage';
+// import HomePage from '../components/HomePage';
 
 const Home: NextPage = () => (
     <div>
@@ -9,7 +9,10 @@ const Home: NextPage = () => (
             <title>Index | Entangle</title>
         </Head>
         <main>
-            <HomePage />
+            {/* <HomePage /> */}
+            <div>
+                <button onClick={() => { throw new Error(); }}>sadfasdf</button>
+            </div>
         </main>
     </div>
 );
@@ -18,8 +21,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     props: {
         ...(await serverSideTranslations(locale!, [
             'index',
-            'profile',
-            '404',
+            'common',
+            'header',
+            'footer',
         ])),
     },
 });

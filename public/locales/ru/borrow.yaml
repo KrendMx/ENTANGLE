@@ -1,0 +1,26 @@
+inCollateral: В залоге
+SelectYour: Выберете ваш
+LendYour: Размер одолжения
+SetLTV: Укажите процент LTV
+GetStarted: Давайте начнем
+CurrenLTV: Текущее значение LTV
+LiquidationComm: Ликвидационная комиссия
+AmountOfEnUSD: Сумма EnUSD, подлежащая заимствованию
+CurrentAVG: Значение AVG на данный момент
+ExchangeRate: Обменный курс
+Mint: Выпустить
+DebtPositions: Позиции по займам
+infoText: LTV или Loan-to-Value — это соотношение, которое определяет ваш кредитный риск и соответствующим образом корректирует сумму займа.
+RepayPosition: Позиции по возмещению
+Note: Заимствование может увеличить риск ликвидации в неожиданном событии.
+Unlocked: Разблокировать
+AmountIn: Сумма в
+TotalBorrowed: Всего в займе
+Interest: Возвращается
+RepayLoan: Погасить займ
+balance: Баланс
+Borrowed: Заимствовано
+Repay: Возместить
+Borrow: В долг
+info: Инфо
+YouWillGet: Вы получите
