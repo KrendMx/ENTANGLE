@@ -1,8 +1,12 @@
-import type { ErrorI } from '@/src/Redux/store/interfaces/App.interfaces';
+import type { ToastOptions as ToastOptionsFromLibrary } from 'react-toastify';
 
-type ErrorModalProps = {
-    error: ErrorI;
-    handleClose: () => any;
-};
+export enum NotyTypes {
+  ERROR = 'error',
+  SUCCESS = 'success',
+  WARNING = 'warning',
+}
 
-export type { ErrorModalProps };
+export type ToastOptions = Pick<
+  ToastOptionsFromLibrary,
+  'delay' | 'autoClose' | 'closeButton' | 'closeOnClick' | 'transition'
+>;

@@ -5,13 +5,14 @@ import { withHelperReducers, withHelperState } from 'src/Core/utils/helper';
 // Interfaces
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { IWithHelperState } from 'src/Core/utils/helper';
-import type { IUserEntityState, IUserInfo } from './UserEntity.interfaces';
+import type { IAssetBalance, IUserEntityState, IUserInfo } from './UserEntity.interfaces';
 
 const initialState: IUserEntityState & IWithHelperState = {
     ...withHelperState,
     profits: {},
     avgPrices: {},
     totalBalance: 0,
+    balances: {},
 };
 
 export const UserEntity = createSlice({
@@ -25,8 +26,12 @@ export const UserEntity = createSlice({
         setAvgPrice(state, action: PayloadAction<IUserInfo>) {
             state.profits[action.payload.avgPrice.key] = action.payload.avgPrice.value;
         },
-        setBalance(state, action: PayloadAction<IUserInfo>) {
+        setTotalBalance(state, action: PayloadAction<IUserInfo>) {
             state.totalBalance = action.payload.totalBalance;
+        },
+        setAssetBalance(state, action: PayloadAction<IAssetBalance>) {
+            const { assetChainId, chainName, positions } = action.payload;
+            state.balances[chainName][assetChainId] = positions;
         },
     },
 });

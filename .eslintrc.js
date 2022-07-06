@@ -21,7 +21,7 @@ module.exports = {
         'no-param-reassign': ['error', { props: false }],
         'max-len': ['error', { code: 120 }],
         indent: ['error', 4],
-        'no-unused-vars': 'warn',
+        'no-unused-vars': 'off',
         'react/no-unused-prop-types': ['off'],
         'react/function-component-definition': [
             2,
@@ -70,7 +70,8 @@ module.exports = {
         'import/extensions': 'off',
         'no-shadow': 'off',
         'react-hooks/exhaustive-deps': 'off',
-        '@typescript-eslint/no-shadow': ['error'],
+        '@typescript-eslint/no-shadow': 'off',
+        'import/no-named-default': 'off',
         '@typescript-eslint/consistent-type-imports': ['error'],
         '@typescript-eslint/no-explicit-any': 'off',
         'no-plusplus': 'off',

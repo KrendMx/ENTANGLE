@@ -4,7 +4,7 @@ declare module '*.module.css';
 
 declare global {
   interface Window {
-    ethereum: providers.ExternalProvider;
+    ethereum: providers.ExternalProvider<{isCoin98: boolean; isCoinbaseWallet: boolean}>;
   }
 }
 export {};
