@@ -89,7 +89,7 @@ export const createContractInteractor = (
     ),
 });
 
-export const WalletInteractor = createContractInteractor(
+export const ContractInteractor = createContractInteractor(
     ContractEntity,
     Notification,
 );

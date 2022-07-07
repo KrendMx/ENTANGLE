@@ -8,7 +8,6 @@ import { NotyTypes } from './Notification.interfaces';
 import { NOTIFICATIONS } from './Notification.constants';
 
 import 'react-toastify/dist/ReactToastify.css';
-import './CustomReactTostify.scss';
 import styles from './style.module.css';
 
 export const NotificationComponent: FC = () => (
@@ -18,51 +17,44 @@ export const NotificationComponent: FC = () => (
         draggable={false}
         hideProgressBar
         pauseOnHover={false}
+        icon={false}
         pauseOnFocusLoss={false}
         toastClassName="reactToastifyContainer"
         bodyClassName="reactToastifyBody"
         className="reactToastifyWrap"
-        // closeButton={() => (
-        //     <button type="button">
-        //         <CloseIcon />
-        //     </button>
-        // )}
     />
 );
 
-export const createCustomContent = (title: string, content: ReactNode, type: NotyTypes): ReactNode => {
-    const { titleColor, contentColor, lineColor } = NOTIFICATIONS[type];
-    return (
-        <div className={styles.wrapper}>
-            <div className={styles.closeWrapper}>
+export const createCustomContent = (title: string, content: ReactNode, type: NotyTypes): ReactNode => (
+    <div className={styles.wrapper}>
+        <div className={styles.closeWrapper}>
+            <Image
+                width={15}
+                height={15}
+                className={styles.closeImg}
+                // onClick={handleClose}
+                quality={100}
+                src="/images/close.svg"
+                alt="closeImg"
+            />
+        </div>
+        <div className={styles.content}>
+            <div className={styles.warning}>
                 <Image
-                    width={15}
-                    height={15}
-                    className={styles.closeImg}
-                    // onClick={handleClose}
+                    width={49}
+                    height={49}
                     quality={100}
-                    src="/images/close.svg"
-                    alt="closeImg"
+                    src="/images/warning.svg"
+                    alt="warning"
                 />
             </div>
-            <div className={styles.content}>
-                <div className={styles.warning}>
-                    <Image
-                        width={49}
-                        height={49}
-                        quality={100}
-                        src="/images/warning.svg"
-                        alt="warning"
-                    />
-                </div>
-                <div className={styles.errorText}>
-                    <h3>{title}</h3>
-                    <h5>{content}</h5>
-                </div>
+            <div className={styles.errorText}>
+                <h3>{title}</h3>
+                <h5>{content}</h5>
             </div>
         </div>
-    );
-};
+    </div>
+);
 
 const toastFactory = (type: NotyTypes) => (
     title: string,

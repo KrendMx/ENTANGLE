@@ -1,5 +1,6 @@
 import type { NextPage, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { Notification } from 'src/libs/Notification';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 // import HomePage from '../components/HomePage';
 
@@ -11,7 +12,14 @@ const Home: NextPage = () => (
         <main>
             {/* <HomePage /> */}
             <div>
-                <button onClick={() => { throw new Error(); }}>sadfasdf</button>
+                <button
+                    style={{ color: '#fff' }}
+                    onClick={() => {
+                        Notification.error('asdf', 'asdf');
+                    }}
+                >
+                    sadfasdf
+                </button>
             </div>
         </main>
     </div>

@@ -10,17 +10,17 @@ import type { ICardRepository } from '../CardRepository';
 import { CardRepository } from '../CardRepository';
 import { CardEntity } from '../CardEntity';
 
-export interface IUserInteractor {
+export interface ICardInteractor {
     setAprs: Thunk<{}>;
     setAvailables: Thunk<{}>;
     setPrices: Thunk<{}>;
 }
 
-export const createUserInteractor = (
+export const createCardsInteractor = (
     Entity: typeof CardEntity,
     Notification: INotification,
     Repository: ICardRepository,
-): IUserInteractor => ({
+): ICardInteractor => ({
     setAprs: createAsyncThunk(
         'CardInteractor/setAprs',
         async (_, { dispatch }) => {
@@ -49,4 +49,4 @@ export const createUserInteractor = (
     ),
 });
 
-export const UserInteractor = createUserInteractor(CardEntity, Notification, CardRepository);
+export const CardInteractor = createCardsInteractor(CardEntity, Notification, CardRepository);
