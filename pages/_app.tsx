@@ -5,15 +5,11 @@ import { appWithTranslation } from 'next-i18next';
 import { NotificationComponent } from 'src/libs/Notification';
 
 import { store } from 'core/store';
-import Layout from 'src/utils/App.hocs/Layout';
+import { Layout } from 'src/utils/App.hocs/Layout';
 // import { ServiceProvider } from '@/src/context/ServiceContext';
-// import { MockService, MainService } from 'src/Service';
-// import ModalContextWrapper from 'Components/ModalContextWrapper';
+import ModalContextWrapper from 'utils/App.hocs/ModalContextWrapper';
 import { ErrorBoundary } from 'src/utils/App.hocs/ErrorBoundary';
-
 import '../styles/index.css';
-
-// const store = setupStore();
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
     <Provider store={store}>
@@ -23,9 +19,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
                 <NotificationComponent />
             </>
         </Layout>
+        <ModalContextWrapper />
     </Provider>
 );
 // { /* <ServiceProvider value={service}> */ }
-// {/* <ModalContextWrapper /> */}
 // {/* </ErrorBoundary> */}
 export default appWithTranslation(MyApp);

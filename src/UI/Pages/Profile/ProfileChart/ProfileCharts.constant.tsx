@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import ChartWrapper from '../../ui-kit/ChartWrapper/ChartWrapper';
-import Loader from '@/ui-kit/Loader/index';
+import ChartWrapper from 'UI/ui-kit/ChartWrapper/ChartWrapper';
+import Loader from 'UI/ui-kit/Loader/index';
 import styles from './style.module.css';
 
 const ChartLoader = () => {

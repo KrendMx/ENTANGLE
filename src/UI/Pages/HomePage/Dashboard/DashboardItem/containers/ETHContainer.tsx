@@ -1,20 +1,28 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useStore } from 'core/store';
+import { useDispatch } from 'react-redux';
+import { CardService } from 'services/index';
+import Modal from 'UI/Components/Modal';
+import PayModal from 'UI/Pages/HomePage/PayModal';
+import { farms } from 'utils/Global/Vars';
+import { Notification } from 'src/libs/Notification';
 import DashboardItem from '../index';
-import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import CardService from '@/src/ChainService/CardService';
-import { setCardInfo } from '@/src/Redux/store/reducers/CardInfoSlice';
-import { setIsOpenModal, setPayData } from '@/src/Redux/store/reducers/UserSlice';
-import { setError, setErrorStack } from '@/src/Redux/store/reducers/AppSlice';
-import Modal from '@/components/Modal';
-import PayModal from '@/components/HomePage/PayModal';
-import { farms } from '@/src/utils/GlobalConst';
 
 const ETHContainer = ({ isFiltered = false }) => {
-    const dispatch = useAppDispatch();
-    const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
-    const { txLoading, isOpenModal, profits } = useAppSelector((state) => state.userReducer);
-    const { error } = useAppSelector((state) => state.appReducer);
-    const cardReducer = useAppSelector((state) => state.cardDataReducer);
+    const { store, actions, asyncActions } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+        WalletEntity: store.WalletEntity,
+        AppEntity: store.AppEntity,
+        CardsEntity: store.CardsEntity,
+    }));
+
+    const dispatch = useDispatch();
+    const { account, chainId, preLoader } = store.WalletEntity;
+    const { data: CardData } = store.CardsEntity;
+    const { txLoading, isOpenModal, profits } = store.UserEntity;
+
+    const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
+    const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
     const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
     const openModal = () => dispatch(setIsOpenModal(true));
@@ -37,7 +45,7 @@ const ETHContainer = ({ isFiltered = false }) => {
     const Service = useMemo(() => new CardService('ETH'), []);
 
     useEffect(() => {
-        if (!preLoader && cardReducer[data.chainId].apr === null) {
+        if (!preLoader && CardData[data.chainId].apr === null) {
             (async () => {
                 let [apr,
                     available,
@@ -54,10 +62,7 @@ const ETHContainer = ({ isFiltered = false }) => {
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
                 } catch (e) {
-                    if (!error) {
-                        dispatch(setError({ e: { head: 'Error', message: e.message } }));
-                    }
-                    dispatch(setErrorStack({ e: { head: 'Error', message: e.message } }));
+                    Notification.error('Error', e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
@@ -66,10 +71,10 @@ const ETHContainer = ({ isFiltered = false }) => {
                 dispatch(setCardInfo({
                     key: data.chainId,
                     data: {
-                        ...cardReducer[data.chainId],
+                        ...CardData[data.chainId],
                         apr: `${apr}`,
                         available: `${
-                            cardReducer[data.chainId].localChain === chainId
+                            CardData[data.chainId].localChain === chainId
                                 ? 'Unlimited'
                                 : '0'
                         }`,
@@ -84,7 +89,7 @@ const ETHContainer = ({ isFiltered = false }) => {
                     key: '1',
                     data: {
                         available: `${
-                            cardReducer[data.chainId].localChain === chainId
+                            CardData[data.chainId].localChain === chainId
                                 ? 'Unlimited'
                                 : Number(available.toFixed(5))
                         }`,
@@ -101,14 +106,14 @@ const ETHContainer = ({ isFiltered = false }) => {
             {isOpenModal && (
                 <Modal handleClose={closeModal}>
                     <PayModal
-                        available={cardReducer[data.chainId].available}
-                        totalAvailable={cardReducer[data.chainId].totalAvailable}
-                        price={cardReducer[data.chainId].price}
+                        available={CardData[data.chainId].available}
+                        totalAvailable={CardData[data.chainId].totalAvailable}
+                        price={CardData[data.chainId].price}
                         handleClose={closeModal}
                     />
                 </Modal>
             )}
-            <DashboardItem {...data} {...cardReducer[data.chainId]} isFiltered={isFiltered} />
+            <DashboardItem {...data} {...CardData[data.chainId]} isFiltered={isFiltered} />
         </>
     );
 };

@@ -16,7 +16,7 @@ import {
     pancakeChef,
     pancakePair,
     pancakeRouter,
-} from './abi/index';
+} from 'utils/ABIs';
 
 export const NETWORKS = {
     250: {

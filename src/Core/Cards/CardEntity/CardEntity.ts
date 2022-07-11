@@ -5,13 +5,12 @@ import { withHelperReducers, withHelperState } from 'src/Core/utils/helper';
 // Interfaces
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { IWithHelperState } from 'src/Core/utils/helper';
-import type { ICardEntityState, helperType } from './CardEntity.interfaces';
+import { initialCardState } from './CardEntity.constants';
+import type { CardData, CardDataState } from './CardEntity.interfaces';
 
-const initialState: ICardEntityState & IWithHelperState = {
+const initialState: CardDataState & IWithHelperState = {
     ...withHelperState,
-    apr: {},
-    available: {},
-    prices: {},
+    ...initialCardState,
 };
 
 export const CardEntity = createSlice({
@@ -19,14 +18,13 @@ export const CardEntity = createSlice({
     initialState,
     reducers: {
         ...withHelperReducers,
-        setAprs(state, action: PayloadAction<helperType>) {
-            state.apr = action.payload;
+        setCardInfo(state, action: PayloadAction<{ key: string, data: CardData }>) {
+            state.data[action.payload.key] = action.payload.data;
         },
-        setAvailables(state, action: PayloadAction<helperType>) {
-            state.available = action.payload;
-        },
-        setPrices(state, action: PayloadAction<helperType>) {
-            state.prices = action.payload;
+        setDefaultCardData(state) {
+            for (const key in state) {
+                state.data[key] = { ...initialState[key] };
+            }
         },
     },
 });

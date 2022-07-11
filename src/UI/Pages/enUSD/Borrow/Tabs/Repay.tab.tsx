@@ -7,16 +7,15 @@ import React, {
 } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import Input from '@/components/ui-kit/Input';
-import styles from '../style.module.css';
-import Text from '@/components/HomePage/PayModal/Text';
-import GradientButton from '@/components/ui-kit/GradientButton';
-import MiniButton from '@/components/ui-kit/MiniButton';
-import TokenSelect, { TokenOption } from '@/components/ui-kit/TokenSelect';
+import Input from 'UI/ui-kit/Input';
+import Text from 'UI/Pages/HomePage/PayModal/Text';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import MiniButton from 'UI/ui-kit/MiniButton';
+import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
+import { networks, chainToNameConfig } from 'utils/Global/Vars';
+import Typography from 'UI/ui-kit/Typography';
 import type { IRepayProps, RepayState } from './Tabs.interfaces';
-import { networks, chainToNameConfig } from '@/src/utils/GlobalConst';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
-import Typography from '@/ui-kit/Typography';
+import styles from '../style.module.css';
 
 const RepayTab: React.FC<IRepayProps> = () => {
     const [state, dispatch] = useReducer(

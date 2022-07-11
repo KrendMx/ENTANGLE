@@ -1,5 +1,5 @@
 import type { AxiosResponse } from 'axios';
-import type { TransactionHistoryEntity } from '../context/ServiceContext/ServiceContext.interfaces';
+import type { TransactionHistoryEntity } from 'utils/Global/Types';
 
 interface IGraphService {
     getBuyTransactions: () => Promise<IConfiguredBuyTransactionsData[]>;

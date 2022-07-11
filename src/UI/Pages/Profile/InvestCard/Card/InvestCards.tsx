@@ -16,7 +16,7 @@ import GradientButton from '@/components/ui-kit/GradientButton';
 import PayModal from '../../../HomePage/PayModal/index';
 import Modal from '@/components/Modal';
 import type { IChain } from '@/src/ChainService/ChainService.interface';
-import TextLoader from '@/ui-kit/TextLoader/TextLoader';
+import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 
 interface IState {
     chainId: availableChains;

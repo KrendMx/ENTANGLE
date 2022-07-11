@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import styles from './style.module.css';
-import Select, { Option } from '@/ui-kit/Select/index';
-import Input from '@/ui-kit/Input';
+import Select, { Option } from 'UI/ui-kit/Select/index';
+import Input from 'UI/ui-kit/Input';
+import { networks } from 'utils/Global/Vars';
+import { useStore } from 'core/store';
 import type { IActionProps } from './ActionPanel.interfaces';
-import { networks } from '@/src/utils/GlobalConst';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
+import styles from './style.module.css';
 
 const ActionPanel: React.FC<IActionProps> = ({
     search,
@@ -41,11 +41,15 @@ const ActionPanel: React.FC<IActionProps> = ({
         { stateName: 'apr', title: 'apr' },
         { stateName: 'available', title: 'valueLP' },
     ];
-    const cardState = useAppSelector((state) => state.cardDataReducer);
+    const { store } = useStore((store) => ({
+        CardEntity: store.CardsEntity,
+    }));
+
+    const { data } = store.CardEntity;
 
     const isDisabled = ():boolean => {
-        for (const key in cardState) {
-            if (cardState[key].apr === null) {
+        for (const key in data.cardState) {
+            if (data.cardState[key].apr === null) {
                 return true;
             }
         }

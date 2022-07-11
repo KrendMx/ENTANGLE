@@ -1,13 +1,6 @@
-import type { availableChains } from 'utils/Global/Types';
+import type { availableChains, walletKeyType } from 'utils/Global/Types';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import type WalletConnectProvider from '@walletconnect/web3-provider';
-
-type walletKeyType =
-    | 'MetaMask'
-    | 'Coin98'
-    | 'CoinBase'
-    | 'WalletConnect'
-    | null;
 
 interface IWalletEntityState {
     walletKey?: walletKeyType,
@@ -15,6 +8,7 @@ interface IWalletEntityState {
     account?: string | null,
     chainId?: availableChains,
     connect?: WalletConnectProvider;
+    preLoader?: boolean;
 }
 
 interface IWalletInfo {

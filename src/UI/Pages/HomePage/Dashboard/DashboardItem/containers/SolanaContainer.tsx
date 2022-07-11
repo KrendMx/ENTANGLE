@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react';
-import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
+import { useDispatch } from 'react-redux';
 import DashboardItem from '../index';
 import type { ContainerStateType } from './types';
 
 const SolanaContainer = ({ isFiltered = false }) => {
-    const dispatch = useAppDispatch();
+    const dispatch = useDispatch();
     const [state, setState] = useReducer(
         (
             containerState: ContainerStateType,

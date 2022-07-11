@@ -1,9 +1,9 @@
 import moment from 'moment/moment';
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import type { ChartDataProps } from '@/ui-kit/ChartWrapper/ChartWrapper.interfaces';
-import ChartWrapper from '@/ui-kit/ChartWrapper/ChartWrapper';
-import SoonChart from '@/ui-kit/SoonChart/SoonChart';
+import type { ChartDataProps } from 'UI/ui-kit/ChartWrapper/ChartWrapper.interfaces';
+import ChartWrapper from 'UI/ui-kit/ChartWrapper/ChartWrapper';
+import SoonChart from 'UI/ui-kit/SoonChart/SoonChart';
 import styles from './style.module.css';
 import type {
     BalanceChartTick,

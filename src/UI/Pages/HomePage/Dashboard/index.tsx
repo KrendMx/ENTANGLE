@@ -1,21 +1,25 @@
 import React from 'react';
+import { useStore } from 'core/store';
+import type { CardData } from 'core/Cards/CardEntity/CardEntity.interfaces';
 import styles from './style.module.css';
 import ITEMS from './Dashboard.consts';
 import type { IDashboardProps } from './Dashboard.interfaces';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
-import type { CardData } from '@/src/Redux/store/interfaces/CardData.interfaces';
 
 const Dashboard: React.FC<IDashboardProps> = ({
     filter = '',
     query = '',
     sort = '',
 }) => {
-    const sortingObject = useAppSelector((state) => state.cardDataReducer);
+    const { store } = useStore((store) => ({
+        CardEntity: store.CardsEntity,
+    }));
+
+    const { data } = store.CardEntity;
 
     const deskDetect = () => (sort.includes('desk') ? -1 : 1);
 
     function sortingCard() {
-        const arr = Object.values(sortingObject);
+        const arr = Object.values(data);
         switch (sort.split(' ')[0]) {
         case 'apr':
             return arr.sort(

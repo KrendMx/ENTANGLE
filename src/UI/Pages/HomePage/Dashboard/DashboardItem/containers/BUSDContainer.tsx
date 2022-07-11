@@ -1,20 +1,28 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import CardService from '@/src/ChainService/CardService';
+import { CardService } from 'services/index';
+import { farms } from 'utils/Global/Vars';
+import { useStore } from 'core/store';
+import { useDispatch } from 'react-redux';
+import { Notification } from 'src/libs/Notification';
 import DashboardItem from '../index';
-import { farms } from '@/src/utils/GlobalConst';
-import Modal from '../../../../Modal';
+import Modal from '../../../../../Components/Modal';
 import PayModal from '../../../PayModal';
-import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
-import { setPayData, setPositionSum, setIsOpenModal } from '@/src/Redux/store/reducers/UserSlice';
-import { setErrorStack, setError } from '@/src/Redux/store/reducers/AppSlice';
-import { setCardInfo } from '@/src/Redux/store/reducers/CardInfoSlice';
 
 const BUSDContainer = ({ isFiltered = false }) => {
-    const dispatch = useAppDispatch();
-    const { account, chainId, preLoader } = useAppSelector((state) => state.walletReducer);
-    const { txLoading, isOpenModal, profits } = useAppSelector((state) => state.userReducer);
-    const { error } = useAppSelector((state) => state.appReducer);
-    const cardReducer = useAppSelector((state) => state.cardDataReducer);
+    const { store, actions, asyncActions } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+        WalletEntity: store.WalletEntity,
+        AppEntity: store.AppEntity,
+        CardsEntity: store.CardsEntity,
+    }));
+
+    const dispatch = useDispatch();
+    const { account, chainId, preLoader } = store.WalletEntity;
+    const { data: CardData } = store.CardsEntity;
+    const { txLoading, isOpenModal, profits } = store.UserEntity;
+
+    const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
+    const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
     const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
     const openModal = () => dispatch(setIsOpenModal(true));
@@ -35,7 +43,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
     const Service = useMemo(() => new CardService('BSC'), []);
 
     useEffect(() => {
-        if (!preLoader && cardReducer[data.chainId].apr === null) {
+        if (!preLoader && CardData[data.chainId].apr === null) {
             (async () => {
                 let [apr,
                     available,
@@ -54,10 +62,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
                 } catch (e) {
-                    if (!error) {
-                        dispatch(setError({ e: { head: 'Error', message: e.message } }));
-                    }
-                    dispatch(setErrorStack({ e: { head: 'Error', message: e.message } }));
+                    Notification.error('Error', e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
@@ -66,10 +71,10 @@ const BUSDContainer = ({ isFiltered = false }) => {
                 dispatch(setCardInfo({
                     key: data.chainId,
                     data: {
-                        ...cardReducer[data.chainId],
+                        ...CardData[data.chainId],
                         apr: `${apr}`,
                         available: `${
-                            cardReducer[data.chainId].localChain === chainId
+                            CardData[data.chainId].localChain === chainId
                                 ? 'Unlimited'
                                 : Number(available.toFixed(5))
                         }`,
@@ -84,7 +89,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     key: '56',
                     data: {
                         available: `${
-                            cardReducer[data.chainId].localChain === chainId
+                            CardData[data.chainId].localChain === chainId
                                 ? 'Unlimited'
                                 : Number(available.toFixed(5))
                         }`,
@@ -98,7 +103,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
 
     useEffect(() => {
         (async () => {
-            if (account && cardReducer[data.chainId].positions === null) {
+            if (account && CardData[data.chainId].positions === null) {
                 let [positions, totalPositions] = [0, 0];
                 try {
                     const personalData = await Service.getPersonalData(
@@ -108,10 +113,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     positions = personalData.positions;
                     totalPositions = personalData.totalPositions;
                 } catch (e: any) {
-                    if (!error) {
-                        dispatch(setError({ e: { head: 'Error', message: e.message } }));
-                    }
-                    dispatch(setErrorStack({ e: { head: 'Error', message: e.message } }));
+                    Notification.error('Error', e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
@@ -121,10 +123,10 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     {
                         key: data.chainId,
                         data: {
-                            ...cardReducer[data.chainId],
+                            ...CardData[data.chainId],
                             positions: `$${Number(positions.toFixed(2))}`,
                             totalPositions: `${Number(totalPositions.toFixed(5))} USDT/BUSD Synthetic LP`,
-                            yieldTime: String(profits.get(data.chainId)?.value || ''),
+                            yieldTime: String(profits[data.chainId]?.value || ''),
                         },
                     },
                 ));
@@ -137,14 +139,14 @@ const BUSDContainer = ({ isFiltered = false }) => {
             {isOpenModal && (
                 <Modal handleClose={closeModal}>
                     <PayModal
-                        available={cardReducer[data.chainId].available}
-                        totalAvailable={cardReducer[data.chainId].totalAvailable}
-                        price={cardReducer[data.chainId].price}
+                        available={CardData[data.chainId].available}
+                        totalAvailable={CardData[data.chainId].totalAvailable}
+                        price={CardData[data.chainId].price}
                         handleClose={closeModal}
                     />
                 </Modal>
             )}
-            <DashboardItem {...data} {...cardReducer[data.chainId]} isFiltered={isFiltered} />
+            <DashboardItem {...data} {...CardData[data.chainId]} isFiltered={isFiltered} />
         </>
     );
 };

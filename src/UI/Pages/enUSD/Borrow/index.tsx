@@ -1,11 +1,10 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import Tabs from 'UI/ui-kit/Tabs';
 import styles from './style.module.css';
-import Tabs from '@/ui-kit/Tabs';
 import BorrowTab from './Tabs/Borrow.tab';
 import type { infoReducer } from './Borrow.intefaces';
 import RepayTab from './Tabs/Repay.tab';
-import ChainService from '@/src/ChainService/ChainService';
 
 const Borrow: React.FC = () => {
     const [actionType, setActionType] = useState<number>(0);

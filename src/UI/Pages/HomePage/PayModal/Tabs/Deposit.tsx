@@ -4,7 +4,7 @@ import type { Contract } from 'ethers';
 import { useTranslation } from 'react-i18next';
 import styles from '../style.module.css';
 import ModalInput from '../ModalInput/index';
-import GradientButton from '@/ui-kit/GradientButton';
+import GradientButton from 'UI/ui-kit/GradientButton';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
 import { networks, namesConfig } from '@/src/utils/GlobalConst';
 import type { availableChains } from '@/src/utils/GlobalConst';

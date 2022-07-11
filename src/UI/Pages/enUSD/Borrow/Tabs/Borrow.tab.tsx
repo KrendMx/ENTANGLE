@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import classNames from 'cimport {useStore} from "core/store";lassnames';
 import type { ChangeEvent } from 'react';
 import React, {
     useEffect, useCallback, useReducer, useState,
@@ -6,19 +6,18 @@ import React, {
 
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import Input from '@/components/ui-kit/Input';
-import styles from '../style.module.css';
-import Text from '@/components/HomePage/PayModal/Text';
-import GradientButton from '@/components/ui-kit/GradientButton';
-import TokenSelect, { TokenOption } from '@/ui-kit/TokenSelect';
-import GradientSlider from '@/components/ui-kit/GradientSlider';
+import Input from 'UI/ui-kit/Input';
+import Text from 'UI/Pages/HomePage/PayModal/Text';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
+import GradientSlider from 'UI/ui-kit/GradientSlider';
+import { networks, chainToNameConfig } from 'utils/Global/Vars';
+import { useStore } from 'core/store';
+import Typography from 'UI/ui-kit/Typography';
 import type { IBorrowProps, BorrowState } from './Tabs.interfaces';
-import { networks, chainToNameConfig } from '@/src/utils/GlobalConst';
+import styles from '../style.module.css';
 
 import local from './style.module.css';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
-import Typography from '@/components/ui-kit/Typography';
-import PayModal from '@/components/HomePage/PayModal';
 
 const BorrowTab: React.FC<IBorrowProps> = () => {
     const [state, dispatch] = useReducer(
@@ -37,7 +36,11 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
         },
     );
 
-    const { balances } = useAppSelector(({ userReducer }) => userReducer);
+    const { store } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+    }));
+
+    const { balances } = store.UserEntity;
 
     useEffect(() => {
         if (!state.lendSynthLp) return;

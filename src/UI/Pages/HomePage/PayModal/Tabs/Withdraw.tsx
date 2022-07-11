@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import styles from '../style.module.css';
 import Text from '../Text/index';
 import ModalInput from '../ModalInput';
-import GradientButton from '@/ui-kit/GradientButton';
+import GradientButton from 'UI/ui-kit/GradientButton';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
 import { networks, farms, namesConfig } from '@/src/utils/GlobalConst';
 import type { availableChains } from '@/src/utils/GlobalConst';

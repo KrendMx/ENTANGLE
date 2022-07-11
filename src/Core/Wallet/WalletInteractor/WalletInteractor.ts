@@ -1,7 +1,7 @@
 // Interfaces
 import type { Thunk } from 'core/utils/types';
 import type { INotification } from 'src/libs/Notification';
-import type { availableChains } from 'src/utils/Global/Types';
+import type { availableChains, walletKeyType } from 'src/utils/Global/Types';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 
 // Deps
@@ -15,7 +15,7 @@ import { WalletEntity } from '../WalletEntity';
 
 export interface IWalletInteractor {
     changeNetwork: Thunk<{ chainId: availableChains, provider: Web3Provider}>;
-    setWallet: Thunk<{walletKey: string}>;
+    setWallet: Thunk<{walletKey: walletKeyType}>;
     importToken: Thunk<{synthAddress: string; provider: Web3Provider}>;
 }
 

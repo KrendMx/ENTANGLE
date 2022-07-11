@@ -1,4 +1,4 @@
-// Store depend
+// Depens
 import { configureStore } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 
@@ -9,9 +9,7 @@ import { ContractInteractor } from 'core/Contract/ContractInteractor';
 import type { IContractInteractor } from './Contract/ContractInteractor';
 import { UserEntity } from './User/UserEntity';
 import { ContractEntity } from './Contract/ContractEntity';
-import { CardInteractor } from './Cards/CardInteractor';
 import { CardEntity } from './Cards/CardEntity';
-import type { ICardInteractor } from './Cards/CardInteractor';
 import { WalletEntity } from './Wallet/WalletEntity';
 import { WalletInteractor } from './Wallet/WalletInteractor';
 import type { IWalletInteractor } from './Wallet/WalletInteractor';
@@ -48,14 +46,12 @@ export const actions: IActions = {
 
 interface IAsyncActions {
     User: IUserInteractor;
-    Card: ICardInteractor,
     Contract: IContractInteractor,
     Wallet: IWalletInteractor,
   }
 
 export const asyncActions: IAsyncActions = {
     User: UserInteractor,
-    Card: CardInteractor,
     Contract: ContractInteractor,
     Wallet: WalletInteractor,
 };
@@ -67,3 +63,6 @@ export const useStore = <T>(
         asyncActions,
         store: useSelector(selector),
     });
+
+export type AppStore = ReturnType<typeof store.getState>;
+export type AppDispatch = ReturnType<typeof store.dispatch>;

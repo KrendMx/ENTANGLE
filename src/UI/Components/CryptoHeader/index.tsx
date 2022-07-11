@@ -2,20 +2,18 @@ import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import type { CryptoHeaderProps } from './CryptoHeader.interfaces';
-import { WalletProviderNames } from '@/components/Modal/SelectWalletModal/SelectWalletModal.constants';
 import {
-    networks,
+    WalletProviderNames, networks,
     namesConfig,
     STABLES,
     synths,
-} from '@/src/utils/GlobalConst';
-
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
+} from 'utils/Global/Vars';
+import { useStore } from 'core/store';
+import type { CryptoHeaderProps } from './CryptoHeader.interfaces';
 
 import styles from './style.module.css';
-import HoverTooltip from '../HoverTooltip/HoverTooltip';
-import CopyBtn from '../CopyBtn/CopyBtn';
+import HoverTooltip from '../../ui-kit/HoverTooltip/HoverTooltip';
+import CopyBtn from '../../ui-kit/CopyBtn/CopyBtn';
 
 const CryptoHeader: React.FC<CryptoHeaderProps> = ({
     token,
@@ -26,9 +24,11 @@ const CryptoHeader: React.FC<CryptoHeaderProps> = ({
     balance,
     earned,
 }) => {
-    const { chainId, provider, account } = useAppSelector(
-        (state) => state.walletReducer,
-    );
+    const { store } = useStore((store) => ({
+        WalletEntity: store.WalletEntity,
+    }));
+
+    const { chainId, provider, account } = store.WalletEntity;
 
     const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
 

@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import styles from './style.module.css';
 
 import type { IWithdrawState, WithdrawProps } from './Tabs.interfaces';
-import GradientButton from '@/ui-kit/GradientButton';
-import Input from '@/ui-kit/Input';
-import TokenSelect, { TokenOption } from '@/ui-kit/TokenSelect';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import Input from 'UI/ui-kit/Input';
+import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import { networks } from '@/src/utils/GlobalConst';
 import Typography from '@/components/ui-kit/Typography';
 import Text from '@/components/HomePage/PayModal/Text';

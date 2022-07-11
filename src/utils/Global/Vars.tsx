@@ -69,6 +69,13 @@ const networks = {
     },
 } as const;
 
+const WalletProviderNames = {
+    MetaMask: 'MetaMask',
+    Coin98: 'Coin98',
+    CoinBase: 'CoinBase',
+    WalletConnect: 'WalletConnect',
+} as const;
+
 const farms = {
     '250': {
         FTM: '9',
@@ -145,5 +152,5 @@ const synths = {
 };
 
 export {
-    synths, chainToNameConfig, namesConfig, farms, networks, STABLES,
+    synths, chainToNameConfig, namesConfig, farms, networks, STABLES, WalletProviderNames,
 };

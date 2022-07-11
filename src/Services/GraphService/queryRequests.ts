@@ -1,7 +1,7 @@
 import axios from 'axios';
+import type { TransactionHistoryEntity } from 'utils/Global/Types';
 import type { IQueryRequests, IQueryResponse } from './GraphService.interfaces';
 import { GRAPH_CONFIG } from './config';
-import type { TransactionHistoryEntity } from '../context/ServiceContext/ServiceContext.interfaces';
 
 class QueryRequests implements IQueryRequests {
     getGraphDataBuyData = async (account: string, url: string) => {

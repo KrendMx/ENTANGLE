@@ -25,6 +25,7 @@
       "src/*": ["./src/*"],
       "UI/*": ["./src/UI/*"],
       "utils/*": ["./src/utils/*"],
+      "services/*": ["./src/Services/*"]
     }
   }
 }

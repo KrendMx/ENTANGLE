@@ -7,11 +7,8 @@ import type {
 import type { shefEvent } from '../GraphService/GraphService.interfaces';
 import { CHEF_CONFIG } from '../GraphService/config';
 
-class ChainService implements IChainService {
+export class ChainService implements IChainService {
     public static readonly SynthsContractsArray: { [key: string]: Contract } = {};
-
-    private static createProvider = (chainId: keyof typeof NETWORKS) =>
-        new providers.JsonRpcProvider(NETWORKS[chainId].rpc);
 
     public static contracts: any = (() => {
         const contracts = {};
@@ -113,14 +110,12 @@ class ChainService implements IChainService {
             }
             finalArr.push(((sumMarkInvestition + sumWithdraw)
                 - (startInvestition + sumDeposited)) / (10
-                    ** Number(
-                        await ChainService.contracts[
-                            key.key
-                        ].STABLESYNTCHEF.decimals(),
-                    )));
+                ** Number(
+                    await ChainService.contracts[
+                        key.key
+                    ].STABLESYNTCHEF.decimals(),
+                )));
         }
         return finalArr.reduce((p, c) => p + c);
     };
 }
-
-export default ChainService;

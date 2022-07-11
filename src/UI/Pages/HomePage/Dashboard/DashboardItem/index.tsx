@@ -2,23 +2,17 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import styles from './style.module.css';
-import GradientButton from '@/ui-kit/GradientButton';
-import TextLoader from '@/ui-kit/TextLoader/TextLoader';
-import { synths } from '@/src/utils/GlobalConst';
-import { useAppDispatch, useAppSelector } from '@/src/Redux/store/hooks/redux';
-import {
-    changeNetwork,
-    importToken,
-    setWallet,
-} from '@/src/Redux/store/reducers/ActionCreators';
-import type { availableChains } from '@/src/utils/GlobalConst';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
+import { synths, WalletProviderNames } from 'utils/Global/Vars';
+import { useStore } from 'core/store';
+import { useDispatch } from 'react-redux';
+import type { availableChains } from 'utils/Global/Types';
+import CopyBtn from 'UI/ui-kit/CopyBtn/CopyBtn';
+import HoverTooltip from 'UI/ui-kit/HoverTooltip/HoverTooltip';
+import HintModal from 'UI/ui-kit/HintModal';
 import type { ContainerStateType } from './containers/types';
-import CopyBtn from '@/ui-kit/CopyBtn/CopyBtn';
-import HoverTooltip from '@/ui-kit/HoverTooltip/HoverTooltip';
-import { WalletProviderNames } from '@/components/Modal/SelectWalletModal/SelectWalletModal.constants';
-import { setIsOpenSelectWalletModal } from '@/src/Redux/store/reducers/AppSlice';
-import HintModal from '@/components/ui-kit/HintModal';
+import styles from './style.module.css';
 
 type DashboardItemProps = {
     chainId: availableChains;
@@ -48,14 +42,21 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     localChain,
     localName,
 }) => {
-    const {
-        account,
-        provider,
-        chainId: selectedChainId,
-    } = useAppSelector((state) => state.walletReducer);
-    const { profits } = useAppSelector((state) => state.userReducer);
+    const { store, asyncActions, actions } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+        WalletEntity: store.WalletEntity,
+        AppEntity: store.AppEntity,
+    }));
 
-    const dispatch = useAppDispatch();
+    const { account, provider, chainId: selectedChainId } = store.WalletEntity;
+
+    const { profits } = store.UserEntity;
+
+    const { importToken, changeNetwork, setWallet } = asyncActions.Wallet;
+
+    const { setIsOpenSelectWalletModal } = actions.App;
+
+    const dispatch = useDispatch();
 
     const { t } = useTranslation('index');
 
@@ -74,7 +75,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     useEffect(() => {
         if (addingToken) {
             const synthAddress = synths[chainId][localName];
-            dispatch(importToken({ chainId, synthAddress, provider }));
+            dispatch(importToken({ synthAddress, provider }));
             setAddingToken(false);
         }
     }, [selectedChainId, addingToken]);
@@ -92,7 +93,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
             setAddingToken(true);
         } else {
             const synthAddress = synths[chainId][localName];
-            dispatch(importToken({ chainId, synthAddress, provider }));
+            dispatch(importToken({ synthAddress, provider }));
         }
     };
 
@@ -246,11 +247,11 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             </HintModal>
                         </div>
                         <div className={styles.sectionRow}>
-                            {profits.get(localChain)?.value
-                                || profits.get(localChain)?.value === 0 ? (
+                            {profits[localChain]?.value
+                                || profits[localChain]?.value === 0 ? (
                                     <p className={styles.sectionValue}>
                                         $
-                                        {profits.get(localChain)?.value}
+                                        {profits[localChain]?.value}
                                     </p>
                                 )
                                 : (

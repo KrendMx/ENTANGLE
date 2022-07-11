@@ -16,6 +16,7 @@ const initialState: IWalletEntityState & IWithHelperState = {
     account: null,
     chainId: '43114',
     connect: null,
+    preLoader: true,
 };
 
 export const WalletEntity = createSlice({
@@ -51,6 +52,13 @@ export const WalletEntity = createSlice({
         setNetwork(state, action: PayloadAction<{chainId: availableChains, provider: Web3Provider}>) {
             state.chainId = action.payload.chainId;
             state.provider = action.payload.provider;
+        },
+        changeNetworkWC(state, action: PayloadAction<{chainId: availableChains, provider: Web3Provider}>) {
+            state.chainId = action.payload.chainId;
+            state.provider = action.payload.provider;
+        },
+        setPreloader(state, action: PayloadAction<boolean>) {
+            state.preLoader = action.payload;
         },
     },
 });

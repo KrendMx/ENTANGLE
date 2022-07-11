@@ -1,9 +1,9 @@
 import type { Page } from 'puppeteer';
 import puppeteer from 'puppeteer';
+import type { availableNames } from 'utils/Global/Types';
 import SCRAPPER_CONFIG from './config';
-import type { availableNames } from '../utils/GlobalConst';
 
-class ScrapperService {
+export class ScrapperService {
     private url: string;
 
     private path: string;
@@ -91,5 +91,3 @@ class ScrapperService {
         return 2.23;
     }
 }
-
-export default ScrapperService;

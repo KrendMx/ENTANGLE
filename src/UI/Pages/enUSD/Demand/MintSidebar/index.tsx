@@ -4,9 +4,9 @@ import { CSSTransition } from 'react-transition-group';
 
 import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 import styles from './style.module.css';
-import GradientButton from '@/ui-kit/GradientButton/index';
-import Input from '@/ui-kit/Input/index';
-import Tabs from '@/ui-kit/Tabs/index';
+import GradientButton from 'UI/ui-kit/GradientButton/index';
+import Input from 'UI/ui-kit/Input/index';
+import Tabs from 'UI/ui-kit/Tabs/index';
 
 type SidebarProps = {
     handleClose: () => void

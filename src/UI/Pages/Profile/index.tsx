@@ -5,10 +5,10 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import InvestCard from './InvestCard';
-import Typography from '@/ui-kit/Typography';
-import Select, { Option } from '@/ui-kit/Select';
-import InfoBlock from '@/ui-kit/InfoBlock/InfoBlock';
-import { InfoBlockTypes } from '@/ui-kit/InfoBlock/InfoBlock.constants';
+import Typography from 'UI/ui-kit/Typography';
+import Select, { Option } from 'UI/ui-kit/Select';
+import InfoBlock from 'UI/ui-kit/InfoBlock/InfoBlock';
+import { InfoBlockTypes } from 'UI/ui-kit/InfoBlock/InfoBlock.constants';
 
 import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';

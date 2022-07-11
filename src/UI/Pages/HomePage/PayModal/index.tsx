@@ -4,15 +4,12 @@ import { Contract, providers } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import { useTranslation } from 'next-i18next';
 import styles from './style.module.css';
-import { networks, farms } from '@/src/utils/GlobalConst';
+import { networks, farms } from 'utils/Global/Vars';
 import type { PayModalPropsType } from './PayModal.interfaces';
 import Deposit from './Tabs/Deposit';
 import Withdraw from './Tabs/Withdraw';
-import Tabs from '@/ui-kit/Tabs/index';
-import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
-import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
-import { setSucInfo } from '@/src/Redux/store/reducers/AppSlice';
-import { ChainConfig } from '@/src/ChainService/config';
+import Tabs from 'UI/ui-kit/Tabs/index';
+import { ChainConfig } from 'services/index';
 
 const PayModal: React.FC<PayModalPropsType> = ({
     handleClose, price, available, totalAvailable,

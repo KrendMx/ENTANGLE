@@ -1,6 +1,6 @@
 import { Contract, providers } from 'ethers';
 import { ChainConfig, NETWORKS } from 'src/Services/ChainService/config';
-import Loader from 'UI/Components/Loader';
+import Loader from 'UI/ui-kit/Loader';
 
 const SortArray = [{ title: 'priceIn', sort: 'Price increase' },
     { title: 'priceDec', sort: 'Price decrease' },
