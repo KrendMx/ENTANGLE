@@ -3,6 +3,7 @@ const enum InfoBlockTypes {
     PERCENTAGE,
     BALANCE,
     PERCENTAGE_MIXED,
+    ABOUT_MONEY
 }
 
 /**

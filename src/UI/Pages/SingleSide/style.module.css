@@ -1,0 +1,29 @@
+.wrapper {
+	padding-top: 50px;
+}
+
+.header {
+	font-size: 35px !important;
+}
+
+.headerDesc {
+	padding-top: 13px;
+
+	color: var(--gray);
+
+	font-size: 18px;
+}
+
+.infoWrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+
+	margin: 10px 0;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.infoWrapper > div {
+	max-width: 500px;
+	margin: 4px;
+}

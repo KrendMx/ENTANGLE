@@ -1,0 +1,14 @@
+.wrapper {
+	display: flex;
+
+	font-size: 22px;
+}
+
+
+.awaitingTitle {
+	color: var(--green);
+}
+
+.padding {
+	padding-left: 10px;
+}

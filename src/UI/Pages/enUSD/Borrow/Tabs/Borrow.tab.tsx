@@ -1,4 +1,5 @@
-import classNames from 'cimport {useStore} from "core/store";lassnames';
+import classNames from 'classnames';
+import { useStore } from 'core/store';
 import type { ChangeEvent } from 'react';
 import React, {
     useEffect, useCallback, useReducer, useState,
@@ -12,7 +13,7 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientSlider from 'UI/ui-kit/GradientSlider';
 import { networks, chainToNameConfig } from 'utils/Global/Vars';
-import { useStore } from 'core/store';
+
 import Typography from 'UI/ui-kit/Typography';
 import type { IBorrowProps, BorrowState } from './Tabs.interfaces';
 import styles from '../style.module.css';
@@ -47,7 +48,7 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
         dispatch({
             getEnUSD: Number(
                 (
-                    (Number(state.lendSynthLp))
+                    Number(state.lendSynthLp)
                     * (Number(state.LTVRate) / 100)
                 ).toFixed(2),
             ).toString(),
@@ -58,10 +59,9 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
         (value
             ? dispatch({
                 getEnUSD: Number(
-                    (
-                        Number(value)
-                          * (Number(state.LTVRate) / 100)
-                    ).toFixed(2),
+                    (Number(value) * (Number(state.LTVRate) / 100)).toFixed(
+                        2,
+                    ),
                 ).toString(),
                 lendSynthLp: value,
             })
@@ -71,10 +71,9 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
         (value
             ? dispatch({
                 lendSynthLp: Number(
-                    (
-                        (Number(value))
-                          / (Number(state.LTVRate) / 100)
-                    ).toFixed(2),
+                    (Number(value) / (Number(state.LTVRate) / 100)).toFixed(
+                        2,
+                    ),
                 ).toString(),
                 getEnUSD: value,
             })
@@ -87,10 +86,13 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
     const getMax = () => {
         if (!state.synthLp) return;
         dispatch({
-            lendSynthLp: balances[chainToNameConfig[state.synthLp]].positions.toString(),
+            lendSynthLp:
+                balances[chainToNameConfig[state.synthLp]].positions.toString(),
             getEnUSD: Number(
                 (
-                    Number(balances[chainToNameConfig[state.synthLp]].positions)
+                    Number(
+                        balances[chainToNameConfig[state.synthLp]].positions,
+                    )
                     * (Number(state.LTVRate) / 100)
                 ).toFixed(2),
             ).toString(),
@@ -168,7 +170,9 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                         />
                     </div>
                     <div className={styles.infoContainer}>
-                        <p className={classNames(styles.white)}>{t('SetLTV')}</p>
+                        <p className={classNames(styles.white)}>
+                            {t('SetLTV')}
+                        </p>
                         <div style={{ width: '30%' }}>
                             <GradientButton
                                 title={t('info')}
@@ -228,9 +232,7 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                             }}
                         >
                             <div className="inner">
-                                <p>
-                                    {t('infoText')}
-                                </p>
+                                <p>{t('infoText')}</p>
                             </div>
                         </div>
                     </div>
@@ -276,7 +278,10 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                 </div>
             </div>
             <div className={styles.helper}>
-                <GradientButton title={`${t('Mint')} EnUSD`} onClick={() => {}} />
+                <GradientButton
+                    title={`${t('Mint')} EnUSD`}
+                    onClick={() => {}}
+                />
             </div>
         </>
     );

@@ -27,8 +27,8 @@ const HintModal: React.FC<Props> = ({ children }) => {
                     ) : null}
                     <Image
                         src="/images/i.svg"
-                        width={14}
-                        height={14}
+                        width={15}
+                        height={15}
                         quality={100}
                         alt=""
                     />

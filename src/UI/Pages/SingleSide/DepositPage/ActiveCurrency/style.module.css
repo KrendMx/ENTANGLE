@@ -1,0 +1,42 @@
+.wrapper {
+	display: grid;
+	grid-template-columns: repeat(var(--assets-count), 1fr);
+	grid-column-gap: 15px;
+}
+
+.card {
+	position: relative;
+
+	width: 100%;
+
+	padding: 10px;
+
+	cursor: pointer;
+
+	transition: all 0.5s;
+
+	border-radius: 10px; 
+
+	background: var(--color-3);
+}
+
+.card > span {
+	display: flex;
+	align-items: center;
+	
+}
+
+.card > span > span:last-child {
+	padding-left: 10px;
+	
+}
+
+.card > span 
+> span:last-child 
+> p:first-child {
+	padding-bottom: 2px;
+
+	color: var(--gray);
+}
+
+

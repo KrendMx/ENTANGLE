@@ -1,5 +1,7 @@
 type availableChains = '43114' | '250' | '56' | '1';
 
+type availableSingleSideChains = '24886' | availableChains;
+
 type availableNames = 'AVAX' | 'FTM' | 'BSC' | 'ETH';
 
 type languages = 'en' | 'ru' | 'ch' | 'de' | 'ko';
@@ -32,4 +34,5 @@ export type {
     ErrorI,
     TransactionHistoryEntity,
     walletKeyType,
+    availableSingleSideChains,
 };

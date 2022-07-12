@@ -1,0 +1,34 @@
+.arrow {
+	--size: 55px;
+	position: absolute;
+	z-index: 50;
+	top: calc((100% - var(--size)) / 2 - 10px);
+	left: -38px;
+
+	display: block;
+
+	width: var(--size);
+	height: var(--size);
+
+	transform: rotate(-90deg);
+}
+
+@media (max-width: 1124px) {
+	.rotate {
+		top: -23px;
+		left: 94%;
+
+		transform: rotate(45deg);
+	}
+}
+
+@media (max-width: 900px) {
+	.arrow {
+		top: -30px;
+		left: calc((100% - 40px) / 2 - 5px);
+
+		display: block;
+
+		transform: rotate(0deg);
+	}
+}

@@ -1,0 +1,181 @@
+.upperInfo {
+	display: grid;
+
+	padding: 40px 0 30px;
+	grid-template-columns: repeat(calc(var(--assets) + 2), 1fr);
+	grid-column-gap: 10px;
+}
+
+.infoCard {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+
+	padding: 15px;
+
+	border: 2px solid rgb(255 255 255 / 10%);
+
+	border-radius: 12px;
+	background: rgb(30 30 30 / 10%);
+	backdrop-filter: blur(15px);
+
+}
+
+.infoCard > span {
+	display: flex;
+}
+
+.customTextGroop p {
+	font-size: 17px !important;
+}
+
+.infoCard > span > p {
+	color: var(--gray);
+}
+
+
+
+.cardMainInfoText {
+	display: flex;
+
+	color: var(--text-color);
+
+	font-size: 22px;
+}
+
+.cardMainInfo > *:last-child {
+	padding-left: 10px;
+}
+
+
+
+
+.noAmount {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+
+	padding: 25px 0;
+}
+
+.headerDesc {
+	color: var(--gray);
+
+	font-size: 22px;
+}
+
+.loader {
+	position: relative;
+
+	width: 100%;
+	height: 10px;
+
+	border-radius: 10px;
+
+	background-color: var(--color-3);
+}
+
+.loader::after {
+	position: absolute;
+	top:0;
+	left: 0;
+
+	width: var(--load);
+	height: 100%;
+
+	content: '';
+
+	border-radius: inherit;
+
+	background-color: var(--green);
+}
+
+.awaitingTitle{
+	color: var(--green);
+
+	font-size: 13px
+}
+
+
+
+.assetInfo {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(3, 100px);
+	grid-gap: 10px;
+
+	padding-bottom: 70px;
+}
+
+.mainAsset {
+	display: grid;
+	grid-row: 1/4;
+
+	padding: 20px 30px;
+}
+
+.assetInfo > div {
+	border: 2px solid rgb(255 255 255 / 10%);
+	border-radius: 10px;
+}
+
+
+
+.mainAsset > span {
+	display: flex;
+	align-items: center;
+}
+
+.textDescription {
+	color: var(--gray) !important;
+
+	font-size: 16px !important;
+}
+
+.stakeCurrence {
+	display: flex;
+}
+
+.projected {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.projected > div {
+	height: 90%;
+
+	border: 0;
+}
+
+.projected > div > span > p {
+	font-size: 15px;
+}
+
+
+.assetsAmount > div:last-child {
+	padding-left: 20px;
+}
+
+.assetsAmount {
+	display: flex;
+}
+
+@media (max-width: 900px){
+	.upperInfo  {
+		grid-template-columns: 1fr;
+		grid-row-gap: 10px;
+	}
+
+	.assetInfo {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 570px){
+	.upperInfo {
+		grid-template-columns: 1fr;
+		grid-row-gap: 10px;
+	}
+}

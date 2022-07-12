@@ -7,9 +7,11 @@ const networks = {
         currencyMin: 'USDC/USDC.e',
         description:
             'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
-        bgGradient: 'linear-gradient(90deg, rgba(241, 78, 86, 0.10) 0%, rgba(241, 78, 86, 0.04) 100%)',
+        bgGradient:
+            'linear-gradient(90deg, rgba(241, 78, 86, 0.10) 0%, rgba(241, 78, 86, 0.04) 100%)',
         cardTypeLabelColor: '#E7252E',
-        cardTypeLabelBg: 'linear-gradient(180deg, #F14E5640 -23.33%, #E7252E40 118.33%)',
+        cardTypeLabelBg:
+            'linear-gradient(180deg, #F14E5640 -23.33%, #E7252E40 118.33%)',
         dex: '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
         fiat: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
         rpc: 'https://rpc.ankr.com/avalanche',
@@ -27,9 +29,11 @@ const networks = {
         currencyMin: 'USDT-BUSD',
         description:
             'Generates yield by running an autocompound USDT/BUSD strategy on pancakeswap.finance',
-        bgGradient: 'linear-gradient(90deg, rgba(255, 199, 0, 0.10) 0%, rgba(255, 199, 0, 0.04) 100%)',
+        bgGradient:
+            'linear-gradient(90deg, rgba(255, 199, 0, 0.10) 0%, rgba(255, 199, 0, 0.04) 100%)',
         cardTypeLabelColor: '#FF8A00',
-        cardTypeLabelBg: 'linear-gradient(180deg, #FFC70045 -23.33%, #FF8A0045 118.33%)',
+        cardTypeLabelBg:
+            'linear-gradient(180deg, #FFC70045 -23.33%, #FF8A0045 118.33%)',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
         rpc: 'https://rpc.ankr.com/bsc',
@@ -64,7 +68,8 @@ const networks = {
         currencyMin: 'MIM/USDC',
         description:
             'Generates yield by running an autocompound MIM/USDC strategy on spiritswap.finance',
-        bgGradient: 'linear-gradient(90deg, rgba(0, 148, 255, 0.10) 0%, rgba(0, 148, 255, 0.04) 100%)',
+        bgGradient:
+            'linear-gradient(90deg, rgba(0, 148, 255, 0.10) 0%, rgba(0, 148, 255, 0.04) 100%)',
         cardTypeLabelColor: '#00AFFF',
         cardTypeLabelBg: '#0094FF40',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
@@ -78,6 +83,16 @@ const networks = {
     },
 } as const;
 
+const availableSingleSideNetworks = {
+    '24886': {
+        title: 'Entangle',
+        abbr: 'ENTGL',
+        mainColor: 'rgba(60,27,124,0.5)',
+        mainIcon: '/images/networks/entangleDashboard.svg',
+    },
+    ...networks,
+};
+
 const WalletProviderNames = {
     MetaMask: 'MetaMask',
     Coin98: 'Coin98',
@@ -86,10 +101,10 @@ const WalletProviderNames = {
 } as const;
 
 const init = {
-    'FTM': { '56': 0, '43114': 0, '250': 0 },
-    'AVAX': { '56': 0, '43114': 0, '250': 0 },
-    'BSC': { '56': 0, '43114': 0, '250': 0 },
-    'ETH': { '56': 0, '43114': 0, '250': 0 },
+    FTM: { '56': 0, '43114': 0, '250': 0 },
+    AVAX: { '56': 0, '43114': 0, '250': 0 },
+    BSC: { '56': 0, '43114': 0, '250': 0 },
+    ETH: { '56': 0, '43114': 0, '250': 0 },
 };
 
 const farms = {
@@ -168,5 +183,13 @@ const synths = {
 };
 
 export {
-    synths, chainToNameConfig, namesConfig, farms, networks, STABLES, WalletProviderNames, init,
+    synths,
+    chainToNameConfig,
+    namesConfig,
+    farms,
+    networks,
+    STABLES,
+    WalletProviderNames,
+    init,
+    availableSingleSideNetworks,
 };

@@ -23,6 +23,10 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
             valueText = `$${numberFormatter(value, 4)}`;
             break;
         }
+        case InfoBlockTypes.ABOUT_MONEY: {
+            valueText = `~$${numberFormatter(value, 4)}`;
+            break;
+        }
         case InfoBlockTypes.BALANCE: {
             valueText = `$${Number(value).toFixed(4)}`;
 

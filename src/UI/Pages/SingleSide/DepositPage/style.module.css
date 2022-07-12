@@ -1,0 +1,74 @@
+.wrapper {
+	position: relative;
+}
+
+.back {
+	display: flex;
+	flex-direction: row;
+
+	width: fit-content;
+
+	margin: 3rem 0 0.5rem;
+
+	cursor: pointer;
+}
+
+.dFlex {
+	display: flex;
+}
+
+.back p {
+	margin-left: .8rem;
+}
+
+.header {
+	font-size: 35px !important;
+}
+
+.headerDesc {
+	padding-top: 13px;
+
+	color: var(--gray);
+
+	font-size: 18px;
+}
+
+.images {
+	padding-left: 15px;
+}
+
+.images span:first-child {
+	z-index: 5;
+}
+
+.images span:last-child {
+	position: relative;
+	z-index: 4;
+	left: -10px;
+}
+
+.yieldHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding-top: 50px;
+}
+
+.noMargin {
+	margin: 0;
+}
+
+.yieldHeader > div {
+	width:350px;
+}
+
+@media (max-width: 900px){
+	.yieldHeader{
+		padding-top: 300px;
+	}
+
+	.images span:last-child {
+		left: 0;
+	}
+}

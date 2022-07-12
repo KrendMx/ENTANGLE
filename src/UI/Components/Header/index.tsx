@@ -197,7 +197,7 @@ const Header = () => {
                 <div className="container">
                     <div className={styles.wrapper}>
                         <div className={styles.menuHeaderWrapper}>
-                            <Link href="/pages" passHref>
+                            <Link href="/" passHref>
                                 <Image
                                     src="/images/logo.svg"
                                     width={205}
@@ -220,7 +220,7 @@ const Header = () => {
                                     )}
                                 >
                                     <div className={styles.dropElemFirst}>
-                                        <Link href="/pages" passHref>
+                                        <Link href="/" passHref>
                                             <p className={styles.dropItemOne}>
                                                 {t('syntheticVaults')}
                                             </p>
@@ -228,7 +228,7 @@ const Header = () => {
                                     </div>
                                     <Dropout title="EnUSD" offset="25px">
                                         <Link
-                                            href="/pages/borrow"
+                                            href="/borrow"
                                             passHref
                                         >
                                             <p className={styles.dropItem}>
@@ -239,7 +239,7 @@ const Header = () => {
                                     <Dropout title={t('stake')} offset="25px">
                                         <>
                                             <Link
-                                                href="/pages/stake-entangle"
+                                                href="/stake-entangle"
                                                 passHref
                                             >
                                                 <p className={styles.dropItem}>
@@ -252,6 +252,14 @@ const Header = () => {
                                             >
                                                 <p className={styles.dropItem}>
                                                     {t('stablecoin')}
+                                                </p>
+                                            </Link>
+                                            <Link
+                                                href="/single-side-staking"
+                                                passHref
+                                            >
+                                                <p className={styles.dropItem}>
+                                                    SSAS
                                                 </p>
                                             </Link>
                                         </>
