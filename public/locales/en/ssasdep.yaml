@@ -1,0 +1,21 @@
+name: Name
+deposit: Deposit
+stakedValue: Staked Value
+# currentAPR: Current APR
+# stakingTerm: Staking Term
+selectAsset: Select asset
+availableBalance: Available Balance
+# enterAmount: Enter amount
+# enterStake: Enter Stake Amount
+yourYield: Your Yield
+checkYourResultsHere: Check your results here
+# youStaked: You Staked
+# stakeAmount: Stake Amount
+# stakingTerm: Staking Term
+# withdrawAssets: Withdraw assets
+# avaiableAssets: Avaiable assets for withdraw
+# withdraw: Withdraw
+# currentAssets: Current Assets Amount
+# profitAmount: Profit Amount
+# ProjectedIL: Projected IL Protection Percentage
+# ImpermanentWin: Impermanent Win Percentage

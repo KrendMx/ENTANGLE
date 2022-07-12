@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from 'react';
+import type { HTMLAttributes, InputHTMLAttributes } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import React from 'react';
@@ -12,8 +12,9 @@ type InputProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     otherProps?: InputHTMLAttributes<HTMLInputElement>;
     classNameInputModifier?: InputHTMLAttributes<HTMLInputElement>['className'];
+    wrapperCustomClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     getMax?: () => void;
-    min?: string
+    min?: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -29,7 +30,11 @@ const Input: React.FC<InputProps> = ({
 }) => (
     <>
         {title && <p className={styles.inputTitle}>{title}</p>}
-        <div className={styles.wrapper}>
+        <div
+            className={classNames(styles.wrapper, {
+                [props?.wrapperCustomClassName]: props?.wrapperCustomClassName,
+            })}
+        >
             <input
                 type={type}
                 value={value}
@@ -44,20 +49,18 @@ const Input: React.FC<InputProps> = ({
                     max
                 </p>
             )}
-            {
-                type === 'text' && (
-                    <button type="submit">
-                        <Image
-                            width={23}
-                            height={23}
-                            quality={100}
-                            className={styles.searchIcon}
-                            src="/images/searchIcon.svg"
-                            alt=""
-                        />
-                    </button>
-                )
-            }
+            {type === 'text' && (
+                <button type="submit">
+                    <Image
+                        width={23}
+                        height={23}
+                        quality={100}
+                        className={styles.searchIcon}
+                        src="/images/searchIcon.svg"
+                        alt=""
+                    />
+                </button>
+            )}
         </div>
     </>
 );

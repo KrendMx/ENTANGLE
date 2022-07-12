@@ -1,0 +1,14 @@
+earn: Earn
+description: Deposit a single asset to be paired with other users liquidity for access to yield, while minimizing % exposure to impermanent loss
+tvl: TVL
+volume24: Volume 24H
+totalEarned: Total Earned
+Network: Network
+all: All
+days: Days
+depositeIn: Deposit in
+stakingTerm: Staking term
+apr: APR
+name: name
+awaitingDeposit: Awaiting Deposit
+ProjectedIL: Projected IL Protection

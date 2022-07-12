@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useTransition } from 'react';
 import Image from 'next/image';
 import HintModal from 'src/UI/ui-kit/HintModal';
 import TextGroup from 'src/UI/ui-kit/TextGrop';
@@ -10,6 +10,8 @@ import GradientButton from 'src/UI/ui-kit/GradientButton';
 
 import type { availableSingleSideChains } from 'src/utils/Global/Types';
 import { availableSingleSideNetworks } from 'src/utils/Global/Vars';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 import { ActiveCurrency } from '../ActiveCurrency';
 import styles from './style.module.css';
 import type { IDepositTabProps, depositStore } from './DepositTab.interfaces';
@@ -54,12 +56,21 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
         }
     };
 
+    const { t: tDep } = useTranslation('ssasdep');
+
+    const { t: tSass } = useTranslation('ssas');
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.depositInfo}>
                 <div className={styles.infoCard}>
                     <span>
-                        <p>{`Staked Value ${availableSingleSideNetworks[first].abbr}`}</p>
+                        <p>
+                            {`${tDep('stakedValue')} ${
+                                availableSingleSideNetworks[first].abbr
+                            }`}
+
+                        </p>
                         <HintModal>
                             <p>HintModal</p>
                         </HintModal>
@@ -75,7 +86,12 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                 </div>
                 <div className={styles.infoCard}>
                     <span>
-                        <p>{`Staked Value ${availableSingleSideNetworks[second].abbr}`}</p>
+                        <p>
+                            {`${tDep('stakedValue')} ${
+                                availableSingleSideNetworks[second].abbr
+                            }`}
+
+                        </p>
                         <HintModal>
                             <p>HintModal</p>
                         </HintModal>
@@ -91,7 +107,7 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                 </div>
                 <div className={styles.infoCard}>
                     <span>
-                        <p>Current APR</p>
+                        <p>{tDep('currentAPR')}</p>
                         <HintModal>
                             <p>HintModal</p>
                         </HintModal>
@@ -100,17 +116,22 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                 </div>
                 <div className={styles.infoCard}>
                     <span>
-                        <p>Staking Term</p>
+                        <p>{tDep('stakingTerm')}</p>
                         <HintModal>
                             <p>HintModal</p>
                         </HintModal>
                     </span>
-                    <p className={styles.cardMainInfoText}>{`${time} days`}</p>
+                    <p className={styles.cardMainInfoText}>
+                        {`${time} ${tSass(
+                            'days',
+                        )}`}
+
+                    </p>
                 </div>
             </div>
             <div className={styles.depositDo}>
                 <div>
-                    <Typography type="textBody">Select asset</Typography>
+                    <Typography type="textBody">{tDep('selectAsset')}</Typography>
                     {/*---------------------------------------------------*/}
                     <ActiveCurrency
                         assets={[first, second]}
@@ -121,13 +142,13 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                     <TextGroup
                         customClassNameTitle={styles.customTextGroop}
                         customClassNameValue={styles.customTextGroop}
-                        title={`Available Balance ${availableSingleSideNetworks[first].abbr}`}
+                        title={`${tDep('availableBalance')} ${availableSingleSideNetworks[first].abbr}`}
                         value={`${store.availableFirst} ${availableSingleSideNetworks[first].abbr}`}
                     />
                     <TextGroup
                         customClassNameTitle={styles.customTextGroop}
                         customClassNameValue={styles.customTextGroop}
-                        title={`Available Balance ${availableSingleSideNetworks[second].abbr}`}
+                        title={`${tDep('availableBalance')} ${availableSingleSideNetworks[second].abbr}`}
                         value={`${store.availableSecond} ${availableSingleSideNetworks[second].abbr}`}
                     />
                 </div>

@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import Typography from 'src/UI/ui-kit/Typography';
 import InfoBlock from 'src/UI/ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from 'src/UI/ui-kit/InfoBlock/InfoBlock.constants';
+import { useTranslation } from 'react-i18next';
 import type { SingleSideReducerType } from './SingleSide.interfaces';
 import styles from './style.module.css';
 import { ActionPanel } from './ActionPanel';
@@ -35,28 +36,29 @@ export const SingleSide = () => {
         dispatch({ timeStatus: value });
     };
 
+    const { t } = useTranslation('ssas');
+
     return (
         <div className={styles.wrapper}>
             <Typography type="title" classNameModifier={styles.header}>
-                Earn
+                {t('earn')}
             </Typography>
             <Typography type="textBody" classNameModifier={styles.headerDesc}>
-                Deposit a single token and maintain 100% upside exposure while
-                earning fees and rewards.
+                {t('description')}
             </Typography>
             <div className={styles.infoWrapper}>
                 <InfoBlock
-                    info="TVL"
+                    info={t('tvl')}
                     value={Number(store.tvl)}
                     type={InfoBlockTypes.MONEY}
                 />
                 <InfoBlock
-                    info="Volume 24H"
+                    info={t('volume24')}
                     value={Number(store.volume)}
                     type={InfoBlockTypes.MONEY}
                 />
                 <InfoBlock
-                    info="Total Earned"
+                    info={t('totalEarned')}
                     value={Number(store.totalEarned)}
                     type={InfoBlockTypes.ABOUT_MONEY}
                 />

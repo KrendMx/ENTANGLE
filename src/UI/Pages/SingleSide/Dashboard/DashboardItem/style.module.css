@@ -57,7 +57,7 @@
 }
 
 .section {
-	margin-bottom: 15px;
+	margin: 10px 0px;
 }
 
 .sectionTitle {
@@ -66,6 +66,7 @@
 
 	margin-right: 5px;
 	margin-bottom: 6px;
+	margin-top: 6px;
 
 	color: var(--gray);
 
@@ -82,5 +83,5 @@
 
 .footer {
 	width: 95%;
-	margin: 20px auto;
+	margin: 30px auto;
 }

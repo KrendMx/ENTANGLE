@@ -24,11 +24,13 @@ export const ActionPanel: React.FC<IActionPanelProps> = (props) => {
     const timaStatusValues: string[] = ['10', '30', '90'];
 
     const { t } = useTranslation('index');
+    const { t: tSsas } = useTranslation('ssas');
     return (
         <div className={styles.wrapper}>
             <div className={styles.searchWrapper}>
                 <Input
-                    placeholder={`${t('search')} name`}
+                    wrapperCustomClassName={styles.customInput}
+                    placeholder={`${t('search')} ${tSsas('name')}`}
                     onChange={hangleChangeSearch}
                     value={search}
                     type="text"
@@ -41,17 +43,17 @@ export const ActionPanel: React.FC<IActionPanelProps> = (props) => {
                     disabled
                     customClassName={styles.cutomClassName}
                 >
-                    <Option value="">Network</Option>
-                    <Option value="Network">Network</Option>
+                    <Option value="">{tSsas('Network')}</Option>
+                    <Option value="Network">{tSsas('Network')}</Option>
                 </Select>
                 <Select
                     onChange={setTimeStatus}
                     value={timeStatus}
                     customClassName={styles.cutomClassName}
                 >
-                    <Option value="">All</Option>
+                    <Option value="">{tSsas('all')}</Option>
                     {timaStatusValues.map((el, i) => (
-                        <Option value={el} key={i}>{`${el} days`}</Option>
+                        <Option value={el} key={i}>{`${el} ${tSsas('days')}`}</Option>
                     ))}
                 </Select>
             </div>

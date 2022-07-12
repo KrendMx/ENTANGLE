@@ -29,6 +29,8 @@ export async function getServerSideProps({ locale, query }) {
                 'footer',
                 'stable',
                 'index',
+                'ssasdep',
+                'ssas',
             ])),
             fallback: false,
         },

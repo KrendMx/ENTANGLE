@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Router from 'next/router';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Typography from 'src/UI/ui-kit/Typography';
 import { availableSingleSideNetworks } from 'src/utils/Global/Vars';
 import type { IDepositeProps } from './Deposite.interfaces';
@@ -12,15 +12,11 @@ import { YieldTab } from './YielTab';
 export const DepositPage: React.FC<IDepositeProps> = ({ query }) => {
     const { first, second, time } = query;
 
+    const { t: tDep } = useTranslation('ssasdep');
+
     const { t: tIndex } = useTranslation('index');
 
-    const [activeTab, setActiveTab] = useState<string>('10 days');
-
-    const yieldButtons = ['10 days', '30 days', '90 days'];
-
-    const changeActive = (x: number) => {
-        setActiveTab(yieldButtons[x]);
-    };
+    const { t: tSsas } = useTranslation('ssas');
 
     return (
         <div className={styles.wrapper}>
@@ -43,7 +39,9 @@ export const DepositPage: React.FC<IDepositeProps> = ({ query }) => {
             </div>
             <div className={styles.dFlex}>
                 <Typography type="title" classNameModifier={styles.header}>
-                    {`Deposit ${availableSingleSideNetworks[first].abbr} / ${availableSingleSideNetworks[second].abbr}`}
+                    {`${tDep('deposit')} ${
+                        availableSingleSideNetworks[first].abbr
+                    } / ${availableSingleSideNetworks[second].abbr}`}
                 </Typography>
                 <div className={styles.images}>
                     <Image
@@ -64,20 +62,19 @@ export const DepositPage: React.FC<IDepositeProps> = ({ query }) => {
                 </div>
             </div>
             <Typography type="textBody" classNameModifier={styles.headerDesc}>
-                Deposit a single token and maintain 100% upside exposure while
-                earning fees and rewards.
+                {tSsas('description')}
             </Typography>
             <DepositTab {...query} />
             <div className={styles.yieldHeader}>
                 <div>
                     <Typography type="title" classNameModifier={styles.header}>
-                        Your Yield
+                        {tDep('yourYield')}
                     </Typography>
                     <Typography
                         type="textBody"
                         classNameModifier={styles.headerDesc}
                     >
-                        Check your results here
+                        {tDep('checkYourResultsHere')}
                     </Typography>
                 </div>
             </div>

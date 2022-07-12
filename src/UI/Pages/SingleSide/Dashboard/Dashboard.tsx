@@ -17,10 +17,9 @@ export const Dashboard: React.FC<IDashboardSASSProps> = ({
     return (
         <div className={styles.wrapper}>
             {Containers.map(
-                (el) =>
+                (el, i) =>
                     detectDuration(el.term)
-                    && detectSearch(el.name)
-                    && el.component,
+                    && detectSearch(el.name) && <div key={i}>{el.component}</div>,
             )}
         </div>
     );

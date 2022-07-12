@@ -1,14 +1,12 @@
 .wrapper {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	grid-column-gap: 50px;
+	grid-row-gap: 20px;
 
 	padding: 40px 0 140px;
 }
 
-.wrapper > div {
-	width: 96%;
-	margin: auto;
-}
 
 @media (max-width: 1100px) {
 	.wrapper {
@@ -19,5 +17,6 @@
 @media (max-width: 640px) {
 	.wrapper {
 		grid-template-columns: 1fr;
+		grid-column-gap: 50px;
 	}
 }
