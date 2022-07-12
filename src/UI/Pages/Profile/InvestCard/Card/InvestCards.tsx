@@ -5,32 +5,19 @@ import Image from 'next/image';
 import classNames from 'classnames';
 
 import { useTranslation } from 'react-i18next';
-import { networks } from '@/src/utils/GlobalConst';
+import { networks } from 'utils/Global/Vars';
 
-import styles from '../style.module.css';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
-import type { availableChains } from '@/src/utils/GlobalConst';
-import HintModal from '@/components/ui-kit/HintModal';
-import GradientButton from '@/components/ui-kit/GradientButton';
+import { useStore } from 'core/store';
+import type { ICardUnit } from 'UI/Pages/Profile/InvestCard/InvestCard.interfaces';
+import HintModal from 'UI/ui-kit/HintModal';
+import GradientButton from 'UI/ui-kit/GradientButton';
 
-import PayModal from '../../../HomePage/PayModal/index';
-import Modal from '@/components/Modal';
-import type { IChain } from '@/src/ChainService/ChainService.interface';
+import Modal from 'UI/Components/Modal';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
+import PayModal from '../../../HomePage/PayModal/index';
+import styles from '../style.module.css';
 
-interface IState {
-    chainId: availableChains;
-    description: string;
-    positions: number;
-    price: number;
-    bgGradient: string;
-    cardType: string;
-    cardTypeLabelBg:string,
-    cardTypeLabelColor:string,
-    currencyName: IChain,
-}
-
-const InvestCardExp: React.FC<IState> = ({
+const InvestCardExp: React.FC<ICardUnit> = ({
     positions,
     price,
     chainId,
@@ -40,13 +27,17 @@ const InvestCardExp: React.FC<IState> = ({
     cardTypeLabelColor,
     currencyName,
 }) => {
+    const { store } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+        CardEntity: store.CardsEntity,
+    }));
     const {
         profits, avgPrices,
-    } = useAppSelector((state) => state.userReducer);
+    } = store.UserEntity;
 
     const [isClose, setIsClose] = useState<boolean | null>(false);
 
-    const cardData = useAppSelector((state) => state.cardDataReducer);
+    const { data: cardData } = store.CardEntity;
 
     const { t } = useTranslation('index');
     return (
@@ -130,28 +121,28 @@ const InvestCardExp: React.FC<IState> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>{t('profit')}</p>
-                    {profits.get(chainId)?.value ? (
+                    {profits[chainId]?.value ? (
                         <>
                             <p className={styles.itemValue}>
                                 $
-                                {profits.get(chainId)?.value}
+                                {profits[currencyName][chainId]?.value}
                             </p>
                             <p
                                 className={classNames(
                                     styles.undertitle,
                                     {
                                         [styles.loss]:
-                                            profits.get(chainId)?.change! < 0,
+                                        profits[currencyName][chainId]?.change! < 0,
                                     },
                                     {
                                         [styles.up]:
-                                            profits.get(chainId)?.change! > 0,
+                                        profits[currencyName][chainId]?.change! > 0,
                                     },
                                 )}
                             >
-                                {profits.get(chainId)?.change! > 0
-                                    ? `+${profits.get(chainId)?.change}`
-                                    : `${profits.get(chainId)?.change}`}
+                                {profits[currencyName][chainId]?.change! > 0
+                                    ? `+${profits[currencyName][chainId]?.change}`
+                                    : `${profits[currencyName][chainId]?.change}`}
                                 %
                             </p>
                         </>

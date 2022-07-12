@@ -3,17 +3,17 @@ import React, { useReducer } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import styles from './style.module.css';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientButton from 'UI/ui-kit/GradientButton';
-import Input from '@/components/ui-kit/Input';
-import { networks, chainToNameConfig } from '@/src/utils/GlobalConst';
-import Text from '@/components/HomePage/PayModal/Text';
+import Input from 'UI/ui-kit/Input';
+import { networks } from 'utils/Global/Vars';
+import Text from 'UI/Pages/HomePage/PayModal/Text';
 
+import Tabs from 'UI/ui-kit/Tabs';
+import Typography from 'UI/ui-kit/Typography';
+import MiniButton from 'UI/ui-kit/MiniButton';
 import type { LockProps, ILockState } from './Tabs.interfaces';
-import Tabs from '@/components/ui-kit/Tabs';
-import Typography from '@/components/ui-kit/Typography';
-import MiniButton from '@/components/ui-kit/MiniButton';
+import styles from './style.module.css';
 
 const Lock: React.FC<LockProps> = ({ token }) => {
     const [state, dispatch] = useReducer(

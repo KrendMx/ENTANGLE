@@ -2,13 +2,12 @@ import React, { useEffect, useReducer, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import Select, { Option } from 'UI/ui-kit/Select';
+import Typography from 'UI/ui-kit/Typography';
+import ChartWrapper from 'UI/ui-kit/ChartWrapperNew/ChartWrapper';
 import { CHART_DATA_TEST, initState } from './Stable.const';
 import AssetItem from './AssetItem';
-import Select, { Option } from '@/components/ui-kit/Select';
 import type { IAssetItem } from './Stable.interfaces';
-
-import Typography from '@/components/ui-kit/Typography';
-import ChartWrapper from '@/components/ui-kit/ChartWrapperNew/ChartWrapper';
 
 import styles from './style.module.css';
 

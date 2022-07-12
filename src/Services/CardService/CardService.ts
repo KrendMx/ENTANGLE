@@ -4,7 +4,7 @@ import { Notification } from 'src/libs/Notification';
 
 // Config
 import axios from 'axios';
-import type {availableChains, availableNames} from 'utils/Global/Types';
+import type { availableChains, availableNames } from 'utils/Global/Types';
 import { ChainConfig, NETWORKS } from '../ChainService/config';
 
 // Interfaces

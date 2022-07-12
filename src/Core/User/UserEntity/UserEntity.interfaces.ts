@@ -4,7 +4,7 @@ interface IUserEntityState {
     totalBalance: number;
     avgPrices: {[key: string]: number};
     positionSumObj: {[key: string]: number};
-    profits: {[key: string]: {value: number; change: number}};
+    profits: {[key: string]: {[key: string]: {value: number; change: number}}};
     balances: {[key: string]: {[key: string]: number}};
     txLoading: boolean;
     txHistory: TransactionHistoryEntity[];

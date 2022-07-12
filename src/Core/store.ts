@@ -23,7 +23,8 @@ export const store = configureStore({
         ContractEntity: ContractEntity.reducer,
         AppEntity: AppEntity.reducer,
     },
-
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type IStore = ReturnType<typeof store.getState>;

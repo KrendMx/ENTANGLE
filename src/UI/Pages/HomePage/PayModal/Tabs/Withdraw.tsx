@@ -2,21 +2,17 @@ import React, { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import type { Contract } from 'ethers';
 import { useTranslation } from 'next-i18next';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import { useStore } from 'core/store';
+import { useDispatch } from 'react-redux';
+import { networks, farms, namesConfig } from 'utils/Global/Vars';
+import type { availableChains } from 'utils/Global/Types';
+import { ChainConfig } from 'services/index';
+import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import styles from '../style.module.css';
 import Text from '../Text/index';
 import ModalInput from '../ModalInput';
-import GradientButton from 'UI/ui-kit/GradientButton';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
-import { networks, farms, namesConfig } from '@/src/utils/GlobalConst';
-import type { availableChains } from '@/src/utils/GlobalConst';
-import { ChainConfig } from '@/src/ChainService/config';
-import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
-import {
-    getAllowance,
-    approve,
-} from '@/src/Redux/store/reducers/ActionCreators';
-import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
-import TextLoader from '@/components/ui-kit/TextLoader/TextLoader';
 
 type propsType = {
     // eslint-disable-next-line no-unused-vars
@@ -28,16 +24,24 @@ type propsType = {
 const Withdraw: React.FC<propsType> = ({
     sellToken, balanceSynth, chainThings,
 }) => {
-    const dispatch = useAppDispatch();
-    const { chainId, account, provider } = useAppSelector(
-        (state) => state.walletReducer,
-    );
-    const { payData, txLoading } = useAppSelector((state) => state.userReducer);
-    const cardState = useAppSelector((state) => state.cardDataReducer);
+    const { store, actions, asyncActions } = useStore((store) => ({
+        WalletEntity: store.WalletEntity,
+        UserEntity: store.UserEntity,
+        CardsEntity: store.CardsEntity,
+        ContractEntity: store.ContractEntity,
+    }));
+    const dispatch = useDispatch();
+    const { chainId, account, provider } = store.WalletEntity;
+    const { payData, txLoading } = store.UserEntity;
+    const { data: CardData } = store.CardsEntity;
+    const { allowance } = store.ContractEntity;
+
+    const { changeLoadingTx } = actions.User;
+
+    const { getAllowance, approve } = asyncActions.Contract;
     const [synthAmount, setSynthAmount] = useState('');
     const [amount, setAmount] = useState<string>('');
     const [synthBalance, setSynthBalance] = useState<string>('');
-    const [allowance, setAllowance] = useState(0);
     const [maxError, setMaxError] = useState<boolean>(false);
 
     const localChain = useMemo(
@@ -61,8 +65,10 @@ const Withdraw: React.FC<propsType> = ({
                     dexAddress: chainThings.genered.CONTRACTS.FEE.address,
                     account,
                     provider,
+                    chainId,
+                    cardId: localChain,
                 }),
-            ).then((action) => setAllowance(Number(action.payload.toBigInt())));
+            );
         }());
     }, []);
 
@@ -77,6 +83,7 @@ const Withdraw: React.FC<propsType> = ({
     }, [amount]);
 
     const handleApprove = async () => {
+        dispatch(changeLoadingTx(true));
         const contracts = (
             ChainConfig[sessionStorage.getItem('card')].SYNTH as any
         ).find(
@@ -88,17 +95,11 @@ const Withdraw: React.FC<propsType> = ({
                 tokenAddress: contracts.CONTRACTS.SYNTH.address,
                 dexAddress: contracts.CONTRACTS.FEE.address,
                 provider,
+                chainId,
+                cardId: localChain,
             }),
-        ).then((action) => {
-            if (action.payload) {
-                dispatch(changeLoadingTx(true));
-            }
-            const res = action.payload.wait();
-            if (res?.status === 1) {
-                setAllowance(10000000000);
-                dispatch(changeLoadingTx(false));
-            }
-        });
+        );
+        dispatch(changeLoadingTx(false));
     };
 
     const getMax = async () => {
@@ -150,7 +151,7 @@ const Withdraw: React.FC<propsType> = ({
                 The approximate transaction execution time is 15 seconds!
             </p>
             <div className={styles.mg2}>
-                <Text title={t('aprCard')} content={`${cardState[localChain].apr}%`} />
+                <Text title={t('aprCard')} content={`${CardData[localChain].apr}%`} />
                 <br />
                 <Text title={t('yourSynthBalance')} content={`${synthBalance} SynthLP`} />
             </div>
@@ -200,14 +201,14 @@ const Withdraw: React.FC<propsType> = ({
             ) : (
                 <GradientButton
                     title={
-                        allowance > 0
+                        allowance[chainId][localChain] > 0
                             ? payData[localChain as availableChains]?.price
                                 ? 'Sell funds'
                                 : 'Data Loading'
                             : 'Approve'
                     }
                     onClick={
-                        allowance > 0
+                        allowance[chainId][localChain] > 0
                             ? () => sellToken(parseFloat(amount))
                             : () => handleApprove()
                     }

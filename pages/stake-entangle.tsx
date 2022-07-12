@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import StakeEntangle from '@/components/Stake/Entangle/index';
+import StakeEntangle from 'UI/Pages/Stake/Entangle/index';
 
 const StakeEntanglePage: NextPage = () => (
     <div>

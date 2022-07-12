@@ -2,9 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import GradientButton from '@/components/ui-kit/GradientButton';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import { networks, STABLES } from 'utils/Global/Vars';
 import type { IAssetItem } from '../Stable.interfaces';
-import { networks, STABLES } from '@/src/utils/GlobalConst';
 
 import styles from './style.module.css';
 

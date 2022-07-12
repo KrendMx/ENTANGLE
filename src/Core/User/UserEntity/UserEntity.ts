@@ -29,19 +29,17 @@ export const UserEntity = createSlice({
     initialState,
     reducers: {
         ...withHelperReducers,
-        setProfit(state, action: PayloadAction<IUserInfo>) {
-            state.profits[action.payload.profit.key].value = action.payload.profit.value;
-            state.profits[action.payload.profit.key].value = action.payload.profit.value;
+        setProfit(state, action: PayloadAction<any>) {
+            state.profits = action.payload;
         },
-        setAvgPrice(state, action: PayloadAction<IUserInfo>) {
-            state.avgPrices[action.payload.avgPrice.key] = action.payload.avgPrice.value;
+        setAvgPrice(state, action: PayloadAction<{res: typeof this.state.avgPrices}>) {
+            state.avgPrices = action.payload;
         },
         setTotalBalance(state, action: PayloadAction<IUserInfo>) {
             state.totalBalance = action.payload.totalBalance;
         },
-        setAssetBalance(state, action: PayloadAction<IAssetBalance>) {
-            const { assetChainId, chainName, positions } = action.payload;
-            state.balances[chainName][assetChainId] = positions;
+        setAssetBalance(state, action: PayloadAction<any>) {
+            state.balances = action.payload;
         },
         setTxHistory(state, action: PayloadAction<TransactionHistoryEntity[]>) {
             state.txHistory = action.payload;

@@ -2,23 +2,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import type { Contract } from 'ethers';
 import { useTranslation } from 'react-i18next';
-import styles from '../style.module.css';
-import ModalInput from '../ModalInput/index';
 import GradientButton from 'UI/ui-kit/GradientButton';
-import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
-import { networks, namesConfig } from '@/src/utils/GlobalConst';
-import type { availableChains } from '@/src/utils/GlobalConst';
-import { useAppSelector, useAppDispatch } from '@/src/Redux/store/hooks/redux';
-import {
-    getAllowance,
-    approve,
-} from '@/src/Redux/store/reducers/ActionCreators';
-import { changeLoadingTx } from '@/src/Redux/store/reducers/UserSlice';
+import { networks, namesConfig } from 'utils/Global/Vars';
+import type { availableChains } from 'utils/Global/Types';
+import { useStore } from 'core/store';
+import { useDispatch } from 'react-redux';
+import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import Text from '../Text/index';
-import TextLoader from '@/components/ui-kit/TextLoader/TextLoader';
+import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
+import ModalInput from '../ModalInput/index';
+import styles from '../style.module.css';
 
 type propsType = {
-    // eslint-disable-next-line no-unused-vars
     buyToken: (value: number) => void;
     balanceUSDC: Promise<number>;
     balanceSynth: Promise<number>;
@@ -28,16 +23,25 @@ type propsType = {
 const Deposit: React.FC<propsType> = ({
     buyToken, chainThings, balanceSynth, balanceUSDC, available,
 }) => {
-    const dispatch = useAppDispatch();
-    const { chainId, account, provider } = useAppSelector(
-        (state) => state.walletReducer,
-    );
-    const { payData, txLoading } = useAppSelector((state) => state.userReducer);
-    const cardState = useAppSelector((state) => state.cardDataReducer);
+    const { store, actions, asyncActions } = useStore((store) => ({
+        WalletEntity: store.WalletEntity,
+        UserEntity: store.UserEntity,
+        CardsEntity: store.CardsEntity,
+        ContractEntity: store.ContractEntity,
+    }));
+    const dispatch = useDispatch();
+    const { chainId, account, provider } = store.WalletEntity;
+    const { payData, txLoading } = store.UserEntity;
+    const { data: CardData } = store.CardsEntity;
+    const { allowance } = store.ContractEntity;
+
+    const { changeLoadingTx } = actions.User;
+
+    const { getAllowance, approve } = asyncActions.Contract;
+
     const [amount, setAmount] = useState('');
     const [synthAmount, setSynthAmount] = useState('');
     const [balances, setBalances] = useState<{usdc: string, synth: string}>({ usdc: '', synth: '' });
-    const [allowance, setAllowance] = useState<number>(0);
     const [maxError, setMaxError] = useState<boolean>(false);
 
     const { t } = useTranslation('index');
@@ -56,8 +60,10 @@ const Deposit: React.FC<propsType> = ({
                     dexAddress: chainThings.genered.CONTRACTS.FEE.address,
                     account,
                     provider,
+                    chainId,
+                    cardId: localChain,
                 }),
-            ).then((action) => setAllowance(Number(action.payload.toBigInt())));
+            );
         }());
     }, [chainId]);
 
@@ -87,22 +93,18 @@ const Deposit: React.FC<propsType> = ({
     }, [synthAmount]);
 
     const handleApprove = async () => {
+        dispatch(changeLoadingTx(true));
         dispatch(
             approve({
                 tokenAddress: chainThings.genered.CONTRACTS.STABLE.address,
                 dexAddress: chainThings.genered.CONTRACTS.FEE.address,
                 provider,
+                chainId,
+                cardId: localChain,
             }),
-        ).then(async (action) => {
-            if (action.payload) {
-                dispatch(changeLoadingTx(true));
-            }
-            const res = await action.payload.wait();
-            if (res?.status) {
-                setAllowance(10000000000);
-                dispatch(changeLoadingTx(false));
-            }
-        });
+
+        );
+        dispatch(changeLoadingTx(false));
     };
 
     const getMax = async () => {
@@ -160,7 +162,7 @@ const Deposit: React.FC<propsType> = ({
                     5-30 minutes!
                 </p>
             )}
-            <Text title={t('aprCard')} content={`${cardState[localChain].apr}%`} classText={styles.mgT} />
+            <Text title={t('aprCard')} content={`${CardData[localChain].apr}%`} classText={styles.mgT} />
             <Text title={t('yourSynthBalance')} content={`${balances.synth} SynthLP`} classText={styles.mgT} />
             <Text title={t('yourUSDCBalance')} content={`${balances.usdc} USDC`} classText={styles.mgT} />
             <ModalInput
@@ -209,14 +211,14 @@ const Deposit: React.FC<propsType> = ({
             ) : (
                 <GradientButton
                     title={
-                        allowance > 0
+                        allowance[chainId][localChain] > 0
                             ? payData[localChain as availableChains]?.price
                                 ? 'Add funds'
                                 : 'Data Loading'
                             : 'Approve'
                     }
                     onClick={
-                        allowance > 0
+                        allowance[chainId][localChain] > 0
                             ? () => buyToken(parseFloat(amount))
                             : () => handleApprove()
                     }

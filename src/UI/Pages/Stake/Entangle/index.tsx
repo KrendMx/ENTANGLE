@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { VALIDATOR_DATA, STAKE_DATE } from './Entangle.const';
 
 import Tabs from 'UI/ui-kit/Tabs';
 import Input from 'UI/ui-kit/Input';
-import ValidatorBar from './ValidatorBar';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import MiniButton from 'UI/ui-kit/MiniButton/index';
 import Select, { Option } from 'UI/ui-kit/Select/index';
@@ -13,6 +11,8 @@ import Typography from 'UI/ui-kit/Typography';
 import StakeTextArea from 'UI/ui-kit/StakeTextArea/index';
 import ChartWrapperWithText from 'UI/ui-kit/ChartWrapperWithText/index';
 import TextGroupStake from 'UI/ui-kit/TextGropStake';
+import ValidatorBar from './ValidatorBar';
+import { VALIDATOR_DATA, STAKE_DATE } from './Entangle.const';
 
 import styles from './style.module.css';
 

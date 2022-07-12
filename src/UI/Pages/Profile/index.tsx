@@ -4,26 +4,28 @@ import React, {
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import InvestCard from './InvestCard';
 import Typography from 'UI/ui-kit/Typography';
 import Select, { Option } from 'UI/ui-kit/Select';
 import InfoBlock from 'UI/ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from 'UI/ui-kit/InfoBlock/InfoBlock.constants';
 
+import { networks } from 'utils/Global/Vars';
+import { useStore } from 'core/store';
 import styles from './style.module.css';
 import ProfileChart from './ProfileChart/ProfileChart';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
-import { networks } from '@/src/utils/GlobalConst';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
+import InvestCard from './InvestCard';
 import { SortArray, loader } from './Profile.constant';
 import type { IFilter } from './Profile.interfaces';
 
 const Profile = () => {
+    const { store } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+    }));
     const {
         profits, totalBalance, balances, cardLoaded,
-    } = useAppSelector(
-        ({ userReducer }) => userReducer,
-    );
+    } = store.UserEntity;
+
     const [bestProfit, setBestProfit] = useState<{
         value: number;
         change: number;
@@ -37,10 +39,10 @@ const Profile = () => {
     const [change, setChange] = useState<number[]>([0, 0]);
     useEffect(() => {
         const data = Object.keys(networks).map((i) =>
-            (profits.get(i)
+            (profits[i]
                 ? {
                     chain: i as keyof typeof networks,
-                    ...profits.get(i),
+                    ...profits[i],
                 }
                 : {
                     chain: i as keyof typeof networks,
@@ -52,9 +54,9 @@ const Profile = () => {
         let changeLocal = 0;
         let valueLocal = 0;
         for (let i = 0; i < Object.keys(networks).length; i++) {
-            if (profits.get(Object.keys(networks)[i])) {
-                changeLocal = profits.get(Object.keys(networks)[i]).change + changeLocal;
-                valueLocal = profits.get(Object.keys(networks)[i]).value + valueLocal;
+            if (profits[Object.keys(networks)[i]]) {
+                changeLocal = profits[Object.keys(networks)[i]].change + changeLocal;
+                valueLocal = profits[Object.keys(networks)[i]].value + valueLocal;
             }
         }
         setChange([valueLocal, changeLocal]);

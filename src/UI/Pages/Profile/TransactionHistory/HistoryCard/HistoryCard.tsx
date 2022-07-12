@@ -2,11 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import moment from 'moment/moment';
 import classNames from 'classnames';
+import type { availableChains } from 'utils/Global/Types';
+import { networks } from 'utils/Global/Vars';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import CopyBtn from 'UI/ui-kit/CopyBtn/CopyBtn';
 import styles from './style.module.css';
-import type { availableChains } from '@/src/utils/GlobalConst';
-import { networks } from '@/src/utils/GlobalConst';
-import GradientButton from '@/components/ui-kit/GradientButton';
-import CopyBtn from '@/components/ui-kit/CopyBtn/CopyBtn';
 
 type CardProps = {
     id: string;

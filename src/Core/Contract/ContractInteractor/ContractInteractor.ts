@@ -57,6 +57,7 @@ export const createContractInteractor = (
                     Entity.actions.setAllowance({ chainId, cardId, value }),
                 );
             } catch (e) {
+                Notification.error('Error', e.message);
                 dispatch(Entity.actions.setError(e));
             } finally {
                 dispatch(Entity.actions.setLoading(false));
@@ -79,8 +80,14 @@ export const createContractInteractor = (
                     dexAddress,
                     '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
                 );
-                dispatch(Entity.actions.setAllowance({ cardId, chainId, value: 10000000 }));
+                const res = await value.wait();
+                if (res?.status) {
+                    Entity.actions.setAllowance({ chainId, cardId, value: 10000000 });
+                } else {
+                    Notification.error('Error', 'Internal blockchain error');
+                }
             } catch (e) {
+                Notification.error('Error', e.message);
                 dispatch(Entity.actions.setError(e));
             } finally {
                 dispatch(Entity.actions.setLoading(false));

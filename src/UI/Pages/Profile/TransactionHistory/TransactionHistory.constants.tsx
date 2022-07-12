@@ -1,4 +1,4 @@
-import type { TransactionHistoryEntity } from '../../../src/context/ServiceContext/ServiceContext.interfaces';
+import type { TransactionHistoryEntity } from 'utils/Global/Types';
 
 const TransactionFilters = {
     'allActivity': (i: TransactionHistoryEntity) => true,

@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import StakeStable from '@/components/Stake/Stable/index';
+import StakeStable from 'UI/Pages/Stake/Stable/index';
 
 const StakeStablePage: NextPage = () => (
     <div>

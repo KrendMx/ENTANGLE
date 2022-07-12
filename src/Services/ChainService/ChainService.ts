@@ -38,7 +38,7 @@ export class ChainService implements IChainService {
         return contracts;
     })();
 
-    public static getShefContractData = async (eventType: shefEvent, url: string, labels: string) => {
+    public static getChefContractData = async (eventType: shefEvent, url: string, labels: string) => {
         const body = {
             query: `{${eventType} {${labels}}}`,
         };
@@ -51,7 +51,7 @@ export class ChainService implements IChainService {
         for (const keyUrl in CHEF_CONFIG) {
             finalObject[keyUrl] = {};
             for (const keyEvent of event) {
-                finalObject[keyUrl][keyEvent] = (await this.getShefContractData(
+                finalObject[keyUrl][keyEvent] = (await this.getChefContractData(
                     keyEvent,
                     CHEF_CONFIG[keyUrl].url,
                     keyEvent !== 'compounds' ? 'id, address, amount' : 'id, address, amountStable',
@@ -61,22 +61,27 @@ export class ChainService implements IChainService {
         return finalObject;
     };
 
-    private static getSumValueFromContract = async (key: string): Promise<number> => Number(
-        (await ChainService.contracts[key].SYNTHCHEF.deposits(
-            key,
-            ChainService.contracts[key].farmid,
-        ))
-        / 10
-        ** Number(
-            await ChainService.contracts[
-                key
-            ].STABLESYNTCHEF.decimals(),
-        ),
-    );
+    private static getSumValueFromContract = async (key: string): Promise<number> => {
+        if (ChainService.contracts[key].SYNTHCHEF) {
+            return Number(
+                (await ChainService.contracts[key].SYNTHCHEF.deposits(
+                    key,
+                    ChainService.contracts[key].farmid,
+                ))
+                / 10
+                ** Number(
+                    await ChainService.contracts[
+                        key
+                    ].STABLESYNTCHEF.decimals(),
+                ),
+            );
+        }
+    };
 
     public static getTVDForBuyAndSell = async (): Promise<number> => {
         const finalArr = [];
         for (const key in ChainService.contracts) {
+            console.log(ChainService.contracts[key]);
             finalArr.push(await ChainService.getSumValueFromContract(key));
         }
         return Math.round(finalArr.reduce((pr, cr) => Number(pr) + Number(cr)));
@@ -92,29 +97,31 @@ export class ChainService implements IChainService {
         const chefData = await ChainService.getDataForTRA();
         console.log(chefData);
         for (const key of id) {
-            let sumWithdraw: number = 0;
-            let sumMarkInvestition: number = 10000;
-            const startInvestition: number = Number(chefData[key.name].deposites[0].amount);
-            let sumDeposited: number = 0;
-            if (Object.keys(chefData[key.name].withdraws).length > 0) {
-                sumWithdraw = Object.values(chefData[key.name].withdraws).map((el: any) => Number(el.amount))
-                    .reduce((p, c) => p + c) as number;
+            if (ChainService.contracts[key.key].STABLESYNTCHEF) {
+                let sumWithdraw: number = 0;
+                let sumMarkInvestition: number = 10000;
+                const startInvestition: number = Number(chefData[key.name].deposites[0].amount);
+                let sumDeposited: number = 0;
+                if (Object.keys(chefData[key.name].withdraws).length > 0) {
+                    sumWithdraw = Object.values(chefData[key.name].withdraws).map((el: any) => Number(el.amount))
+                        .reduce((p, c) => p + c) as number;
+                }
+                if (Object.keys(chefData[key.name].compounds).length > 0) {
+                    sumMarkInvestition = 10000000000;
+                }
+                if (Object.keys(chefData[key.name].deposites).length > 0) {
+                    sumDeposited = Object.values(chefData[key.name].deposites)
+                        .map((el: any) => Number(el.amount))
+                        .reduce((p, c) => p + c);
+                }
+                finalArr.push(((sumMarkInvestition + sumWithdraw)
+                    - (startInvestition + sumDeposited)) / (10
+                    ** Number(
+                        await ChainService.contracts[
+                            key.key
+                        ].STABLESYNTCHEF.decimals(),
+                    )));
             }
-            if (Object.keys(chefData[key.name].compounds).length > 0) {
-                sumMarkInvestition = 10000000000;
-            }
-            if (Object.keys(chefData[key.name].deposites).length > 0) {
-                sumDeposited = Object.values(chefData[key.name].deposites)
-                    .map((el: any) => Number(el.amount))
-                    .reduce((p, c) => p + c);
-            }
-            finalArr.push(((sumMarkInvestition + sumWithdraw)
-                - (startInvestition + sumDeposited)) / (10
-                ** Number(
-                    await ChainService.contracts[
-                        key.key
-                    ].STABLESYNTCHEF.decimals(),
-                )));
         }
         return finalArr.reduce((p, c) => p + c);
     };

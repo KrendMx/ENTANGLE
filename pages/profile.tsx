@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import ProfileComponent from '../components/Profile';
+import ProfileComponent from 'UI/Pages/Profile';
 
 const Profile: NextPage = () => (
     <div>

@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import GradientButton from '@/components/ui-kit/GradientButton';
+import GradientButton from 'UI/ui-kit/GradientButton';
+import type { availableChains, availableNames } from 'utils/Global/Types';
+import { networks } from 'utils/Global/Vars';
+import HintModal from 'UI/ui-kit/HintModal';
 import styles from '../style.module.css';
-import type { availableChains } from '@/src/utils/GlobalConst';
-import { networks } from '@/src/utils/GlobalConst';
-import type { IChain } from '@/src/ChainService/ChainService.interface';
-import HintModal from '@/components/ui-kit/HintModal';
 
 type PropType = {
     chainId: availableChains;
@@ -16,7 +15,7 @@ type PropType = {
     cardType: string;
     cardTypeLabelBg:string,
     cardTypeLabelColor:string,
-    currencyName: IChain,
+    currencyName: availableNames,
 }
 
 const LockedCardExp: React.FC<PropType> = ({

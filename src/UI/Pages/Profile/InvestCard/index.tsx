@@ -1,66 +1,28 @@
 import React, {
-    useEffect, useState,
+    useEffect, useState, useMemo,
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import InvestCardExp from './Card/InvestCards';
-import { CardsOrder } from './InvestCards.const';
-import type { availableChains } from '@/src/utils/GlobalConst';
-import type { IProps, ICard } from './InvestCard.interfaces';
+import type { availableChains } from 'utils/Global/Types';
+import InvestCardExp from 'UI/Pages/Profile/InvestCard/Card/InvestCards';
+import { CardsOrder, generateInitState } from './InvestCards.const';
+import type { IProps, ICardUnit } from './InvestCard.interfaces';
 
 import styles from './style.module.css';
-import type { IChain } from '@/src/ChainService/ChainService.interface';
 import Pager from '../TransactionHistory/Pager/Pager';
 
 const InvestCard: React.FC<IProps> = ({
     balances,
     filter,
 }) => {
-    const InitCards = [
-        {
-            chainId: '250',
-            description:
-                'Generates yield by running an autocompound MIM/USDC strategy on spookyswap.finance',
-            position: balances?.FTM?.positions,
-            price: balances?.FTM?.price,
-            bgGradient: 'linear-gradient(90deg, rgba(0, 148, 255, 0.10) 0%, rgba(0, 148, 255, 0.04) 100%)',
-            cardType: 'Synthetic-LP',
-            cardTypeLabelColor: '#00AFFF',
-            cardTypeLabelBg: '#0094FF40',
-            currencyName: 'FTM' as IChain,
-        },
-        {
-            chainId: '43114',
-            description:
-                'Generates yield by running autocompounded USDC/USDC.e strategy on traderjoexyz.com',
-            position: balances?.AVAX?.positions,
-            price: balances?.AVAX?.price,
-            bgGradient: 'linear-gradient(90deg, rgba(241, 78, 86, 0.10) 0%, rgba(241, 78, 86, 0.04) 100%)',
-            cardType: 'Synthetic-LP',
-            cardTypeLabelColor: '#E7252E',
-            cardTypeLabelBg: 'linear-gradient(180deg, #F14E5640 -23.33%, #E7252E40 118.33%)',
-            currencyName: 'AVAX' as IChain,
-        },
-        {
-            chainId: '56',
-            description:
-                'Generates yield by running an autocompound USDT/BUSD strategy on pancakeswap.finance',
-            position: balances?.BSC?.positions,
-            price: balances?.BSC?.price,
-            bgGradient: 'linear-gradient(90deg, rgba(255, 199, 0, 0.10) 0%, rgba(255, 199, 0, 0.04) 100%)',
-            cardType: 'Synthetic-LP',
-            cardTypeLabelColor: '#FF8A00',
-            cardTypeLabelBg: 'linear-gradient(180deg, #FFC70045 -23.33%, #FF8A0045 118.33%)',
-            currencyName: 'BSC' as IChain,
-        },
-    ];
-
-    const [cards, setCards] = useState<ICard[]>([]);
+    const [cards, setCards] = useState<ICardUnit[]>([]);
     const hasPhantom = Number(balances?.FTM?.positions) > 0;
     const hasAvax = Number(balances.AVAX?.positions) > 0;
     const hasBnb = Number(balances.BSC?.positions) > 0;
     const hasNoOne = !hasPhantom && !hasAvax && !hasBnb;
+
+    const InitCards = useMemo(() => (generateInitState(balances)), [balances]);
 
     const updateCardsFilter = () => {
         let cardsPrepared = [...cards];
@@ -121,12 +83,12 @@ const InvestCard: React.FC<IProps> = ({
                         {cards.slice(
                             (currentPage - 1) * pageLimit,
                             currentPage * pageLimit,
-                        ).map((el, key) => (Number(el.position) ? (
+                        ).map((el, key) => (Number(el.positions) ? (
                             <InvestCardExp
                                 key={key}
                                 chainId={el.chainId as availableChains}
                                 description={el.description}
-                                positions={el.position}
+                                positions={el.positions}
                                 price={el.price}
                                 bgGradient={el.bgGradient}
                                 cardType={el.cardType}

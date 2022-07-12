@@ -19,8 +19,18 @@ class QueryRequests implements IQueryRequests {
     };
 
     calculateAVG = async (account: string) => {
-        const res: { [key: string]: number } = {};
-        const counter: {[key: string]: number} = {};
+        const res: { [key: string]: {[key: string]: number} } = {
+            'FTM': { '56': 0, '43114': 0, '250': 0 },
+            'AVAX': { '56': 0, '43114': 0, '250': 0 },
+            'BSC': { '56': 0, '43114': 0, '250': 0 },
+            'ETH': { '56': 0, '43114': 0, '250': 0 },
+        };
+        const counter: { [key: string]: {[key: string]: number} } = {
+            'FTM': { '56': 0, '43114': 0, '250': 0 },
+            'AVAX': { '56': 0, '43114': 0, '250': 0 },
+            'BSC': { '56': 0, '43114': 0, '250': 0 },
+            'ETH': { '56': 0, '43114': 0, '250': 0 },
+        };
         const names = Object.keys(GRAPH_CONFIG);
         for (const name of names) {
             const ids = Object.keys(GRAPH_CONFIG[name]);
@@ -29,19 +39,16 @@ class QueryRequests implements IQueryRequests {
                     account,
                     GRAPH_CONFIG[name][id].url,
                 );
-                rawData.data.exchanges.map((el) =>
-                    (res[id]
-                        ? (res[id] += Number(el.amount))
-                        : (res[id] = Number(el.amount))));
-                if (counter[id]) {
-                    counter[id] += rawData.data.exchanges.length;
-                } else {
-                    counter[id] = rawData.data.exchanges.length;
-                }
+                rawData.data.exchanges.map((el) => (res[name][id] += Number(el.amount)));
+                counter[name][id] = rawData.data.exchanges.length;
             }
         }
-        for (const el of Object.keys(res)) {
-            res[el] = Number(((res[el] / counter[el]) / 10 ** 18).toFixed(3));
+        const keys = Object.keys(GRAPH_CONFIG);
+        for (const key of keys) {
+            const ids = Object.keys(GRAPH_CONFIG[key]);
+            for (const id of ids) {
+                if (res[key][id]) res[key][id] = Number(((res[key][id] / counter[key][id]) / 10 ** 18).toFixed(3));
+            }
         }
         return res;
     };

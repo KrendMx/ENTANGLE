@@ -3,16 +3,16 @@ import React, { useReducer } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import styles from './style.module.css';
 
-import type { IWithdrawState, WithdrawProps } from './Tabs.interfaces';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import Input from 'UI/ui-kit/Input';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
-import { networks } from '@/src/utils/GlobalConst';
-import Typography from '@/components/ui-kit/Typography';
-import Text from '@/components/HomePage/PayModal/Text';
-import MiniButton from '@/components/ui-kit/MiniButton';
+import { networks } from 'utils/Global/Vars';
+import Typography from 'UI/ui-kit/Typography';
+import Text from 'UI/Pages/HomePage/PayModal/Text';
+import MiniButton from 'UI/ui-kit/MiniButton';
+import type { IWithdrawState, WithdrawProps } from './Tabs.interfaces';
+import styles from './style.module.css';
 
 const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
     const [state, dispatch] = useReducer(

@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'react';
 import React from 'react';
 import classNames from 'classnames';
+import HintModal from 'UI/ui-kit/HintModal';
 import styles from './style.module.css';
-import HintModal from '@/components/ui-kit/HintModal';
 
 interface IText {
     title: string;

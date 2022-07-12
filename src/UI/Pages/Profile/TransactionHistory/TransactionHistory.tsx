@@ -4,23 +4,26 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Typography from 'UI/ui-kit/Typography';
 import Select, { Option } from 'UI/ui-kit/Select';
+import type { TransactionHistoryEntity } from 'utils/Global/Types';
+import type { networks } from 'utils/Global/Vars';
+import { useStore } from 'core/store';
 import Pager from './Pager/Pager';
 import styles from './style.module.css';
-import type { TransactionHistoryEntity } from '@/src/context/ServiceContext/ServiceContext.interfaces';
 import HistoryCard from './HistoryCard/HistoryCard';
-import type { networks } from '@/src/utils/GlobalConst';
 import {
     TransactionFilters,
     TransactionOrder,
 } from './TransactionHistory.constants';
 import { loader } from '../Profile.constant';
-import { useAppSelector } from '@/src/Redux/store/hooks/redux';
 
 const TransactionHistory: React.FC = () => {
+    const { store } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+    }));
+    const { txLoaded, txHistory: transactions } = store.UserEntity;
     const [transactionsPrepared, setTransactionsPrepared] = useState<
         TransactionHistoryEntity[]
     >([]);
-    const { txLoaded, txHistory: transactions } = useAppSelector((state) => state.userReducer);
 
     const [filter, setFilter] = useState<keyof typeof TransactionFilters>(
         Object.keys(TransactionFilters)[0] as keyof typeof TransactionFilters,

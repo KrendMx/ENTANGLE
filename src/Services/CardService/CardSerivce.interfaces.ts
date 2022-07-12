@@ -1,6 +1,5 @@
 import type { Contract } from 'ethers';
-import type { availableChains } from 'utils/Global/Types';
-import {availableNames} from "utils/Global/Types";
+import type { availableChains, availableNames } from 'utils/Global/Types';
 
 interface ICardData {
     apr: number;
@@ -45,5 +44,5 @@ interface ICardService extends ICardServiceVars {
 }
 
 export type {
-    ICardService, keyType, SynthContracts
+    ICardService, keyType, SynthContracts,
 };

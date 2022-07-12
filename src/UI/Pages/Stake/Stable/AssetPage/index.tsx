@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import CryptoHeader from '@/components/ui-kit/CryptoHeader';
-import styles from './style.module.css';
+import CryptoHeader from 'UI/Components/CryptoHeader';
 
+import ChartWrapper from 'UI/ui-kit/ChartWrapperNew/ChartWrapper';
+import Typography from 'UI/ui-kit/Typography';
+import Tabs from 'UI/ui-kit/Tabs';
 import type { AssetPageProps } from './AssetPage.interfaces';
-import ChartWrapper from '@/components/ui-kit/ChartWrapperNew/ChartWrapper';
-import Typography from '@/components/ui-kit/Typography';
-import Tabs from '@/components/ui-kit/Tabs';
+import styles from './style.module.css';
 
 import Lock from '../Tabs/Lock';
 import Withdraw from '../Tabs/Withdraw';

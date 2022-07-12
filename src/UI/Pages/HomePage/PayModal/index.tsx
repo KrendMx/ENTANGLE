@@ -3,23 +3,31 @@ import Image from 'next/image';
 import { Contract, providers } from 'ethers';
 import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider';
 import { useTranslation } from 'next-i18next';
-import styles from './style.module.css';
 import { networks, farms } from 'utils/Global/Vars';
+import Tabs from 'UI/ui-kit/Tabs/index';
+import { ChainConfig } from 'services/index';
+import { useStore } from 'core/store';
+import { useDispatch } from 'react-redux';
+import styles from './style.module.css';
 import type { PayModalPropsType } from './PayModal.interfaces';
 import Deposit from './Tabs/Deposit';
 import Withdraw from './Tabs/Withdraw';
-import Tabs from 'UI/ui-kit/Tabs/index';
-import { ChainConfig } from 'services/index';
 
 const PayModal: React.FC<PayModalPropsType> = ({
     handleClose, price, available, totalAvailable,
 }) => {
+    const { store, actions } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+        WalletEntity: store.WalletEntity,
+        AppEntity: store.AppEntity,
+    }));
     const [activeTab, setActiveTab] = useState(0);
-    const dispatch = useAppDispatch();
-    const { chainId, provider, account } = useAppSelector(
-        (state) => state.walletReducer,
-    );
-    const { txLoading } = useAppSelector((state) => state.userReducer);
+    const dispatch = useDispatch();
+    const { chainId, provider, account } = store.WalletEntity;
+    const { txLoading } = store.UserEntity;
+
+    const { changeLoadingTx } = actions.User;
+    const { setSucInfo } = actions.App;
 
     useEffect(() => {
         if (!(chainId in networks)) {

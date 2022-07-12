@@ -6,9 +6,10 @@ import Preloader from 'UI/ui-kit/Preloader';
 import Footer from 'UI/Components/Footer';
 import Header from 'UI/Components/Header';
 
-import { GraphService } from 'services/GraphService';
+import { GraphService } from 'services/index';
 import QueryRequests from 'services/GraphService/queryRequests';
 import { namesConfig } from 'utils/Global/Vars';
+import { Notification } from 'src/libs/Notification';
 import styles from './style.module.css';
 
 type ILayoutProps = {
@@ -31,10 +32,10 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
 
     const { setIsAppLoaded } = actions.App;
     const {
-        setAvgPrice, setCardLoaded, setTxHistory, setTxLoaded, setProfit,
+        setCardLoaded, setTxHistory, setTxLoaded, setProfit, setError, setLoading,
     } = actions.User;
 
-    const { calculateBalances } = asyncActions.User;
+    const { calculateBalances, getAverageBuyPrice } = asyncActions.User;
 
     useEffect(() => {
         dispatch(setIsAppLoaded(true));
@@ -45,7 +46,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     useEffect(() => {
         (async function getAvg() {
             if (!account) return;
-            dispatch(setAvgPrice({ account }));
+            dispatch(getAverageBuyPrice({ account }));
         }());
     }, [account]);
 
@@ -70,33 +71,65 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
 
     useEffect(() => {
         (async function GetProfit() {
-            if (txHistory.length) {
-                const chains = Object.keys(balances);
-                for (let i = 0; i < chains.length; i++) {
-                    const { percentage, stable } = await QueryRequests.calculateProfit(
-                        txHistory,
-                        balances[chains[i]].price,
-                        namesConfig[chains[i]],
-                    );
-                    dispatch(
-                        setProfit({
-                            n: stable,
-                            change: percentage,
-                            key: namesConfig[chains[i]],
-                        }),
-                    );
+            try {
+                dispatch(setLoading(true));
+                if (txHistory.length) {
+                    const res = {
+                        'FTM': {
+                            '56': { percentage: 0, stable: 0 },
+                            '43114': { percentage: 0, stable: 0 },
+                            '250': { percentage: 0, stable: 0 },
+                        },
+                        'AVAX': {
+                            '56': { percentage: 0, stable: 0 },
+                            '43114': { percentage: 0, stable: 0 },
+                            '250': { percentage: 0, stable: 0 },
+                        },
+                        'BSC': {
+                            '56': { percentage: 0, stable: 0 },
+                            '43114': { percentage: 0, stable: 0 },
+                            '250': { percentage: 0, stable: 0 },
+                        },
+                        'ETH': {
+                            '56': { percentage: 0, stable: 0 },
+                            '43114': { percentage: 0, stable: 0 },
+                            '250': { percentage: 0, stable: 0 },
+                        },
+                    };
+                    const names = Object.keys(balances);
+                    for (const name of names) {
+                        const chains = Object.keys(balances[name]);
+                        for (let i = 0; i < chains.length; i++) {
+                            if ((balances[name][chains[i]] as any).positions > 0) {
+                                const { percentage, stable } = await QueryRequests.calculateProfit(
+                                    txHistory,
+                                    (balances[name][chains[i]] as any).positions,
+                                    namesConfig[name],
+                                );
+                                res[name][chains[i]] = { percentage, stable };
+                            } else {
+                                res[name][chains[i]] = { percentage: 0, stable: 0 };
+                            }
+                        }
+                    }
+                    dispatch(setProfit(res));
+                } else if (!txHistory.length && txLoaded) {
+                    const chains = Object.keys(balances);
+                    for (let i = 0; i < chains.length; i++) {
+                        dispatch(
+                            setProfit({
+                                n: 0,
+                                change: 0,
+                                key: namesConfig[chains[i]],
+                            }),
+                        );
+                    }
                 }
-            } else if (!txHistory.length && txLoaded) {
-                const chains = Object.keys(balances);
-                for (let i = 0; i < chains.length; i++) {
-                    dispatch(
-                        setProfit({
-                            n: 0,
-                            change: 0,
-                            key: namesConfig[chains[i]],
-                        }),
-                    );
-                }
+            } catch (e) {
+                Notification.error('Error', e.message);
+                setError(e.message);
+            } finally {
+                dispatch(setLoading(false));
             }
         }());
     }, [txHistory, txLoading, balances, txLoaded]);

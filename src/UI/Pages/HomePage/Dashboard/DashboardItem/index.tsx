@@ -247,13 +247,12 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             </HintModal>
                         </div>
                         <div className={styles.sectionRow}>
-                            {profits[localChain]?.value
-                                || profits[localChain]?.value === 0 ? (
-                                    <p className={styles.sectionValue}>
-                                        $
-                                        {profits[localChain]?.value}
-                                    </p>
-                                )
+                            {profits.length ? (
+                                <p className={styles.sectionValue}>
+                                    $
+                                    {profits[localName][chainId]?.value}
+                                </p>
+                            )
                                 : (
                                     <TextLoader bgGradient={bgGradient} />
                                 )}

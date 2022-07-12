@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { useTranslation } from 'next-i18next';
+import { ChainService } from 'services/index';
 import type { InfoBlockProps } from './SummaryInfoBoard.interfaces';
 import { InfoBlockTypes, numberFormatter } from './SummaryInfoBoard.constants';
 
 import styles from './style.module.css';
-import ChainService from '@/src/ChainService/ChainService';
 
 // TODO MIGRATE TO INFO BLOCK from UI
 const InfoBlock: React.FC<InfoBlockProps> = ({
