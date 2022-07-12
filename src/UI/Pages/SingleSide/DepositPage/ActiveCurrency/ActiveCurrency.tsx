@@ -2,11 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { availableSingleSideNetworks } from 'src/utils/Global/Vars';
+import { useTranslation } from 'react-i18next';
 import styles from './style.module.css';
 import type { IAssetsSelectorProps } from './ActiveCurrency.interfaces';
 
 export const ActiveCurrency: React.FC<IAssetsSelectorProps> = (props) => {
     const { assets, activeAsset, changeActiveAssets } = props;
+    const { t } = useTranslation('ssasdep');
     return (
         <div
             className={styles.wrapper}
@@ -45,7 +47,7 @@ export const ActiveCurrency: React.FC<IAssetsSelectorProps> = (props) => {
                                 height={40}
                             />
                             <span>
-                                <p>Name</p>
+                                <p>{t('name')}</p>
                                 <p>{availableSingleSideNetworks[el].abbr}</p>
                             </span>
                         </span>

@@ -134,7 +134,7 @@ const Header = () => {
                     wrapperPickerClassName={styles.connectButtonPicker}
                 >
                     <>
-                        <Link href="/pages/profile" passHref>
+                        <Link href="/profile" passHref>
                             <div className={styles.locationBar}>
                                 <div>{t('profile')}</div>
                                 <Image

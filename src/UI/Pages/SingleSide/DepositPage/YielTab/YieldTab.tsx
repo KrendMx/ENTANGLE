@@ -5,6 +5,7 @@ import Typography from 'src/UI/ui-kit/Typography';
 import HintModal from 'src/UI/ui-kit/HintModal';
 import GradientButton from 'src/UI/ui-kit/GradientButton';
 import { availableSingleSideNetworks } from 'src/utils/Global/Vars';
+import { useTranslation } from 'react-i18next';
 import type { IYieldTabProps, IYieldTabStore } from './YieldTab.interfaces';
 import styles from './style.module.css';
 import { ActiveCurrency } from '../ActiveCurrency';
@@ -35,6 +36,9 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
         },
     );
 
+    const { t } = useTranslation('ssasdep');
+    const { t: tSsas } = useTranslation('ssas');
+
     return (
         <div>
             {store.isYield ? (
@@ -49,9 +53,21 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                     >
                         <div className={styles.infoCard}>
                             <span>
-                                <p>{`You Staked ${availableSingleSideNetworks[firstChainId].abbr}`}</p>
+                                <p>
+                                    {`${t('youStaked')} ${
+                                        availableSingleSideNetworks[
+                                            firstChainId
+                                        ].abbr
+                                    }`}
+                                </p>
                                 <HintModal>
-                                    <p>{`You Staked ${availableSingleSideNetworks[firstChainId].abbr}`}</p>
+                                    <p>
+                                        {`${t('youStaked')} ${
+                                            availableSingleSideNetworks[
+                                                firstChainId
+                                            ].abbr
+                                        }`}
+                                    </p>
                                 </HintModal>
                             </span>
                             <CurrencyLabel
@@ -62,9 +78,21 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                         {store?.secondUserStake ? (
                             <div className={styles.infoCard}>
                                 <span>
-                                    <p>{`You Staked ${availableSingleSideNetworks[secondChainId].abbr}`}</p>
+                                    <p>
+                                        {`${t('youStaked')} ${
+                                            availableSingleSideNetworks[
+                                                secondChainId
+                                            ].abbr
+                                        }`}
+                                    </p>
                                     <HintModal>
-                                        <p>{`You Staked ${availableSingleSideNetworks[secondChainId].abbr}`}</p>
+                                        <p>
+                                            {`${t('youStaked')} ${
+                                                availableSingleSideNetworks[
+                                                    secondChainId
+                                                ].abbr
+                                            }`}
+                                        </p>
                                     </HintModal>
                                 </span>
                                 <CurrencyLabel
@@ -75,9 +103,9 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                         ) : null}
                         <div className={styles.infoCard}>
                             <span>
-                                <p>Stake Amount</p>
+                                <p>{t('stakeAmount')}</p>
                                 <HintModal>
-                                    <p>Stake Amount</p>
+                                    <p>{t('stakeAmount')}</p>
                                 </HintModal>
                             </span>
                             <p className={styles.cardMainInfoText}>
@@ -87,9 +115,9 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                         <div className={styles.infoCard}>
                             <span style={{ justifyContent: 'space-between' }}>
                                 <div style={{ display: 'flex' }}>
-                                    Staking Term
+                                    {t('stakingTerm')}
                                     <HintModal>
-                                        <p>Staking Term</p>
+                                        <p>{t('stakingTerm')}</p>
                                     </HintModal>
                                 </div>
                                 <div>
@@ -116,7 +144,7 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                             />
                             {store.stakinTerm === 0 ? (
                                 <p className={styles.awaitingTitle}>
-                                    Awaiting Deposite
+                                    {tSsas('awaitingDeposit')}
                                 </p>
                             ) : (
                                 <p />
@@ -127,17 +155,17 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                         <div className={styles.mainAsset}>
                             <span>
                                 <Typography type="textBody">
-                                    Withdraw assets
+                                    {t('withdrawAssets')}
                                 </Typography>
                                 <HintModal>
-                                    <p>Withdraw assets</p>
+                                    <p>{t('withdrawAssets')}</p>
                                 </HintModal>
                             </span>
                             <Typography
                                 type="textBody"
                                 classNameModifier={styles.textDescription}
                             >
-                                Avaiable assets for withdraw
+                                {t('avaiableAssets')}
                             </Typography>
                             <div>
                                 <ActiveCurrency
@@ -153,7 +181,7 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                             </div>
                             <div>
                                 <GradientButton
-                                    title="Withdraw"
+                                    title={t('withdraw')}
                                     onClick={() => {}}
                                 />
                             </div>
@@ -161,13 +189,13 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                         <div className={styles.infoCard}>
                             <span>
                                 <p>
-                                    {`Current ${
-                                        store.secondUserStake
-                                            ? 'Assets'
-                                            : availableSingleSideNetworks[
+                                    {store.secondUserStake
+                                        ? t('currentAssets')
+                                        : `${t('currentAssetStart')} ${
+                                            availableSingleSideNetworks[
                                                 firstChainId
-                                            ].title
-                                    } Amount`}
+                                            ].abbr
+                                        } ${t('currentAssetEnd')}`}
                                 </p>
                                 <HintModal>
                                     <p>Current Assets Amount</p>
@@ -188,9 +216,9 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                         </div>
                         <div className={styles.infoCard}>
                             <span>
-                                <p>Profit Amount</p>
+                                <p>{t('profitAmount')}</p>
                                 <HintModal>
-                                    <p>Profit Amount</p>
+                                    <p>{t('profitAmount')}</p>
                                 </HintModal>
                             </span>
                             <CurrencyLabel
@@ -201,10 +229,10 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                         <div className={styles.projected}>
                             <div className={styles.infoCard}>
                                 <span>
-                                    <p>Projected IL Protection Percentage</p>
+                                    <p>{t('ProjectedIL')}</p>
                                     <HintModal>
                                         <p>
-                                            Projected IL Protection Percentage
+                                            {t('ProjectedIL')}
                                         </p>
                                     </HintModal>
                                 </span>
@@ -215,9 +243,9 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                             </div>
                             <div className={styles.infoCard}>
                                 <span>
-                                    <p>Impermanent Win Percentage</p>
+                                    <p>{t('ImpermanentWin')}</p>
                                     <HintModal>
-                                        <p>Impermanent Win Percentage</p>
+                                        <p>{t('ImpermanentWin')}</p>
                                     </HintModal>
                                 </span>
                                 <p className={styles.cardMainInfoText}>

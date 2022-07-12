@@ -9,10 +9,10 @@
 .infoCard {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
+	height: 100%;
 
-
-	padding: 15px;
+	padding: 10px 25px;
 
 	border: 2px solid rgb(255 255 255 / 10%);
 
@@ -23,6 +23,7 @@
 }
 
 .infoCard > span {
+	padding-bottom: 5px;
 	display: flex;
 }
 
@@ -31,7 +32,8 @@
 }
 
 .infoCard > span > p {
-	color: var(--gray);
+	color: var(--gray) !important;
+	font-size: 14px !important;
 }
 
 
@@ -104,7 +106,7 @@
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: repeat(3, 100px);
-	grid-gap: 10px;
+	grid-gap: 20px;
 
 	padding-bottom: 70px;
 }
@@ -149,13 +151,10 @@
 	border: 0;
 }
 
-.projected > div > span > p {
-	font-size: 15px;
-}
 
 
-.assetsAmount > div:last-child {
-	padding-left: 20px;
+.assetsAmount > div:first-child {
+	margin-right: 20px;
 }
 
 .assetsAmount {

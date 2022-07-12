@@ -22,8 +22,6 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
     second,
     time,
 }) => {
-    const miniButtons = ['25%', '50%', '75%', '100%'];
-
     const [store, dispatch] = useReducer(
         (oldState: depositStore, newState: Partial<depositStore>) => ({
             ...oldState,
@@ -37,6 +35,8 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
             availableSecond: '1500',
             enterAmount: '',
             activeAssets: '',
+            activeButton: 5,
+            miniButtons: ['25%', '50%', '75%', '100%'],
         },
     );
 
@@ -69,7 +69,6 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                             {`${tDep('stakedValue')} ${
                                 availableSingleSideNetworks[first].abbr
                             }`}
-
                         </p>
                         <HintModal>
                             <p>HintModal</p>
@@ -90,7 +89,6 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                             {`${tDep('stakedValue')} ${
                                 availableSingleSideNetworks[second].abbr
                             }`}
-
                         </p>
                         <HintModal>
                             <p>HintModal</p>
@@ -122,16 +120,15 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                         </HintModal>
                     </span>
                     <p className={styles.cardMainInfoText}>
-                        {`${time} ${tSass(
-                            'days',
-                        )}`}
-
+                        {`${time} ${tSass('days')}`}
                     </p>
                 </div>
             </div>
             <div className={styles.depositDo}>
                 <div>
-                    <Typography type="textBody">{tDep('selectAsset')}</Typography>
+                    <Typography type="textBody">
+                        {tDep('selectAsset')}
+                    </Typography>
                     {/*---------------------------------------------------*/}
                     <ActiveCurrency
                         assets={[first, second]}
@@ -139,26 +136,34 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                         activeAsset={store.activeAssets}
                     />
                     {/*---------------------------------------------------*/}
-                    <TextGroup
-                        customClassNameTitle={styles.customTextGroop}
-                        customClassNameValue={styles.customTextGroop}
-                        title={`${tDep('availableBalance')} ${availableSingleSideNetworks[first].abbr}`}
-                        value={`${store.availableFirst} ${availableSingleSideNetworks[first].abbr}`}
-                    />
-                    <TextGroup
-                        customClassNameTitle={styles.customTextGroop}
-                        customClassNameValue={styles.customTextGroop}
-                        title={`${tDep('availableBalance')} ${availableSingleSideNetworks[second].abbr}`}
-                        value={`${store.availableSecond} ${availableSingleSideNetworks[second].abbr}`}
-                    />
+                    <div className={styles.balancesBlock}>
+                        <TextGroup
+                            customClassNameTitle={styles.customTextGroop}
+                            customClassNameValue={styles.customTextGroop}
+                            title={`${tDep('availableBalance')} ${
+                                availableSingleSideNetworks[first].abbr
+                            }`}
+                            value={`${store.availableFirst} ${availableSingleSideNetworks[first].abbr}`}
+                        />
+                        <TextGroup
+                            customClassNameTitle={styles.customTextGroop}
+                            customClassNameValue={styles.customTextGroop}
+                            title={`${tDep('availableBalance')} ${
+                                availableSingleSideNetworks[second].abbr
+                            }`}
+                            value={`${store.availableSecond} ${availableSingleSideNetworks[second].abbr}`}
+                        />
+                    </div>
                 </div>
                 <div>
                     <Arrow />
-                    <Typography type="textBody">Enter Stake Amount</Typography>
+                    <Typography type="textBody">
+                        {tDep('enterStake')}
+                    </Typography>
                     <div>
                         <Input
                             type="number"
-                            placeholder="Enter amount"
+                            placeholder={tDep('enterAmount')}
                             value={store.enterAmount}
                             onChange={(e) => {
                                 enterAmountChangeHandler(e.target.value);
@@ -166,17 +171,29 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                         />
                     </div>
                     <div className={styles.miniButtons}>
-                        {miniButtons.map((el, idx) => (
+                        {store.miniButtons.map((el, idx) => (
                             <MiniButton
                                 key={idx}
                                 title={el}
-                                clickHandler={() => {}}
-                                active={false}
+                                clickHandler={() => {
+                                    dispatch({ activeButton: idx });
+                                    enterAmountChangeHandler(
+                                        (
+                                            (Number(store.availableFirst)
+                                                / 100)
+                                            * Number(el.slice(0, el.length - 1))
+                                        ).toString(),
+                                    );
+                                }}
+                                active={store.activeButton === idx}
                             />
                         ))}
                     </div>
                     <div className={styles.buttonContainer}>
-                        <GradientButton title="Deposit" onClick={() => {}} />
+                        <GradientButton
+                            title={tDep('deposit')}
+                            onClick={() => {}}
+                        />
                     </div>
                 </div>
             </div>

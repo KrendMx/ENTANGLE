@@ -1,4 +1,4 @@
-import type { availableSingleSideChains } from '@/src/utils/GlobalConst';
+import type { availableSingleSideChains } from 'src/utils/Global/Types';
 
 interface IDepositTabProps {
     first: availableSingleSideChains;
@@ -14,6 +14,8 @@ interface depositStore {
     availableSecond: string;
     enterAmount: string;
     activeAssets: string;
+    activeButton: number;
+    miniButtons: string[];
 }
 
 export type { IDepositTabProps, depositStore };
