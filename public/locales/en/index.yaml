@@ -17,6 +17,8 @@ copy: Copy token address
 copied: Token address copied
 metamask: Add to MetaMask
 rty: Real Time Yield
+yield: Yield
+network: Network
 rtyDesk: Your Current Accrued Yield
 select: Select
 highGas: High Gas Fees. Excluded from MVP

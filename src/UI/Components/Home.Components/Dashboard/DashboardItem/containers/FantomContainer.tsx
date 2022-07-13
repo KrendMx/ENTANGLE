@@ -38,7 +38,6 @@ const FantomContainer = ({ isFiltered = false }) => {
         priceCurrency: 'MIM/USDC Synthetic LP',
         vendor: 'spiritswap.finance',
         disabled: false,
-        rty: '123',
         openModal,
         rowGradient,
     } as const;
@@ -46,7 +45,7 @@ const FantomContainer = ({ isFiltered = false }) => {
     const Service = useMemo(() => new CardService('FTM'), []);
 
     useEffect(() => {
-        if (!preLoader && CardData[data.chainId].apr === null) {
+        if (!preLoader) {
             (async () => {
                 let apr = 0;
                 try {
@@ -92,7 +91,6 @@ const FantomContainer = ({ isFiltered = false }) => {
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
                 } catch (e) {
-                    Notification.error('Error', e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }

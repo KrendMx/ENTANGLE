@@ -1,4 +1,4 @@
-const networks = {
+ const networks = {
     '43114': {
         title: 'Avalanche',
         abbr: 'AVAX',

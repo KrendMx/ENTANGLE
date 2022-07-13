@@ -92,8 +92,8 @@ export class GraphService implements IGraphService {
                 if (max !== 0) {
                     for (let i = 0; i < max; i++) {
                         if (SellData.data.exchanges[i]) {
-                            const user = (await contract.provider.getTransaction(SellData.data.exchanges[i].id)).from;
-                            if (user.toLowerCase() === this.account) {
+                            const user = (await contract.provider.getTransaction(SellData.data.exchanges[i].id))?.from;
+                            if (user?.toLowerCase() === this.account) {
                                 const time = (
                                     await contract.provider.getBlock(
                                         Number(SellData.data.exchanges[i].block),

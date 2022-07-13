@@ -8,6 +8,8 @@ interface IProps {
         avaxSynth: number;
     };
     filter: keyof typeof CardsOrder | 'Sort by';
+    totalBalance: number;
+    hasTokens: boolean
 }
 
 type CardValues = {

@@ -24,7 +24,7 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
         {
             isYield: true,
             firstUserStake: '125',
-            secondUserStake: '555',
+            // secondUserStake: '555',
             stakedAmount: '240',
             stakinTerm: 2,
             stakingRemained: 5,

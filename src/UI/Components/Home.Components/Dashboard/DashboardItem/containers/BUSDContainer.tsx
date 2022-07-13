@@ -40,14 +40,13 @@ const BUSDContainer = ({ isFiltered = false }) => {
         vendor: 'pancakeswap.finance',
         disabled: false,
         openModal,
-        rty: '123',
         rowGradient,
     } as const;
 
     const Service = useMemo(() => new CardService('BSC'), []);
 
     useEffect(() => {
-        if (!preLoader && CardData[data.chainId].apr === null) {
+        if (!preLoader) {
             (async () => {
                 let apr = 0;
                 try {
@@ -93,7 +92,6 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
                 } catch (e) {
-                    Notification.error('Error', e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }

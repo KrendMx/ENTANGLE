@@ -81,7 +81,6 @@ export class ChainService implements IChainService {
     public static getTVDForBuyAndSell = async (): Promise<number> => {
         const finalArr = [];
         for (const key in ChainService.contracts) {
-            console.log(ChainService.contracts[key]);
             finalArr.push(await ChainService.getSumValueFromContract(key));
         }
         return Math.round(finalArr.reduce((pr, cr) => Number(pr) + Number(cr)));
@@ -95,7 +94,6 @@ export class ChainService implements IChainService {
         ] as const;
         const finalArr: number[] = [];
         const chefData = await ChainService.getDataForTRA();
-        console.log(chefData);
         for (const key of id) {
             if (ChainService.contracts[key.key].STABLESYNTCHEF) {
                 let sumWithdraw: number = 0;

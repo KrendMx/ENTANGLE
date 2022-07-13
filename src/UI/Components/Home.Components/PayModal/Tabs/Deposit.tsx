@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import type { Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { useTranslation } from 'react-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import { networks, namesConfig } from 'utils/Global/Vars';
@@ -8,6 +8,7 @@ import type { availableChains } from 'utils/Global/Types';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
+import { opToken } from 'utils/ABIs';
 import Text from '../Text';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
 import ModalInput from '../ModalInput';
@@ -41,6 +42,7 @@ const Deposit: React.FC<propsType> = ({
 
     const [amount, setAmount] = useState('');
     const [synthAmount, setSynthAmount] = useState('');
+    const [allow, setAllow] = useState<number>(0);
     const [balances, setBalances] = useState<{usdc: string, synth: string}>({ usdc: '', synth: '' });
     const [maxError, setMaxError] = useState<boolean>(false);
 
@@ -53,17 +55,27 @@ const Deposit: React.FC<propsType> = ({
 
     useEffect(() => {
         (async function getAllowanceAndBalance() {
-            dispatch(
-                getAllowance({
-                    contractAddress:
-                        chainThings.genered.CONTRACTS.STABLE.address,
-                    dexAddress: chainThings.genered.CONTRACTS.FEE.address,
-                    account,
-                    provider,
-                    chainId,
-                    cardId: localChain,
-                }),
+            // dispatch(
+            //     getAllowance({
+            //         contractAddress:
+            //             chainThings.genered.CONTRACTS.STABLE.address,
+            //         dexAddress: chainThings.genered.CONTRACTS.FEE.address,
+            //         account,
+            //         provider,
+            //         chainId,
+            //         cardId: localChain,
+            //     }),
+            // );
+
+            // TODO: переделать в кор
+            const contract = new Contract(
+                chainThings.genered.CONTRACTS.STABLE.address,
+                opToken,
+                provider?.getSigner(),
             );
+
+            const value = await contract.allowance(account, chainThings.genered.CONTRACTS.FEE.address);
+            setAllow(value);
         }());
     }, [chainId]);
 
@@ -211,14 +223,14 @@ const Deposit: React.FC<propsType> = ({
             ) : (
                 <GradientButton
                     title={
-                        allowance[chainId][localChain] > 0
+                        allow > 0
                             ? payData[localChain as availableChains]?.price
                                 ? 'Add funds'
                                 : 'Data Loading'
                             : 'Approve'
                     }
                     onClick={
-                        allowance[chainId][localChain] > 0
+                        allow > 0
                             ? () => buyToken(parseFloat(amount))
                             : () => handleApprove()
                     }

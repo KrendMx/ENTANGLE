@@ -22,7 +22,6 @@ type DashboardItemProps = {
     vendor: string;
     priceCurrency: string;
     disabled: boolean;
-    rty: string;
     isFiltered: boolean;
     openModal?: () => void;
 } & ContainerStateType;
@@ -42,7 +41,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     isFiltered = false,
     localChain,
     localName,
-    rty,
 }) => {
     const { store, asyncActions, actions } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -252,7 +250,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             {'AVAX' in profits ? (
                                 <p className={styles.sectionValue}>
                                     $
-                                    {rty}
+                                    {profits[localName][chainId]?.stable}
                                 </p>
                             )
                                 : (

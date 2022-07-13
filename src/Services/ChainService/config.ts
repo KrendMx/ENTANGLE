@@ -193,33 +193,6 @@ export const ChainConfig = {
                     },
                 },
             },
-            // {
-            //     ID: '12',
-            //     FARMID: '26',
-            //     CROSSCHAIN: true,
-            //     CONTRACTS: {
-            //         SYNTH: {
-            //             address: '0xAe8aF48Ea0E9dc54Cc3328a872a323F039920ceb',
-            //             abi: avaSynth,
-            //             chainId: 250,
-            //         },
-            //         DEX: {
-            //             address: '0xD9E4EeaeDC5A5c65feaFb376d866d10db9B2b04c',
-            //             abi: dexOnDemand,
-            //             chainId: 250,
-            //         },
-            //         STABLE: {
-            //             address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-            //             abi: avaSynth,
-            //             chainId: 250,
-            //         },
-            //         FEE: {
-            //             address: '0x10424388092fB8Cd3E235A623e950afDd1655561',
-            //             abi: feeAbi,
-            //             chainId: 250,
-            //         },
-            //     },
-            // },
         ],
     },
     AVAX: {
@@ -381,33 +354,6 @@ export const ChainConfig = {
                     },
                 },
             },
-            // {
-            //     ID: '71',
-            //     FARMID: '26',
-            //     CROSSCHAIN: true,
-            //     CONTRACTS: {
-            //         SYNTH: {
-            //             address: '0xf066F23C55D7aF2259Da196862B3c23702B9320b',
-            //             abi: ftmSynth,
-            //             chainId: 43114,
-            //         },
-            //         DEX: {
-            //             address: '0x7197c3059Df102AAD8A0f517A11241BB76d4dcF9',
-            //             abi: ftmDex,
-            //             chainId: 43114,
-            //         },
-            //         STABLE: {
-            //             address: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
-            //             abi: ftmSynth,
-            //             chainId: 43114,
-            //         },
-            //         FEE: {
-            //             address: '0x5169b4351AD7215a326301d93537b068ef5DAD3B',
-            //             abi: feeAbi,
-            //             chainId: 43114,
-            //         },
-            //     },
-            // },
         ],
     },
     BSC: {
@@ -569,33 +515,6 @@ export const ChainConfig = {
                     },
                 },
             },
-            // {
-            //     ID: '20',
-            //     FARMID: '26',
-            //     CROSSCHAIN: true,
-            //     CONTRACTS: {
-            //         SYNTH: {
-            //             address: '0x6fDa2e4C4187017D92a11D02b455C51E8CFF7FEA',
-            //             abi: avaSynth,
-            //             chainId: 56,
-            //         },
-            //         DEX: {
-            //             address: '0x8E1575934a6Adfd6AdBb08Bde1490A00Acb60706',
-            //             abi: dexOnDemand,
-            //             chainId: 56,
-            //         },
-            //         STABLE: {
-            //             address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-            //             abi: avaSynth,
-            //             chainId: 56,
-            //         },
-            //         FEE: {
-            //             address: '0xf86967d5dd4ABDF454Bf13C66c59210844922474',
-            //             abi: feeAbi,
-            //             chainId: 56,
-            //         },
-            //     },
-            // },
         ],
     },
     ETH: {
@@ -644,7 +563,7 @@ export const ChainConfig = {
                         chainId: 250,
                     },
                     STABLE: {
-                        address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+                        address: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
                         abi: avaSynth,
                         chainId: 250,
                     },

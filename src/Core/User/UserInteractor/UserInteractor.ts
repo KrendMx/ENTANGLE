@@ -47,7 +47,11 @@ export const createUserInteractor = (
                         '56': { price: 0, positions: 0 },
                         '43114': { price: 0, positions: 0 },
                         '250': { price: 0, positions: 0 },
-                    },
+                    },    // {
+    //     filter: 56,
+    //     query: ['usdt-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
+    //     element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
+    // },
                 };
                 let totalBalance = 0;
                 const keys = Object.keys(ChainConfig);
@@ -73,6 +77,7 @@ export const createUserInteractor = (
                 dispatch(Entity.actions.setError(e.message));
             } finally {
                 dispatch(Entity.actions.setLoading(false));
+                dispatch(Entity.actions.setCardLoaded(true));
             }
         },
     ),

@@ -27,6 +27,7 @@ const Profile = () => {
         profits, totalBalance, balances, cardLoaded,
     } = store.UserEntity;
 
+    const [hasTokens, setHasTokens] = useState<boolean>(false);
     const [bestProfit, setBestProfit] = useState<{
         value: number;
         change: number;
@@ -36,41 +37,50 @@ const Profile = () => {
         value: number;
         change: number;
         chain: keyof typeof networks;
-    }>({ value: -0.0000001, change: 0, chain: '43114' });
+    }>({ value: -0.000001, change: 0, chain: '43114' });
     const [change, setChange] = useState<number[]>([0, 0]);
 
     useEffect(() => {
-        const names = Object.keys(profits);
-        let best = { value: 0.0000001, change: 0, chain: '250' };
-        let worst = { value: 0.0000001, change: 0, chain: '250' };
-        let counter = 0;
-        let valueLocal = 0;
-        let changeLocal = 0;
-        for (const name in names) {
-            for (const chain in Object.keys(profits[name])) {
-                if (profits[name][chain].change > bestProfit.change) {
-                    best = {
-                        value: profits[name][chain].value,
-                        change: profits[name][chain].change,
-                        chain,
-                    };
-                } else if (profits[name][chain].change < worstProfit.change) {
-                    worst = {
-                        value: profits[name][chain].value,
-                        change: profits[name][chain].change,
-                        chain,
-                    };
+        if ('AVAX' in profits) {
+            const names = Object.keys(profits);
+            let best = { value: 0, change: 0, chain: '250' };
+            let worst = { value: 0, change: 0, chain: '250' };
+            let counter = 0;
+            let valueLocal = 0;
+            let changeLocal = 0;
+            for (const name in names) {
+                const chains = Object.keys(profits[names[name]]);
+                for (const chain in chains) {
+                    if (profits[names[name]][chains[chain]].percentage > bestProfit.change) {
+                        best = {
+                            value: profits[names[name]][chains[chain]].stable,
+                            change: profits[names[name]][chains[chain]].percentage,
+                            chain: chains[chain],
+                        };
+                    } else if (profits[names[name]][chains[chain]].percentage < worstProfit.change) {
+                        worst = {
+                            value: profits[names[name]][chains[chain]].stable,
+                            change: profits[names[name]][chains[chain]].percentage,
+                            chain: chains[chain],
+                        };
+                    }
+                    valueLocal += profits[names[name]][chains[chain]].stable;
+                    changeLocal += profits[names[name]][chains[chain]].percentage;
+                    counter++;
                 }
-                valueLocal += profits[name][chain].value;
-                changeLocal += profits[name][chain].change;
-                counter++;
             }
+            setChange([(valueLocal / counter), (changeLocal / counter)]);
+            setBestProfit((best as typeof bestProfit));
+            setWorstProfit((worst as typeof worstProfit));
+            setChange([valueLocal, changeLocal]);
         }
-        setChange([(valueLocal / counter), (changeLocal / counter)]);
-        setBestProfit((best as typeof bestProfit));
-        setWorstProfit((worst as typeof worstProfit));
-        setChange([valueLocal, changeLocal]);
     }, [profits]);
+
+    useEffect(() => {
+        if (totalBalance > 0) {
+            setHasTokens(true);
+        }
+    }, [totalBalance]);
 
     const [filter, setFilter] = React.useState<IFilter>('Sort by');
 
@@ -193,7 +203,9 @@ const Profile = () => {
                 ) : (
                     <InvestCard
                         balances={balances}
+                        totalBalance={totalBalance}
                         filter={filter}
+                        hasTokens={hasTokens}
                     />
                 )}
             </section>

@@ -42,14 +42,12 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         disabled: false,
         openModal,
         rowGradient,
-        rty: '123',
-        // profits[CardData['43114'].localName][chainId]?.stable,
     } as const;
 
     const Service = useMemo(() => new CardService('AVAX'), []);
 
     useEffect(() => {
-        if (!preLoader && CardData[data.chainId].apr === null) {
+        if (!preLoader) {
             (async () => {
                 let apr = 0;
                 try {
@@ -95,7 +93,6 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
                 } catch (e) {
-                    Notification.error('Error', e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
@@ -142,7 +139,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
 
     useEffect(() => {
         (async () => {
-            if (account && CardData[data.chainId].positions === null) {
+            if (account) {
                 let [positions, totalPositions] = [0, 0];
                 try {
                     const personalData = await Service.getPersonalData(

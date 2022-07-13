@@ -64,12 +64,14 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             </div>
             <div className={styles.main}>
                 <div className={styles.pare}>
-                    <p>{`f${networks[chainId].currencyMin}`}</p>
-                    <span style={{ margin: '0 10px 0 5px' }}>
-                        <HintModal>
-                            <p>test</p>
-                        </HintModal>
-                    </span>
+                    <div className={styles.assetTitle}>
+                        <p>{`f${networks[chainId].currencyMin}`}</p>
+                        <span style={{ margin: '0 10px 0 5px' }}>
+                            <HintModal>
+                                <p>test</p>
+                            </HintModal>
+                        </span>
+                    </div>
                     <button
                         className={styles.cardLabel}
                         style={{ background: cardTypeLabelBg }}
@@ -78,7 +80,6 @@ const InvestCardExp: React.FC<ICardUnit> = ({
 
                     </button>
                 </div>
-                <p className={styles.undertitle}>{description}</p>
             </div>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
@@ -101,16 +102,11 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>{t('avgPrice')}</p>
-                    {avgPrices[chainId] ? (
-                        <>
-                            <p className={styles.itemValue}>
-                                $
-                                {avgPrices[chainId]}
-                            </p>
-                            <p className={styles.undertitle}>
-                                {networks[chainId].currency}
-                            </p>
-                        </>
+                    {'AVAX' in avgPrices ? (
+                        <p className={styles.itemValue}>
+                            $
+                            {avgPrices[currencyName][chainId]}
+                        </p>
                     ) : (
                         <p className={styles.itemValue}>
                             <TextLoader bgGradient={bgGradient} />
@@ -121,28 +117,28 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>{t('profit')}</p>
-                    {profits[chainId]?.value ? (
+                    {'AVAX' in profits ? (
                         <>
                             <p className={styles.itemValue}>
                                 $
-                                {profits[currencyName][chainId]?.value}
+                                {profits[currencyName][chainId]?.stable}
                             </p>
                             <p
                                 className={classNames(
                                     styles.undertitle,
                                     {
                                         [styles.loss]:
-                                        profits[currencyName][chainId]?.change! < 0,
+                                        profits[currencyName][chainId]?.percentage! < 0,
                                     },
                                     {
                                         [styles.up]:
-                                        profits[currencyName][chainId]?.change! > 0,
+                                        profits[currencyName][chainId]?.percentage! > 0,
                                     },
                                 )}
                             >
-                                {profits[currencyName][chainId]?.change! > 0
-                                    ? `+${profits[currencyName][chainId]?.change}`
-                                    : `${profits[currencyName][chainId]?.change}`}
+                                {profits[currencyName][chainId]?.percentage! > 0
+                                    ? `+${profits[currencyName][chainId]?.percentage}`
+                                    : `${profits[currencyName][chainId]?.percentage}`}
                                 %
                             </p>
                         </>

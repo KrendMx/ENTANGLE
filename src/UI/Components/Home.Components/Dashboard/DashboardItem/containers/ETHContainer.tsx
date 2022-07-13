@@ -19,6 +19,7 @@ const ETHContainer = ({ isFiltered = false }) => {
     const dispatch = useDispatch();
     const { account, chainId, preLoader } = store.WalletEntity;
     const { data: CardData } = store.CardsEntity;
+    const { setDefaultCardData } = actions.Card;
     const { txLoading, isOpenModal } = store.UserEntity;
 
     const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
@@ -39,7 +40,6 @@ const ETHContainer = ({ isFiltered = false }) => {
         priceCurrency: 'aDAI/aSUSD Synthetic LP',
         vendor: 'convexfinance.com',
         disabled: false,
-        rty: '123',
         openModal,
         rowGradient,
     } as const;
@@ -47,7 +47,7 @@ const ETHContainer = ({ isFiltered = false }) => {
     const Service = useMemo(() => new CardService('ETH'), []);
 
     useEffect(() => {
-        if (!preLoader && CardData[data.chainId].apr === null) {
+        if (!preLoader) {
             (async () => {
                 let apr = 0;
                 try {
@@ -85,7 +85,7 @@ const ETHContainer = ({ isFiltered = false }) => {
                 ] = [0, 0, 0, 0, 0];
                 try {
                     const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.ETH : '7',
+                        account ? farms[chainId]?.ETH : '70',
                     );
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;
@@ -93,7 +93,6 @@ const ETHContainer = ({ isFiltered = false }) => {
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
                 } catch (e) {
-                    Notification.error('Error', e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
@@ -106,12 +105,12 @@ const ETHContainer = ({ isFiltered = false }) => {
                             available: `${
                                 CardData[data.chainId].localChain === chainId
                                     ? 'Unlimited'
-                                    : '0'
+                                    : available
                             }`,
                             totalAvailable: totalAvailable.toString(),
                             totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
                             currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                            price: `${1}`,
+                            price: `${Number(price.toFixed(6))}`,
                         },
                     }),
                 );

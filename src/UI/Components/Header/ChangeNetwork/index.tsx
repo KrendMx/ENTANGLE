@@ -23,7 +23,6 @@ const ChangeNetwork = () => {
     const { changeNetwork } = asyncActions.Wallet;
 
     const handleClick = (chainIdEl: availableChains) => {
-        dispatch(setDefaultCardData());
         dispatch(changeNetwork({ chainId: chainIdEl, provider }));
     };
 

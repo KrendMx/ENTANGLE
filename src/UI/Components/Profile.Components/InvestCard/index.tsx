@@ -15,12 +15,9 @@ import Pager from '../TransactionHistory/Pager/Pager';
 const InvestCard: React.FC<IProps> = ({
     balances,
     filter,
+    hasTokens,
 }) => {
     const [cards, setCards] = useState<ICardUnit[]>([]);
-    const hasPhantom = Number(balances?.FTM?.positions) > 0;
-    const hasAvax = Number(balances.AVAX?.positions) > 0;
-    const hasBnb = Number(balances.BSC?.positions) > 0;
-    const hasNoOne = !hasPhantom && !hasAvax && !hasBnb;
 
     const InitCards = useMemo(() => (generateInitState(balances)), [balances]);
 
@@ -54,7 +51,7 @@ const InvestCard: React.FC<IProps> = ({
 
     return (
         <div>
-            {hasNoOne ? (
+            {!hasTokens && !('AVAX' in balances) ? (
                 <>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Image

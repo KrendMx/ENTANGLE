@@ -56,6 +56,12 @@ export class CardService implements ICardService {
         id: string,
     ) => {
         try {
+            if (this.name === 'ETH') {
+                return {
+                    currentDeposits: 0,
+                    totalDeposits: 0,
+                };
+            }
             const lpAmount = (
                 await contracts.CHEF.userInfo(id, contracts.SYNTHCHEF.address)
             ).amount.toBigInt();
@@ -94,7 +100,7 @@ export class CardService implements ICardService {
                 totalDeposits: lpAmount,
             };
         } catch (e) {
-            Notification.error('Error', 'Error while calculating current deposit');
+            throw new Error('Error while calculating current deposit');
         }
     };
 
@@ -117,7 +123,7 @@ export class CardService implements ICardService {
                 price,
             };
         } catch (e) {
-            Notification.error('Error', 'Error while calculating remain data');
+            throw new Error('Error while calculating remain data');
         }
     };
 
@@ -148,17 +154,6 @@ export class CardService implements ICardService {
                 'BSC': 1.09,
                 'ETH': 15.40,
             } as const;
-
-            // if (this.name === 'ETH') {
-            //     return {
-            //         apr: aprs[this.name],
-            //         totalDeposits: 0,
-            //         currentDeposits: 0,
-            //         available: 0,
-            //         totalAvailable: 0,
-            //         price: 1,
-            //     };
-            // }
             const necessaryContracts: SynthContracts = this.contracts[id];
 
             const synthObj = (ChainConfig[this.name].SYNTH as any).find(
@@ -169,6 +164,7 @@ export class CardService implements ICardService {
                 necessaryContracts,
                 synthObj.FARMID,
             );
+
             const { available, totalAvailable, price } = await this.getRemainData(necessaryContracts);
             return {
                 apr: aprs[this.name],
@@ -179,7 +175,7 @@ export class CardService implements ICardService {
                 price,
             };
         } catch (e) {
-            Notification.error('Error', 'Error calculating card data');
+            throw new Error('Error calculating card data');
         }
     };
 
@@ -208,7 +204,7 @@ export class CardService implements ICardService {
                 totalPositions,
             };
         } catch (e) {
-            Notification.error('Error', 'Error while calculating positions sum');
+            throw new Error('Error while calculating positions sum');
         }
     };
 }

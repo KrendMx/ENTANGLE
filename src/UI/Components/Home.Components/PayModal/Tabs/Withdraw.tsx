@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
-import type { Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { useTranslation } from 'next-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import { useStore } from 'core/store';
@@ -9,6 +9,7 @@ import { networks, farms, namesConfig } from 'utils/Global/Vars';
 import type { availableChains } from 'utils/Global/Types';
 import { ChainConfig } from 'src/Services';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
+import { opToken } from 'utils/ABIs';
 import styles from '../style.module.css';
 import Text from '../Text';
 import ModalInput from '../ModalInput';
@@ -43,6 +44,7 @@ const Withdraw: React.FC<propsType> = ({
     const [amount, setAmount] = useState<string>('');
     const [synthBalance, setSynthBalance] = useState<string>('');
     const [maxError, setMaxError] = useState<boolean>(false);
+    const [allow, setAllow] = useState<number>(0);
 
     const localChain = useMemo(
         () => namesConfig[sessionStorage.getItem('card')],
@@ -58,17 +60,26 @@ const Withdraw: React.FC<propsType> = ({
 
     useEffect(() => {
         (async function getAllowanceAndBalance() {
-            dispatch(
-                getAllowance({
-                    contractAddress:
-                        chainThings.genered.CONTRACTS.SYNTH.address,
-                    dexAddress: chainThings.genered.CONTRACTS.FEE.address,
-                    account,
-                    provider,
-                    chainId,
-                    cardId: localChain,
-                }),
+            // dispatch(
+            //     getAllowance({
+            //         contractAddress:
+            //             chainThings.genered.CONTRACTS.SYNTH.address,
+            //         dexAddress: chainThings.genered.CONTRACTS.FEE.address,
+            //         account,
+            //         provider,
+            //         chainId,
+            //         cardId: localChain,
+            //     }),
+            // );
+            // TODO: переделать в кор
+            const contract = new Contract(
+                chainThings.genered.CONTRACTS.SYNTH.address,
+                opToken,
+                provider?.getSigner(),
             );
+
+            const value = await contract.allowance(account, chainThings.genered.CONTRACTS.FEE.address);
+            setAllow(value);
         }());
     }, []);
 
@@ -201,14 +212,14 @@ const Withdraw: React.FC<propsType> = ({
             ) : (
                 <GradientButton
                     title={
-                        allowance[chainId][localChain] > 0
+                        allow > 0
                             ? payData[localChain as availableChains]?.price
                                 ? 'Sell funds'
                                 : 'Data Loading'
                             : 'Approve'
                     }
                     onClick={
-                        allowance[chainId][localChain] > 0
+                        allow > 0
                             ? () => sellToken(parseFloat(amount))
                             : () => handleApprove()
                     }

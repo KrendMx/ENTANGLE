@@ -157,7 +157,6 @@ const CryptoHeader: React.FC<CryptoHeaderProps> = ({
                             </p>
                         </div>
                         <div className={styles.info}>
-                            <p className={styles.infoHeader}>Total Earned</p>
                             <p className={styles.infoHeader}>{t('totalEarned')}</p>
                             <p className={styles.infoData}>
                                 {earned}
