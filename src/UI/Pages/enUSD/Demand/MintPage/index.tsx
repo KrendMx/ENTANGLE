@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import { useAppDispatch } from '@/src/Redux/store/hooks/redux';
 // import { changeActiveCard } from '@/src/Redux/store/reducers/AppSlice';
-import ActionPanel from '../../../HomePage/ActionPanel';
+import ActionPanel from '../../../../Components/Home.Components/ActionPanel';
 
 import DashboardCards from './Dashboard';
 import styles from './style.module.css';

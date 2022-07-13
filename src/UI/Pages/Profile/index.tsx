@@ -11,10 +11,11 @@ import { InfoBlockTypes } from 'UI/ui-kit/InfoBlock/InfoBlock.constants';
 
 import { networks } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
+import type { availableChains } from 'utils/Global/Types';
 import styles from './style.module.css';
-import ProfileChart from './ProfileChart/ProfileChart';
-import TransactionHistory from './TransactionHistory/TransactionHistory';
-import InvestCard from './InvestCard';
+import ProfileChart from '../../Components/Profile.Components/ProfileChart/ProfileChart';
+import TransactionHistory from '../../Components/Profile.Components/TransactionHistory/TransactionHistory';
+import InvestCard from '../../Components/Profile.Components/InvestCard';
 import { SortArray, loader } from './Profile.constant';
 import type { IFilter } from './Profile.interfaces';
 
@@ -37,28 +38,37 @@ const Profile = () => {
         chain: keyof typeof networks;
     }>({ value: -0.0000001, change: 0, chain: '43114' });
     const [change, setChange] = useState<number[]>([0, 0]);
+
     useEffect(() => {
-        const data = Object.keys(networks).map((i) =>
-            (profits[i]
-                ? {
-                    chain: i as keyof typeof networks,
-                    ...profits[i],
-                }
-                : {
-                    chain: i as keyof typeof networks,
-                    value: 0,
-                    change: 0,
-                }));
-        setBestProfit(data.reduce((l, e) => (e.value > l.value ? e : l)));
-        setWorstProfit(data.reduce((l, e) => (e.value < l.value ? e : l)));
-        let changeLocal = 0;
+        const names = Object.keys(profits);
+        let best = { value: 0.0000001, change: 0, chain: '250' };
+        let worst = { value: 0.0000001, change: 0, chain: '250' };
+        let counter = 0;
         let valueLocal = 0;
-        for (let i = 0; i < Object.keys(networks).length; i++) {
-            if (profits[Object.keys(networks)[i]]) {
-                changeLocal = profits[Object.keys(networks)[i]].change + changeLocal;
-                valueLocal = profits[Object.keys(networks)[i]].value + valueLocal;
+        let changeLocal = 0;
+        for (const name in names) {
+            for (const chain in Object.keys(profits[name])) {
+                if (profits[name][chain].change > bestProfit.change) {
+                    best = {
+                        value: profits[name][chain].value,
+                        change: profits[name][chain].change,
+                        chain,
+                    };
+                } else if (profits[name][chain].change < worstProfit.change) {
+                    worst = {
+                        value: profits[name][chain].value,
+                        change: profits[name][chain].change,
+                        chain,
+                    };
+                }
+                valueLocal += profits[name][chain].value;
+                changeLocal += profits[name][chain].change;
+                counter++;
             }
         }
+        setChange([(valueLocal / counter), (changeLocal / counter)]);
+        setBestProfit((best as typeof bestProfit));
+        setWorstProfit((worst as typeof worstProfit));
         setChange([valueLocal, changeLocal]);
     }, [profits]);
 

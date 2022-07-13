@@ -1,4 +1,4 @@
-// Depens
+// Deps
 import { configureStore } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 
@@ -64,6 +64,3 @@ export const useStore = <T>(
         asyncActions,
         store: useSelector(selector),
     });
-
-export type AppStore = ReturnType<typeof store.getState>;
-export type AppDispatch = ReturnType<typeof store.dispatch>;

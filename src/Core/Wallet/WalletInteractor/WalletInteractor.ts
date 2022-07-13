@@ -105,6 +105,7 @@ export const createWalletInteractor = (
             } catch (e) {
                 dispatch(Entity.actions.setError(e));
             } finally {
+                dispatch(Entity.actions.setPreloader(false));
                 dispatch(Entity.actions.setLoading(false));
             }
         },

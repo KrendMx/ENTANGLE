@@ -8,7 +8,7 @@ import React, {
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Input from 'UI/ui-kit/Input';
-import Text from 'UI/Pages/HomePage/PayModal/Text';
+import Text from 'UI/Components/Home.Components/PayModal/Text';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientSlider from 'UI/ui-kit/GradientSlider';

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import AssetPage from 'UI/Pages/Stake/Stable/AssetPage';
+import AssetPage from 'UI/Components/StakeStable.Components/AssetPage';
 
 const StakeStablePage: NextPage = () => {
     const router = useRouter();

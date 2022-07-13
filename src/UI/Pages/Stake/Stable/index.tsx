@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import Select, { Option } from 'UI/ui-kit/Select';
 import Typography from 'UI/ui-kit/Typography';
 import ChartWrapper from 'UI/ui-kit/ChartWrapperNew/ChartWrapper';
+import AssetItem from 'UI/Components/StakeStable.Components/AssetItem';
 import { CHART_DATA_TEST, initState } from './Stable.const';
-import AssetItem from './AssetItem';
 import type { IAssetItem } from './Stable.interfaces';
 
 import styles from './style.module.css';

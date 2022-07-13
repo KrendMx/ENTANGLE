@@ -1,5 +1,5 @@
 import React from 'react';
-import type { IDashboardProps } from 'UI/Pages/HomePage/Dashboard/Dashboard.interfaces';
+import type { IDashboardProps } from 'UI/Components/Home.Components/Dashboard/Dashboard.interfaces';
 import styles from './style.module.css';
 import ITEMS from './Dashboard.consts';
 

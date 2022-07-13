@@ -3,10 +3,10 @@ import Typography from 'src/UI/ui-kit/Typography';
 import InfoBlock from 'src/UI/ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from 'src/UI/ui-kit/InfoBlock/InfoBlock.constants';
 import { useTranslation } from 'react-i18next';
+import { ActionPanel } from 'UI/Components/SASS.Components/ActionPanel';
+import { Dashboard } from 'UI/Components/SASS.Components/Dashboard';
 import type { SingleSideReducerType } from './SingleSide.interfaces';
 import styles from './style.module.css';
-import { ActionPanel } from './ActionPanel';
-import { Dashboard } from './Dashboard';
 
 export const SingleSide = () => {
     const [store, dispatch] = useReducer(

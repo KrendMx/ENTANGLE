@@ -2,7 +2,7 @@ import React from 'react';
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import { DepositPage } from 'src/UI/Pages/SingleSide/DepositPage';
+import { DepositPage } from 'src/UI/Components/SASS.Components/DepositPage';
 
 const StakeStablePage: NextPage<any> = ({ paths }) => (
     <div>

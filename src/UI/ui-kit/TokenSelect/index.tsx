@@ -8,7 +8,7 @@ import type {
 } from './TokenSelect.intefaces';
 
 import styles from './style.module.css';
-import PayModal from '../../Pages/HomePage/PayModal';
+import PayModal from '../../Components/Home.Components/PayModal';
 import Modal from '../../Components/Modal';
 
 export const TokenOption: React.FC<TokenOptionProps> = ({
