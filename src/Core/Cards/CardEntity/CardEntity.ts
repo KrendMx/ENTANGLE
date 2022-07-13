@@ -18,12 +18,12 @@ export const CardEntity = createSlice({
     initialState,
     reducers: {
         ...withHelperReducers,
-        setCardInfo(state, action: PayloadAction<{ key: string, data: CardData }>) {
-            state.data[action.payload.key] = action.payload.data;
+        setCardInfo(state, action: PayloadAction<{ key: string, data }>) {
+            state.data[action.payload.key] = Object.assign(state.data[action.payload.key], action.payload.data);
         },
         setDefaultCardData(state) {
-            for (const key in state) {
-                state.data[key] = { ...initialState[key] };
+            for (const key in state.data) {
+                state.data[key] = { ...initialState.data[key], apr: state.data[key].apr };
             }
         },
     },

@@ -22,6 +22,7 @@ type DashboardItemProps = {
     vendor: string;
     priceCurrency: string;
     disabled: boolean;
+    rty: string;
     isFiltered: boolean;
     openModal?: () => void;
 } & ContainerStateType;
@@ -41,6 +42,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     isFiltered = false,
     localChain,
     localName,
+    rty,
 }) => {
     const { store, asyncActions, actions } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -250,7 +252,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             {'AVAX' in profits ? (
                                 <p className={styles.sectionValue}>
                                     $
-                                    {profits[localName][chainId]?.stable}
+                                    {rty}
                                 </p>
                             )
                                 : (
@@ -258,18 +260,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                                 )}
                         </div>
                     </div>
-                ) : (
-                    <div className={styles.section}>
-                        <p className={styles.sectionTitle}>
-                            {`${t('yourPosition')} / ${t('rty')}`}
-                        </p>
-                        <div className={styles.section}>
-                            <p className={styles.sectionError}>
-                                {t('connectWallet')}
-                            </p>
-                        </div>
-                    </div>
-                )}
+                ) : null}
                 <div className={styles.buttonWrapper}>
                     <div className={styles.mt2}>
                         <GradientButton

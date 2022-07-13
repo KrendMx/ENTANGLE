@@ -19,14 +19,16 @@
 
 .back p {
 	margin-left: .8rem;
+
 }
 
 .header {
 	font-size: 35px !important;
+	padding-top: 30px;
 }
 
 .headerDesc {
-	padding-top: 13px;
+	padding: 13px 0px 30px;
 
 	color: var(--gray);
 
@@ -35,6 +37,9 @@
 
 .images {
 	padding-left: 15px;
+	display: flex;
+	align-items: center;
+	padding-top: 30px;
 }
 
 .images span:first-child {

@@ -9,7 +9,7 @@ import styles from './style.module.css';
 import { DepositTab } from './DepositTab';
 import { YieldTab } from './YielTab';
 
-export const DepositPage: React.FC<IDepositeProps> = ({ query }) => {
+export const DepositPage: React.FC<IDepositeProps> = ({ query, reverse }) => {
     const { first, second, time } = query;
 
     const { t: tDep } = useTranslation('ssasdep');
@@ -48,16 +48,16 @@ export const DepositPage: React.FC<IDepositeProps> = ({ query }) => {
                         width={43}
                         height={43}
                         quality={100}
+                        className={styles.absImage}
                         alt=""
-                        src={availableSingleSideNetworks[first].mainIcon}
+                        src={availableSingleSideNetworks[second].mainIcon}
                     />
                     <Image
                         width={43}
                         height={43}
                         quality={100}
-                        className={styles.absImage}
                         alt=""
-                        src={availableSingleSideNetworks[second].mainIcon}
+                        src={availableSingleSideNetworks[first].mainIcon}
                     />
                 </div>
             </div>

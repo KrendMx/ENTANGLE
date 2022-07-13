@@ -5,7 +5,7 @@
 .depositInfo {
 	display: grid;
 
-	margin: 24px auto;
+	margin: 30px auto;
 	grid-template-columns: repeat(4, 1fr);
 	grid-column-gap: 20px;
 }

@@ -1,8 +1,4 @@
-import React, {
-    useEffect,
-    useMemo,
-    useState,
-} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CardService } from 'src/Services';
 import { farms } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
@@ -29,7 +25,10 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
 
-    const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
+    const closeModal = () => {
+        history.replaceState({}, '', '/');
+        dispatch(setIsOpenModal(false));
+    };
     const openModal = () => dispatch(setIsOpenModal(true));
 
     const data = {
@@ -43,6 +42,8 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         disabled: false,
         openModal,
         rowGradient,
+        rty: '123',
+        // profits[CardData['43114'].localName][chainId]?.stable,
     } as const;
 
     const Service = useMemo(() => new CardService('AVAX'), []);
@@ -50,17 +51,44 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader && CardData[data.chainId].apr === null) {
             (async () => {
-                let [apr,
-                    available,
-                    totalAvailable,
-                    totalDeposits,
-                    currentDeposits,
-                    price] = [0, 0, 0, 0, 0, 0];
+                let apr = 0;
                 try {
                     const cardData = await Service.getCardData(
                         account ? farms[chainId]?.AVAX : '68',
                     );
                     apr = cardData.apr;
+                } catch (e) {
+                    Notification.error('Error', e.message);
+                    if ((e.code as number) === -32002) {
+                        localStorage.removeItem('wallet');
+                    }
+                }
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            apr: apr.toString(),
+                        },
+                    }),
+                );
+            })();
+        }
+    });
+
+    useEffect(() => {
+        if (!preLoader && CardData[data.chainId].available === null) {
+            (async () => {
+                let [
+                    available,
+                    totalAvailable,
+                    totalDeposits,
+                    currentDeposits,
+                    price,
+                ] = [0, 0, 0, 0, 0];
+                try {
+                    const cardData = await Service.getCardData(
+                        account ? farms[chainId]?.AVAX : '68',
+                    );
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;
                     totalDeposits = cardData.totalDeposits;
@@ -75,36 +103,39 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,
                 );
-                console.log(apr);
-                dispatch(setCardInfo({
-                    key: data.chainId,
-                    data: {
-                        ...CardData[data.chainId],
-                        apr: `${apr}`,
-                        available: `${
-                            CardData[data.chainId].localChain === chainId
-                                ? 'Unlimited'
-                                : Number(available.toFixed(5))
-                        }`,
-                        totalAvailable: totalAvailable.toString(),
-                        totalDeposits: `${totalDeposits} USDC/USDC.e LP`,
-                        currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                        price: `${Number(price.toFixed(6))}`,
-                    },
-                }));
-                dispatch(setPayData({
-                    key: '43114',
-                    data: {
-                        available: `${
-                            CardData[data.chainId].localChain === chainId
-                                ? 'Unlimited'
-                                : Number(available.toFixed(5))
-                        }`,
-                        price: `${Number(price.toFixed(6))}`,
-                        totalAvailable: `$${totalAvailable}`,
-                    },
-                }));
-                setRowGradient(`linear-gradient(90deg, #E93038 0%, rgba(239, 70, 78, 0) ${percentage}%)`);
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            totalAvailable: totalAvailable.toString(),
+                            totalDeposits: `${totalDeposits} USDC/USDC.e LP`,
+                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
+                            price: `${Number(price.toFixed(6))}`,
+                        },
+                    }),
+                );
+                dispatch(
+                    setPayData({
+                        key: '43114',
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            price: `${Number(price.toFixed(6))}`,
+                            totalAvailable: `$${totalAvailable}`,
+                        },
+                    }),
+                );
+                setRowGradient(
+                    `linear-gradient(90deg, #E93038 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
+                );
             })();
         }
     }, [txLoading, chainId, preLoader]);
@@ -127,17 +158,20 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     }
                 }
                 setPositionSum({ n: positions, key: '43114' });
-                dispatch(setCardInfo(
-                    {
+                dispatch(
+                    setCardInfo({
                         key: data.chainId,
                         data: {
-                            ...CardData[data.chainId],
                             positions: `$${Number(positions.toFixed(2))}`,
-                            totalPositions: `${Number(totalPositions.toFixed(5))} USDC/USDC.e Synthetic LP`,
-                            yieldTime: String(profits[data.chainId]?.value || ''),
+                            totalPositions: `${Number(
+                                totalPositions.toFixed(5),
+                            )} USDC/USDC.e Synthetic LP`,
+                            yieldTime: String(
+                                profits[data.chainId]?.value || '',
+                            ),
                         },
-                    },
-                ));
+                    }),
+                );
             }
         })();
     }, [account, txLoading, chainId]);
@@ -154,7 +188,11 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     />
                 </Modal>
             )}
-            <DashboardItem {...data} {...CardData[data.chainId]} isFiltered={isFiltered} />
+            <DashboardItem
+                {...data}
+                {...CardData[data.chainId]}
+                isFiltered={isFiltered}
+            />
         </>
     );
 };

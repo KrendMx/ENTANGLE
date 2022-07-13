@@ -1,8 +1,4 @@
-import React, {
-    useEffect,
-    useMemo,
-    useState,
-} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { farms } from 'utils/Global/Vars';
 import { CardService } from 'src/Services';
 import { useStore } from 'core/store';
@@ -28,7 +24,10 @@ const FantomContainer = ({ isFiltered = false }) => {
     const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
     const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
-    const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
+    const closeModal = () => {
+        history.replaceState({}, '', '/');
+        dispatch(setIsOpenModal(false));
+    };
     const openModal = () => dispatch(setIsOpenModal(true));
     const data = {
         icon: 'fantom.svg',
@@ -39,6 +38,7 @@ const FantomContainer = ({ isFiltered = false }) => {
         priceCurrency: 'MIM/USDC Synthetic LP',
         vendor: 'spiritswap.finance',
         disabled: false,
+        rty: '123',
         openModal,
         rowGradient,
     } as const;
@@ -48,17 +48,44 @@ const FantomContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader && CardData[data.chainId].apr === null) {
             (async () => {
-                let [apr,
-                    available,
-                    totalAvailable,
-                    totalDeposits,
-                    currentDeposits,
-                    price] = [0, 0, 0, 0, 0, 0];
+                let apr = 0;
                 try {
                     const cardData = await Service.getCardData(
                         account ? farms[chainId]?.FTM : '9',
                     );
                     apr = cardData.apr;
+                } catch (e) {
+                    Notification.error('Error', e.message);
+                    if ((e.code as number) === -32002) {
+                        localStorage.removeItem('wallet');
+                    }
+                }
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            apr: apr.toString(),
+                        },
+                    }),
+                );
+            })();
+        }
+    });
+
+    useEffect(() => {
+        if (!preLoader && CardData[data.chainId].available === null) {
+            (async () => {
+                let [
+                    available,
+                    totalAvailable,
+                    totalDeposits,
+                    currentDeposits,
+                    price,
+                ] = [0, 0, 0, 0, 0];
+                try {
+                    const cardData = await Service.getCardData(
+                        account ? farms[chainId]?.FTM : '9',
+                    );
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;
                     totalDeposits = cardData.totalDeposits;
@@ -70,36 +97,42 @@ const FantomContainer = ({ isFiltered = false }) => {
                         localStorage.removeItem('wallet');
                     }
                 }
-                const percentage = Math.ceil((available / currentDeposits) * 100);
-                dispatch(setCardInfo({
-                    key: data.chainId,
-                    data: {
-                        ...CardData[data.chainId],
-                        apr: `${apr}`,
-                        available: `${
-                            CardData[data.chainId].localChain === chainId
-                                ? 'Unlimited'
-                                : Number(available.toFixed(5))
-                        }`,
-                        totalAvailable: totalAvailable.toString(),
-                        totalDeposits: `${totalDeposits} MIM/USDC LP`,
-                        currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                        price: `${Number(price.toFixed(6))}`,
-                    },
-                }));
-                dispatch(setPayData({
-                    key: '250',
-                    data: {
-                        available: `${
-                            CardData[data.chainId].localChain === chainId
-                                ? 'Unlimited'
-                                : Number(available.toFixed(5))
-                        }`,
-                        price: `${Number(price.toFixed(6))}`,
-                        totalAvailable: `$${totalAvailable}`,
-                    },
-                }));
-                setRowGradient(`linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`);
+                const percentage = Math.ceil(
+                    (available / currentDeposits) * 100,
+                );
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            totalAvailable: totalAvailable.toString(),
+                            totalDeposits: `${totalDeposits} MIM/USDC LP`,
+                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
+                            price: `${Number(price.toFixed(6))}`,
+                        },
+                    }),
+                );
+                dispatch(
+                    setPayData({
+                        key: '250',
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            price: `${Number(price.toFixed(6))}`,
+                            totalAvailable: `$${totalAvailable}`,
+                        },
+                    }),
+                );
+                setRowGradient(
+                    `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
+                );
             })();
         }
     }, [txLoading, chainId, preLoader]);
@@ -122,17 +155,20 @@ const FantomContainer = ({ isFiltered = false }) => {
                     }
                 }
                 setPositionSum({ n: positions, key: '250' });
-                dispatch(setCardInfo(
-                    {
+                dispatch(
+                    setCardInfo({
                         key: data.chainId,
                         data: {
-                            ...CardData[data.chainId],
                             positions: `$${Number(positions.toFixed(2))}`,
-                            totalPositions: `${Number(totalPositions.toFixed(5))} MIM/USDC Synthetic LP`,
-                            yieldTime: String(profits[(data.chainId)]?.value || ''),
+                            totalPositions: `${Number(
+                                totalPositions.toFixed(5),
+                            )} MIM/USDC Synthetic LP`,
+                            yieldTime: String(
+                                profits[data.chainId]?.value || '',
+                            ),
                         },
-                    },
-                ));
+                    }),
+                );
             }
         })();
     }, [account, txLoading, chainId]);
@@ -149,7 +185,11 @@ const FantomContainer = ({ isFiltered = false }) => {
                     />
                 </Modal>
             )}
-            <DashboardItem {...data} {...CardData[data.chainId]} isFiltered={isFiltered} />
+            <DashboardItem
+                {...data}
+                {...CardData[data.chainId]}
+                isFiltered={isFiltered}
+            />
         </>
     );
 };

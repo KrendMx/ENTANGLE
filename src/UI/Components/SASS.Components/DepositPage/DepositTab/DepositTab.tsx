@@ -158,35 +158,39 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                     <Typography type="textBody">
                         {tDep('enterStake')}
                     </Typography>
-                    <div>
-                        <Input
-                            type="number"
-                            placeholder={tDep('enterAmount')}
-                            value={store.enterAmount}
-                            onChange={(e) => {
-                                enterAmountChangeHandler(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.miniButtons}>
-                        {store.miniButtons.map((el, idx) => (
-                            <MiniButton
-                                key={idx}
-                                title={el}
-                                clickHandler={() => {
-                                    dispatch({ activeButton: idx });
-                                    enterAmountChangeHandler(
-                                        (
-                                            (Number(store.availableFirst)
-                                                / 100)
-                                            * Number(el.slice(0, el.length - 1))
-                                        ).toString(),
-                                    );
+                    <span>
+                        <div>
+                            <Input
+                                type="number"
+                                placeholder={tDep('enterAmount')}
+                                value={store.enterAmount}
+                                onChange={(e) => {
+                                    enterAmountChangeHandler(e.target.value);
                                 }}
-                                active={store.activeButton === idx}
                             />
-                        ))}
-                    </div>
+                        </div>
+                        <div className={styles.miniButtons}>
+                            {store.miniButtons.map((el, idx) => (
+                                <MiniButton
+                                    key={idx}
+                                    title={el}
+                                    clickHandler={() => {
+                                        dispatch({ activeButton: idx });
+                                        enterAmountChangeHandler(
+                                            (
+                                                (Number(store.availableFirst)
+                                                    / 100)
+                                                * Number(
+                                                    el.slice(0, el.length - 1),
+                                                )
+                                            ).toString(),
+                                        );
+                                    }}
+                                    active={store.activeButton === idx}
+                                />
+                            ))}
+                        </div>
+                    </span>
                     <div className={styles.buttonContainer}>
                         <GradientButton
                             title={tDep('deposit')}

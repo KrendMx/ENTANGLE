@@ -1,4 +1,4 @@
-import type { availableSingleSideChains } from '@/src/utils/GlobalConst';
+import type { availableSingleSideChains } from 'src/utils/Global/Types';
 
 interface IDepositeProps {
     query: {
@@ -6,6 +6,7 @@ interface IDepositeProps {
         second: availableSingleSideChains;
         time: string;
     };
+    reverse: boolean;
 }
 
 interface IDepositeStore {

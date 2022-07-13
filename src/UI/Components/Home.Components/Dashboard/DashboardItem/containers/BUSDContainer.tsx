@@ -24,7 +24,10 @@ const BUSDContainer = ({ isFiltered = false }) => {
     const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
     const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
-    const closeModal = () => { history.replaceState({}, '', '/'); dispatch(setIsOpenModal(false)); };
+    const closeModal = () => {
+        history.replaceState({}, '', '/');
+        dispatch(setIsOpenModal(false));
+    };
     const openModal = () => dispatch(setIsOpenModal(true));
 
     const data = {
@@ -37,6 +40,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
         vendor: 'pancakeswap.finance',
         disabled: false,
         openModal,
+        rty: '123',
         rowGradient,
     } as const;
 
@@ -45,17 +49,44 @@ const BUSDContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader && CardData[data.chainId].apr === null) {
             (async () => {
-                let [apr,
-                    available,
-                    totalAvailable,
-                    totalDeposits,
-                    currentDeposits,
-                    price] = [0, 0, 0, 0, 0, 0];
+                let apr = 0;
                 try {
                     const cardData = await Service.getCardData(
                         account ? farms[chainId]?.BSC : '7',
                     );
                     apr = cardData.apr;
+                } catch (e) {
+                    Notification.error('Error', e.message);
+                    if ((e.code as number) === -32002) {
+                        localStorage.removeItem('wallet');
+                    }
+                }
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            apr: apr.toString(),
+                        },
+                    }),
+                );
+            })();
+        }
+    });
+
+    useEffect(() => {
+        if (!preLoader && CardData[data.chainId].available === null) {
+            (async () => {
+                let [
+                    available,
+                    totalAvailable,
+                    totalDeposits,
+                    currentDeposits,
+                    price,
+                ] = [0, 0, 0, 0, 0];
+                try {
+                    const cardData = await Service.getCardData(
+                        account ? farms[chainId]?.BSC : '7',
+                    );
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;
                     totalDeposits = cardData.totalDeposits;
@@ -67,36 +98,42 @@ const BUSDContainer = ({ isFiltered = false }) => {
                         localStorage.removeItem('wallet');
                     }
                 }
-                const percentage = Math.ceil((available / currentDeposits) * 100);
-                dispatch(setCardInfo({
-                    key: data.chainId,
-                    data: {
-                        ...CardData[data.chainId],
-                        apr: `${apr}`,
-                        available: `${
-                            CardData[data.chainId].localChain === chainId
-                                ? 'Unlimited'
-                                : Number(available.toFixed(5))
-                        }`,
-                        totalAvailable: totalAvailable.toString(),
-                        totalDeposits: `${totalDeposits} USDT/BUSD LP`,
-                        currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                        price: `${Number(price.toFixed(6))}`,
-                    },
-                }));
-                setRowGradient(`linear-gradient(90deg, #FF9501 0%, rgba(239, 70, 78, 0) ${percentage}%)`);
-                dispatch(setPayData({
-                    key: '56',
-                    data: {
-                        available: `${
-                            CardData[data.chainId].localChain === chainId
-                                ? 'Unlimited'
-                                : Number(available.toFixed(5))
-                        }`,
-                        price: `${Number(price.toFixed(6))}`,
-                        totalAvailable: `$${totalAvailable}`,
-                    },
-                }));
+                const percentage = Math.ceil(
+                    (available / currentDeposits) * 100,
+                );
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            totalAvailable: totalAvailable.toString(),
+                            totalDeposits: `${totalDeposits} USDT/BUSD LP`,
+                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
+                            price: `${Number(price.toFixed(6))}`,
+                        },
+                    }),
+                );
+                setRowGradient(
+                    `linear-gradient(90deg, #FF9501 0%, rgba(239, 70, 78, 0) ${percentage}%)`,
+                );
+                dispatch(
+                    setPayData({
+                        key: '56',
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            price: `${Number(price.toFixed(6))}`,
+                            totalAvailable: `$${totalAvailable}`,
+                        },
+                    }),
+                );
             })();
         }
     }, [txLoading, chainId, preLoader]);
@@ -119,17 +156,20 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     }
                 }
                 dispatch(setPositionSum({ n: positions, key: '56' }));
-                dispatch(setCardInfo(
-                    {
+                dispatch(
+                    setCardInfo({
                         key: data.chainId,
                         data: {
-                            ...CardData[data.chainId],
                             positions: `$${Number(positions.toFixed(2))}`,
-                            totalPositions: `${Number(totalPositions.toFixed(5))} USDT/BUSD Synthetic LP`,
-                            yieldTime: String(profits[data.chainId]?.value || ''),
+                            totalPositions: `${Number(
+                                totalPositions.toFixed(5),
+                            )} USDT/BUSD Synthetic LP`,
+                            yieldTime: String(
+                                profits[data.chainId]?.value || '',
+                            ),
                         },
-                    },
-                ));
+                    }),
+                );
             }
         })();
     }, [account, txLoading, chainId]);
@@ -146,7 +186,11 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     />
                 </Modal>
             )}
-            <DashboardItem {...data} {...CardData[data.chainId]} isFiltered={isFiltered} />
+            <DashboardItem
+                {...data}
+                {...CardData[data.chainId]}
+                isFiltered={isFiltered}
+            />
         </>
     );
 };

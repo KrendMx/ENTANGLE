@@ -57,6 +57,7 @@ const ChangeNetwork = () => {
                 })}
             >
                 {(Object.keys(networks) as Array<keyof typeof networks>)
+                    .filter((el) => el !== '1')
                     .sort((a, b) => networks[a].order - networks[b].order)
                     .map((chainIdEl: availableChains) => (
                         <div
