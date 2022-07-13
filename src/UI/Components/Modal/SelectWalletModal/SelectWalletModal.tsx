@@ -1,4 +1,4 @@
-import React from 'react';import type { WalletProviderNames } from './SelectWalletModal.constants';
+import React from 'react';
 
 import type { SelectWalletProps } from './SelectWalletModal.interface';
 import Modal from '../index';

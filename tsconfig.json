@@ -1,10 +1,22 @@
 {
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next-i18next.config.js", "locales.js"],
-  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-i18next.config.js",
+    "locales.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -15,17 +27,29 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
     "noImplicitAny": false,
     "paths": {
-      "pages/*": [".src/UI/Pages/*"],
-      "core/*": ["./src/Core/*"],
-      "src/*": ["./src/*"],
-      "UI/*": ["./src/UI/*"],
-      "utils/*": ["./src/utils/*"],
-      "services/*": ["./src/Services/*"]
+      "pages/*": [
+        ".src/UI/Pages/*"
+      ],
+      "core/*": [
+        "./src/Core/*"
+      ],
+      "src/*": [
+        "./src/*"
+      ],
+      "UI/*": [
+        "./src/UI/*"
+      ],
+      "utils/*": [
+        "./src/utils/*"
+      ],
+      "services/*": [
+        "./src/Services/*"
+      ]
     }
   }
 }

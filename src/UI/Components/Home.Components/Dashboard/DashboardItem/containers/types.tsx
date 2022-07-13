@@ -1,4 +1,4 @@
-import type { availableChains } from '../../../../../src/utils/GlobalConst';
+import type { availableChains } from 'src/utils/Global/Types';
 
 export type ContainerStateType = {
     apr: string | null;
@@ -13,4 +13,4 @@ export type ContainerStateType = {
     yieldTime: string | null;
     localChain: availableChains;
     localName: 'FTM' | 'AVAX' | 'BSC' | 'ETH';
-}
+};
