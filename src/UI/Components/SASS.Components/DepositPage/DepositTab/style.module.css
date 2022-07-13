@@ -16,11 +16,11 @@
 	flex-direction: column;
 	justify-content: space-evenly;
 
-	padding: 10px 25px;
+	padding: 12px 25px;
 
 	border: 2px solid rgb(255 255 255 / 10%);
 
-	border-radius: 12px;
+	border-radius: 18px;
 	background: rgb(30 30 30 / 10%);
 	backdrop-filter: blur(15px);
 
@@ -65,7 +65,7 @@
 .currencyBlocks > div {
 	padding: 100px;
 
-	border-radius: 12px;
+	border-radius: 18px;
 
 	background-color: var(--color-18);
 }
@@ -106,7 +106,7 @@
 	padding: 5px 30px 10px;
 
 	border: 2px solid rgb(255 255 255 / 10%);
-	border-radius: 8px;
+	border-radius: 18px;
 	background: rgb(30 30 30 / 10%);
 	backdrop-filter: blur(15px);
 }
