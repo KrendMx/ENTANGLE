@@ -46,6 +46,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         UserEntity: store.UserEntity,
         WalletEntity: store.WalletEntity,
         AppEntity: store.AppEntity,
+        CardEntity: store.CardsEntity,
     }));
 
     const { account, provider, chainId: selectedChainId } = store.WalletEntity;
@@ -252,10 +253,9 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                                     $
                                     {profits[localName][chainId]?.stable}
                                 </p>
-                            )
-                                : (
-                                    <TextLoader bgGradient={bgGradient} />
-                                )}
+                            ) : (
+                                <TextLoader bgGradient={bgGradient} />
+                            )}
                         </div>
                     </div>
                 ) : null}

@@ -37,7 +37,7 @@
 
 .cardLabel {
 	padding: 5px 10px;
-  width: 8rem;
+	width: 8rem;
 	border-radius: 14px;
 }
 
@@ -55,29 +55,28 @@
 	font-weight: 700;
 }
 .assetTitle {
-  display: flex;
-  flex-direction: row;
+	display: flex;
 }
 
 .itemValue {
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 25px;
+	font-weight: 600;
+	font-size: 18px;
+	line-height: 25px;
 
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 
-  color: #ECECEC;
+	color: #ECECEC;
 }
 
 
 .undertitle {
 	color: var(--gray);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 19px;
-  display: flex;
-  align-items: center;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 19px;
+	display: flex;
+	align-items: center;
 
 }
 
@@ -180,8 +179,8 @@
 
 	.root {
 		display: grid;
-		grid-template-columns: 0.3fr max-content 1.4fr 1fr 0.9fr 0.9fr max-content;
-		grid-column-gap: 40px;
+		grid-template-columns: 0.2fr 1.8fr 1fr 1.4fr 1fr 0.9fr 0.9fr max-content;
+		grid-column-gap: 35px;
 
 		max-width: 100%;
 	}

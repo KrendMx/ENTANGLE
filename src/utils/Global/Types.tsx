@@ -6,13 +6,35 @@ type availableNames = 'AVAX' | 'FTM' | 'BSC' | 'ETH';
 
 type languages = 'en' | 'ru' | 'ch' | 'de' | 'ko';
 
+type networksType = {
+    [key: string]: {
+        order: number;
+        farm: number;
+        title: string;
+        abbr: string;
+        icon: string;
+        currency: string;
+        currencyMin: string;
+        description: string;
+        bgGradient?: string;
+        cardTypeLabelColor?: string;
+        cardTypeLabelBg?: string;
+        dex: string;
+        fiat: string;
+        rpc: string;
+        synth: string;
+        mainColor: string;
+        mainIcon: string;
+    };
+};
+
 type TransactionHistoryEntity = {
-    type: 'buy' | 'sell',
-    id: string,
-    crypto: number,
-    amount: string,
-    time: number
-}
+    type: 'buy' | 'sell';
+    id: string;
+    crypto: number;
+    amount: string;
+    time: number;
+};
 
 type walletKeyType =
     | 'MetaMask'
@@ -35,4 +57,5 @@ export type {
     TransactionHistoryEntity,
     walletKeyType,
     availableSingleSideChains,
+    networksType,
 };

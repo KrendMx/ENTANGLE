@@ -6,33 +6,138 @@ import Preloader from 'UI/ui-kit/Preloader';
 import Footer from 'UI/Components/Footer';
 import Header from 'UI/Components/Header';
 
-import { GraphService } from 'services/index';
+import { CardService, GraphService } from 'services/index';
 import QueryRequests from 'services/GraphService/queryRequests';
-import { namesConfig } from 'utils/Global/Vars';
+import { namesConfig, farms } from 'utils/Global/Vars';
 import { Notification } from 'src/libs/Notification';
+import type { availableChains, availableNames } from 'src/utils/Global/Types';
 import styles from './style.module.css';
 
 type ILayoutProps = {
     children: JSX.Element;
 };
 
+type synthArrayType = {
+    chainId: availableChains;
+    name: string;
+    secondChain: string;
+};
+
+// eslint-disable-next-line react/display-name
 export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     const { store, actions, asyncActions } = useStore((store) => ({
         UserEntity: store.UserEntity,
         AppEntity: store.AppEntity,
         WalletEntity: store.WalletEntity,
+        CardsEntity: store.CardsEntity,
     }));
     const dispatch = useDispatch();
+
+    const servises = {
+        FTM: useMemo(() => new CardService('FTM'), []),
+        AVAX: useMemo(() => new CardService('AVAX'), []),
+        ETH: useMemo(() => new CardService('ETH'), []),
+        BSC: useMemo(() => new CardService('BSC'), []),
+    };
 
     const {
         balances, txLoading, txHistory, txLoaded,
     } = store.UserEntity;
     const { isAppLoaded } = store.AppEntity;
-    const { account } = store.WalletEntity;
+    const { account, chainId } = store.WalletEntity;
+
+    const { data: CardData } = store.CardsEntity;
+
+    const { setCardInfo } = actions.Card;
+    const { setPayData } = actions.User;
+
+    const synthArray: synthArrayType[] = [
+        { chainId: '43114', name: 'AVAX', secondChain: '68' },
+        { chainId: '250', name: 'FTM', secondChain: '9' },
+        { chainId: '1', name: 'ETH', secondChain: '7' },
+        { chainId: '56', name: 'BSC', secondChain: '7' },
+    ];
+
+    const updateCardUserInfo = (): void => {
+        synthArray.forEach((el) => {});
+    };
+
+    const updateCardAppInfo = (): void => {
+        synthArray.forEach((el) => {
+            if (CardData[el.chainId].available === null) {
+                (async () => {
+                    let [
+                        available,
+                        totalAvailable,
+                        totalDeposits,
+                        currentDeposits,
+                        price,
+                    ] = [0, 0, 0, 0, 0];
+                    try {
+                        const test = new CardService(el.name as availableNames);
+                        const cardData = await test.getCardData(
+                            account ? farms[chainId][el.name] : el.secondChain,
+                        );
+                        available = cardData.available;
+                        totalAvailable = cardData.totalAvailable;
+                        totalDeposits = cardData.totalDeposits;
+                        currentDeposits = cardData.currentDeposits;
+                        price = cardData.price;
+                        console.log(totalAvailable);
+                    } catch (e) {
+                        if ((e.code as number) === -32002) {
+                            localStorage.removeItem('wallet');
+                        }
+                    }
+                    dispatch(
+                        setCardInfo({
+                            key: el.chainId,
+                            data: {
+                                available: `${
+                                    CardData[el.chainId].localChain === chainId
+                                        ? 'Unlimited'
+                                        : available
+                                }`,
+                                totalAvailable: totalAvailable.toString(),
+                                totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
+                                currentDeposits: `$${currentDeposits.toFixed(
+                                    3,
+                                )}`,
+                                price: `${Number(price.toFixed(6))}`,
+                            },
+                        }),
+                    );
+                    dispatch(
+                        setPayData({
+                            key: '1',
+                            data: {
+                                available: `${
+                                    CardData[el.chainId].localChain === chainId
+                                        ? 'Unlimited'
+                                        : Number(available.toFixed(5))
+                                }`,
+                                price: `${Number(price.toFixed(6))}`,
+                                totalAvailable: `$${totalAvailable}`,
+                            },
+                        }),
+                    );
+                })();
+            }
+        });
+    };
+
+    const updateCardApr = (): void => {
+        synthArray.forEach((el) => {});
+    };
 
     const { setIsAppLoaded } = actions.App;
     const {
-        setCardLoaded, setTxHistory, setTxLoaded, setProfit, setError, setLoading,
+        setCardLoaded,
+        setTxHistory,
+        setTxLoaded,
+        setProfit,
+        setError,
+        setLoading,
     } = actions.User;
 
     const { calculateBalances, getAverageBuyPrice } = asyncActions.User;
@@ -49,6 +154,11 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
             dispatch(getAverageBuyPrice({ account }));
         }());
     }, [account]);
+
+    useEffect(() => {
+        updateCardAppInfo();
+        console.log(CardData);
+    }, [chainId]);
 
     useEffect(() => {
         (async () => {
@@ -75,22 +185,22 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 dispatch(setLoading(true));
                 if (txHistory.length) {
                     const res = {
-                        'FTM': {
+                        FTM: {
                             '56': { percentage: 0, stable: 0 },
                             '43114': { percentage: 0, stable: 0 },
                             '250': { percentage: 0, stable: 0 },
                         },
-                        'AVAX': {
+                        AVAX: {
                             '56': { percentage: 0, stable: 0 },
                             '43114': { percentage: 0, stable: 0 },
                             '250': { percentage: 0, stable: 0 },
                         },
-                        'BSC': {
+                        BSC: {
                             '56': { percentage: 0, stable: 0 },
                             '43114': { percentage: 0, stable: 0 },
                             '250': { percentage: 0, stable: 0 },
                         },
-                        'ETH': {
+                        ETH: {
                             '56': { percentage: 0, stable: 0 },
                             '43114': { percentage: 0, stable: 0 },
                             '250': { percentage: 0, stable: 0 },
@@ -100,15 +210,21 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                     for (const name of names) {
                         const chains = Object.keys(balances[name]);
                         for (let i = 0; i < chains.length; i++) {
-                            if ((balances[name][chains[i]] as any).positions > 0) {
+                            if (
+                                (balances[name][chains[i]] as any).positions > 0
+                            ) {
                                 const { percentage, stable } = await QueryRequests.calculateProfit(
                                     txHistory,
-                                    (balances[name][chains[i]] as any).positions,
+                                    (balances[name][chains[i]] as any)
+                                        .positions,
                                     namesConfig[name],
                                 );
                                 res[name][chains[i]] = { percentage, stable };
                             } else {
-                                res[name][chains[i]] = { percentage: 0, stable: 0 };
+                                res[name][chains[i]] = {
+                                    percentage: 0,
+                                    stable: 0,
+                                };
                             }
                         }
                     }

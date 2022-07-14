@@ -1,6 +1,4 @@
-import React, {
-    useState,
-} from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
@@ -14,6 +12,7 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 
 import Modal from 'UI/Components/Modal';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
+import type { availableChains } from 'src/utils/Global/Types';
 import PayModal from '../../../Home.Components/PayModal';
 import styles from '../style.module.css';
 
@@ -31,24 +30,36 @@ const InvestCardExp: React.FC<ICardUnit> = ({
         UserEntity: store.UserEntity,
         CardEntity: store.CardsEntity,
     }));
-    const {
-        profits, avgPrices,
-    } = store.UserEntity;
+    const { profits, avgPrices } = store.UserEntity;
 
     const [isClose, setIsClose] = useState<boolean | null>(false);
 
     const { data: cardData } = store.CardEntity;
 
     const { t } = useTranslation('index');
+
+    const detectedChainId = (chainName: string): availableChains => {
+        for (const key in networks) {
+            if (networks[key].abbr === chainName) {
+                return key as availableChains;
+            }
+        }
+    };
     return (
         <div className={styles.root} style={{ background: bgGradient || '' }}>
             {isClose ? (
-                <Modal handleClose={() => { setIsClose(false); }}>
+                <Modal
+                    handleClose={() => {
+                        setIsClose(false);
+                    }}
+                >
                     <PayModal
                         available={cardData[chainId].available}
                         totalAvailable={cardData[chainId].available}
                         price={cardData[chainId].price}
-                        handleClose={() => { setIsClose(false); }}
+                        handleClose={() => {
+                            setIsClose(false);
+                        }}
                     />
                 </Modal>
             ) : null}
@@ -57,7 +68,9 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                     width={64}
                     height={64}
                     quality={100}
-                    src={`/images/networks/${networks[chainId].icon}`}
+                    src={`/images/networks/${
+                        networks[detectedChainId(currencyName)].icon
+                    }`}
                     alt="alt"
                     className={styles.logo}
                 />
@@ -65,7 +78,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             <div className={styles.main}>
                 <div className={styles.pare}>
                     <div className={styles.assetTitle}>
-                        <p>{`f${networks[chainId].currencyMin}`}</p>
+                        <p>{`${networks[detectedChainId(currencyName)].currencyMin}`}</p>
                         <span style={{ margin: '0 10px 0 5px' }}>
                             <HintModal>
                                 <p>test</p>
@@ -77,14 +90,23 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                         style={{ background: cardTypeLabelBg }}
                     >
                         <p style={{ color: cardTypeLabelColor }}>Syntetic-LP</p>
-
                     </button>
                 </div>
             </div>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
+                    <p className={styles.undertitle}>{`${t('Network')}`}</p>
+                    <p className={styles.itemValue}>
+                        {networks[chainId].title}
+                    </p>
+                </li>
+            </ul>
+            <ul className={styles.list}>
+                <li className={styles.listItem}>
                     <p className={styles.undertitle}>{t('yourPosition')}</p>
-                    <p className={styles.itemValue}>{Number(positions.toFixed(2))}</p>
+                    <p className={styles.itemValue}>
+                        {Number(positions.toFixed(2))}
+                    </p>
                     <p className={styles.undertitle}>
                         {networks[chainId].currency}
                     </p>
@@ -93,7 +115,9 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             <ul className={styles.list}>
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>{t('price')}</p>
-                    <p className={styles.itemValue}>{`$${Number(price.toFixed(6))}`}</p>
+                    <p className={styles.itemValue}>
+                        {`$${Number(price.toFixed(6))}`}
+                    </p>
                     <p className={styles.undertitle}>
                         {networks[chainId].currencyMin}
                     </p>
@@ -128,11 +152,13 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                                     styles.undertitle,
                                     {
                                         [styles.loss]:
-                                        profits[currencyName][chainId]?.percentage! < 0,
+                                            profits[currencyName][chainId]
+                                                ?.percentage! < 0,
                                     },
                                     {
                                         [styles.up]:
-                                        profits[currencyName][chainId]?.percentage! > 0,
+                                            profits[currencyName][chainId]
+                                                ?.percentage! > 0,
                                     },
                                 )}
                             >

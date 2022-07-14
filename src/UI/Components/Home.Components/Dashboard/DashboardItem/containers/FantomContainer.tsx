@@ -90,6 +90,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     totalDeposits = cardData.totalDeposits;
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
+                    console.log(`fantom ${totalAvailable}`);
                 } catch (e) {
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
@@ -97,36 +98,6 @@ const FantomContainer = ({ isFiltered = false }) => {
                 }
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,
-                );
-                dispatch(
-                    setCardInfo({
-                        key: data.chainId,
-                        data: {
-                            available: `${
-                                CardData[data.chainId].localChain === chainId
-                                    ? 'Unlimited'
-                                    : Number(available.toFixed(5))
-                            }`,
-                            totalAvailable: totalAvailable.toString(),
-                            totalDeposits: `${totalDeposits} MIM/USDC LP`,
-                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                            price: `${Number(price.toFixed(6))}`,
-                        },
-                    }),
-                );
-                dispatch(
-                    setPayData({
-                        key: '250',
-                        data: {
-                            available: `${
-                                CardData[data.chainId].localChain === chainId
-                                    ? 'Unlimited'
-                                    : Number(available.toFixed(5))
-                            }`,
-                            price: `${Number(price.toFixed(6))}`,
-                            totalAvailable: `$${totalAvailable}`,
-                        },
-                    }),
                 );
                 setRowGradient(
                     `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,

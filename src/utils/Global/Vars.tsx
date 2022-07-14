@@ -1,4 +1,6 @@
- const networks = {
+import type { networksType } from './Types';
+
+const networks: networksType = {
     '43114': {
         title: 'Avalanche',
         abbr: 'AVAX',
