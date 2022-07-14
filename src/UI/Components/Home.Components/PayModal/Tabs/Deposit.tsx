@@ -18,11 +18,15 @@ type propsType = {
     buyToken: (value: number) => void;
     balanceUSDC: Promise<number>;
     balanceSynth: Promise<number>;
-    chainThings: {genered: any, contract: Contract}
+    chainThings: { genered: any; contract: Contract };
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
 const Deposit: React.FC<propsType> = ({
-    buyToken, chainThings, balanceSynth, balanceUSDC, available,
+    buyToken,
+    chainThings,
+    balanceSynth,
+    balanceUSDC,
+    available,
 }) => {
     const { store, actions, asyncActions } = useStore((store) => ({
         WalletEntity: store.WalletEntity,
@@ -43,7 +47,10 @@ const Deposit: React.FC<propsType> = ({
     const [amount, setAmount] = useState('');
     const [synthAmount, setSynthAmount] = useState('');
     const [allow, setAllow] = useState<number>(0);
-    const [balances, setBalances] = useState<{usdc: string, synth: string}>({ usdc: '', synth: '' });
+    const [balances, setBalances] = useState<{ usdc: string; synth: string }>({
+        usdc: '',
+        synth: '',
+    });
     const [maxError, setMaxError] = useState<boolean>(false);
 
     const { t } = useTranslation('index');
@@ -74,7 +81,10 @@ const Deposit: React.FC<propsType> = ({
                 provider?.getSigner(),
             );
 
-            const value = await contract.allowance(account, chainThings.genered.CONTRACTS.FEE.address);
+            const value = await contract.allowance(
+                account,
+                chainThings.genered.CONTRACTS.FEE.address,
+            );
             setAllow(value);
         }());
     }, [chainId]);
@@ -114,7 +124,6 @@ const Deposit: React.FC<propsType> = ({
                 chainId,
                 cardId: localChain,
             }),
-
         );
         dispatch(changeLoadingTx(false));
     };
@@ -129,24 +138,27 @@ const Deposit: React.FC<propsType> = ({
                 className={styles.priceBlock}
                 style={
                     {
-                        '--color-from': `${localChain !== '1' ? networks[localChain]?.mainColor : '#121212'}`,
+                        '--color-from': `${
+                            localChain !== '1'
+                                ? networks[localChain]?.mainColor
+                                : '#121212'
+                        }`,
                     } as React.CSSProperties
                 }
             >
                 <div className={styles.priceContent}>
                     <p>{t('price')}</p>
-                    {payData[localChain]?.price
-                        ? (
-                            <p>
-                                $
-                                {payData[localChain]?.price}
-                            </p>
-                        ) : (
-                            <TextLoader
-                                bgGradient={`linear-gradient(270deg, 
+                    {payData[localChain]?.price ? (
+                        <p>
+                            $
+                            {payData[localChain]?.price}
+                        </p>
+                    ) : (
+                        <TextLoader
+                            bgGradient={`linear-gradient(270deg, 
                                     ${networks[localChain]?.mainColor} 0%, rgba(239, 200, 208, 0.01) 100%)`}
-                            />
-                        )}
+                        />
+                    )}
                 </div>
                 <div className={styles.logo}>
                     <Image
@@ -154,7 +166,9 @@ const Deposit: React.FC<propsType> = ({
                         height={57}
                         quality={100}
                         src={`/images/networks/${
-                            localChain !== '1' ? networks[localChain]?.icon : 'etheriumDashboard.svg'
+                            localChain !== '1'
+                                ? networks[localChain]?.icon
+                                : 'etheriumDashboard.svg'
                         }`}
                         alt={`${networks[localChain]?.title}-logo`}
                     />
@@ -170,13 +184,24 @@ const Deposit: React.FC<propsType> = ({
                     {' '}
                     {Number(synthAmount).toFixed(3)}
                     {' '}
-                    SynthLPs can take between
-                    5-30 minutes!
+                    SynthLPs can take between 5-30 minutes!
                 </p>
             )}
-            <Text title={t('aprCard')} content={`${CardData[localChain].apr}%`} classText={styles.mgT} />
-            <Text title={t('yourSynthBalance')} content={`${balances.synth} SynthLP`} classText={styles.mgT} />
-            <Text title={t('yourUSDCBalance')} content={`${balances.usdc} USDC`} classText={styles.mgT} />
+            <Text
+                title={t('aprCard')}
+                content={`${CardData[localChain].apr}%`}
+                classText={styles.mgT}
+            />
+            <Text
+                title={t('yourSynthBalance')}
+                content={`${balances.synth} SynthLP`}
+                classText={styles.mgT}
+            />
+            <Text
+                title={t('yourUSDCBalance')}
+                content={`${balances.usdc} USDC`}
+                classText={styles.mgT}
+            />
             <ModalInput
                 currencyReceive={networks[chainId as availableChains].currency}
                 currencySend="USDC"
@@ -186,10 +211,14 @@ const Deposit: React.FC<propsType> = ({
                 receiveValue={synthAmount}
                 onReceiveChange={(e) => {
                     if (e.target.value.length <= 6) {
-                        setAmount(e.target.value
-                            ? String(Number(e.target.value)
-                                  / Number(payData[localChain]?.price))
-                            : '');
+                        setAmount(
+                            e.target.value
+                                ? String(
+                                    Number(e.target.value)
+                                          / Number(payData[localChain]?.price),
+                                )
+                                : '',
+                        );
                         setSynthAmount(e.target.value);
                     }
                 }}
@@ -198,8 +227,10 @@ const Deposit: React.FC<propsType> = ({
                         setAmount(e.target.value);
                         setSynthAmount(
                             e.target.value
-                                ? String(Number(e.target.value)
-                                      * Number(payData[localChain]?.price))
+                                ? String(
+                                    Number(e.target.value)
+                                          * Number(payData[localChain]?.price),
+                                )
                                 : '',
                         );
                     }

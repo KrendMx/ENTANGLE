@@ -73,6 +73,73 @@ const ETHContainer = ({ isFiltered = false }) => {
         }
     });
 
+    useEffect(() => {
+        if (!preLoader) {
+            (async () => {
+                let [
+                    available,
+                    totalAvailable,
+                    totalDeposits,
+                    currentDeposits,
+                    price,
+                ] = [0, 0, 0, 0, 0];
+                try {
+                    const cardData = await Service.getCardData(
+                        account ? farms[chainId]?.ETH : '7',
+                    );
+                    available = cardData.available;
+                    totalAvailable = cardData.totalAvailable;
+                    totalDeposits = cardData.totalDeposits;
+                    currentDeposits = cardData.currentDeposits;
+                    price = cardData.price;
+                    console.log(`fantom ${totalAvailable}`);
+                } catch (e) {
+                    if ((e.code as number) === -32002) {
+                        localStorage.removeItem('wallet');
+                    }
+                }
+                const percentage = Math.ceil(
+                    (available / currentDeposits) * 100,
+                );
+                setRowGradient(
+                    `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
+                );
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : available
+                            }`,
+                            totalAvailable: totalAvailable.toFixed(2),
+                            totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
+                            currentDeposits: `$${currentDeposits.toFixed(
+                                3,
+                            )}`,
+                            price: `${Number(price.toFixed(6))}`,
+                        },
+                    }),
+                );
+                dispatch(
+                    setPayData({
+                        key: '1',
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            price: `${Number(price.toFixed(6))}`,
+                            totalAvailable: `$${totalAvailable}`,
+                        },
+                    }),
+                );
+            })();
+        }
+    }, [txLoading, chainId, preLoader]);
+
     return (
         <>
             {isOpenModal && (

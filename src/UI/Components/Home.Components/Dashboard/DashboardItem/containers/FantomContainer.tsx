@@ -72,7 +72,7 @@ const FantomContainer = ({ isFiltered = false }) => {
     });
 
     useEffect(() => {
-        if (!preLoader && CardData[data.chainId].available === null) {
+        if (!preLoader) {
             (async () => {
                 let [
                     available,
@@ -102,13 +102,45 @@ const FantomContainer = ({ isFiltered = false }) => {
                 setRowGradient(
                     `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
                 );
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : available
+                            }`,
+                            totalAvailable: totalAvailable.toFixed(2),
+                            totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
+                            currentDeposits: `$${currentDeposits.toFixed(
+                                3,
+                            )}`,
+                            price: `${Number(price.toFixed(6))}`,
+                        },
+                    }),
+                );
+                dispatch(
+                    setPayData({
+                        key: '250',
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            price: `${Number(price.toFixed(6))}`,
+                            totalAvailable: `$${totalAvailable}`,
+                        },
+                    }),
+                );
             })();
         }
     }, [txLoading, chainId, preLoader]);
 
     useEffect(() => {
         (async () => {
-            if (account && CardData[data.chainId].positions === null) {
+            if (account) {
                 let [positions, totalPositions] = [0, 0];
                 try {
                     const personalData = await Service.getPersonalData(

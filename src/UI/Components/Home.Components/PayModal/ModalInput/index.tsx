@@ -35,7 +35,8 @@ const ModalInput: React.FC<IModalInput> = ({
                     <Input
                         onChange={onSendChange}
                         className={styles.input}
-                        value={sendValue}
+                        value={`${sendValue}`}
+                        style={{ width: `${(sendValue.length + 5) * 5}px`, maxWidth: '55px' }}
                     />
                     <p className={styles.currency}>{currencySend}</p>
                 </div>
@@ -63,6 +64,7 @@ const ModalInput: React.FC<IModalInput> = ({
                         onChange={onReceiveChange}
                         className={styles.input}
                         value={receiveValue}
+                        style={{ width: `${(receiveValue.length + 5) * 5}px` }}
                     />
                     <p className={styles.currency}>{currencyReceive}</p>
                 </div>

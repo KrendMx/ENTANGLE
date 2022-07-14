@@ -74,6 +74,60 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     });
 
     useEffect(() => {
+        if (!preLoader) {
+            (async () => {
+                const {
+                    available,
+                    totalAvailable,
+                    totalDeposits,
+                    currentDeposits,
+                    price,
+                } = await Service.getCardData(
+                    account ? farms[chainId]?.AVAX : '68',
+                );
+                const percentage = Math.ceil(
+                    (available / currentDeposits) * 100,
+                );
+                setRowGradient(
+                    `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
+                );
+                dispatch(
+                    setCardInfo({
+                        key: data.chainId,
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : available.toFixed(2)
+                            }`,
+                            totalAvailable: totalAvailable.toString(),
+                            totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
+                            currentDeposits: `$${currentDeposits.toFixed(
+                                3,
+                            )}`,
+                            price: `${Number(price.toFixed(6))}`,
+                        },
+                    }),
+                );
+                dispatch(
+                    setPayData({
+                        key: '43114',
+                        data: {
+                            available: `${
+                                CardData[data.chainId].localChain === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            price: `${Number(price.toFixed(6))}`,
+                            totalAvailable: `$${totalAvailable}`,
+                        },
+                    }),
+                );
+            })();
+        }
+    }, [txLoading, chainId, preLoader]);
+
+    useEffect(() => {
         (async () => {
             if (account) {
                 let [positions, totalPositions] = [0, 0];

@@ -79,11 +79,6 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                 <div className={styles.pare}>
                     <div className={styles.assetTitle}>
                         <p>{`${networks[detectedChainId(currencyName)].currencyMin}`}</p>
-                        <span style={{ margin: '0 10px 0 5px' }}>
-                            <HintModal>
-                                <p>test</p>
-                            </HintModal>
-                        </span>
                     </div>
                     <button
                         className={styles.cardLabel}
@@ -107,9 +102,6 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                     <p className={styles.itemValue}>
                         {Number(positions.toFixed(2))}
                     </p>
-                    <p className={styles.undertitle}>
-                        {networks[chainId].currency}
-                    </p>
                 </li>
             </ul>
             <ul className={styles.list}>
@@ -118,9 +110,21 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                     <p className={styles.itemValue}>
                         {`$${Number(price.toFixed(6))}`}
                     </p>
-                    <p className={styles.undertitle}>
-                        {networks[chainId].currencyMin}
-                    </p>
+                </li>
+            </ul>
+            <ul className={styles.list}>
+                <li className={styles.listItem}>
+                    <p className={styles.undertitle}>{t('APR')}</p>
+                    {cardData[detectedChainId(currencyName)].apr
+                        ? (
+                            <p className={styles.itemValue}>
+                                {`${cardData[detectedChainId(currencyName)].apr}`}
+                            </p>
+                        ) : (
+                            <p className={styles.itemValue}>
+                                <TextLoader bgGradient={bgGradient} />
+                            </p>
+                        )}
                 </li>
             </ul>
             <ul className={styles.list}>
@@ -140,7 +144,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             </ul>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{t('profit')}</p>
+                    <p className={styles.undertitle}>{t('Yield')}</p>
                     {'AVAX' in profits ? (
                         <>
                             <p className={styles.itemValue}>
