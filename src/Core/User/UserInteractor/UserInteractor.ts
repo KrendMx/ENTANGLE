@@ -9,14 +9,17 @@ import { calculatePosPrice } from 'src/UI/Pages/Profile/Profile.constant';
 import { Notification } from 'src/libs/Notification';
 import QueryRequests from 'services/GraphService/queryRequests';
 import type { init } from 'utils/Global/Vars';
+import type { IProfileChartResponse } from 'core/User/UserRepository';
 import { UserRepository } from 'core/User/UserRepository';
+import type { IHttpClientResponse } from 'src/libs/HTTPClient';
 import { UserEntity } from '../UserEntity';
 
-type IBalances = { [key: string]: {[key: string]: {price: number; positions: number }}};
+type IBalances = { [key: string]: { [key: string]: { price: number; positions: number } } };
 
 export interface IUserInteractor {
     calculateBalances: Thunk<{ account: string }>;
     getAverageBuyPrice: Thunk<{ account: string }>;
+    getChartData: Thunk<{ account: string }>
 }
 
 export const createUserInteractor = (
@@ -91,6 +94,21 @@ export const createUserInteractor = (
                 dispatch(Entity.actions.setError(e.message));
             } finally {
                 dispatch(Entity.actions.setLoading(false));
+            }
+        },
+    ),
+    getChartData: createAsyncThunk(
+        'UserInteractor/getChartData',
+        async ({ account }, { dispatch }): Promise<any> => {
+            try {
+                const res: IHttpClientResponse<IProfileChartResponse> = await Repository.getProfileData(account);
+                dispatch(Entity.actions.setChartData(res.data.chart));
+                dispatch(Entity.actions.setTxChartData(res.data.txs));
+            } catch (e) {
+                Notification.error('Error', e.message);
+                dispatch(Entity.actions.setError(e.message));
+            } finally {
+                dispatch(Entity.actions.setIsChartLoaded(true));
             }
         },
     ),

@@ -6,6 +6,7 @@ import HintModal from 'src/UI/ui-kit/HintModal';
 import GradientButton from 'src/UI/ui-kit/GradientButton';
 import { useTranslation } from 'react-i18next';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
+import type { availableSingleSideChains } from 'src/utils/Global/Types';
 import type { IYieldTabProps, IYieldTabStore } from './YieldTab.interfaces';
 import styles from './style.module.css';
 import { ActiveCurrency } from '../ActiveCurrency';
@@ -38,6 +39,15 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
 
     const { t } = useTranslation('ssasdep');
     const { t: tSsas } = useTranslation('ssas');
+
+    const [activeAssets, setActiveAssets] = useState<string>('');
+    const changeActiveAssets = (value: availableSingleSideChains) => {
+        if (activeAssets.includes(value)) {
+            setActiveAssets(activeAssets.replace(value, ''));
+        } else {
+            setActiveAssets(activeAssets + value);
+        }
+    };
 
     return (
         <div>
@@ -175,8 +185,8 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                                             ? secondChainId
                                             : null,
                                     ]}
-                                    activeAsset={` ${firstChainId} ${secondChainId}}`}
-                                    changeActiveAssets={() => {}}
+                                    activeAsset={activeAssets}
+                                    changeActiveAssets={changeActiveAssets}
                                 />
                             </div>
                             <div>
@@ -231,9 +241,7 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
                                 <span>
                                     <p>{t('ProjectedIL')}</p>
                                     <HintModal>
-                                        <p>
-                                            {t('ProjectedIL')}
-                                        </p>
+                                        <p>{t('ProjectedIL')}</p>
                                     </HintModal>
                                 </span>
                                 <p className={styles.cardMainInfoText}>

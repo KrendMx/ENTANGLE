@@ -1,21 +1,27 @@
 import type { TransactionHistoryEntity, availableChains } from 'utils/Global/Types';
+import type { IChartData, TX } from '../UserRepository';
 
 interface IUserEntityState {
     totalBalance: number;
-    avgPrices: {[key: string]: number};
-    positionSumObj: {[key: string]: number};
-    profits: {[key: string]: {[key: string]: {percentage: number; stable: number}}};
-    balances: {[key: string]: {[key: string]: {positions: number, price: number}}};
+    chartData: IChartData[] | null;
+    txChartData: TX[];
+    isChartLoaded: boolean;
+    avgPrices: { [key: string]: number };
+    positionSumObj: { [key: string]: number };
+    profits: { [key: string]: { [key: string]: { percentage: number; stable: number } } };
+    balances: { [key: string]: { [key: string]: { positions: number, price: number } } };
     txLoading: boolean;
     txHistory: TransactionHistoryEntity[];
     txLoaded: boolean;
     cardLoaded: boolean;
     isOpenModal: boolean;
-    payData: {[key: string]: {
-        available: null | string,
-        totalAvailable: null | string,
-        price: null | string,
-    }}
+    payData: {
+        [key: string]: {
+            available: null | string,
+            totalAvailable: null | string,
+            price: null | string,
+        }
+    }
 }
 
 type payDataActionType = {
@@ -24,8 +30,8 @@ type payDataActionType = {
 };
 
 interface IUserInfo {
-    profit?: {key: string; change: number, value: number};
-    avgPrice?: {key: string; value: number};
+    profit?: { key: string; change: number, value: number };
+    avgPrice?: { key: string; value: number };
     totalBalance?: number;
 }
 

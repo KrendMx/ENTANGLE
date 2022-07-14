@@ -6,9 +6,9 @@ import ChartWrapper from 'UI/ui-kit/ChartWrapper/ChartWrapper';
 import SoonChart from 'UI/ui-kit/SoonChart/SoonChart';
 import { useStore } from 'core/store';
 import { response } from 'UI/Components/Profile.Components/ProfileChart/MockedResponse';
-import type {
-    BalanceChartTick,
-} from './ProfileChart.ineterfaces';
+import { UserEntity } from 'core/User/UserEntity';
+import type { IChartData } from 'core/User/UserRepository';
+import type { BalanceChartTick } from './ProfileChart.ineterfaces';
 import styles from './style.module.css';
 import ChartLoader from './ProfileCharts.constant';
 
@@ -18,25 +18,10 @@ const ProfileChart: React.FC = () => {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const { store } = useStore((store) => ({
         WalletEntity: store.WalletEntity,
+        UserEntity: store.UserEntity,
     }));
-    const { account } = store.WalletEntity;
+    const { chartData: chartsData } = store.UserEntity;
 
-    // const updateChart = () => {
-    //     if (!account) return;
-    //     service
-    //         .getBalanceChart(account)
-    //         .then(setData)
-    //         .then(() => setIsLoaded(true));
-    // };
-    //
-    // const updateData = () => {
-    //     updateChart();
-    // };
-    //
-    // useEffect(() => {
-    //     updateData();
-    // }, [account]);
-    //
     useEffect(() => {
         setIsLoaded(true);
     }, []);

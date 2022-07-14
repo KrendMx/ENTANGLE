@@ -1,9 +1,9 @@
-import type { availableSingleSideChains } from '@/src/utils/GlobalConst';
+import type { availableSingleSideChains } from 'src/utils/Global/Types';
 
 interface IYieldTabProps {
     firstChainId: availableSingleSideChains;
     secondChainId: availableSingleSideChains;
-    duration: number
+    duration: number;
 }
 
 interface IYieldTabStore {
