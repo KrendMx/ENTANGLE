@@ -9,6 +9,7 @@ import { calculatePosPrice } from 'src/UI/Pages/Profile/Profile.constant';
 import { Notification } from 'src/libs/Notification';
 import QueryRequests from 'services/GraphService/queryRequests';
 import type { init } from 'utils/Global/Vars';
+import { UserRepository } from 'core/User/UserRepository';
 import { UserEntity } from '../UserEntity';
 
 type IBalances = { [key: string]: {[key: string]: {price: number; positions: number }}};
@@ -21,6 +22,7 @@ export interface IUserInteractor {
 export const createUserInteractor = (
     Entity: typeof UserEntity,
     Notification: INotification,
+    Repository: typeof UserRepository,
 ): IUserInteractor => ({
     calculateBalances: createAsyncThunk(
         'UserInteractor/calculate-balances',
@@ -47,11 +49,7 @@ export const createUserInteractor = (
                         '56': { price: 0, positions: 0 },
                         '43114': { price: 0, positions: 0 },
                         '250': { price: 0, positions: 0 },
-                    },    // {
-    //     filter: 56,
-    //     query: ['usdt-busd', 'bnb', 'binance', 'bsc', 'busd', 'pancakeswap'],
-    //     element: (isFiltered: boolean, key: number) => <BUSDContainer isFiltered={isFiltered} key={key} />,
-    // },
+                    },
                 };
                 let totalBalance = 0;
                 const keys = Object.keys(ChainConfig);
@@ -98,4 +96,4 @@ export const createUserInteractor = (
     ),
 });
 
-export const UserInteractor = createUserInteractor(UserEntity, Notification);
+export const UserInteractor = createUserInteractor(UserEntity, Notification, UserRepository);
