@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
+import { CSSTransition } from 'react-transition-group';
 import styles from './styles.module.css';
 
 import type { OptionProps, SelectProps } from './Select.interfaces';
 
 export const Option: React.FC<OptionProps> = ({
-    value, children, extraSymbol, ...props
+    value,
+    children,
+    extraSymbol,
+    ...props
 }) => (
     <li data-select-value={value}>
         {children}
@@ -22,7 +26,11 @@ export const Option: React.FC<OptionProps> = ({
 );
 
 const Select: React.FC<SelectProps> = ({
-    value, onChange, children, customClassName, disabled,
+    value,
+    onChange,
+    children,
+    customClassName,
+    disabled,
 }) => {
     const [selected, setSelected] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -46,8 +54,12 @@ const Select: React.FC<SelectProps> = ({
                 onChange(target.getAttribute('data-select-value'));
                 setIsOpen(!isOpen);
             }
-            if (selectWrapperNode.current.contains(target as Node)) setIsOpen(!isOpen);
-            if (!selectWrapperNode.current.contains(target as Node)) setIsOpen(false);
+            if (selectWrapperNode.current.contains(target as Node)) {
+                setIsOpen(!isOpen);
+            }
+            if (!selectWrapperNode.current.contains(target as Node)) {
+                setIsOpen(false);
+            }
         };
         window.addEventListener('click', handleClick);
         return () => window.removeEventListener('click', handleClick);
@@ -55,9 +67,9 @@ const Select: React.FC<SelectProps> = ({
 
     return (
         <div
-            className={
-                classNames(styles.wrapper, customClassName, [disabled ? styles.disabled : ''])
-            }
+            className={classNames(styles.wrapper, customClassName, [
+                disabled ? styles.disabled : '',
+            ])}
             ref={selectWrapperNode}
         >
             <label className={styles.label}>{selected}</label>
@@ -66,10 +78,24 @@ const Select: React.FC<SelectProps> = ({
                 height={13}
                 quality={100}
                 src="/images/selectArrowIcon.svg"
-                className={styles.icon}
+                className={classNames(styles.icon, {
+                    [styles.rotated]: isOpen,
+                })}
                 alt=""
             />
-            {isOpen && <ul className={styles.options}>{children}</ul>}
+            <CSSTransition
+                in={isOpen}
+                timeout={200}
+                unmountOnExit
+                classNames={{
+                    enter: styles['alert-enter'],
+                    enterActive: styles['alert-enter-active'],
+                    exit: styles['alert-exit'],
+                    exitActive: styles['alert-exit-active'],
+                }}
+            >
+                <ul className={styles.options}>{children}</ul>
+            </CSSTransition>
         </div>
     );
 };

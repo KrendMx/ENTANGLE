@@ -6,6 +6,7 @@ import type { availableChains } from 'utils/Global/Types';
 import { networks } from 'utils/Global/Vars';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import CopyBtn from 'UI/ui-kit/CopyBtn/CopyBtn';
+import { useTranslation } from 'react-i18next';
 import styles from './style.module.css';
 
 type CardProps = {
@@ -19,7 +20,9 @@ const HistoryCard: React.FC<CardProps> = ({
 }) => {
     const transactionDateMoment = moment(date);
 
-    const detectGradient = ():string => {
+    const { t } = useTranslation('profile');
+
+    const detectGradient = (): string => {
         switch (chainId) {
         case '43114':
             return 'linear-gradient(90deg, rgba(241, 78, 86, 0.10) 0%, rgba(241, 78, 86, 0.04) 100%)';
@@ -56,18 +59,18 @@ const HistoryCard: React.FC<CardProps> = ({
             </div>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
-                    <p className={styles.undertitle}>Date/Time</p>
+                    <p className={styles.undertitle}>{t('dateTime')}</p>
                     <p className={styles.itemValue}>
-                        {`${transactionDateMoment.format('Do MMMM YYYY hh:mm')} UTС`}
+                        {`${transactionDateMoment.format(
+                            'Do MMMM YYYY hh:mm',
+                        )} UTС`}
                     </p>
                 </li>
             </ul>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
-                    <p className={styles.undertitle}>Price</p>
-                    <p
-                        className={classNames(styles.itemValue)}
-                    >
+                    <p className={styles.undertitle}>{t('price')}</p>
+                    <p className={classNames(styles.itemValue)}>
                         {price < 0 && '-'}
                         $
                         {Math.abs(price).toFixed(4)}
@@ -76,7 +79,7 @@ const HistoryCard: React.FC<CardProps> = ({
             </ul>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
-                    <p className={styles.undertitle}>Amount</p>
+                    <p className={styles.undertitle}>{t('amount')}</p>
                     <p className={styles.itemValue}>96.589 $ENTGL</p>
                 </li>
             </ul>
@@ -84,7 +87,7 @@ const HistoryCard: React.FC<CardProps> = ({
                 <li className={styles.listItem}>
                     <GradientButton
                         wrapperClass={styles.wrapperButtonClass}
-                        title="View in explorer"
+                        title={t('viewExplorer')}
                         onClick={() => {}}
                         titleClass={styles.buttonTitleClass}
                     />

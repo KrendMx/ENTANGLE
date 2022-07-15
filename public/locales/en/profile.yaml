@@ -17,3 +17,10 @@ sell: Sell
 recentLast: Recent last
 recentFirst: Recent first
 inDev: In Development
+dateTime:	Date/Time
+price:	Price
+amount:	Amount
+yield: Yield
+viewExplorer:	View in explorer
+network:	Network
+inDev:	In Development

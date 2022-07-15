@@ -38,6 +38,7 @@
 .icon {
 	cursor: pointer;
 	pointer-events: none;
+	transition: all 0.3s;
 }
 
 .selected {

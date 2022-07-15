@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
-import { synths, WalletProviderNames } from 'utils/Global/Vars';
+import { synths, WalletProviderNames, networks } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import type { availableChains } from 'utils/Global/Types';
@@ -12,6 +12,7 @@ import CopyBtn from 'UI/ui-kit/CopyBtn/CopyBtn';
 import HoverTooltip from 'UI/ui-kit/HoverTooltip/HoverTooltip';
 import HintModal from 'UI/ui-kit/HintModal';
 import type { ContainerStateType } from './containers/types';
+
 import styles from './style.module.css';
 
 type DashboardItemProps = {
@@ -248,10 +249,10 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             </HintModal>
                         </div>
                         <div className={styles.sectionRow}>
-                            {'AVAX' in profits ? (
+                            {networks[chainId].abbr in profits ? (
                                 <p className={styles.sectionValue}>
                                     $
-                                    {profits[localName][chainId]?.stable}
+                                    {profits[localName][chainId]?.stable || 0}
                                 </p>
                             ) : (
                                 <TextLoader bgGradient={bgGradient} />

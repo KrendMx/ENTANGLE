@@ -10,7 +10,6 @@ export const AvaxEntgContainer: React.FC<SassContainerProps> = ({ term }) => {
             newState: Partial<IDashboardSASSItems>,
         ) => ({ ...oldState, ...newState }),
         {
-            desc: 'Generates yield by running an autocompound FTM/ENTGL strategy on spookyswap.finance',
             depositeInFirstCurrency: 1238,
             depositeInSecondCurrency: 0,
             term: term as 10 | 30 | 90,
@@ -18,6 +17,7 @@ export const AvaxEntgContainer: React.FC<SassContainerProps> = ({ term }) => {
             APR: 99,
             firstChainId: '43114',
             secondChainId: '56',
+            site: 'pancakeswap.finance',
         },
     );
 

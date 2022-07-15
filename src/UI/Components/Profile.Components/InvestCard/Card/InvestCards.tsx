@@ -37,6 +37,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
     const { data: cardData } = store.CardEntity;
 
     const { t } = useTranslation('index');
+    const { t: tProfile } = useTranslation('profile');
 
     const detectedChainId = (chainName: string): availableChains => {
         for (const key in networks) {
@@ -80,9 +81,9 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                     <div className={styles.assetTitle}>
                         <p>
                             {`${
-                                networks[detectedChainId(currencyName)].currencyMin
+                                networks[detectedChainId(currencyName)]
+                                    .currencyMin
                             }`}
-
                         </p>
                     </div>
                     <button
@@ -95,7 +96,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             </div>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{`${t('Network')}`}</p>
+                    <p className={styles.undertitle}>{`${tProfile('network')}`}</p>
                     <p className={styles.itemValue}>
                         {networks[chainId].title}
                     </p>

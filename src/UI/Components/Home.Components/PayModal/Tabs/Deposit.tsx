@@ -62,18 +62,6 @@ const Deposit: React.FC<propsType> = ({
 
     useEffect(() => {
         (async function getAllowanceAndBalance() {
-            // dispatch(
-            //     getAllowance({
-            //         contractAddress:
-            //             chainThings.genered.CONTRACTS.STABLE.address,
-            //         dexAddress: chainThings.genered.CONTRACTS.FEE.address,
-            //         account,
-            //         provider,
-            //         chainId,
-            //         cardId: localChain,
-            //     }),
-            // );
-
             // TODO: переделать в кор
             const contract = new Contract(
                 chainThings.genered.CONTRACTS.STABLE.address,
@@ -129,7 +117,11 @@ const Deposit: React.FC<propsType> = ({
     };
 
     const getMax = async () => {
-        setAmount((await balanceUSDC).toString() || '0');
+        const balance = (await balanceUSDC).toString();
+        setAmount(balance || '0');
+        setSynthAmount(
+            (Number(balance) * Number(payData[localChain]?.price)).toFixed(3),
+        );
     };
 
     return (
@@ -176,15 +168,14 @@ const Deposit: React.FC<propsType> = ({
             </div>
             {!moreThenAvailable ? (
                 <p className={styles.warn}>
-                    The approximate transaction execution time is 15 seconds!
+                    {`${t('withdrawStartPhrase')} 15 ${t('withdrawEndPhrase')}`}
                 </p>
             ) : (
                 <p className={styles.warnScd}>
-                    Transaction for more than
-                    {' '}
-                    {Number(synthAmount).toFixed(3)}
-                    {' '}
-                    SynthLPs can take between 5-30 minutes!
+                    {`${t('depositeStartPhrase')} 
+                    ${Number(synthAmount).toFixed(3)} ${t(
+                    'depositeEndPhrase',
+                )}`}
                 </p>
             )}
             <Text
@@ -213,10 +204,10 @@ const Deposit: React.FC<propsType> = ({
                     if (e.target.value.length <= 6) {
                         setAmount(
                             e.target.value
-                                ? String(
+                                ? (
                                     Number(e.target.value)
-                                          / Number(payData[localChain]?.price),
-                                )
+                                      / Number(payData[localChain]?.price)
+                                ).toFixed(3)
                                 : '',
                         );
                         setSynthAmount(e.target.value);
@@ -227,10 +218,10 @@ const Deposit: React.FC<propsType> = ({
                         setAmount(e.target.value);
                         setSynthAmount(
                             e.target.value
-                                ? String(
+                                ? (
                                     Number(e.target.value)
-                                          * Number(payData[localChain]?.price),
-                                )
+                                      * Number(payData[localChain]?.price)
+                                ).toFixed(3)
                                 : '',
                         );
                     }
@@ -256,9 +247,9 @@ const Deposit: React.FC<propsType> = ({
                     title={
                         allow > 0
                             ? payData[localChain as availableChains]?.price
-                                ? 'Add funds'
-                                : 'Data Loading'
-                            : 'Approve'
+                                ? t('sellFunds')
+                                : t('dataLoading')
+                            : t('approve')
                     }
                     onClick={
                         allow > 0

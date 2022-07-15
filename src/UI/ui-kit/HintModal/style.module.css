@@ -66,3 +66,19 @@
 
 	font-size: 14px;
 }
+
+.alert-enter {
+	transform: scale(0.8) translateY(20px);
+  }
+  .alert-enter-active {
+	transform: scale(1);
+	transition: transform 100ms;
+  }
+  .alert-exit {
+	opacity: 1;
+  }
+  .alert-exit-active {
+	opacity: 0;
+	transform: scale(0.95);
+	transition: opacity 100ms, transform 100ms;
+  }

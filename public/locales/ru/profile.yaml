@@ -16,4 +16,10 @@ buy: Покупка
 sell: Продажа
 recentLast: Сначала старые
 recentFirst: Сначала новые
+dateTime: Дата/Время
+price: Цена
+amount: Всего
+yield: Доход
+viewExplorer: Посмотреть в эксплорере
+network: Сеть
 inDev: В разработке

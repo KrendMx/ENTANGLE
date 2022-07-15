@@ -90,7 +90,6 @@ const FantomContainer = ({ isFiltered = false }) => {
                     totalDeposits = cardData.totalDeposits;
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
-                    console.log(`fantom ${totalAvailable}`);
                 } catch (e) {
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
@@ -109,13 +108,11 @@ const FantomContainer = ({ isFiltered = false }) => {
                             available: `${
                                 CardData[data.chainId].localChain === chainId
                                     ? 'Unlimited'
-                                    : available
+                                    : available.toFixed(2)
                             }`,
                             totalAvailable: totalAvailable.toFixed(2),
                             totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
-                            currentDeposits: `$${currentDeposits.toFixed(
-                                3,
-                            )}`,
+                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
                             price: `${Number(price.toFixed(6))}`,
                         },
                     }),

@@ -28,6 +28,12 @@
 .icon {
 	cursor: pointer;
 	pointer-events: none;
+
+	transition: all 0.3s;
+}
+
+.rotated {
+	transform: rotate(180deg);
 }
 
 .options {
@@ -74,3 +80,21 @@
 .options li:hover {
 	background-color: var(--color-10);
 }
+
+.alert-enter {
+	opacity: 0;
+	transform: translateY(-50px) scale(0.95);
+  }
+  .alert-enter-active {
+	opacity: 1;
+	transform: translateX(0);
+	transition: opacity 200ms, transform 200ms;
+  }
+  .alert-exit {
+	opacity: 1;
+  }
+  .alert-exit-active {
+	opacity: 0;
+	transform: translateY(-50px) scale(0.95);
+	transition: opacity 100ms, transform 100ms;
+  }

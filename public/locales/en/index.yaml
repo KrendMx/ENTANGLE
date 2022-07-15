@@ -35,3 +35,11 @@ buyAndSell: Buy/Sell
 avgPrice: Avg Buy Price
 profit: Profit
 back: Back
+withdrawStartPhrase: The approximate transaction execution time is
+withdrawEndPhrase: seconds!
+depositeStartPhrase: Transaction for more than
+depositeEndPhrase: SynthLPs can take between 5-30 minutes!
+maxValueLength: Max value length
+sellFunds: Sell funds
+dataLoading: Data Loading
+approve: Approve

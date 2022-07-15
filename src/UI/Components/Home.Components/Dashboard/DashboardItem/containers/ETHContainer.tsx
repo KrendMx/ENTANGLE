@@ -115,9 +115,7 @@ const ETHContainer = ({ isFiltered = false }) => {
                             }`,
                             totalAvailable: totalAvailable.toFixed(2),
                             totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
-                            currentDeposits: `$${currentDeposits.toFixed(
-                                3,
-                            )}`,
+                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
                             price: `${Number(price.toFixed(6))}`,
                         },
                     }),
@@ -142,7 +140,7 @@ const ETHContainer = ({ isFiltered = false }) => {
 
     return (
         <>
-            {isOpenModal && (
+            {isOpenModal ? (
                 <Modal handleClose={closeModal}>
                     <PayModal
                         available={CardData[data.chainId].available}
@@ -151,7 +149,7 @@ const ETHContainer = ({ isFiltered = false }) => {
                         handleClose={closeModal}
                     />
                 </Modal>
-            )}
+            ) : null}
             <DashboardItem
                 {...data}
                 {...CardData[data.chainId]}

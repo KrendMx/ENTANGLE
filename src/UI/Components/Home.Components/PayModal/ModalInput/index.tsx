@@ -1,6 +1,10 @@
 import type { ChangeEvent } from 'react';
+import React, { useState } from 'react';
+
 import Image from 'next/image';
-import React from 'react';
+
+import HoverTooltip from 'src/UI/ui-kit/HoverTooltip/HoverTooltip';
+import { useTranslation } from 'react-i18next';
 import styles from './style.module.css';
 import Input from '../Input';
 
@@ -26,51 +30,93 @@ const ModalInput: React.FC<IModalInput> = ({
     getMax,
     onReceiveChange,
     onSendChange,
-}) => (
-    <div className={styles.wrapper}>
-        <div className={styles.inputBlock}>
-            <div className={styles.inputContent}>
-                <p>{titleSend}</p>
-                <div className={styles.inputElem}>
-                    <Input
-                        onChange={onSendChange}
-                        className={styles.input}
-                        value={`${sendValue}`}
-                        style={{ width: `${(sendValue.length + 5) * 5}px`, maxWidth: '55px' }}
-                    />
-                    <p className={styles.currency}>{currencySend}</p>
+}) => {
+    const [firstActive, setFirstAcitve] = useState<boolean>(false);
+    const [secondActive, setSecondAcitve] = useState<boolean>(false);
+
+    const closeFirst = () => {
+        setFirstAcitve(true);
+        setInterval(() => {
+            setFirstAcitve(false);
+        }, 5000);
+    };
+
+    const closeSecond = () => {
+        setSecondAcitve(true);
+        setInterval(() => {
+            setSecondAcitve(false);
+        }, 5000);
+    };
+
+    const { t } = useTranslation('index');
+    return (
+        <div className={styles.wrapper}>
+            <div className={styles.inputBlock}>
+                <div className={styles.inputContent}>
+                    <p>{titleSend}</p>
+                    <div className={styles.inputElem}>
+                        <Input
+                            onChange={(e) => {
+                                closeFirst();
+                                onSendChange(e);
+                            }}
+                            className={styles.input}
+                            value={`${sendValue}`}
+                            style={{
+                                width: `${
+                                    (sendValue.length + 5)
+                                    * (sendValue.length + 2)
+                                }px`,
+                                maxWidth: '55px',
+                            }}
+                        />
+                        <HoverTooltip
+                            text={t('maxValueLength')}
+                            isVisible={sendValue.length >= 6 && firstActive}
+                        />
+                        <p className={styles.currency}>{currencySend}</p>
+                    </div>
+                </div>
+                <div className={styles.maxButtonBlock}>
+                    <p className={styles.gradientText} onClick={getMax}>
+                        max
+                    </p>
                 </div>
             </div>
-            <div className={styles.maxButtonBlock}>
-                <p className={styles.gradientText} onClick={getMax}>
-                    max
-                </p>
+            <div className={styles.arrow}>
+                <Image
+                    src="/images/Arrow.svg"
+                    width={45}
+                    height={45}
+                    quality={100}
+                    alt="arrow-icon"
+                />
             </div>
-        </div>
-        <div className={styles.arrow}>
-            <Image
-                src="/images/Arrow.svg"
-                width={45}
-                height={45}
-                quality={100}
-                alt="arrow-icon"
-            />
-        </div>
-        <div className={styles.inputBlock}>
-            <div className={styles.inputContent}>
-                <p>{titleReceive}</p>
-                <div className={styles.inputElem}>
-                    <Input
-                        onChange={onReceiveChange}
-                        className={styles.input}
-                        value={receiveValue}
-                        style={{ width: `${(receiveValue.length + 5) * 5}px` }}
-                    />
-                    <p className={styles.currency}>{currencyReceive}</p>
+            <div className={styles.inputBlock}>
+                <div className={styles.inputContent}>
+                    <p>{titleReceive}</p>
+                    <div className={styles.inputElem}>
+                        <Input
+                            onChange={(e) => {
+                                closeSecond();
+                                onReceiveChange(e);
+                            }}
+                            className={styles.input}
+                            value={receiveValue}
+                            style={{
+                                width: `${(receiveValue.length + 5) * 5}px`,
+                            }}
+                        />
+                        <HoverTooltip
+                            text={t('maxValueLength')}
+                            isVisible={receiveValue.length >= 6 && secondActive}
+                        />
+                        <p className={styles.currency}>{currencyReceive}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default ModalInput;

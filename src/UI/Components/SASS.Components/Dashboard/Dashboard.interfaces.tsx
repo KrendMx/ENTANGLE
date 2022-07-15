@@ -1,4 +1,4 @@
-import type { availableSingleSideChains } from '@/src/utils/GlobalConst';
+import type { availableSingleSideChains } from 'src/utils/Global/Types';
 
 interface IDashboardSASSProps {
     search: string;
@@ -9,12 +9,12 @@ interface IDashboardSASSProps {
 interface IDashboardSASSItems {
     firstChainId: availableSingleSideChains;
     secondChainId: availableSingleSideChains;
-    desc: string;
     depositeInFirstCurrency: number | null;
     depositeInSecondCurrency: number | null;
     term: 10 | 30 | 90;
     projectedILProtection: number;
     APR: number;
+    site: string;
 }
 
 export type { IDashboardSASSProps, IDashboardSASSItems };

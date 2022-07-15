@@ -35,3 +35,11 @@ buyAndSell: Купить/Продать
 avgPrice: Высшая цена
 profit: Выручка
 back: Назад
+withdrawStartPhrase: Приблизительное время выполнения транзакции составляет
+withdrawEndPhrase: секунд!
+depositeStartPhrase: Транзакция на сумму более
+depositeEndPhrase: SynthLP могут занимать от 5 до 30 минут!
+maxValueLength:	Максимальная длина значения
+sellFunds: Продать средства
+dataLoading: Загрузка данных
+approve: Утвердить

@@ -19,11 +19,13 @@ type propsType = {
     // eslint-disable-next-line no-unused-vars
     sellToken: (value: number) => void;
     balanceSynth: Promise<number>;
-    chainThings: {genered: any, contract: Contract};
+    chainThings: { genered: any; contract: Contract };
 } & Pick<ContainerStateType, 'available' | 'totalAvailable' | 'price'>;
 
 const Withdraw: React.FC<propsType> = ({
-    sellToken, balanceSynth, chainThings,
+    sellToken,
+    balanceSynth,
+    chainThings,
 }) => {
     const { store, actions, asyncActions } = useStore((store) => ({
         WalletEntity: store.WalletEntity,
@@ -78,7 +80,10 @@ const Withdraw: React.FC<propsType> = ({
                 provider?.getSigner(),
             );
 
-            const value = await contract.allowance(account, chainThings.genered.CONTRACTS.FEE.address);
+            const value = await contract.allowance(
+                account,
+                chainThings.genered.CONTRACTS.FEE.address,
+            );
             setAllow(value);
         }());
     }, []);
@@ -124,25 +129,28 @@ const Withdraw: React.FC<propsType> = ({
             <div
                 className={styles.priceBlock}
                 style={
-                        {
-                            '--color-from': `${localChain !== '1' ? networks[localChain]?.mainColor : '#121212'}`,
-                        } as React.CSSProperties
+                    {
+                        '--color-from': `${
+                            localChain !== '1'
+                                ? networks[localChain]?.mainColor
+                                : '#121212'
+                        }`,
+                    } as React.CSSProperties
                 }
             >
                 <div className={styles.priceContent}>
                     <p>{t('price')}</p>
-                    {payData[localChain]?.price
-                        ? (
-                            <p>
-                                $
-                                {payData[localChain]?.price}
-                            </p>
-                        ) : (
-                            <TextLoader
-                                bgGradient={`linear-gradient(270deg, 
+                    {payData[localChain]?.price ? (
+                        <p>
+                            $
+                            {payData[localChain]?.price}
+                        </p>
+                    ) : (
+                        <TextLoader
+                            bgGradient={`linear-gradient(270deg, 
                                     ${networks[localChain]?.mainColor} 0%, rgba(239, 200, 208, 0.01) 100%)`}
-                            />
-                        )}
+                        />
+                    )}
                 </div>
                 <div className={styles.logo}>
                     <Image
@@ -150,21 +158,27 @@ const Withdraw: React.FC<propsType> = ({
                         height={57}
                         quality={100}
                         src={`/images/networks/${
-                            localChain !== '1' ? networks[localChain]?.icon : 'etheriumDashboard.svg'
+                            localChain !== '1'
+                                ? networks[localChain]?.icon
+                                : 'etheriumDashboard.svg'
                         }`}
-                        alt={`${
-                            networks[localChain]?.title
-                        }-logo`}
+                        alt={`${networks[localChain]?.title}-logo`}
                     />
                 </div>
             </div>
             <p className={styles.warn}>
-                The approximate transaction execution time is 15 seconds!
+                {`${t('withdrawStartPhrase')} 15 ${t('withdrawEndPhrase')}`}
             </p>
             <div className={styles.mg2}>
-                <Text title={t('aprCard')} content={`${CardData[localChain].apr}%`} />
+                <Text
+                    title={t('aprCard')}
+                    content={`${CardData[localChain].apr}%`}
+                />
                 <br />
-                <Text title={t('yourSynthBalance')} content={`${synthBalance} SynthLP`} />
+                <Text
+                    title={t('yourSynthBalance')}
+                    content={`${synthBalance} SynthLP`}
+                />
             </div>
             <ModalInput
                 currencyReceive="USDC"
@@ -175,10 +189,14 @@ const Withdraw: React.FC<propsType> = ({
                 receiveValue={synthAmount}
                 onReceiveChange={(e) => {
                     if (e.target.value.length <= 6) {
-                        setAmount(e.target.value
-                            ? String(Number(e.target.value)
-                                  / Number(payData[localChain]?.price))
-                            : '');
+                        setAmount(
+                            e.target.value
+                                ? (
+                                    Number(e.target.value)
+                                      / Number(payData[localChain]?.price)
+                                ).toFixed(3)
+                                : '',
+                        );
                         setSynthAmount(e.target.value);
                     }
                 }}
@@ -187,8 +205,10 @@ const Withdraw: React.FC<propsType> = ({
                         setAmount(e.target.value);
                         setSynthAmount(
                             e.target.value
-                                ? String(Number(e.target.value)
-                                      * Number(payData[localChain]?.price))
+                                ? (
+                                    Number(e.target.value)
+                                      * Number(payData[localChain]?.price)
+                                ).toFixed(3)
                                 : '',
                         );
                     }
@@ -214,9 +234,9 @@ const Withdraw: React.FC<propsType> = ({
                     title={
                         allow > 0
                             ? payData[localChain as availableChains]?.price
-                                ? 'Sell funds'
-                                : 'Data Loading'
-                            : 'Approve'
+                                ? t('sellFunds')
+                                : t('dataLoading')
+                            : t('approve')
                     }
                     onClick={
                         allow > 0

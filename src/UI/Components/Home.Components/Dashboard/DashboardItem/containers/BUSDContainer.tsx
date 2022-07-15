@@ -22,7 +22,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
     const { txLoading, isOpenModal, profits } = store.UserEntity;
 
     const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
-    const { setCardInfo } = actions.Card;
+    const { setCardInfo, setDefaultCardData } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
     const closeModal = () => {
         history.replaceState({}, '', '/');
@@ -75,6 +75,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader) {
             (async () => {
+                dispatch(setDefaultCardData());
                 let [
                     available,
                     totalAvailable,
@@ -91,7 +92,6 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     totalDeposits = cardData.totalDeposits;
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
-                    console.log(`fantom ${totalAvailable}`);
                 } catch (e) {
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
@@ -114,9 +114,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                             }`,
                             totalAvailable: totalAvailable.toFixed(2),
                             totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
-                            currentDeposits: `$${currentDeposits.toFixed(
-                                3,
-                            )}`,
+                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
                             price: `${Number(price.toFixed(6))}`,
                         },
                     }),

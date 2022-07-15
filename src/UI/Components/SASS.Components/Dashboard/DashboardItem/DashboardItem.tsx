@@ -7,6 +7,7 @@ import HintModal from 'UI/ui-kit/HintModal';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
+import { DescriptionGenerator } from 'src/UI/ui-kit/DescriptionGenerator';
 import styles from './style.module.css';
 import type { IDashboardSASSItems } from '../Dashboard.interfaces';
 
@@ -16,7 +17,7 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
         secondChainId,
         depositeInFirstCurrency,
         depositeInSecondCurrency,
-        desc,
+        site,
         term,
         projectedILProtection,
         APR,
@@ -61,12 +62,25 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                     ${availableSingleSideNetworks[secondChainId].abbr}`}
                 </Typography>
             </div>
-            <p className={styles.description}>{desc}</p>
+            <DescriptionGenerator
+                customClassName={styles.description}
+                currencyName={`${availableSingleSideNetworks[firstChainId].abbr}/
+                    ${availableSingleSideNetworks[secondChainId].abbr}`}
+                currencySite={site}
+            />
             <div className={styles.section}>
                 <div className={styles.sectionTitle}>
-                    <p>{`${t('depositeIn')} ${availableSingleSideNetworks[firstChainId].abbr}`}</p>
+                    <p>
+                        {`${t('depositeIn')} ${
+                            availableSingleSideNetworks[firstChainId].abbr
+                        }`}
+                    </p>
                     <HintModal>
-                        <p>{`${t('depositeIn')} ${availableSingleSideNetworks[secondChainId].abbr}`}</p>
+                        <p>
+                            {`${t('depositeIn')} ${
+                                availableSingleSideNetworks[secondChainId].abbr
+                            }`}
+                        </p>
                     </HintModal>
                 </div>
                 <div className={styles.sectionRow}>
@@ -91,9 +105,17 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
             </div>
             <div className={styles.section}>
                 <div className={styles.sectionTitle}>
-                    <p>{`${t('depositeIn')} ${availableSingleSideNetworks[secondChainId].abbr}`}</p>
+                    <p>
+                        {`${t('depositeIn')} ${
+                            availableSingleSideNetworks[secondChainId].abbr
+                        }`}
+                    </p>
                     <HintModal>
-                        <p>{`${t('depositeIn')} ${availableSingleSideNetworks[secondChainId].abbr}`}</p>
+                        <p>
+                            {`${t('depositeIn')} ${
+                                availableSingleSideNetworks[secondChainId].abbr
+                            }`}
+                        </p>
                     </HintModal>
                 </div>
                 <div className={styles.sectionRow}>
@@ -122,7 +144,9 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                 </div>
                 <div className={styles.sectionRow}>
                     {term ? (
-                        <p className={styles.sectionValue}>{`${term} ${t('days')}`}</p>
+                        <p className={styles.sectionValue}>
+                            {`${term} ${t('days')}`}
+                        </p>
                     ) : (
                         <TextLoader
                             bgGradient={`linear-gradient(to right, 
@@ -152,7 +176,7 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
             </div>
             <div className={styles.section}>
                 <div className={styles.sectionTitle}>
-                    <p>APR, %</p>
+                    <p>APR %</p>
                 </div>
                 <div className={styles.sectionRow}>
                     {APR ? (
@@ -172,7 +196,10 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                     as={`/single-side-staking/deposit?first=${firstChainId}&second=${secondChainId}&time=${term}`}
                     passHref
                 >
-                    <GradientButton title={tIndex('select')} onClick={() => {}} />
+                    <GradientButton
+                        title={tIndex('select')}
+                        onClick={() => {}}
+                    />
                 </Link>
             </div>
         </div>

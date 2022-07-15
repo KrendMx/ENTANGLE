@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { CSSTransition } from 'react-transition-group';
 import styles from './style.module.css';
 
 type Props = {
-    children: JSX.Element,
-  };
+    children: JSX.Element;
+};
 
 const HintModal: React.FC<Props> = ({ children }) => {
     const [visible, setVisible] = useState<boolean>(false);
@@ -14,17 +15,27 @@ const HintModal: React.FC<Props> = ({ children }) => {
         <div className={styles.modal}>
             <div>
                 <div
-                    onMouseEnter={() => { setVisible(true); }}
-                    onMouseLeave={() => { setVisible(false); }}
+                    onMouseEnter={() => {
+                        setVisible(true);
+                    }}
+                    onMouseLeave={() => {
+                        setVisible(false);
+                    }}
                     className={styles.tooltip}
                 >
-                    {visible ? (
-                        <div
-                            className={styles.tooltiptext}
-                        >
-                            {children}
-                        </div>
-                    ) : null}
+                    <CSSTransition
+                        in={visible}
+                        timeout={300}
+                        unmountOnExit
+                        classNames={{
+                            enter: styles['alert-enter'],
+                            enterActive: styles['alert-enter-active'],
+                            exit: styles['alert-exit'],
+                            exitActive: styles['alert-exit-active'],
+                        }}
+                    >
+                        <div className={styles.tooltiptext}>{children}</div>
+                    </CSSTransition>
                     <Image
                         src="/images/i.svg"
                         width={15}
@@ -32,7 +43,6 @@ const HintModal: React.FC<Props> = ({ children }) => {
                         quality={100}
                         alt=""
                     />
-
                 </div>
             </div>
         </div>
