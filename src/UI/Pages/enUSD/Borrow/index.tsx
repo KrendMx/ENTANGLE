@@ -20,8 +20,7 @@ const Borrow: React.FC = () => {
             EnUSDBorrowed: 201.55,
         },
     );
-    const switchHandler = (): void =>
-        (actionType === 0 ? setActionType(1) : setActionType(0));
+    const switchHandler = (tab: number): void => setActionType(tab);
 
     const { t } = useTranslation('borrow');
 

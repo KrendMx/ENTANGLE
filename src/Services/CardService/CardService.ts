@@ -159,6 +159,7 @@ export class CardService implements ICardService {
             const synthObj = (ChainConfig[this.name].SYNTH as any).find(
                 (el: any) => el.ID === id,
             );
+            console.log(id);
 
             const { currentDeposits, totalDeposits } = await this.getCurrentDeposit(
                 necessaryContracts,

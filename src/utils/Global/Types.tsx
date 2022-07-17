@@ -13,6 +13,7 @@ type networksType = {
         title: string;
         abbr: string;
         icon: string;
+        mmCurrency: string,
         currency: string;
         currencyMin: string;
         description: string;

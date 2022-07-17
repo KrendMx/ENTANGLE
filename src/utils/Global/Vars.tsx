@@ -5,6 +5,7 @@ const networks: networksType = {
         title: 'Avalanche',
         abbr: 'AVAX',
         icon: 'avalanche.svg',
+        mmCurrency: 'AVAX',
         currency: 'USDC/USDC.e Synthetic LP',
         currencyMin: 'USDC/USDC.e',
         description:
@@ -27,6 +28,7 @@ const networks: networksType = {
         title: 'Binance',
         abbr: 'BSC',
         icon: 'binance.svg',
+        mmCurrency: 'BNB',
         currency: 'USDT/BUSD Synthetic LP',
         currencyMin: 'USDT-BUSD',
         description:
@@ -49,6 +51,7 @@ const networks: networksType = {
         title: 'Ethereum',
         abbr: 'ETH',
         icon: 'ethereum.svg',
+        mmCurrency: 'ETH',
         currency: 'MIM/USDC Synthetic LP',
         currencyMin: 'MIM-UST',
         description:
@@ -66,6 +69,7 @@ const networks: networksType = {
         title: 'Fantom',
         abbr: 'FTM',
         icon: 'fantom.svg',
+        mmCurrency: 'FTM',
         currency: 'MIM/USDC Synthetic LP',
         currencyMin: 'MIM/USDC',
         description:
@@ -114,19 +118,19 @@ const farms = {
         FTM: '9',
         AVAX: '8',
         BSC: '11',
-        ETH: '11',
+        ETH: '12',
     },
     '43114': {
         FTM: '67',
         AVAX: '68',
         BSC: '70',
-        ETH: '70',
+        ETH: '71',
     },
     '56': {
         FTM: '69',
         AVAX: '10',
         BSC: '7',
-        ETH: '7',
+        ETH: '20',
     },
 } as const;
 

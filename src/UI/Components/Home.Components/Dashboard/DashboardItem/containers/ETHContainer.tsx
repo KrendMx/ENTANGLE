@@ -92,7 +92,6 @@ const ETHContainer = ({ isFiltered = false }) => {
                     totalDeposits = cardData.totalDeposits;
                     currentDeposits = cardData.currentDeposits;
                     price = cardData.price;
-                    console.log(`fantom ${totalAvailable}`);
                 } catch (e) {
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');

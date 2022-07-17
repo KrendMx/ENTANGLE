@@ -8,6 +8,7 @@ import Tabs from 'UI/ui-kit/Tabs';
 import { ChainConfig } from 'src/Services';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
+import { Notification } from 'src/libs/Notification';
 import styles from './style.module.css';
 import type { PayModalPropsType } from './PayModal.interfaces';
 import Deposit from './Tabs/Deposit';
@@ -133,7 +134,7 @@ const PayModal: React.FC<PayModalPropsType> = ({
                 );
             }
         } catch (e) {
-            throw new Error('Buy synth internal error');
+            Notification.error('Transaction Error', 'User rejected the buy transaction');
         }
     };
 
@@ -170,7 +171,7 @@ const PayModal: React.FC<PayModalPropsType> = ({
                 handleClose();
             }
         } catch (e) {
-            throw new Error('Sell synth internal error');
+            Notification.error('Transaction Error', 'User rejected the sell transaction');
         }
     };
 

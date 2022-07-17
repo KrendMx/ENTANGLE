@@ -75,6 +75,11 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     }, [tooltipVisible]);
 
     useEffect(() => {
+        console.log(localName);
+        console.log(chainId);
+    }, []);
+
+    useEffect(() => {
         if (addingToken) {
             const synthAddress = synths[chainId][localName];
             dispatch(importToken({ synthAddress, provider }));
@@ -252,7 +257,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             {networks[chainId].abbr in profits ? (
                                 <p className={styles.sectionValue}>
                                     $
-                                    {profits[localName][chainId]?.stable || 0}
+                                    {profits[localName][selectedChainId]?.stable}
                                 </p>
                             ) : (
                                 <TextLoader bgGradient={bgGradient} />

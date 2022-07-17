@@ -37,6 +37,23 @@ export const createWalletInteractor = (
                             { chainId: toChainId(chainId) },
                         ]);
                     } catch (switchError: any) {
+                        if (switchError.code === 4902) {
+                            await provider.send('wallet_addEthereumChain', [
+                                {
+                                    chainId: toChainId(chainId),
+                                    chainName: networks[chainId].title,
+                                    nativeCurrency: {
+                                        name: networks[chainId].mmCurrency,
+                                        symbol: networks[chainId].mmCurrency,
+                                        decimals: 18,
+                                    },
+                                    rpcUrls: [networks[chainId].rpc],
+                                },
+                            ]);
+                        } else if (switchError.code === 4001) {
+                            Notification.error('Switch Error', switchError.message);
+                            return;
+                        }
                         dispatch(Entity.actions.setError(switchError));
                     }
                 }
