@@ -113,16 +113,14 @@ export class ChainService implements IChainService {
                     .map((el: any) => Number(el.amount))
                     .reduce((p, c) => p + c);
             }
-            // finalArr.push(((sumMarkInvestition + sumWithdraw)
-            //     - (startInvestition + sumDeposited)) / (10
-            //         ** Number(
-            //             await ChainService.contracts[
-            //                 key.key
-            //             ]?.STABLESYNTCHEF.decimals(),
-            //         )));
+            finalArr.push(((sumMarkInvestition + sumWithdraw)
+                - (startInvestition + sumDeposited)) / (10
+                    ** Number(
+                        await ChainService.contracts[
+                            key.key
+                        ]?.STABLESYNTCHEF.decimals(),
+                    )));
         }
-        // return finalArr.reduce((p, c) => p + c);
-        console.log(ChainService.contracts);
-        return 123;
+        return finalArr.reduce((p, c) => p + c).toFixed(3);
     };
 }
