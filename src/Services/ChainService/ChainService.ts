@@ -122,6 +122,7 @@ export class ChainService implements IChainService {
             //         )));
         }
         // return finalArr.reduce((p, c) => p + c);
+        console.log(ChainService.contracts);
         return 123;
     };
 }

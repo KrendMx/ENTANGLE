@@ -521,7 +521,7 @@ export const ChainConfig = {
         NAME: 'MIM/USDC Synthetic LP',
         SYNTH: [
             {
-                ID: '7',
+                ID: '20',
                 FARMID: '26',
                 CROSSCHAIN: true,
                 CONTRACTS: {
@@ -548,7 +548,7 @@ export const ChainConfig = {
                 },
             },
             {
-                ID: '11',
+                ID: '71',
                 FARMID: '26',
                 CROSSCHAIN: true,
                 CONTRACTS: {
@@ -575,7 +575,7 @@ export const ChainConfig = {
                 },
             },
             {
-                ID: '70',
+                ID: '12',
                 FARMID: '26',
                 CROSSCHAIN: true,
                 CONTRACTS: {
