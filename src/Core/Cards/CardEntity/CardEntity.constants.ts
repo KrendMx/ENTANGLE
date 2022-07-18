@@ -54,6 +54,19 @@ const initialCardState: CardDataState = {
             localName: 'ETH',
             localChain: '1',
         },
+        '22417': {
+            apr: '10.4',
+            currentDeposits: '124',
+            totalDeposits: '124',
+            available: '22',
+            totalAvailable: '2',
+            price: '4.5',
+            yieldTime: '4',
+            positions: '1',
+            totalPositions: '1',
+            localName: 'EGLD',
+            localChain: '22417',
+        },
     },
 };
 

@@ -32,14 +32,12 @@ const ElrondContainer = ({ isFiltered = false }) => {
     };
     const openModal = () => dispatch(setIsOpenModal(true));
 
-    const { t: tError } = useTranslation('error');
-
     const data = {
         icon: 'elrondDashboard.svg',
         bgGradient:
             'linear-gradient(90deg, rgba(252,252,252,0.5) 0%, rgba(246, 246, 246, 0) 96.87%)',
         heading: 'EGLD-USDC',
-        chainId: '1',
+        chainId: '22417',
         priceCurrency: 'aDAI/aSUSD Synthetic LP',
         vendor: 'convexfinance.com',
         disabled: false,
@@ -47,117 +45,105 @@ const ElrondContainer = ({ isFiltered = false }) => {
         rowGradient,
     } as const;
 
-    const Service = useMemo(() => new CardService('ETH'), []);
+    // const Service = useMemo(() => new CardService('EGLD'), []);
 
-    useEffect(() => {
-        if (!preLoader) {
-            (async () => {
-                let apr = 0;
-                try {
-                    const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.ETH : '7',
-                    );
-                    apr = cardData.apr;
-                } catch (e) {
-                    Notification.error(tError('error'), e.message);
-                    if ((e.code as number) === -32002) {
-                        localStorage.removeItem('wallet');
-                    }
-                }
-                dispatch(
-                    setCardInfo({
-                        key: data.chainId,
-                        data: {
-                            apr: apr.toString(),
-                        },
-                    }),
-                );
-            })();
-        }
-    });
+    // useEffect(() => {
+    //     if (!preLoader) {
+    //         (async () => {
+    //             let apr = 0;
+    //             try {
+    //                 const cardData = await Service.getCardData(
+    //                     account ? farms[chainId]?.ETH : '7',
+    //                 );
+    //                 apr = cardData.apr;
+    //             } catch (e) {
+    //                 Notification.error(tError('error'), e.message);
+    //                 if ((e.code as number) === -32002) {
+    //                     localStorage.removeItem('wallet');
+    //                 }
+    //             }
+    //             dispatch(
+    //                 setCardInfo({
+    //                     key: data.chainId,
+    //                     data: {
+    //                         apr: apr.toString(),
+    //                     },
+    //                 }),
+    //             );
+    //         })();
+    //     }
+    // });
 
-    useEffect(() => {
-        if (!preLoader) {
-            (async () => {
-                let [
-                    available,
-                    totalAvailable,
-                    totalDeposits,
-                    currentDeposits,
-                    price,
-                ] = [0, 0, 0, 0, 0];
-                try {
-                    const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.ETH : '7',
-                    );
-                    available = cardData.available;
-                    totalAvailable = cardData.totalAvailable;
-                    totalDeposits = cardData.totalDeposits;
-                    currentDeposits = cardData.currentDeposits;
-                    price = cardData.price;
-                } catch (e) {
-                    if ((e.code as number) === -32002) {
-                        localStorage.removeItem('wallet');
-                    }
-                }
-                const percentage = Math.ceil(
-                    (available / currentDeposits) * 100,
-                );
-                setRowGradient(
-                    `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
-                );
-                dispatch(
-                    setCardInfo({
-                        key: data.chainId,
-                        data: {
-                            available: `${
-                                CardData[data.chainId].localChain === chainId
-                                    ? 'Unlimited'
-                                    : available
-                            }`,
-                            totalAvailable: totalAvailable.toFixed(2),
-                            totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
-                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                            price: `${Number(price.toFixed(6))}`,
-                        },
-                    }),
-                );
-                dispatch(
-                    setPayData({
-                        key: '1',
-                        data: {
-                            available: `${
-                                CardData[data.chainId].localChain === chainId
-                                    ? 'Unlimited'
-                                    : Number(available.toFixed(5))
-                            }`,
-                            price: `${Number(price.toFixed(6))}`,
-                            totalAvailable: `$${totalAvailable}`,
-                        },
-                    }),
-                );
-            })();
-        }
-    }, [txLoading, chainId, preLoader]);
+    // useEffect(() => {
+    //     if (!preLoader) {
+    //         (async () => {
+    //             let [
+    //                 available,
+    //                 totalAvailable,
+    //                 totalDeposits,
+    //                 currentDeposits,
+    //                 price,
+    //             ] = [0, 0, 0, 0, 0];
+    //             try {
+    //                 const cardData = await Service.getCardData(
+    //                     account ? farms[chainId]?.ETH : '7',
+    //                 );
+    //                 available = cardData.available;
+    //                 totalAvailable = cardData.totalAvailable;
+    //                 totalDeposits = cardData.totalDeposits;
+    //                 currentDeposits = cardData.currentDeposits;
+    //                 price = cardData.price;
+    //             } catch (e) {
+    //                 if ((e.code as number) === -32002) {
+    //                     localStorage.removeItem('wallet');
+    //                 }
+    //             }
+    //             const percentage = Math.ceil(
+    //                 (available / currentDeposits) * 100,
+    //             );
+    //             setRowGradient(
+    //                 `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
+    //             );
+    //             dispatch(
+    //                 setCardInfo({
+    //                     key: data.chainId,
+    //                     data: {
+    //                         available: `${
+    //                             CardData[data.chainId].localChain === chainId
+    //                                 ? 'Unlimited'
+    //                                 : available
+    //                         }`,
+    //                         totalAvailable: totalAvailable.toFixed(2),
+    //                         totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
+    //                         currentDeposits: `$${currentDeposits.toFixed(3)}`,
+    //                         price: `${Number(price.toFixed(6))}`,
+    //                     },
+    //                 }),
+    //             );
+    //             dispatch(
+    //                 setPayData({
+    //                     key: '1',
+    //                     data: {
+    //                         available: `${
+    //                             CardData[data.chainId].localChain === chainId
+    //                                 ? 'Unlimited'
+    //                                 : Number(available.toFixed(5))
+    //                         }`,
+    //                         price: `${Number(price.toFixed(6))}`,
+    //                         totalAvailable: `$${totalAvailable}`,
+    //                     },
+    //                 }),
+    //             );
+    //         })();
+    //     }
+    // }, [txLoading, chainId, preLoader]);
 
     return (
-        <>
-            {isOpenModal ? (
-                <Modal handleClose={closeModal}>
-                    <PayModal
-                        available={CardData[data.chainId].available}
-                        totalAvailable={CardData[data.chainId].totalAvailable}
-                        price={CardData[data.chainId].price}
-                        handleClose={closeModal}
-                    />
-                </Modal>
-            ) : null}
-            <DashboardItem
-                {...data}
-                {...CardData[data.chainId]}
-                isFiltered={isFiltered}
-            />
-        </>
+        <DashboardItem
+            {...data}
+            {...CardData[data.chainId]}
+            isFiltered={isFiltered}
+        />
     );
 };
 

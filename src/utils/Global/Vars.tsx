@@ -87,29 +87,27 @@ const networks: networksType = {
         farm: 67,
         mainIcon: '/images/networks/fantomDashboard.svg',
     },
-    // '22417': {
-    //     title: 'Elrond',
-    //     abbr: 'EGLD',
-    //     icon: 'elrond.svg',
-    //     description: '',
-    //     bgGradient:
-    //         'linear-gradient(90deg, rgba(252,252,252,0.5) 0%, rgba(246, 246, 246, 0) 96.87%)',
-    //     cardTypeLabelColor: '#fcfcfc',
-    //     cardTypeLabelBg: '#dcdcdc81',
-    //     mainColor: 'rgba(252,252,252,0.5)',
-    //     mainIcon: '/images/networks/elrondDashboard.svg',
-    //     // TODO Уточнить названия.
-    //     mmCurrency: 'EGLD',
-    //     currency: 'EGLD/USDC Synthetic LP',
-    //     currencyMin: 'EGLD/USDC',
-    //     // TODO Заполнить после того, как будет контракт.
-    //     dex: '',
-    //     fiat: '',
-    //     rpc: '',
-    //     synth: '',
-    //     order: 55,
-    //     farm: 555,
-    // },
+    '22417': {
+        title: 'Elrond',
+        abbr: 'EGLD',
+        icon: 'elrond.svg',
+        description: '',
+        bgGradient:
+            'linear-gradient(90deg, rgba(252,252,252,0.5) 0%, rgba(246, 246, 246, 0) 96.87%)',
+        cardTypeLabelColor: '#fcfcfc',
+        cardTypeLabelBg: '#dcdcdc81',
+        mainColor: 'rgba(252,252,252,0.5)',
+        mainIcon: '/images/networks/elrondDashboard.svg',
+        mmCurrency: 'EGLD',
+        currency: 'EGLD/USDC Synthetic LP',
+        currencyMin: 'EGLD/USDC',
+        dex: '',
+        fiat: '',
+        rpc: '',
+        synth: '',
+        order: 55,
+        farm: 555,
+    },
 } as const;
 
 const availableSingleSideNetworks = {
@@ -205,6 +203,11 @@ const synths = {
         FTM: '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
     },
     '1': {
+        BSC: '',
+        AVAX: '',
+        FTM: '',
+    },
+    '22417': {
         BSC: '',
         AVAX: '',
         FTM: '',

@@ -21,6 +21,7 @@ const Dashboard: React.FC<IDashboardProps> = ({
 
     function sortingCard() {
         const arr = Object.values(data);
+
         switch (sort.split(' ')[0]) {
         case 'apr':
             return arr.sort(

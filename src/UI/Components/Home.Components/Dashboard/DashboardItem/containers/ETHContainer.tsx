@@ -37,7 +37,7 @@ const ETHContainer = ({ isFiltered = false }) => {
     const data = {
         icon: 'etheriumDashboard.svg',
         bgGradient:
-            'linear-gradient(90deg, rgba(152,152,152,0.2) 0%, rgba(246, 246, 246, 0) 96.87%)',
+            'linear-gradient(90deg, rgba(152,152,152,0.15) 0%, rgba(246, 246, 246, 0) 96.87%)',
         heading: 'aDAI-aSUSD',
         chainId: '1',
         priceCurrency: 'aDAI/aSUSD Synthetic LP',

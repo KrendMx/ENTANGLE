@@ -12,5 +12,5 @@ export type ContainerStateType = {
     rowGradient: string;
     yieldTime: string | null;
     localChain: availableChains;
-    localName: 'FTM' | 'AVAX' | 'BSC' | 'ETH';
+    localName: 'FTM' | 'AVAX' | 'BSC' | 'ETH' | 'EGLD';
 };
