@@ -40,12 +40,14 @@ const PayModal: React.FC<PayModalPropsType> = ({
     }, [chainId]);
 
     const chainThingsStable = useMemo(() => {
+        console.log(farms[chainId][sessionStorage.getItem('card')]);
         const genered = (
             ChainConfig[sessionStorage.getItem('card')].SYNTH as any
         ).find(
             (el: any) =>
                 el.ID === farms[chainId][sessionStorage.getItem('card')],
         );
+        console.log(genered);
         const contract = new Contract(
             genered.CONTRACTS.STABLE.address,
             genered.CONTRACTS.STABLE.abi,

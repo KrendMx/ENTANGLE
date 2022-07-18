@@ -548,7 +548,7 @@ export const ChainConfig = {
                 },
             },
             {
-                ID: '71',
+                ID: '12',
                 FARMID: '26',
                 CROSSCHAIN: true,
                 CONTRACTS: {
@@ -575,7 +575,7 @@ export const ChainConfig = {
                 },
             },
             {
-                ID: '12',
+                ID: '71',
                 FARMID: '26',
                 CROSSCHAIN: true,
                 CONTRACTS: {
