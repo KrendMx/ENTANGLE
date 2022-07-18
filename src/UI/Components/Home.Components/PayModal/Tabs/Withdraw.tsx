@@ -41,7 +41,7 @@ const Withdraw: React.FC<propsType> = ({
 
     const { changeLoadingTx } = actions.User;
 
-    const { getAllowance, approve } = asyncActions.Contract;
+    const { approve } = asyncActions.Contract;
     const [synthAmount, setSynthAmount] = useState('');
     const [amount, setAmount] = useState<string>('');
     const [synthBalance, setSynthBalance] = useState<string>('');
@@ -225,20 +225,20 @@ const Withdraw: React.FC<propsType> = ({
             ) : (
                 <GradientButton
                     title={
-                        allow > 0
+                        allowance[localChain] > 0
                             ? payData[localChain as availableChains]?.price
                                 ? t('sellFunds')
                                 : t('dataLoading')
                             : t('approve')
                     }
                     onClick={
-                        allow > 0
+                        allowance[localChain] < 0
                             ? () => sellToken(parseFloat(amount))
                             : () => handleApprove()
                     }
                     disabled={
-                        !payData[localChain as availableChains]?.price
-                        || !amount
+                        allowance[localChain] < 0
+                        || (!!amount && amount > synthBalance)
                     }
                 />
             )}

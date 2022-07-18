@@ -1,6 +1,4 @@
-import React, {
-    useEffect, useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -40,38 +38,52 @@ const Profile = () => {
     }>({ value: -0.000001, change: 0, chain: '43114' });
     const [change, setChange] = useState<number[]>([0, 0]);
 
+    function detectedChainId(chainName: string): availableChains {
+        for (const key in networks) {
+            if (networks[key].abbr === chainName) {
+                return key as availableChains;
+            }
+        }
+    }
+
     useEffect(() => {
-        if ('AVAX' in profits) {
-            const names = Object.keys(profits);
-            let best = { value: 0, change: 0, chain: '250' };
-            let worst = { value: 0, change: 0, chain: '250' };
+        if (Object.keys(profits).length >= 4) {
+            let best = { value: 0, change: -Infinity, chain: '250' };
+            let worst = { value: 0, change: Infinity, chain: '250' };
             let counter = 0;
             let valueLocal = 0;
             let changeLocal = 0;
-            for (const name in names) {
-                const chains = Object.keys(profits[names[name]]);
-                for (const chain in chains) {
-                    if (profits[names[name]][chains[chain]].percentage > bestProfit.change) {
-                        best = {
-                            value: profits[names[name]][chains[chain]].stable,
-                            change: profits[names[name]][chains[chain]].percentage,
-                            chain: chains[chain],
-                        };
-                    } else if (profits[names[name]][chains[chain]].percentage < worstProfit.change) {
+            for (const name in profits) {
+                const names = profits[name];
+                for (const chain in names) {
+                    if (
+                        profits[name][chain].percentage < worst.change
+                        && profits[name][chain].percentage !== 0
+                    ) {
                         worst = {
-                            value: profits[names[name]][chains[chain]].stable,
-                            change: profits[names[name]][chains[chain]].percentage,
-                            chain: chains[chain],
+                            chain: detectedChainId(name),
+                            change: profits[name][chain].percentage,
+                            value: profits[name][chain].stable,
                         };
                     }
-                    valueLocal += profits[names[name]][chains[chain]].stable;
-                    changeLocal += profits[names[name]][chains[chain]].percentage;
+                    if (
+                        profits[name][chain].percentage > best.change
+                        && profits[name][chain].percentage !== 0
+                    ) {
+                        best = {
+                            chain: detectedChainId(name),
+                            change: profits[name][chain].percentage,
+                            value: profits[name][chain].stable,
+                        };
+                    }
+                    valueLocal += profits[name][chain].stable;
+                    changeLocal += profits[name][chain].percentage;
                     counter++;
                 }
             }
-            setChange([(valueLocal / counter), (changeLocal / counter)]);
-            setBestProfit((best as typeof bestProfit));
-            setWorstProfit((worst as typeof worstProfit));
+            setChange([valueLocal / counter, changeLocal / counter]);
+            setBestProfit(best as typeof bestProfit);
+            setWorstProfit(worst as typeof worstProfit);
             setChange([valueLocal, changeLocal]);
         }
     }, [profits]);
@@ -188,7 +200,11 @@ const Profile = () => {
                 <div className={styles.panel}>
                     <Typography type="title">{t('yourAssets')}</Typography>
                     <div className={styles.selectWrapper}>
-                        <Select value={filter} isCenter onChange={handleChangeFilter}>
+                        <Select
+                            value={filter}
+                            isCenter
+                            onChange={handleChangeFilter}
+                        >
                             <Option value="Sort by">{t('sortBy')}</Option>
                             {SortArray.map((el, key) => (
                                 <Option value={el.sort} key={key}>

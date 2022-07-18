@@ -30,6 +30,10 @@
 	line-height: 30px;
 }
 
+.close {
+	cursor: pointer;
+}
+
 .priceBlock {
 	--color-from: #FFF;
 	position: relative;

@@ -126,9 +126,9 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                             {`${cardData[detectedChainId(currencyName)].apr}`}
                         </p>
                     ) : (
-                        <p className={styles.itemValue}>
+                        <div className={styles.itemValue}>
                             <TextLoader bgGradient={bgGradient} />
-                        </p>
+                        </div>
                     )}
                 </li>
             </ul>
@@ -141,9 +141,9 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                             {avgPrices[currencyName][chainId]}
                         </p>
                     ) : (
-                        <p className={styles.itemValue}>
+                        <div className={styles.itemValue}>
                             <TextLoader bgGradient={bgGradient} />
-                        </p>
+                        </div>
                     )}
                 </li>
             </ul>
@@ -156,9 +156,9 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                             {profits[currencyName][chainId]?.stable}
                         </p>
                     ) : (
-                        <p className={styles.itemValue}>
+                        <div className={styles.itemValue}>
                             <TextLoader bgGradient={bgGradient} />
-                        </p>
+                        </div>
                     )}
                 </li>
             </ul>

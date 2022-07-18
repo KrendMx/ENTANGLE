@@ -39,9 +39,11 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
 
     const { store } = useStore((store) => ({
         UserEntity: store.UserEntity,
+        WalletEntity: store.WalletEntity,
     }));
 
     const { balances } = store.UserEntity;
+    const { chainId } = store.WalletEntity;
 
     useEffect(() => {
         if (!state.lendSynthLp) return;
@@ -87,11 +89,11 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
         if (!state.synthLp) return;
         dispatch({
             lendSynthLp:
-                balances[chainToNameConfig[state.synthLp]].positions.toString(),
+                balances[chainToNameConfig[state.synthLp]][chainId].positions.toString(),
             getEnUSD: Number(
                 (
                     Number(
-                        balances[chainToNameConfig[state.synthLp]].positions,
+                        balances[chainToNameConfig[state.synthLp]][chainId].positions,
                     )
                     * (Number(state.LTVRate) / 100)
                 ).toFixed(2),
@@ -117,26 +119,28 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                             currency="SYNTHUSDC"
                             showPayModal
                         >
-                            {Object.keys(networks).map((el, idx) => (
-                                <TokenOption
-                                    value={el}
-                                    key={idx}
-                                    name={networks[el].abbr}
-                                    amount={
-                                        balances[chainToNameConfig[el]]
-                                            ?.positions
-                                            ? `${
-                                                balances[
+                            {Object.keys(networks).map((el, idx) => {
+                                console.log();
+                                return (
+                                    <TokenOption
+                                        value={el}
+                                        key={idx}
+                                        name={networks[el].abbr}
+                                        amount={
+                                            balances[chainToNameConfig[el]]?.[
+                                                chainId
+                                            ]?.positions
+                                                ? balances[
                                                     chainToNameConfig[el]
-                                                ].positions
-                                            }`
-                                            : 'Buy now'
-                                    }
-                                    currency="SYNTHUSDC"
-                                >
-                                    {networks[el].currencyMin}
-                                </TokenOption>
-                            ))}
+                                                ][chainId]?.positions.toString()
+                                                : 'Buy now'
+                                        }
+                                        currency="SYNTHUSDC"
+                                    >
+                                        {networks[el].currencyMin}
+                                    </TokenOption>
+                                );
+                            })}
                         </TokenSelect>
                     </div>
                     <div>

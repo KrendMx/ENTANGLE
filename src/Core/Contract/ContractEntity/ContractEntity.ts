@@ -18,9 +18,12 @@ export const ContractEntity = createSlice({
     initialState,
     reducers: {
         ...withHelperReducers,
-        setAllowance(state, action: PayloadAction<{chainId: string; cardId: string; value: number}>) {
-            const { cardId, chainId, value } = action.payload;
-            state.allowance[chainId][cardId] = value;
+        setAllowance(state, action: PayloadAction<{ cardId: string; value: number }>) {
+            const { cardId, value } = action.payload;
+            state.allowance[cardId] = value;
+        },
+        clearAllowance(state) {
+            state.allowance = {};
         },
     },
 });

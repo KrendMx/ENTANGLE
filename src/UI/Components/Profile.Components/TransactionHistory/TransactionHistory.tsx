@@ -4,7 +4,10 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Typography from 'UI/ui-kit/Typography';
 import Select, { Option } from 'UI/ui-kit/Select';
-import type { TransactionHistoryEntity } from 'utils/Global/Types';
+import type {
+    availableChains,
+    TransactionHistoryEntity,
+} from 'utils/Global/Types';
 import type { networks } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import Pager from './Pager/Pager';
@@ -71,7 +74,11 @@ const TransactionHistory: React.FC = () => {
                 <Typography type="title">{t('transactionHistory')}</Typography>
                 <div className={styles.selects}>
                     <div className={styles.selectWrapper}>
-                        <Select value={filter} isCenter onChange={handleChangeFilter}>
+                        <Select
+                            value={filter}
+                            isCenter
+                            onChange={handleChangeFilter}
+                        >
                             {Object.keys(TransactionFilters).map((i) => (
                                 <Option key={i} value={i}>
                                     {t(i)}
@@ -80,7 +87,11 @@ const TransactionHistory: React.FC = () => {
                         </Select>
                     </div>
                     <div className={styles.selectWrapper}>
-                        <Select value={order} isCenter onChange={handleChangeOrder}>
+                        <Select
+                            value={order}
+                            isCenter
+                            onChange={handleChangeOrder}
+                        >
                             {Object.keys(TransactionOrder).map((i) => (
                                 <Option key={i} value={i}>
                                     {t(i)}
@@ -97,7 +108,12 @@ const TransactionHistory: React.FC = () => {
                     <div>
                         {transactionsPrepared.length === 0 && (
                             <>
-                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
                                     <Image
                                         src="/images/bar-graph.png"
                                         alt=""
@@ -128,9 +144,7 @@ const TransactionHistory: React.FC = () => {
                                 <HistoryCard
                                     key={k}
                                     chainId={
-                                        String(
-                                            i.crypto,
-                                        ) as keyof typeof networks
+                                        String(i.crypto) as availableChains
                                     }
                                     date={new Date(i.time)}
                                     price={
@@ -149,12 +163,18 @@ const TransactionHistory: React.FC = () => {
                                 styles.my1,
                             )}
                         >
-                            <div className={classNames(styles.flex, styles.mxAuto)}>
+                            <div
+                                className={classNames(
+                                    styles.flex,
+                                    styles.mxAuto,
+                                )}
+                            >
                                 <Pager
                                     selectedPage={currentPage}
                                     pageCount={Math.max(
                                         Math.ceil(
-                                            transactionsPrepared.length / pageLimit,
+                                            transactionsPrepared.length
+                                                / pageLimit,
                                         ),
                                         1,
                                     )}

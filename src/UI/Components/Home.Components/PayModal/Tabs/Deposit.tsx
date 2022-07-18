@@ -42,7 +42,9 @@ const Deposit: React.FC<propsType> = ({
 
     const { changeLoadingTx } = actions.User;
 
-    const { getAllowance, approve } = asyncActions.Contract;
+    const { setAllowance } = actions.Contract;
+
+    const { approve } = asyncActions.Contract;
 
     const [amount, setAmount] = useState('');
     const [synthAmount, setSynthAmount] = useState('');
@@ -62,7 +64,6 @@ const Deposit: React.FC<propsType> = ({
 
     useEffect(() => {
         (async function getAllowanceAndBalance() {
-            // TODO: переделать в кор
             const contract = new Contract(
                 chainThings.genered.CONTRACTS.STABLE.address,
                 opToken,
@@ -73,7 +74,7 @@ const Deposit: React.FC<propsType> = ({
                 account,
                 chainThings.genered.CONTRACTS.FEE.address,
             );
-            setAllow(value);
+            dispatch(setAllowance({ cardId: localChain, value }));
         }());
     }, [chainId]);
 
@@ -245,21 +246,18 @@ const Deposit: React.FC<propsType> = ({
             ) : (
                 <GradientButton
                     title={
-                        allow > 0
+                        allowance[localChain] > 0
                             ? payData[localChain as availableChains]?.price
                                 ? t('addFunds')
                                 : t('dataLoading')
                             : t('approve')
                     }
                     onClick={
-                        allow > 0
+                        allowance[localChain] > 0
                             ? () => buyToken(parseFloat(amount))
                             : () => handleApprove()
                     }
-                    disabled={
-                        !payData[localChain as availableChains]?.price
-                        || !amount
-                    }
+                    disabled={allowance[localChain] < 0 || (!!amount && amount > balances.usdc)}
                 />
             )}
         </div>

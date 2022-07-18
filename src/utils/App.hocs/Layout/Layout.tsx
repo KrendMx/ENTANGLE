@@ -29,6 +29,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         UserEntity: store.UserEntity,
         AppEntity: store.AppEntity,
         WalletEntity: store.WalletEntity,
+        ContractEntity: store.ContractEntity,
     }));
     const dispatch = useDispatch();
 
@@ -37,6 +38,8 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     } = store.UserEntity;
     const { isAppLoaded } = store.AppEntity;
     const { account, chainId } = store.WalletEntity;
+
+    const { clearAllowance } = actions.Contract;
 
     const { setCardInfo } = actions.Card;
     const { setPayData } = actions.User;
@@ -155,6 +158,10 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
             }
         }());
     }, [txHistory, txLoading, balances, txLoaded]);
+
+    useEffect(() => {
+        dispatch(clearAllowance());
+    }, [chainId]);
 
     return (
         <div className={styles.wrapper}>

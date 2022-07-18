@@ -25,7 +25,7 @@ const PayModal: React.FC<PayModalPropsType> = ({
         WalletEntity: store.WalletEntity,
         AppEntity: store.AppEntity,
     }));
-    const [activeTab, setActiveTab] = useState(1);
+    const [activeTab, setActiveTab] = useState(0);
     const dispatch = useDispatch();
     const { chainId, provider, account } = store.WalletEntity;
     const { txLoading } = store.UserEntity;
@@ -65,16 +65,16 @@ const PayModal: React.FC<PayModalPropsType> = ({
         })();
     }, []);
 
-    // const balanceUSDC = useMemo(
-    //     async () =>
-    //         Number(
-    //             (
-    //                 await chainThingsStable.contract.balanceOf(account)
-    //             ).toBigInt()
-    //                 / BigInt(10 ** (await chainThingsStable.contract.decimals())),
-    //         ),
-    //     [account, txLoading, chainId],
-    // );
+    const balanceUSDC = useMemo(
+        async () =>
+            Number(
+                (
+                    await chainThingsStable.contract.balanceOf(account)
+                ).toBigInt()
+                    / BigInt(10 ** (await chainThingsStable.contract.decimals())),
+            ),
+        [account, txLoading, chainId],
+    );
 
     const chainThingsSynth = useMemo(() => {
         const genered = (
@@ -95,16 +95,16 @@ const PayModal: React.FC<PayModalPropsType> = ({
         };
     }, [account, chainId]);
 
-    // const balanceSynth = useMemo(
-    //     async () =>
-    //         Number(
-    //             (
-    //                 await chainThingsSynth.contract.balanceOf(account)
-    //             ).toBigInt()
-    //                 / BigInt(10 ** (await chainThingsSynth.contract.decimals())),
-    //         ),
-    //     [account, txLoading, chainId],
-    // );
+    const balanceSynth = useMemo(
+        async () =>
+            Number(
+                (
+                    await chainThingsSynth.contract.balanceOf(account)
+                ).toBigInt()
+                    / BigInt(10 ** (await chainThingsSynth.contract.decimals())),
+            ),
+        [account, txLoading, chainId],
+    );
 
     const buyToken = async (value: number) => {
         try {
@@ -216,7 +216,7 @@ const PayModal: React.FC<PayModalPropsType> = ({
                 activeTab={activeTab}
                 buttons={[t('buy'), t('sell')]}
             />
-            {/* {activeTab ? (
+            {activeTab ? (
                 <Withdraw
                     price={price}
                     available={available}
@@ -235,7 +235,7 @@ const PayModal: React.FC<PayModalPropsType> = ({
                     balanceSynth={balanceSynth}
                     chainThings={chainThingsStable}
                 />
-            )} */}
+            )}
         </div>
     );
 };

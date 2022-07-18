@@ -45,7 +45,7 @@ const InvestCard: React.FC<IProps> = ({
 
     const [currentPage, setCurrentPage] = useState<number>(1);
 
-    const [pageLimit, setPageLimit] = useState<number>(4);
+    const [pageLimit, setPageLimit] = useState<number>(5);
 
     const { t } = useTranslation('profile');
 
