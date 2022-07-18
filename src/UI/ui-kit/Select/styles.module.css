@@ -25,6 +25,10 @@
 	pointer-events: none;
 }
 
+.isCenter {
+	text-align: center;
+}
+
 .icon {
 	cursor: pointer;
 	pointer-events: none;
@@ -84,17 +88,17 @@
 .alert-enter {
 	opacity: 0;
 	transform: translateY(-50px) scale(0.95);
-  }
-  .alert-enter-active {
+}
+.alert-enter-active {
 	opacity: 1;
 	transform: translateX(0);
 	transition: opacity 200ms, transform 200ms;
-  }
-  .alert-exit {
+}
+.alert-exit {
 	opacity: 1;
-  }
-  .alert-exit-active {
+}
+.alert-exit-active {
 	opacity: 0;
 	transform: translateY(-50px) scale(0.95);
 	transition: opacity 100ms, transform 100ms;
-  }
+}

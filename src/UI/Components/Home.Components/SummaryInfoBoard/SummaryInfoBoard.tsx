@@ -57,7 +57,6 @@ const SummaryInfoBoard = () => {
     useEffect(() => {
         (async () => {
             const resTVD = await ChainService.getTVDForBuyAndSell();
-            console.log(resTVD);
             setTVD(resTVD);
             const resTRA = await ChainService.getTRAForBuyAndSell();
             setTRA(Number(resTRA));

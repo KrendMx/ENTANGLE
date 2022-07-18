@@ -41,7 +41,7 @@ export const ActionPanel: React.FC<IActionPanelProps> = (props) => {
                     onChange={setNetwork}
                     value={network}
                     disabled
-                    customClassName={styles.cutomClassName}
+                    isCenter
                 >
                     <Option value="">{tSsas('Network')}</Option>
                     <Option value="Network">{tSsas('Network')}</Option>
@@ -49,11 +49,16 @@ export const ActionPanel: React.FC<IActionPanelProps> = (props) => {
                 <Select
                     onChange={setTimeStatus}
                     value={timeStatus}
-                    customClassName={styles.cutomClassName}
+                    isCenter
                 >
                     <Option value="">{tSsas('all')}</Option>
                     {timaStatusValues.map((el, i) => (
-                        <Option value={el} key={i}>{`${el} ${tSsas('days')}`}</Option>
+                        <Option value={el} key={i}>
+                            {`${el} ${tSsas(
+                                'days',
+                            )}`}
+
+                        </Option>
                     ))}
                 </Select>
             </div>

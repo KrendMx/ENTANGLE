@@ -71,7 +71,7 @@ const TransactionHistory: React.FC = () => {
                 <Typography type="title">{t('transactionHistory')}</Typography>
                 <div className={styles.selects}>
                     <div className={styles.selectWrapper}>
-                        <Select value={filter} onChange={handleChangeFilter}>
+                        <Select value={filter} isCenter onChange={handleChangeFilter}>
                             {Object.keys(TransactionFilters).map((i) => (
                                 <Option key={i} value={i}>
                                     {t(i)}
@@ -80,7 +80,7 @@ const TransactionHistory: React.FC = () => {
                         </Select>
                     </div>
                     <div className={styles.selectWrapper}>
-                        <Select value={order} onChange={handleChangeOrder}>
+                        <Select value={order} isCenter onChange={handleChangeOrder}>
                             {Object.keys(TransactionOrder).map((i) => (
                                 <Option key={i} value={i}>
                                     {t(i)}

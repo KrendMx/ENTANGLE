@@ -188,7 +188,7 @@ const Profile = () => {
                 <div className={styles.panel}>
                     <Typography type="title">{t('yourAssets')}</Typography>
                     <div className={styles.selectWrapper}>
-                        <Select value={filter} onChange={handleChangeFilter}>
+                        <Select value={filter} isCenter onChange={handleChangeFilter}>
                             <Option value="Sort by">{t('sortBy')}</Option>
                             {SortArray.map((el, key) => (
                                 <Option value={el.sort} key={key}>

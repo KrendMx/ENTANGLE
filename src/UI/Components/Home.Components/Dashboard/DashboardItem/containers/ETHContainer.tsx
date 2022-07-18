@@ -141,23 +141,11 @@ const ETHContainer = ({ isFiltered = false }) => {
     }, [txLoading, chainId, preLoader]);
 
     return (
-        <>
-            {isOpenModal ? (
-                <Modal handleClose={closeModal}>
-                    <PayModal
-                        available={CardData[data.chainId].available}
-                        totalAvailable={CardData[data.chainId].totalAvailable}
-                        price={CardData[data.chainId].price}
-                        handleClose={closeModal}
-                    />
-                </Modal>
-            ) : null}
-            <DashboardItem
-                {...data}
-                {...CardData[data.chainId]}
-                isFiltered={isFiltered}
-            />
-        </>
+        <DashboardItem
+            {...data}
+            {...CardData[data.chainId]}
+            isFiltered={isFiltered}
+        />
     );
 };
 

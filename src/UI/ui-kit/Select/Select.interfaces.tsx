@@ -6,7 +6,8 @@ type SelectProps = {
     onChange: (HTMLElement) => void;
     customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     customOptionClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-    disabled?:boolean;
+    disabled?: boolean;
+    isCenter?: boolean;
 };
 
 type OptionProps = {
@@ -16,7 +17,4 @@ type OptionProps = {
     state?: string;
 };
 
-export type {
-    SelectProps,
-    OptionProps,
-};
+export type { SelectProps, OptionProps };

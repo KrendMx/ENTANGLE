@@ -31,6 +31,7 @@ const Select: React.FC<SelectProps> = ({
     children,
     customClassName,
     disabled,
+    isCenter = false,
 }) => {
     const [selected, setSelected] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +73,13 @@ const Select: React.FC<SelectProps> = ({
             ])}
             ref={selectWrapperNode}
         >
-            <label className={styles.label}>{selected}</label>
+            <label
+                className={classNames(styles.label, {
+                    [styles.isCenter]: isCenter,
+                })}
+            >
+                {selected}
+            </label>
             <Image
                 width={13}
                 height={13}

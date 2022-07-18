@@ -62,17 +62,6 @@ const Withdraw: React.FC<propsType> = ({
 
     useEffect(() => {
         (async function getAllowanceAndBalance() {
-            // dispatch(
-            //     getAllowance({
-            //         contractAddress:
-            //             chainThings.genered.CONTRACTS.SYNTH.address,
-            //         dexAddress: chainThings.genered.CONTRACTS.FEE.address,
-            //         account,
-            //         provider,
-            //         chainId,
-            //         cardId: localChain,
-            //     }),
-            // );
             // TODO: переделать в кор
             const contract = new Contract(
                 chainThings.genered.CONTRACTS.SYNTH.address,
