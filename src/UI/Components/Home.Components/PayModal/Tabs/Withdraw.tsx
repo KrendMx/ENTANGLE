@@ -119,7 +119,11 @@ const Withdraw: React.FC<propsType> = ({
     };
 
     const getMax = async () => {
-        setAmount((await balanceSynth).toString() || '0');
+        const res = (await balanceSynth).toString();
+        setAmount(res || '0');
+        setSynthAmount(
+            (Number(res) * Number(payData[localChain]?.price)).toString(),
+        );
     };
 
     const { t } = useTranslation('index');

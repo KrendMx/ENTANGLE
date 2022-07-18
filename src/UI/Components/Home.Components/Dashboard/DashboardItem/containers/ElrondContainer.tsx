@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { CardService } from 'src/Services';
-import { farms } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
+import { CardService } from 'src/Services';
+import Modal from 'UI/Components/Modal';
+import PayModal from 'UI/Components/Home.Components/PayModal';
+import { farms } from 'utils/Global/Vars';
 import { Notification } from 'src/libs/Notification';
 import { useTranslation } from 'react-i18next';
-import PayModal from '../../../PayModal';
-import Modal from '../../../../Modal';
 import DashboardItem from '../index';
 
-const AvalancheContainer = ({ isFiltered = false }) => {
+const ElrondContainer = ({ isFiltered = false }) => {
     const { store, actions, asyncActions } = useStore((store) => ({
         UserEntity: store.UserEntity,
         WalletEntity: store.WalletEntity,
@@ -20,34 +20,34 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     const dispatch = useDispatch();
     const { account, chainId, preLoader } = store.WalletEntity;
     const { data: CardData } = store.CardsEntity;
-    const { txLoading, isOpenModal, profits } = store.UserEntity;
+    const { setDefaultCardData } = actions.Card;
+    const { txLoading, isOpenModal } = store.UserEntity;
 
     const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
     const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
-
     const closeModal = () => {
         history.replaceState({}, '', '/');
         dispatch(setIsOpenModal(false));
     };
     const openModal = () => dispatch(setIsOpenModal(true));
 
+    const { t: tError } = useTranslation('error');
+
     const data = {
-        icon: 'avalancheDashboard.png',
+        icon: 'elrondDashboard.svg',
         bgGradient:
-            'linear-gradient(90deg, rgba(233, 48, 56, 0.4) 0%, rgba(239, 70, 78, 0) 100%)',
-        heading: 'USDC-USDC.e',
-        chainId: '43114',
-        priceCurrency: 'USDC/USDC.e Synthetic LP',
-        vendor: 'traderjoexyz.com',
+            'linear-gradient(90deg, rgba(252,252,252,0.5) 0%, rgba(246, 246, 246, 0) 96.87%)',
+        heading: 'EGLD-USDC',
+        chainId: '1',
+        priceCurrency: 'aDAI/aSUSD Synthetic LP',
+        vendor: 'convexfinance.com',
         disabled: false,
         openModal,
         rowGradient,
     } as const;
 
-    const Service = useMemo(() => new CardService('AVAX'), []);
-
-    const { t: tError } = useTranslation('error');
+    const Service = useMemo(() => new CardService('ETH'), []);
 
     useEffect(() => {
         if (!preLoader) {
@@ -55,7 +55,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 let apr = 0;
                 try {
                     const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.AVAX : '68',
+                        account ? farms[chainId]?.ETH : '7',
                     );
                     apr = cardData.apr;
                 } catch (e) {
@@ -79,15 +79,27 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader) {
             (async () => {
-                const {
+                let [
                     available,
                     totalAvailable,
                     totalDeposits,
                     currentDeposits,
                     price,
-                } = await Service.getCardData(
-                    account ? farms[chainId]?.AVAX : '68',
-                );
+                ] = [0, 0, 0, 0, 0];
+                try {
+                    const cardData = await Service.getCardData(
+                        account ? farms[chainId]?.ETH : '7',
+                    );
+                    available = cardData.available;
+                    totalAvailable = cardData.totalAvailable;
+                    totalDeposits = cardData.totalDeposits;
+                    currentDeposits = cardData.currentDeposits;
+                    price = cardData.price;
+                } catch (e) {
+                    if ((e.code as number) === -32002) {
+                        localStorage.removeItem('wallet');
+                    }
+                }
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,
                 );
@@ -101,9 +113,9 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                             available: `${
                                 CardData[data.chainId].localChain === chainId
                                     ? 'Unlimited'
-                                    : available.toFixed(2)
+                                    : available
                             }`,
-                            totalAvailable: totalAvailable.toString(),
+                            totalAvailable: totalAvailable.toFixed(2),
                             totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
                             currentDeposits: `$${currentDeposits.toFixed(3)}`,
                             price: `${Number(price.toFixed(6))}`,
@@ -112,7 +124,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                 );
                 dispatch(
                     setPayData({
-                        key: '43114',
+                        key: '1',
                         data: {
                             available: `${
                                 CardData[data.chainId].localChain === chainId
@@ -128,45 +140,9 @@ const AvalancheContainer = ({ isFiltered = false }) => {
         }
     }, [txLoading, chainId, preLoader]);
 
-    useEffect(() => {
-        (async () => {
-            if (account) {
-                let [positions, totalPositions] = [0, 0];
-                try {
-                    const personalData = await Service.getPersonalData(
-                        account,
-                        account ? farms[chainId]?.AVAX : '9',
-                    );
-                    positions = personalData.positions;
-                    totalPositions = personalData.totalPositions;
-                } catch (e: any) {
-                    Notification.error(tError('error'), e.message);
-                    if ((e.code as number) === -32002) {
-                        localStorage.removeItem('wallet');
-                    }
-                }
-                setPositionSum({ n: positions, key: '43114' });
-                dispatch(
-                    setCardInfo({
-                        key: data.chainId,
-                        data: {
-                            positions: `$${Number(positions.toFixed(2))}`,
-                            totalPositions: `${Number(
-                                totalPositions.toFixed(5),
-                            )} USDC/USDC.e Synthetic LP`,
-                            yieldTime: String(
-                                profits[data.chainId]?.value || '',
-                            ),
-                        },
-                    }),
-                );
-            }
-        })();
-    }, [account, txLoading, chainId]);
-
     return (
         <>
-            {isOpenModal && (
+            {isOpenModal ? (
                 <Modal handleClose={closeModal}>
                     <PayModal
                         available={CardData[data.chainId].available}
@@ -175,7 +151,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                         handleClose={closeModal}
                     />
                 </Modal>
-            )}
+            ) : null}
             <DashboardItem
                 {...data}
                 {...CardData[data.chainId]}
@@ -185,4 +161,4 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     );
 };
 
-export default AvalancheContainer;
+export default ElrondContainer;

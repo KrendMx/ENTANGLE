@@ -26,6 +26,7 @@ export async function getServerSideProps({ locale, query }) {
             ...(await serverSideTranslations(locale!, [
                 'stake',
                 'header',
+                'error',
                 'footer',
                 'stable',
                 'index',

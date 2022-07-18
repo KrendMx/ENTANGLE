@@ -41,5 +41,6 @@ depositeStartPhrase: Transaction for more than
 depositeEndPhrase: SynthLPs can take between 5-30 minutes!
 maxValueLength: Max value length
 sellFunds: Sell funds
+addFunds: Add funds
 dataLoading: Data Loading
 approve: Approve

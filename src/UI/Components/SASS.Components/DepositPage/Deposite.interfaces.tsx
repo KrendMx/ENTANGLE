@@ -6,7 +6,6 @@ interface IDepositeProps {
         second: availableSingleSideChains;
         time: string;
     };
-    reverse: boolean;
 }
 
 interface IDepositeStore {

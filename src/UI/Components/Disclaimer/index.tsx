@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ScrollLock from 'react-scrolllock';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import GradientCheckbox from 'UI/ui-kit/GradientCheckbox';
@@ -10,83 +11,69 @@ interface DisclaimerProps {
 
 const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
     const [checked, setChecked] = useState(false);
+    const { t } = useTranslation('disclaimer');
     return (
         <div className={styles.wrapper}>
             <ScrollLock>
                 <div className={styles.content}>
                     <div>
                         <div className={styles.header}>
-                            <h1 className={styles.headerText}>Disclaimer</h1>
+                            <h1 className={styles.headerText}>
+                                {t('disclaimer')}
+                            </h1>
                         </div>
                         <div className={styles.mainContent}>
-                            <p className={styles.blockText}>
+                            <div className={styles.blockText}>
                                 <p className={styles.paragraph}>
                                     <span className={styles.highLight}>
-                                        Unaudited MVP
+                                        {t('unauditedMVP')}
                                     </span>
-                                    : Please do NOT use more than a very small
-                                    amount of funds (
+                                    :
+                                    {' '}
+                                    {t('firstPhrase')}
+                                    {' '}
+                                    (
                                     <span className={styles.blueText}>
-                                        max $30 USD
+                                        {t('max30')}
                                     </span>
-                                    ) as there have been no audits of any smart
-                                    contracts on the protocol.
+                                    )
+                                    {' '}
+                                    {t('secondPhrase')}
                                 </p>
                                 <p className={styles.paragraph}>
-                                    Welcome to Entangle Protocol. Entangle
-                                    allows trustless exposure to cross-chain
-                                    yields via Synthetic LP Vaults.
+                                    {t('welcomeTo')}
                                 </p>
                                 <p className={styles.paragraph}>
-                                    In the near future, Entangle Protocol will
-                                    allows you to borrow Entangle USD (
+                                    {t('inTheNear')}
+                                    {' '}
+                                    (
                                     <span className={styles.blueText}>
                                         enUSD
                                     </span>
-                                    ) a cross-chain fully collateralised
-                                    stable-coin against your synthetic yield
-                                    bearing assets.
+                                    )
+                                    {' '}
+                                    {t('aCrossChain')}
                                 </p>
 
                                 <p className={styles.paragraph}>
-                                    No representation or warranty is made
-                                    concerning any aspect of the Entangle
-                                    Protocol.
+                                    {t('noRepresentation')}
                                 </p>
                                 <p className={styles.paragraph}>
-                                    You take full responsibility for your use of
-                                    the Entangle Protocol, and acknowledge that
-                                    you use it on the basis of your own accord,
-                                    without solicitation or inducement by
-                                    contributors.
+                                    {t('youTakeFull')}
                                 </p>
                                 <p className={styles.paragraph}>
-                                    Entangle Protocol is not available to
-                                    residents of&nbsp;
+                                    {t('isNotAvailable')}
+                                    &nbsp;
                                     <span className={styles.highLight}>
-                                        Belarus, the Central African Republic,
-                                        the Democratic Republic of Congo, the
-                                        Democratic People’s Republic of Korea,
-                                        the Crimea region of Ukraine, Cuba,
-                                        Iran, Libya, Somalia, Sudan, South
-                                        Sudan, Syria, the USA, Yemen, and
-                                        Zimbabwe or any other jurisdiction in
-                                        which accessing or using the Protocol is
-                                        prohibited (“Prohibited Jurisdictions”).
+                                        {t('placement')}
                                     </span>
                                 </p>
                                 <p className={styles.paragraph}>
-                                    By Using Entangle , you confirm that you are
-                                    not located in, incorporated or otherwise
-                                    established in, or a citizen or resident of,
-                                    a Prohibited Jurisdiction.
+                                    {t('byUsingEntangle')}
                                 </p>
-                            </p>
+                            </div>
                             <GradientCheckbox
-                                text={`
-                            I confirm that I have read, understand and 
-                            accept the Terms of Use and the Risks statement
-                            `}
+                                text={t('buttonText')}
                                 gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
                                 isChecked={checked}
                                 onClickHandler={() => setChecked(!checked)}
@@ -94,7 +81,7 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                             />
                             <div className={styles.blockButton}>
                                 <GradientButton
-                                    title="Enter"
+                                    title={t('enter')}
                                     gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
                                     onClick={checked ? handleClose : undefined}
                                     wrapperClass={styles.btn}

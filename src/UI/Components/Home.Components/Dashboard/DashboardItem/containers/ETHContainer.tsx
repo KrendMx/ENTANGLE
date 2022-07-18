@@ -6,6 +6,7 @@ import Modal from 'UI/Components/Modal';
 import PayModal from 'UI/Components/Home.Components/PayModal';
 import { farms } from 'utils/Global/Vars';
 import { Notification } from 'src/libs/Notification';
+import { useTranslation } from 'react-i18next';
 import DashboardItem from '../index';
 
 const ETHContainer = ({ isFiltered = false }) => {
@@ -30,6 +31,8 @@ const ETHContainer = ({ isFiltered = false }) => {
         dispatch(setIsOpenModal(false));
     };
     const openModal = () => dispatch(setIsOpenModal(true));
+
+    const { t: tError } = useTranslation('error');
 
     const data = {
         icon: 'etheriumDashboard.svg',
@@ -56,7 +59,7 @@ const ETHContainer = ({ isFiltered = false }) => {
                     );
                     apr = cardData.apr;
                 } catch (e) {
-                    Notification.error('Error', e.message);
+                    Notification.error(tError('error'), e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }

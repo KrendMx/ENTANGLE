@@ -57,9 +57,10 @@ const SummaryInfoBoard = () => {
     useEffect(() => {
         (async () => {
             const resTVD = await ChainService.getTVDForBuyAndSell();
+            console.log(resTVD);
             setTVD(resTVD);
             const resTRA = await ChainService.getTRAForBuyAndSell();
-            setTRA(resTRA);
+            setTRA(Number(resTRA));
         })();
     }, []);
 
@@ -70,9 +71,7 @@ const SummaryInfoBoard = () => {
             <div className={styles.wrapper}>
                 <InfoBlock
                     info={t('tpe')}
-                    value={
-                        TRA
-                    }
+                    value={TRA}
                     type={InfoBlockTypes.MONEY}
                     isShort
                 />

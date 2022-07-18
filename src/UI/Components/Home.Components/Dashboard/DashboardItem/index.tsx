@@ -73,12 +73,6 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
         }
         return () => {};
     }, [tooltipVisible]);
-
-    useEffect(() => {
-        console.log(localName);
-        console.log(chainId);
-    }, []);
-
     useEffect(() => {
         if (addingToken) {
             const synthAddress = synths[chainId][localName];

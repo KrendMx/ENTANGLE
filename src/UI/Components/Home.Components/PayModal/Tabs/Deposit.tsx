@@ -247,7 +247,7 @@ const Deposit: React.FC<propsType> = ({
                     title={
                         allow > 0
                             ? payData[localChain as availableChains]?.price
-                                ? t('sellFunds')
+                                ? t('addFunds')
                                 : t('dataLoading')
                             : t('approve')
                     }

@@ -100,7 +100,8 @@ export class CardService implements ICardService {
                 totalDeposits: lpAmount,
             };
         } catch (e) {
-            throw new Error('Error while calculating current deposit');
+            Notification.error('Error', 'Error while calculating current deposit');
+            console.log(e);
         }
     };
 
@@ -123,7 +124,8 @@ export class CardService implements ICardService {
                 price,
             };
         } catch (e) {
-            throw new Error('Error while calculating remain data');
+            Notification.error('Error', 'Error while calculating remain data');
+            console.log(e);
         }
     };
 
@@ -159,7 +161,6 @@ export class CardService implements ICardService {
             const synthObj = (ChainConfig[this.name].SYNTH as any).find(
                 (el: any) => el.ID === id,
             );
-            console.log(id);
 
             const { currentDeposits, totalDeposits } = await this.getCurrentDeposit(
                 necessaryContracts,
@@ -176,7 +177,8 @@ export class CardService implements ICardService {
                 price,
             };
         } catch (e) {
-            throw new Error('Error calculating card data');
+            Notification.error('Error', 'Error calculating card data');
+            console.log(e);
         }
     };
 
@@ -205,7 +207,8 @@ export class CardService implements ICardService {
                 totalPositions,
             };
         } catch (e) {
-            throw new Error('Error while calculating positions sum');
+            Notification.error('Error', 'Error while calculating positions sum');
+            console.log(e);
         }
     };
 }

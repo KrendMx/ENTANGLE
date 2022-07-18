@@ -149,7 +149,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
             </ul>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{t('Yield')}</p>
+                    <p className={styles.undertitle}>{t('yield')}</p>
                     {'AVAX' in profits ? (
                         <p className={styles.itemValue}>
                             $

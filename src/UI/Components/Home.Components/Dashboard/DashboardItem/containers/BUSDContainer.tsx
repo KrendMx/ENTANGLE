@@ -1,9 +1,12 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, {
+    useMemo, useEffect, useState, useTransition,
+} from 'react';
 import { CardService } from 'src/Services';
 import { farms } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import { Notification } from 'src/libs/Notification';
+import { useTranslation } from 'react-i18next';
 import DashboardItem from '../index';
 import Modal from '../../../../Modal';
 import PayModal from '../../../PayModal';
@@ -30,6 +33,8 @@ const BUSDContainer = ({ isFiltered = false }) => {
     };
     const openModal = () => dispatch(setIsOpenModal(true));
 
+    const { t: tError } = useTranslation('error');
+
     const data = {
         icon: 'pancakeDashboard.png',
         bgGradient:
@@ -55,7 +60,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     );
                     apr = cardData.apr;
                 } catch (e) {
-                    Notification.error('Error', e.message);
+                    Notification.error(tError('error'), e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
@@ -149,7 +154,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                     positions = personalData.positions;
                     totalPositions = personalData.totalPositions;
                 } catch (e: any) {
-                    Notification.error('Error', e.message);
+                    Notification.error(tError('error'), e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }

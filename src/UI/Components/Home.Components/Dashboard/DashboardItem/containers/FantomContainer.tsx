@@ -4,6 +4,7 @@ import { CardService } from 'src/Services';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import { Notification } from 'src/libs/Notification';
+import { useTranslation } from 'react-i18next';
 import PayModal from '../../../PayModal';
 import Modal from '../../../../Modal';
 import DashboardItem from '../index';
@@ -44,6 +45,8 @@ const FantomContainer = ({ isFiltered = false }) => {
 
     const Service = useMemo(() => new CardService('FTM'), []);
 
+    const { t: tError } = useTranslation('error');
+
     useEffect(() => {
         if (!preLoader) {
             (async () => {
@@ -54,7 +57,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     );
                     apr = cardData.apr;
                 } catch (e) {
-                    Notification.error('Error', e.message);
+                    Notification.error(tError('error'), e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
@@ -147,7 +150,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                     positions = personalData.positions;
                     totalPositions = personalData.totalPositions;
                 } catch (e: any) {
-                    Notification.error('Error', e.message);
+                    Notification.error(tError('error'), e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }

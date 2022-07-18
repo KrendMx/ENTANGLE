@@ -9,7 +9,7 @@ import styles from './style.module.css';
 import { DepositTab } from './DepositTab';
 import { YieldTab } from './YielTab';
 
-export const DepositPage: React.FC<IDepositeProps> = ({ query, reverse }) => {
+export const DepositPage: React.FC<IDepositeProps> = ({ query }) => {
     const { first, second, time } = query;
 
     const { t: tDep } = useTranslation('ssasdep');

@@ -23,6 +23,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
             'footer',
             'stable',
             'index',
+            'error',
             'ssasdep',
             'ssas',
         ])),

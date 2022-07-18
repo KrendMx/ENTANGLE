@@ -84,7 +84,7 @@ export class ChainService implements IChainService {
         for (const key in ChainService.contracts) {
             finalArr.push(await ChainService.getSumValueFromContract(key));
         }
-        return Math.round(finalArr.reduce((pr, cr) => Number(pr) + Number(cr)));
+        return Math.round(finalArr.filter((el) => el).reduce((pr, cr) => Number(pr) + Number(cr)));
     };
 
     public static getTRAForBuyAndSell = async () => {
