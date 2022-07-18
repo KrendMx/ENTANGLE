@@ -3,7 +3,7 @@ import FantomContainer from './DashboardItem/containers/FantomContainer';
 
 import BUSDContainer from './DashboardItem/containers/BUSDContainer';
 import ETHContainer from './DashboardItem/containers/ETHContainer';
-import ElrondContainer from './DashboardItem/containers/ElrondContainer';
+// import ElrondContainer from './DashboardItem/containers/ElrondContainer';
 
 const ITEMS = [
     {
@@ -34,13 +34,13 @@ const ITEMS = [
             <BUSDContainer isFiltered={isFiltered} key={key} />
         ),
     },
-    {
-        filter: 22417,
-        query: ['elrond', 'egld', 'egld-usdt'],
-        element: (isFiltered: boolean, key: number) => (
-            <ElrondContainer isFiltered={isFiltered} key={key} />
-        ),
-    },
+    // {
+    //     filter: 22417,
+    //     query: ['elrond', 'egld', 'egld-usdt'],
+    //     element: (isFiltered: boolean, key: number) => (
+    //         <ElrondContainer isFiltered={isFiltered} key={key} />
+    //     ),
+    // },
 ];
 
 export default ITEMS;
