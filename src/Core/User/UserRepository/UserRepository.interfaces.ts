@@ -13,8 +13,8 @@ type TX = {
 }
 
 type IChartData = {
-    date: Date,
-    price: number,
+    label: Date,
+    value: number,
 }
 
 interface IProfileChartResponse {

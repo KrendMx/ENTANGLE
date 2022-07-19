@@ -1,30 +1,26 @@
 import moment from 'moment/moment';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import type { ChartDataProps } from 'UI/ui-kit/ChartWrapper/ChartWrapper.interfaces';
 import ChartWrapper from 'UI/ui-kit/ChartWrapper/ChartWrapper';
 import SoonChart from 'UI/ui-kit/SoonChart/SoonChart';
 import { useStore } from 'core/store';
-import { response } from 'UI/Components/Profile.Components/ProfileChart/MockedResponse';
-import { UserEntity } from 'core/User/UserEntity';
-import type { IChartData } from 'core/User/UserRepository';
 import type { BalanceChartTick } from './ProfileChart.ineterfaces';
 import styles from './style.module.css';
 import ChartLoader from './ProfileCharts.constant';
 
 const ProfileChart: React.FC = () => {
-    // const service = useContext<iService>(ServiceContext);
-    const [data, setData] = useState<BalanceChartTick[]>(response);
+    const [data, setData] = useState<BalanceChartTick[]>([]);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const { store } = useStore((store) => ({
         WalletEntity: store.WalletEntity,
         UserEntity: store.UserEntity,
     }));
-    const { chartData } = store.UserEntity;
+    const { chartData: rawChartData } = store.UserEntity;
 
     useEffect(() => {
-        setIsLoaded(true);
-    }, []);
+        setData(rawChartData);
+    }, [rawChartData]);
 
     const filters = {
         '24H': moment().subtract(1, 'days').toDate(),
@@ -48,10 +44,13 @@ const ProfileChart: React.FC = () => {
         const filtredData = data.filter(
             (i) => i.label > filters[selectedFilter],
         );
-        setChartData({
+        const res = {
             labels: filtredData.map((i) => i.label),
             data: filtredData.map((i) => i.value),
-        });
+        };
+        console.log(data);
+        setChartData(res);
+        setIsLoaded(true);
     };
 
     useEffect(() => {

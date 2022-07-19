@@ -1,5 +1,5 @@
 type BalanceChartTick = {
-    label: any,
+    label: Date,
     value: number,
 }
 
