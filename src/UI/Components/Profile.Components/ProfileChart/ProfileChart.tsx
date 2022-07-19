@@ -20,7 +20,7 @@ const ProfileChart: React.FC = () => {
         WalletEntity: store.WalletEntity,
         UserEntity: store.UserEntity,
     }));
-    const { chartData: chartsData } = store.UserEntity;
+    const { chartData } = store.UserEntity;
 
     useEffect(() => {
         setIsLoaded(true);

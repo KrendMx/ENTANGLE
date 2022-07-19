@@ -101,15 +101,16 @@ export const createUserInteractor = (
         'UserInteractor/getChartData',
         async ({ account }, { dispatch }): Promise<any> => {
             try {
+                dispatch(Entity.actions.setTxLoaded(true));
                 const res: IHttpClientResponse<IProfileChartResponse> = await Repository.getProfileData(account);
-                console.log(res);
-                dispatch(Entity.actions.setChartData(res.data.respones.chart));
-                dispatch(Entity.actions.setTxChartData(res.data.respones.txs));
+                console.log(res.data.response.chart);
+                dispatch(Entity.actions.setChartData(res.data.response.chart));
+                dispatch(Entity.actions.setTxHistory(res.data.response.txs));
             } catch (e) {
                 Notification.error('Error', e.message);
                 dispatch(Entity.actions.setError(e.message));
             } finally {
-                dispatch(Entity.actions.setIsChartLoaded(true));
+                dispatch(Entity.actions.setTxLoaded(false));
             }
         },
     ),

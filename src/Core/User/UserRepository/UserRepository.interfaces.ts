@@ -18,9 +18,9 @@ type IChartData = {
 }
 
 interface IProfileChartResponse {
-    respones: any;
+    [x: string]: any;
     data: {
-        respones: {
+        response: {
             txs: TX[],
             chart: IChartData[]
         }
