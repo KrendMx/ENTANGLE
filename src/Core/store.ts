@@ -14,6 +14,8 @@ import { WalletEntity } from './Wallet/WalletEntity';
 import { WalletInteractor } from './Wallet/WalletInteractor';
 import type { IWalletInteractor } from './Wallet/WalletInteractor';
 import { AppEntity } from './App/AppEntity';
+import type { ICardInteractor } from './Cards/CardInteractor';
+import { CardInteractor } from './Cards/CardInteractor';
 
 export const store = configureStore({
     reducer: {
@@ -49,12 +51,14 @@ interface IAsyncActions {
     User: IUserInteractor;
     Contract: IContractInteractor,
     Wallet: IWalletInteractor,
+    Card: ICardInteractor
   }
 
 export const asyncActions: IAsyncActions = {
     User: UserInteractor,
     Contract: ContractInteractor,
     Wallet: WalletInteractor,
+    Card: CardInteractor,
 };
 
 export const useStore = <T>(

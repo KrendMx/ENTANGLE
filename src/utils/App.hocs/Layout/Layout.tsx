@@ -30,6 +30,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         AppEntity: store.AppEntity,
         WalletEntity: store.WalletEntity,
         ContractEntity: store.ContractEntity,
+        CardEntity: store.CardsEntity,
     }));
     const dispatch = useDispatch();
 
@@ -40,9 +41,6 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     const { account, chainId } = store.WalletEntity;
 
     const { clearAllowance } = actions.Contract;
-
-    const { setCardInfo } = actions.Card;
-    const { setPayData } = actions.User;
 
     const { setIsAppLoaded } = actions.App;
     const {
@@ -55,6 +53,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     } = actions.User;
 
     const { calculateBalances, getAverageBuyPrice } = asyncActions.User;
+    const { getCardApr } = asyncActions.Card;
 
     useEffect(() => {
         dispatch(setIsAppLoaded(true));
@@ -87,6 +86,10 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 .finally(() => dispatch(setTxLoaded(true)));
         })();
     }, [account, txLoading]);
+
+    useEffect(() => {
+        dispatch(getCardApr());
+    }, []);
 
     useEffect(() => {
         (async function GetProfit() {
