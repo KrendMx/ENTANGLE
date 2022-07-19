@@ -77,13 +77,13 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
                     {image && (
                         <div className={styles.smallImg}>{image}</div>
                     )}
-                    <div>{`${sign}${value?.toFixed(4)}%`}</div>
-                    <div className={styles.smallText}>
-                        (
+                    <div style={{ color: '#fff' }}>{`${sign}${value?.toFixed(4)}%`}</div>
+                    <div>
+                        (&nbsp;
                         {signChange}
                         $
                         {Number(Math.abs(changeValue)).toFixed(4)}
-                        )
+                        &nbsp;)
                     </div>
                 </div>
             );

@@ -1,8 +1,7 @@
 import { default as axiosLib } from 'axios';
 
 export const axios = axiosLib.create({
-    baseURL: process.env.API_HOST || '',
-    withCredentials: true,
+    baseURL: process.env.NEXT_PUBLIC_API_HOST || '',
 });
 
 axios.interceptors.response.use(

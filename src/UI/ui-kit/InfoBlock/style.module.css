@@ -20,9 +20,6 @@
 	font-size: 14px;
 }
 
-.smallText {
-	font-size: 16px;
-}
 
 .smallImg {
 	display: flex;
@@ -38,6 +35,7 @@
 	display: flex;
 	align-items: center;
 	flex-direction: row;
+  font-size: 24px!important;
 }
 
 .horisontalWrapper {

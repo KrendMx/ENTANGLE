@@ -37,6 +37,7 @@ const Pager: React.FC<PagerProps> = ({
                 className={classNames(styles.block, {
                     [styles.selected]: i + shift === selectedPage,
                 })}
+                key={i}
             >
                 <div>{i + shift}</div>
             </div>
