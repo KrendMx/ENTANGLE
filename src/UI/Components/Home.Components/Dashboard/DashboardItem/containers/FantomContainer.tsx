@@ -50,33 +50,6 @@ const FantomContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader) {
             (async () => {
-                let apr = 0;
-                try {
-                    const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.FTM : '9',
-                    );
-                    apr = cardData.apr;
-                } catch (e) {
-                    Notification.error(tError('error'), e.message);
-                    if ((e.code as number) === -32002) {
-                        localStorage.removeItem('wallet');
-                    }
-                }
-                dispatch(
-                    setCardInfo({
-                        key: data.chainId,
-                        data: {
-                            apr: apr.toString(),
-                        },
-                    }),
-                );
-            })();
-        }
-    });
-
-    useEffect(() => {
-        if (!preLoader) {
-            (async () => {
                 let [
                     available,
                     totalAvailable,

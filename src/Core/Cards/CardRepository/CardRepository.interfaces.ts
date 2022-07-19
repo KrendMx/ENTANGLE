@@ -5,7 +5,11 @@ interface ICardRepository {
 }
 
 interface IAprResponse {
-    [key: string]: number
+    data?: {
+        apr? : {
+            [key: string]: number
+        }
+    }
 }
 
 export type {
