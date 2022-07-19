@@ -18,8 +18,13 @@ type IChartData = {
 }
 
 interface IProfileChartResponse {
-    txs: TX[],
-    chart: IChartData[]
+    respones: any;
+    data: {
+        respones: {
+            txs: TX[],
+            chart: IChartData[]
+        }
+    }
 }
 
 export type {

@@ -52,7 +52,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         setLoading,
     } = actions.User;
 
-    const { calculateBalances, getAverageBuyPrice } = asyncActions.User;
+    const { calculateBalances, getAverageBuyPrice, getChartData } = asyncActions.User;
     const { getCardApr } = asyncActions.Card;
 
     useEffect(() => {
@@ -77,14 +77,8 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     }, [account, txLoading]);
 
     useEffect(() => {
-        (async () => {
-            if (!account) return;
-            Graph.getAllTransactions()
-                .then((res) => {
-                    dispatch(setTxHistory(res));
-                })
-                .finally(() => dispatch(setTxLoaded(true)));
-        })();
+        if (!account) return;
+        dispatch(getChartData({ account }));
     }, [account, txLoading]);
 
     useEffect(() => {

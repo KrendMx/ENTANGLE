@@ -46,6 +46,7 @@ const Profile = () => {
         }
     }
 
+    // Calculate Best/Worst performers + allTimeProfit
     useEffect(() => {
         if (Object.keys(profits).length >= 4) {
             let best = { value: 0, change: -Infinity, chain: '250' };

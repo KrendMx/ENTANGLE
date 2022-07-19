@@ -8,11 +8,12 @@ import type { IProfileChartResponse, IUserRepository } from './UserRepository.in
 export const UserRepository: IUserRepository = {
     getProfileData: async (user: string) => {
         try {
-            return await HttpClient.post<IProfileChartResponse>('/charts/profileChart', {
-                data: { user },
-            });
+            return await HttpClient.post<IProfileChartResponse>(
+                'charts/profileChart',
+                { data: { user } },
+            );
         } catch (err: any) {
-            Notification.error('HTTP Error', 'Error sending request');
+            Notification.error('HTTP Error', 'Error getting txHistory');
         }
     },
 };

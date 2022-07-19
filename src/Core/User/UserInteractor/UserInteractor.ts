@@ -102,8 +102,9 @@ export const createUserInteractor = (
         async ({ account }, { dispatch }): Promise<any> => {
             try {
                 const res: IHttpClientResponse<IProfileChartResponse> = await Repository.getProfileData(account);
-                dispatch(Entity.actions.setChartData(res.data.chart));
-                dispatch(Entity.actions.setTxChartData(res.data.txs));
+                console.log(res);
+                dispatch(Entity.actions.setChartData(res.data.respones.chart));
+                dispatch(Entity.actions.setTxChartData(res.data.respones.txs));
             } catch (e) {
                 Notification.error('Error', e.message);
                 dispatch(Entity.actions.setError(e.message));
