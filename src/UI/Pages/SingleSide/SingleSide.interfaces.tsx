@@ -1,5 +1,3 @@
-import type { networks } from '@/src/utils/GlobalConst';
-
 type SingleSideReducerType = {
     tvl: string;
     volume: string;

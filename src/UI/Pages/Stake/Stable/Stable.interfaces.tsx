@@ -1,5 +1,3 @@
-import type { availableChains } from '@/src/utils/GlobalConst';
-
 interface IAssetItem {
     title: string;
     apr: number;

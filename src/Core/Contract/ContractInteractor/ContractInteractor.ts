@@ -54,7 +54,7 @@ export const createContractInteractor = (
 
                 const value = await contract.allowance(account, dexAddress);
                 dispatch(
-                    Entity.actions.setAllowance({ chainId, cardId, value }),
+                    Entity.actions.setAllowance({ cardId, value }),
                 );
             } catch (e) {
                 Notification.error('Error', e.message);
@@ -82,7 +82,7 @@ export const createContractInteractor = (
                 );
                 const res = await value.wait();
                 if (res?.status) {
-                    Entity.actions.setAllowance({ chainId, cardId, value: 10000000 });
+                    Entity.actions.setAllowance({ cardId, value: 10000000 });
                 } else {
                     Notification.error('Error', 'Internal blockchain error');
                 }

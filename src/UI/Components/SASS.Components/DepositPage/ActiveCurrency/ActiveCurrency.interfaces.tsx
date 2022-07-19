@@ -1,4 +1,4 @@
-import type { availableSingleSideChains } from '@/src/utils/GlobalConst';
+import type { availableSingleSideChains } from 'src/utils/Global/Types';
 
 interface IAssetsSelectorProps {
     assets: availableSingleSideChains[];
