@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import { networks, STABLES } from 'utils/Global/Vars';
+import { useRouter } from 'next/router';
 import type { IAssetItem } from '../../../Pages/Stake/Stable/Stable.interfaces';
 
 import styles from './style.module.css';
@@ -16,6 +17,9 @@ const AssetItem: React.FC<IAssetItem> = ({
 }) => {
     const { t } = useTranslation('stable');
     const { t: tIndex } = useTranslation('index');
+
+    const router = useRouter();
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
@@ -67,18 +71,14 @@ const AssetItem: React.FC<IAssetItem> = ({
                     </p>
                 </div>
                 <div className={styles.button}>
-                    <Link
-                        href={`/stake-stablecoin/${title}`}
-                        as={`/stake-stablecoin/${title}`}
-                        passHref
-                    >
-                        <GradientButton
-                            title={t('view')}
-                            onClick={() => {}}
-                            titleClass={styles.titleClass}
-                            wrapperClass={styles.blockClass}
-                        />
-                    </Link>
+                    <GradientButton
+                        title={t('view')}
+                        onClick={() => {
+                            router.push(`/stake-stablecoin/${title}`);
+                        }}
+                        titleClass={styles.titleClass}
+                        wrapperClass={styles.blockClass}
+                    />
                 </div>
             </div>
         </div>

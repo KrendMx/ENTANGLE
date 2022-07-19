@@ -39,7 +39,7 @@ const ElrondContainer = ({ isFiltered = false }) => {
         heading: 'EGLD-USDC',
         chainId: '22417',
         priceCurrency: 'aDAI/aSUSD Synthetic LP',
-        vendor: 'convexfinance.com',
+        vendor: 'maiar.exchange',
         disabled: false,
         openModal,
         rowGradient,
@@ -142,6 +142,7 @@ const ElrondContainer = ({ isFiltered = false }) => {
         <DashboardItem
             {...data}
             {...CardData[data.chainId]}
+            disabled
             isFiltered={isFiltered}
         />
     );

@@ -20,6 +20,12 @@ const StakeStable: React.FC = () => {
 
     const filterSortStables = () => {};
 
+    const generateGraph = (): number[] => {
+        // eslint-disable-next-line prefer-spread
+        const arr = Array.apply(null, { length: 25 });
+        return arr.map((el : number, i: number) => Math.random() * (30 - 10) + i);
+    };
+
     const { t } = useTranslation('stable');
     const { t: tIndex } = useTranslation('index');
     return (
@@ -42,8 +48,8 @@ const StakeStable: React.FC = () => {
                 <div className={classNames(styles.chart, styles.mgr)}>
                     <ChartWrapper
                         label={t('tvl')}
-                        data={Array.apply(null, { length: 10 }).map(Function.call, Math.random)}
-                        labels={Array.from(Array(10).keys())}
+                        data={generateGraph()}
+                        labels={Array.from(Array(25).keys())}
                         total="1568'530'000"
                         percentChange={54.345}
                     />
@@ -51,8 +57,8 @@ const StakeStable: React.FC = () => {
                 <div className={styles.chart}>
                     <ChartWrapper
                         label={t('slpSupply')}
-                        data={Array.apply(null, { length: 10 }).map(Function.call, Math.random)}
-                        labels={Array.from(Array(10).keys())}
+                        data={generateGraph()}
+                        labels={Array.from(Array(25).keys())}
                         total="1568'530'000"
                         percentChange={54.345}
                     />

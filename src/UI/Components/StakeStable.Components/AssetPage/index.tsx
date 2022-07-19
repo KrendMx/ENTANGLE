@@ -16,6 +16,13 @@ const AssetPage: React.FC<AssetPageProps> = ({ stable }) => {
     const [activeTab, setActiveTab] = useState<number>(0);
 
     const { t } = useTranslation('stable');
+
+    const generateGraph = (): number[] => {
+        // eslint-disable-next-line prefer-spread
+        const arr = Array.apply(null, { length: 25 });
+        return arr.map((el : number, i: number) => Math.random() * (30 - 10) + i);
+    };
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
@@ -32,11 +39,8 @@ const AssetPage: React.FC<AssetPageProps> = ({ stable }) => {
                     <div className={classNames(styles.chart, styles.mgr)}>
                         <ChartWrapper
                             label={t('tvl')}
-                            data={Array.apply(null, { length: 10 }).map(
-                                Function.call,
-                                Math.random,
-                            )}
-                            labels={Array.from(Array(10).keys())}
+                            data={generateGraph()}
+                            labels={Array.from(Array(25).keys())}
                             total="1568'530'000"
                             percentChange={54.345}
                             miniGraph
@@ -45,11 +49,8 @@ const AssetPage: React.FC<AssetPageProps> = ({ stable }) => {
                     <div className={styles.chart}>
                         <ChartWrapper
                             label={t('slpSupply')}
-                            data={Array.apply(null, { length: 10 }).map(
-                                Function.call,
-                                Math.random,
-                            )}
-                            labels={Array.from(Array(10).keys())}
+                            data={generateGraph()}
+                            labels={Array.from(Array(25).keys())}
                             total="1568'530'000"
                             percentChange={-54.345}
                             miniGraph

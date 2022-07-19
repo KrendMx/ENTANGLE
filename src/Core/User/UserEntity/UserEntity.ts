@@ -36,6 +36,7 @@ export const UserEntity = createSlice({
         setProfit(state, action: PayloadAction<any>) {
             state.profits = action.payload;
         },
+        // eslint-disable-next-line no-undef
         setAvgPrice(state, action: PayloadAction<{ res: typeof this.state.avgPrices }>) {
             state.avgPrices = action.payload;
         },

@@ -119,28 +119,25 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                             currency="SYNTHUSDC"
                             showPayModal
                         >
-                            {Object.keys(networks).map((el, idx) => {
-                                console.log();
-                                return (
-                                    <TokenOption
-                                        value={el}
-                                        key={idx}
-                                        name={networks[el].abbr}
-                                        amount={
-                                            balances[chainToNameConfig[el]]?.[
-                                                chainId
-                                            ]?.positions
-                                                ? balances[
-                                                    chainToNameConfig[el]
-                                                ][chainId]?.positions.toString()
-                                                : 'Buy now'
-                                        }
-                                        currency="SYNTHUSDC"
-                                    >
-                                        {networks[el].currencyMin}
-                                    </TokenOption>
-                                );
-                            })}
+                            {Object.keys(networks).map((el, idx) => (
+                                <TokenOption
+                                    value={el}
+                                    key={idx}
+                                    name={networks[el].abbr}
+                                    amount={
+                                        balances[chainToNameConfig[el]]?.[
+                                            chainId
+                                        ]?.positions
+                                            ? balances[
+                                                chainToNameConfig[el]
+                                            ][chainId]?.positions.toString()
+                                            : 'Buy now'
+                                    }
+                                    currency="SYNTHUSDC"
+                                >
+                                    {networks[el].currencyMin}
+                                </TokenOption>
+                            ))}
                         </TokenSelect>
                     </div>
                     <div>

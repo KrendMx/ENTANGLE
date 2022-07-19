@@ -137,7 +137,17 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                             }
                         }
                     }
-                    dispatch(setProfit(res));
+                    dispatch(
+                        setProfit(
+                            Object.assign(res, {
+                                EGLD: {
+                                    '43114': { percentage: 0, stable: 0 },
+                                    '250': { percentage: 0, stable: 0 },
+                                    '56': { percentage: 0, stable: 0 },
+                                },
+                            }),
+                        ),
+                    );
                 } else if (!txHistory.length && txLoaded) {
                     const chains = Object.keys(balances);
                     for (let i = 0; i < chains.length; i++) {

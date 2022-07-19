@@ -20,7 +20,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({
     titleClass,
     wrapperClass,
     onClick,
-    disabled,
+    disabled = false,
     loader,
     gradient = 'linear-gradient(90deg, #FF5EBA 0%, #6831D6DE 87%, #0094FF 100%)',
     ...props

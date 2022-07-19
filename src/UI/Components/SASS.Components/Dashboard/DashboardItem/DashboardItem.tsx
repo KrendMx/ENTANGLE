@@ -8,6 +8,7 @@ import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
 import { DescriptionGenerator } from 'src/UI/ui-kit/DescriptionGenerator';
+import { useRouter } from 'next/router';
 import styles from './style.module.css';
 import type { IDashboardSASSItems } from '../Dashboard.interfaces';
 
@@ -25,6 +26,8 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
 
     const { t: tIndex } = useTranslation('index');
     const { t } = useTranslation('ssas');
+
+    const Router = useRouter();
     return (
         <div className={styles.wrapper}>
             <span
@@ -191,16 +194,14 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                 </div>
             </div>
             <div className={styles.footer}>
-                <Link
-                    href={`/single-side-staking/deposit?first=${firstChainId}&second=${secondChainId}&time=${term}`}
-                    as={`/single-side-staking/deposit?first=${firstChainId}&second=${secondChainId}&time=${term}`}
-                    passHref
-                >
-                    <GradientButton
-                        title={tIndex('select')}
-                        onClick={() => {}}
-                    />
-                </Link>
+                <GradientButton
+                    title={tIndex('select')}
+                    onClick={() => {
+                        Router.push(
+                            `/single-side-staking/deposit?first=${firstChainId}&second=${secondChainId}&time=${term}`,
+                        );
+                    }}
+                />
             </div>
         </div>
     );

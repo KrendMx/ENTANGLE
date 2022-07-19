@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { Contract } from 'ethers';
+import { BigNumber, Contract, ethers } from 'ethers';
 import { useTranslation } from 'react-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import { networks, namesConfig } from 'utils/Global/Vars';
@@ -52,7 +52,6 @@ const Deposit: React.FC<propsType> = ({
         usdc: '',
         synth: '',
     });
-    const [maxError, setMaxError] = useState<boolean>(false);
 
     const { t } = useTranslation('index');
 
@@ -76,16 +75,6 @@ const Deposit: React.FC<propsType> = ({
             dispatch(setAllowance({ cardId: localChain, value }));
         }());
     }, [chainId]);
-
-    useEffect(() => {
-        (async function checkMax() {
-            if (Number(amount) > Number(await balanceUSDC)) {
-                setMaxError(true);
-            } else {
-                setMaxError(false);
-            }
-        }());
-    }, [amount, chainId]);
 
     useEffect(() => {
         (async function calcBalances() {
@@ -126,15 +115,28 @@ const Deposit: React.FC<propsType> = ({
 
     const buttonData = useMemo(() => {
         const res = {
-            title: 'Add funds',
+            title: t('dataLoading'),
             disabled: true,
-            onClick: () => buyToken(parseFloat(amount)),
-            loader: false
+            onClick: () => {},
+            loader: txLoading,
         };
-        if () {
-            
+        if (allowance[localChain] && payData[localChain]) {
+            if (allowance[localChain].toString().length > 1 && payData[localChain]?.price) {
+                res.title = t('addFunds');
+            } else {
+                res.title = t('approve');
+            }
         }
-    }, [amount, txLoading, maxError, localChain, payData])
+        if (res.title === t('approve')) {
+            res.onClick = () => handleApprove();
+            res.disabled = false;
+        } else if (res.title === t('addFunds')) {
+            res.disabled = !(Number(amount) !== 0 && Number(amount) <= Number(balances.usdc));
+            res.onClick = () => buyToken(parseFloat(amount));
+        }
+
+        return res;
+    }, [amount, txLoading, payData, allowance]);
 
     return (
         <div className={styles.container}>
@@ -240,40 +242,17 @@ const Deposit: React.FC<propsType> = ({
                 }}
                 getMax={getMax}
             />
-            {txLoading || maxError ? (
-                <GradientButton
-                    title={maxError ? 'Add funds' : 'Waiting'}
-                    onClick={() => {}}
-                    disabled
-                    loader={
-                        txLoading && (
-                            <i
-                                className="fa fa-spinner fa-spin"
-                                style={{ marginLeft: '5px' }}
-                            />
-                        )
-                    }
-                />
-            ) : (
-                <GradientButton
-                    title={
-                        allowance[localChain] > 0
-                            ? payData[localChain as availableChains]?.price
-                                ? t('addFunds')
-                                : t('dataLoading')
-                            : t('approve')
-                    }
-                    onClick={
-                        allowance[localChain] > 0
-                            ? () => buyToken(parseFloat(amount))
-                            : () => handleApprove()
-                    }
-                    disabled={
-                        !amount
-                        || !payData[localChain]?.price
-                    }
-                />
-            )}
+            <GradientButton
+                {...buttonData}
+                loader={
+                    buttonData.loader && (
+                        <i
+                            className="fa fa-spinner fa-spin"
+                            style={{ marginLeft: '5px' }}
+                        />
+                    )
+                }
+            />
         </div>
     );
 };
