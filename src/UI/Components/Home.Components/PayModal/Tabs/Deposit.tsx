@@ -48,7 +48,6 @@ const Deposit: React.FC<propsType> = ({
 
     const [amount, setAmount] = useState('');
     const [synthAmount, setSynthAmount] = useState('');
-    const [allow, setAllow] = useState<number>(0);
     const [balances, setBalances] = useState<{ usdc: string; synth: string }>({
         usdc: '',
         synth: '',
@@ -257,7 +256,11 @@ const Deposit: React.FC<propsType> = ({
                             ? () => buyToken(parseFloat(amount))
                             : () => handleApprove()
                     }
-                    disabled={allowance[localChain] < 0 || (!!amount && amount > balances.usdc)}
+                    disabled={
+                        Number(allowance[localChain]) < 0
+                        || !amount
+                        || !payData[localChain]?.price
+                    }
                 />
             )}
         </div>
