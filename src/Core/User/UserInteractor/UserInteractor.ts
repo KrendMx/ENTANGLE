@@ -102,12 +102,15 @@ export const createUserInteractor = (
         async ({ account }, { dispatch }): Promise<any> => {
             try {
                 dispatch(Entity.actions.setTxLoaded(true));
-                const res: IHttpClientResponse<IProfileChartResponse> = await Repository.getProfileData(account);
-                console.log(res.data.response.chart);
-                dispatch(Entity.actions.setChartData(res.data.response.chart));
-                dispatch(Entity.actions.setTxHistory(res.data.response.txs));
+                const res : any = await Repository.getProfileData(account);
+                const { data } = res;
+                const { response } = data;
+                dispatch(Entity.actions.setChartData(response.chart));
+                dispatch(Entity.actions.setTxHistory(response.txs));
+                console.log('get data about user transactions');
             } catch (e) {
                 Notification.error('Error', e.message);
+                console.log(e);
                 dispatch(Entity.actions.setError(e.message));
             } finally {
                 dispatch(Entity.actions.setTxLoaded(false));

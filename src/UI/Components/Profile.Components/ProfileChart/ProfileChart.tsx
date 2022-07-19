@@ -42,13 +42,12 @@ const ProfileChart: React.FC = () => {
     const [chartData, setChartData] = useState<ChartDataProps | null>(null);
     const filterChanged = () => {
         const filtredData = data.filter(
-            (i) => i.label > filters[selectedFilter],
+            (i) => new Date(i.label) > filters[selectedFilter],
         );
         const res = {
             labels: filtredData.map((i) => i.label),
             data: filtredData.map((i) => i.value),
         };
-        console.log(data);
         setChartData(res);
         setIsLoaded(true);
     };
