@@ -5,6 +5,7 @@ interface ICardRepository {
 }
 
 interface IAprResponse {
+    [x: string]: any;
     data?: {
         apr? : {
             [key: string]: number
