@@ -124,6 +124,18 @@ const Deposit: React.FC<propsType> = ({
         );
     };
 
+    const buttonData = useMemo(() => {
+        const res = {
+            title: 'Add funds',
+            disabled: true,
+            onClick: () => buyToken(parseFloat(amount)),
+            loader: false
+        };
+        if () {
+            
+        }
+    }, [amount, txLoading, maxError, localChain, payData])
+
     return (
         <div className={styles.container}>
             <div
@@ -234,12 +246,12 @@ const Deposit: React.FC<propsType> = ({
                     onClick={() => {}}
                     disabled
                     loader={
-                        !maxError ? (
+                        txLoading && (
                             <i
                                 className="fa fa-spinner fa-spin"
                                 style={{ marginLeft: '5px' }}
                             />
-                        ) : undefined
+                        )
                     }
                 />
             ) : (
@@ -257,8 +269,7 @@ const Deposit: React.FC<propsType> = ({
                             : () => handleApprove()
                     }
                     disabled={
-                        Number(allowance[localChain]) < 0
-                        || !amount
+                        !amount
                         || !payData[localChain]?.price
                     }
                 />
