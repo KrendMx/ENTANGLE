@@ -6,7 +6,7 @@
 	position: relative;
 
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-evenly;
 
 	padding-bottom: 50px;
@@ -21,7 +21,7 @@
 
 	content: '';
 
-	opacity: 0.3;
+	opacity: 0.1;
 	background-color: var(--white);
 }
 
@@ -33,8 +33,33 @@
 
 .navigate {
 	display: flex;
+	justify-content: space-evenly;
+
+	width: 30%;
 	column-gap: 60px;
 }
+
+.navigate > span {
+	padding-top: 10px;
+	padding-bottom: 30px;
+
+	text-align: center;
+}
+
+.mainLink {
+	cursor: pointer;
+
+	font-size: 16px;
+	line-height: 16px;
+}
+
+.addLink {
+	padding-top: 24px;
+
+	cursor: pointer;
+
+	color: var(--gray);
+} 
 
 .link {
 	cursor: pointer;
@@ -73,6 +98,7 @@
 
 @media screen and (max-width: 1024px) {
 	.content {
+		align-items: center;
 		flex-direction: column;
 	}
 

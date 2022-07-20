@@ -1,29 +1,33 @@
 body .reactToastifyWrap {
-    width: 410px;
+	width: 410px;
 }
 
 body .reactToastifyContainer {
-  width: 100%;
-  min-height: 76px;
-  padding: 10px 10px 10px 43px;
-  background: transparent;
-  box-shadow: none;
-  color: #fff;
-  top: 5em;
-  right: 0;
-  border-radius: 0;
-  position: relative;
-  font-size: 20px;
-  line-height: 31px;
-  font-style: normal;
+	position: relative;
+	top: 5em;
+	right: 0;
+
+	width: 100%;
+	min-height: 76px;
+	padding: 10px 10px 10px 43px;
+
+	color: #FFF;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+
+	font-size: 20px;
+	font-style: normal;
+	line-height: 31px;
 }
 
 body .reactToastifyContainer button {
-  align-self: flex-start;
+	align-self: flex-start;
 }
 
 body .reactToastifyBody {
-  display: flex;
-  padding: 0;
-  margin: 0;
+	display: flex;
+
+	margin: 0;
+	padding: 0;
 }

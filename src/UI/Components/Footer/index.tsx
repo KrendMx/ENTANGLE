@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -24,11 +25,34 @@ const Footer = () => {
                     </span>
                 </Link>
                 <nav className={styles.navigate}>
-                    {NAVIGATE.map(({ title, to }, key) => (
-                        <Link key={key} href={to} passHref>
-                            <span className={classNames(styles.link)}>{ t(title) }</span>
+                    <span>
+                        <Link passHref href="/">
+                            <p className={styles.mainLink}>Synthetic Vaults</p>
                         </Link>
-                    ))}
+                    </span>
+                    <span>
+                        <p className={styles.mainLink}>EnUSD</p>
+                        <Link passHref href="/borrow">
+                            <p className={styles.addLink}>Borrow</p>
+                        </Link>
+                    </span>
+                    <span>
+                        <p className={styles.mainLink}>Stake</p>
+                        <Link passHref href="/stake-entangle">
+                            <p className={styles.addLink}>Entangle</p>
+                        </Link>
+                        <Link passHref href="/stake-stablecoin">
+                            <p className={styles.addLink}>Stablecoin</p>
+                        </Link>
+                        <Link passHref href="/single-side-staking">
+                            <p className={styles.addLink}>SSAS</p>
+                        </Link>
+                    </span>
+                    <span>
+                        <Link passHref href="https://docs.entangle.fi/">
+                            <p className={styles.mainLink}>Whitepape</p>
+                        </Link>
+                    </span>
                 </nav>
                 <div className={styles.connection}>
                     {SOCIALS.map(({ to, icon }, key) => (

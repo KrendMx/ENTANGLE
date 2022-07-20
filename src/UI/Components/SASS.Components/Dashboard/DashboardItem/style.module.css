@@ -27,9 +27,9 @@
 	display: flex;
 	align-items: center;
 
-	padding-top: 125px;
-
 	margin-bottom: 10px;
+
+	padding-top: 125px;
 
 }
 
@@ -63,16 +63,17 @@
 }
 
 .section {
-	margin: 10px 0px;
+	margin: 10px 0;
 }
 
 .sectionTitle {
 	display: flex;
 	align-items: center;
 
+	margin-top: 6px;
+
 	margin-right: 5px;
 	margin-bottom: 6px;
-	margin-top: 6px;
 
 	color: var(--gray);
 

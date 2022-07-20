@@ -69,16 +69,20 @@
 
 .alert-enter {
 	transform: scale(0.8) translateY(20px);
-  }
-  .alert-enter-active {
-	transform: scale(1);
+}
+
+.alert-enter-active {
 	transition: transform 100ms;
-  }
-  .alert-exit {
+	transform: scale(1);
+}
+
+.alert-exit {
 	opacity: 1;
-  }
-  .alert-exit-active {
-	opacity: 0;
-	transform: scale(0.95);
+}
+
+.alert-exit-active {
 	transition: opacity 100ms, transform 100ms;
-  }
+	transform: scale(0.95);
+
+	opacity: 0;
+}

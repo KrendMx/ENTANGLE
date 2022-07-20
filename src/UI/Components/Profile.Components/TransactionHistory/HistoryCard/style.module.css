@@ -1,167 +1,182 @@
 /* stylelint-disable no-duplicate-selectors */
 .root {
-  width: 100%;
-  background: rgb(30 30 30 / 10%);
-  border: 2px solid var(--color-11);
-  border-radius: 18px;
-  padding: 15px 35px;
-  position: relative;
+	position: relative;
+
+	width: 100%;
+	padding: 15px 35px;
+
+	border: 2px solid var(--color-11);
+	border-radius: 18px;
+	background: rgb(30 30 30 / 10%);
 }
 
 .root::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgb(0 0 0 / 90%);
-  z-index: -1;
+	position: absolute;
+	z-index: -1;
+
+	width: 100%;
+	height: 100%;
+
+	content: '';
+
+	background-color: rgb(0 0 0 / 90%);
 }
 
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-  .root::before {
-    backdrop-filter: blur(62px);
-    background-color: rgb(0 0 0 / 10%);
-  }
+	.root::before {
+		backdrop-filter: blur(62px);
+
+		background-color: rgb(0 0 0 / 10%);
+	}
 }
 
 .root + .root {
-  margin-top: 30px;
+	margin-top: 30px;
 }
 
 .list {
-  width: 100%;
+	width: 100%;
 }
 
 .logoWrapper {
-  width: 65px;
-  height: 65px;
-  margin: 0 auto 20px;
+	width: 65px;
+	height: 65px;
+	margin: 0 auto 20px;
 }
 
 .logo {
-  width: 100%;
-  border-radius: 50%;
+	width: 100%;
+
+	border-radius: 50%;
 }
 
 .pare {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 .buy {
-  color: var(--green);
+	color: var(--green);
 }
 
 .sell {
-  color: var(--red);
+	color: var(--red);
 }
 
 .itemValue {
-  color: #ECECEC;
-  font-weight: 600;
-  margin: 5px 0;
+	margin: 5px 0;
+
+	color: #ECECEC;
+
+	font-weight: 600;
 }
 
 .pare,
 .itemValue {
-  font-size: 18px;
+	font-size: 18px;
 }
 
 .undertitle {
-  display: flex;
-  width: 100%;
-  font-size: 12px;
-  font-weight: 300;
-  color: var(--gray);
+	display: flex;
+
+	width: 100%;
+
+	color: var(--gray);
+
+	font-size: 12px;
+	font-weight: 300;
 }
 
 .main {
-  align-content: center;
-  margin-bottom: 20px;
+	align-content: center;
+
+	margin-bottom: 20px;
 }
 
 .list {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .list + .list {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .listItem {
-  list-style: none;
+	list-style: none;
 }
 
 .undertitle.up {
-  color: var(--green);
+	color: var(--green);
 }
 
 .undertitle.loss {
-  color: var(--red);
+	color: var(--red);
 }
 
 .buttonTitleClass {
-  font-size: 16px;
-  word-break: nowrap;
-  padding: 15px 20px;
+	padding: 15px 20px;
+
+	word-break: nowrap;
+
+	font-size: 16px;
 }
 
 .wrapperButtonClass{
-  border-radius: 20px;
+	border-radius: 20px;
 }
 
 @media (min-width: 1200px) {
-  .root {
-    display: grid;
-    grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-column-gap: 40px;
-  }
+	.root {
+		display: grid;
+		grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 1fr;
+		grid-column-gap: 40px;
+	}
 
-  .logoWrapper {
-    margin: 0;
-  }
+	.logoWrapper {
+		margin: 0;
+	}
 
-  .main {
-    margin-bottom: 0;
-  }
+	.main {
+		margin-bottom: 0;
+	}
 
-  .listItem,
-  .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+	.listItem,
+	.main {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
 
-  .main {
-    text-align: left;
-  }
+	.main {
+		text-align: left;
+	}
 
-  .list + .list {
-    margin-top: 0;
-  }
+	.list + .list {
+		margin-top: 0;
+	}
 }
 
 @media (min-width: 1400px) {
-  .root {
-    display: grid;
-    grid-template-columns: 0.3fr 1fr 1.3fr 0.5fr 1fr 0.9fr;
-    grid-column-gap: 25px;
-  }
+	.root {
+		display: grid;
+		grid-template-columns: 0.3fr 1fr 1.3fr 0.5fr 1fr 0.9fr;
+		grid-column-gap: 25px;
+	}
 }
 
 @media screen and (max-width: 900px) {
-  .root {
-    padding: 1.5rem 0;
-  }
+	.root {
+		padding: 1.5rem 0;
+	}
 
-  .pare {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+	.pare {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+	}
 
-  .undertitle {
-    justify-content: center;
-  }
+	.undertitle {
+		justify-content: center;
+	}
 }

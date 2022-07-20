@@ -1,21 +1,23 @@
 .wrapper {
-	padding: 30px 0px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 
 	width: 100%;
+	padding: 30px 0;
 }
 
 .searchWrapper {
+	position: relative;
+
 	width: 100%;
 	max-width: 378px;
+
 	border-radius: 10px;
-	position: relative;
 }
 
 .customInput {
-	box-shadow: inset 0px 0px 4px 1px var(--color-11);
+	box-shadow: inset 0 0 4px 1px var(--color-11);
 }
 
 

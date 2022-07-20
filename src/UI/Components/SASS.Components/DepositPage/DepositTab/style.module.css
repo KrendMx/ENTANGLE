@@ -27,21 +27,27 @@
 }
 
 .infoCard > span {
-	padding-bottom: 5px;
 	display: flex;
-}
 
-.infoCard > span > p {
-	font-size: 14px;
-	color: var(--gray);
-}
-
-.balancesBlock > div:first-child {
-	padding-bottom: 15px !important;
+	padding-bottom: 5px;
 }
 
 .customTextGroop p {
 	font-size: 17px !important;
+}
+
+.infoCard > span > p {
+	color: var(--gray);
+
+	font-size: 14px;
+}
+
+.currencyBlocks > div {
+	padding: 100px;
+
+	border-radius: 18px;
+
+	background-color: var(--color-18);
 }
 
 .cardMainInfoText {
@@ -60,14 +66,6 @@
 	grid-column-gap: 20px;
 
 	padding: 150px 0;
-}
-
-.currencyBlocks > div {
-	padding: 100px;
-
-	border-radius: 18px;
-
-	background-color: var(--color-18);
 }
 
 .currencyBlocks > div > p {
@@ -110,6 +108,11 @@
 	background: rgb(30 30 30 / 10%);
 	backdrop-filter: blur(15px);
 }
+
+.balancesBlock > div:first-child {
+	padding-bottom: 15px !important;
+}
+
 
 
 .miniButtons {

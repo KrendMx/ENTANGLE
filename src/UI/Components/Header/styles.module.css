@@ -67,6 +67,7 @@
 
 .heading > p, .dropItem {
 	cursor: pointer;
+	text-align: left;
 	letter-spacing: 0.07em;
 
 	color: var(--color-5);

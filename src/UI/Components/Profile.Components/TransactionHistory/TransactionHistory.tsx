@@ -118,8 +118,8 @@ const TransactionHistory: React.FC = () => {
                                         src="/images/bar-graph.png"
                                         alt=""
                                         quality={100}
-                                        width={221}
-                                        height={190}
+                                        width={104}
+                                        height={90}
                                     />
                                 </div>
                                 <h2

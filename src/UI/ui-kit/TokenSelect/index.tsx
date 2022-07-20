@@ -2,14 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { chainToNameConfig, networks } from 'utils/Global/Vars';
+import { useStore } from 'core/store';
+import { useDispatch } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import type {
     TokenSelectProps,
     TokenOptionProps,
 } from './TokenSelect.intefaces';
 
 import styles from './style.module.css';
-import PayModal from '../../Components/Home.Components/PayModal';
-import Modal from '../../Components/Modal';
 
 export const TokenOption: React.FC<TokenOptionProps> = ({
     key,
@@ -58,7 +59,11 @@ export const TokenOption: React.FC<TokenOptionProps> = ({
             data-select-amount={amount}
             data-select-abbr={props?.name}
         >
-            {amount ? amount !== 'Buy now' ? Number(Number(amount).toFixed(3)) : amount : undefined}
+            {amount
+                ? amount !== 'Buy now'
+                    ? Number(Number(amount).toFixed(3))
+                    : amount
+                : undefined}
             {' '}
             {amount !== 'Buy now' ? currency : undefined}
         </p>
@@ -84,12 +89,24 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
     const [isOpenPayable, setIsOpenPayable] = useState<boolean>(false);
     const selectWrapperNode = useRef<HTMLDivElement>(null);
 
+    const { actions } = useStore((store) => ({
+        UserEntity: store.UserEntity,
+    }));
+
+    const dispatch = useDispatch();
+
+    const { setIsOpenModal } = actions.User;
+
+    const payModalHandleOpen = () => {
+        dispatch(setIsOpenModal(true));
+    };
+
     useEffect(() => {
         React.Children.forEach<React.ReactElement<TokenOptionProps, 'li'>>(
             children as any,
             (child) => {
                 if (child?.props?.value === value && selected !== value) {
-                    if (child?.props?.amount) setBalance(child?.props?.amount.split(' ')[0]);
+                    if (child?.props?.amount) { setBalance(child?.props?.amount.split(' ')[0]); }
                     setSelected(child?.props?.value);
                 }
             },
@@ -107,11 +124,14 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
                 setIsOpen(!isOpen);
             }
             if (target.getAttribute('data-select-amount') === 'Buy now') {
-                sessionStorage.setItem('card', target.getAttribute('data-select-abbr'));
-                setIsOpenPayable(true);
+                sessionStorage.setItem(
+                    'card',
+                    target.getAttribute('data-select-abbr'),
+                );
+                payModalHandleOpen();
             }
-            if (selectWrapperNode.current.contains(target as Node)) setIsOpen(!isOpen);
-            if (!selectWrapperNode.current.contains(target as Node)) setIsOpen(false);
+            if (selectWrapperNode.current.contains(target as Node)) { setIsOpen(!isOpen); }
+            if (!selectWrapperNode.current.contains(target as Node)) { setIsOpen(false); }
         };
         window.addEventListener('click', handleClick);
         return () => window.removeEventListener('click', handleClick);
@@ -120,16 +140,6 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
     return (
         <>
             {title && <p className={styles.title}>{title}</p>}
-            {showPayModal && isOpenPayable ? (
-                <Modal handleClose={() => { setIsOpenPayable(false); }}>
-                    <PayModal
-                        handleClose={() => { setIsOpenPayable(false); }}
-                        available="123"
-                        totalAvailable="123"
-                        price="123"
-                    />
-                </Modal>
-            ) : null}
             <div
                 className={classNames(styles.wrapper, customClassName, [
                     disabled ? styles.disabled : '',
@@ -147,7 +157,9 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
                         />
                     )}
                     <label className={styles.label}>
-                        {networks[selected]?.[selectedTitle] ? networks[selected][selectedTitle] : defaultLabel}
+                        {networks[selected]?.[selectedTitle]
+                            ? networks[selected][selectedTitle]
+                            : defaultLabel}
                     </label>
                     <Image
                         width={13}
@@ -168,7 +180,19 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
                         {currency}
                     </p>
                 )}
-                {isOpen && <ul className={styles.options}>{children}</ul>}
+                <CSSTransition
+                    in={isOpen}
+                    timeout={200}
+                    unmountOnExit
+                    classNames={{
+                        enter: styles['alert-enter'],
+                        enterActive: styles['alert-enter-active'],
+                        exit: styles['alert-exit'],
+                        exitActive: styles['alert-exit-active'],
+                    }}
+                >
+                    <ul className={styles.options}>{children}</ul>
+                </CSSTransition>
             </div>
         </>
     );

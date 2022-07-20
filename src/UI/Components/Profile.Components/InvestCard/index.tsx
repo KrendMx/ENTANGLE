@@ -51,15 +51,15 @@ const InvestCard: React.FC<IProps> = ({
 
     return (
         <div>
-            {!hasTokens && !('AVAX' in balances) ? (
+            {!hasTokens ? (
                 <>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Image
                             src="/images/bar-graph.png"
                             alt=""
                             quality={100}
-                            width={221}
-                            height={190}
+                            width={104}
+                            height={90}
                         />
                     </div>
                     <h2

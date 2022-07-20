@@ -13,6 +13,7 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 import Modal from 'UI/Components/Modal';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import type { availableChains } from 'src/utils/Global/Types';
+import { useDispatch } from 'react-redux';
 import PayModal from '../../../Home.Components/PayModal';
 import styles from '../style.module.css';
 
@@ -26,14 +27,20 @@ const InvestCardExp: React.FC<ICardUnit> = ({
     cardTypeLabelColor,
     currencyName,
 }) => {
-    const { store } = useStore((store) => ({
+    const { store, actions } = useStore((store) => ({
         UserEntity: store.UserEntity,
         CardEntity: store.CardsEntity,
     }));
+
+    const dispatch = useDispatch();
+
     const { profits, avgPrices } = store.UserEntity;
 
-    const [isClose, setIsClose] = useState<boolean | null>(false);
+    const { setIsOpenModal } = actions.User;
 
+    const payModalHandleOpen = () => {
+        dispatch(setIsOpenModal(true));
+    };
     const { data: cardData } = store.CardEntity;
 
     const { t } = useTranslation('index');
@@ -48,22 +55,6 @@ const InvestCardExp: React.FC<ICardUnit> = ({
     };
     return (
         <div className={styles.root} style={{ background: bgGradient || '' }}>
-            {isClose ? (
-                <Modal
-                    handleClose={() => {
-                        setIsClose(false);
-                    }}
-                >
-                    <PayModal
-                        available={cardData[chainId].available}
-                        totalAvailable={cardData[chainId].available}
-                        price={cardData[chainId].price}
-                        handleClose={() => {
-                            setIsClose(false);
-                        }}
-                    />
-                </Modal>
-            ) : null}
             <div className={styles.logoWrapper}>
                 <Image
                     width={64}
@@ -169,7 +160,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                         disabled={false}
                         onClick={() => {
                             sessionStorage.setItem('card', currencyName);
-                            setIsClose(true);
+                            payModalHandleOpen();
                         }}
                         wrapperClass={styles.wrapperButtonClass}
                         titleClass={styles.buttonTitleClass}

@@ -7,6 +7,8 @@
 	justify-content: flex-end;
 
 	min-width: 112px;
+
+	transition: 0.4s;
 }
 
 .soonText {
@@ -40,7 +42,7 @@
 	display: none;
 
 	width: 100%;
-	padding: 15px 4px 15px 4px;
+	padding: 15px 4px;
 
 	border-radius: 12px;
 	background-color: var(--color-3);
@@ -54,10 +56,16 @@
 
 	width: max-content;
 	min-width: 112px;
+
+	transition: 0.4s;
 }
 
-.wrapper img {
-	transition-duration: .3s;
+.arrow {
+	transition-duration: 0.4s;
+}
+
+.wrapper:hover .arrow {
+	transform: rotate(180deg);
 }
 
 .input {
@@ -65,17 +73,17 @@
 }
 
 .list > * {
-	text-align: center;
 	padding: 8px;
 
 	cursor: pointer;
 
-
-	font-size: 14px;
+	transition: all 0.2s;
+	text-align: left;
 
 	border-radius: 6px;
 
-	transition: all 0.2s;
+
+	font-size: 14px;
 }
 
 .list > *:hover {

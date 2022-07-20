@@ -1,0 +1,23 @@
+.alert-enter > div {
+	transform: scale(0.1);
+
+	opacity: 0;
+}
+
+.alert-enter-active > div {
+	transition: opacity 250ms, transform 250ms;
+	transform: translateX(0);
+
+	opacity: 1;
+}
+
+.alert-exit {
+	opacity: 1;
+}
+
+.alert-exit-active > div {
+	transition: opacity 250ms, transform 250ms;
+	transform: scale(0.1);
+
+	opacity: 0;
+}

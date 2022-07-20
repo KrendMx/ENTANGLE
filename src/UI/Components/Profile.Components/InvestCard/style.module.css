@@ -17,6 +17,7 @@
 
 .list {
 	width: 100%;
+
 	text-align: center;
 }
 
@@ -36,8 +37,9 @@
 
 
 .cardLabel {
-	padding: 5px 10px;
 	width: 8rem;
+	padding: 5px 10px;
+
 	border-radius: 14px;
 }
 
@@ -54,29 +56,32 @@
 	font-size: 22px !important;
 	font-weight: 700;
 }
+
 .assetTitle {
 	display: flex;
 }
 
 .itemValue {
-	font-weight: 600;
-	font-size: 18px;
-	line-height: 25px;
-
 	display: flex;
 	align-items: center;
 
 	color: #ECECEC;
+
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 25px;
 }
 
 
 .undertitle {
-	color: var(--gray);
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 19px;
 	display: flex;
 	align-items: center;
+
+	color: var(--gray);
+
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 19px;
 
 }
 

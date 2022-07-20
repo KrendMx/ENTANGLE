@@ -37,8 +37,8 @@
 
 .icon {
 	cursor: pointer;
-	pointer-events: none;
 	transition: all 0.3s;
+	pointer-events: none;
 }
 
 .selected {
@@ -131,4 +131,26 @@
 	margin: .2rem 0;
 }
 
+.alert-enter {
+	transform: translateY(-50px) scale(0.95);
 
+	opacity: 0;
+}
+
+.alert-enter-active {
+	transition: opacity 200ms, transform 200ms;
+	transform: translateX(0);
+
+	opacity: 1;
+}
+
+.alert-exit {
+	opacity: 1;
+}
+
+.alert-exit-active {
+	transition: opacity 100ms, transform 100ms;
+	transform: translateY(-50px) scale(0.95);
+
+	opacity: 0;
+}

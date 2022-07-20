@@ -38,9 +38,13 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         balances, txLoading, txHistory, txLoaded,
     } = store.UserEntity;
     const { isAppLoaded } = store.AppEntity;
-    const { account, chainId } = store.WalletEntity;
+    const { account, chainId, provider } = store.WalletEntity;
 
     const { clearAllowance } = actions.Contract;
+
+    const { setDefaultCardData } = actions.Card;
+
+    const { changeNetwork } = asyncActions.Wallet;
 
     const { setIsAppLoaded } = actions.App;
     const {
@@ -168,8 +172,8 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
 
     useEffect(() => {
         dispatch(clearAllowance());
+        dispatch(setDefaultCardData());
     }, [chainId]);
-
     return (
         <div className={styles.wrapper}>
             <Preloader isVisible={!isAppLoaded} />

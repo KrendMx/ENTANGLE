@@ -42,8 +42,6 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
     ) {
         const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
 
-        gradient.addColorStop(0, '#FF5EBA');
-        gradient.addColorStop(0.5, 'rgba(104, 49, 214, 0.87)');
         gradient.addColorStop(1, '#0094FF');
 
         return gradient;
@@ -55,9 +53,8 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
     ) {
         const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
 
-        gradient.addColorStop(0, 'rgba(104, 49, 214, 0)');
-        gradient.addColorStop(0.5, 'rgba(104, 49, 214, 0.3)');
-        gradient.addColorStop(1, 'rgba(104, 49, 214, 0.9)');
+        gradient.addColorStop(1, '#0094FF40');
+        gradient.addColorStop(0, '#0094FF10');
 
         return gradient;
     }
@@ -80,7 +77,6 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
                 {
                     data: dataProps,
                     pointRadius: 0,
-                    tension: 0.2,
                 },
             ],
         };
@@ -92,12 +88,15 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
                 borderColor: createLineGradient(chart.ctx, chart.chartArea),
                 backgroundColor: createAreaGradient(chart.ctx, chart.chartArea),
                 fill: true,
+                tension: 0.1,
+                borderJoinStyle: 'round',
             })),
         };
         setChartData(updatedData);
     }, [chartRef.current, dataProps]);
 
     const options = {
+        maintainAspectRatio: false,
         scales: {
             y: {
                 grid: { color: 'rgba(82, 87, 102, 0.2)' },
@@ -107,6 +106,7 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
                         `$${numberFormatter(value, 2)}`,
                     maxRotation: 0,
                     minRotation: 0,
+                    maxTicksLimit: 8,
                 },
             },
             x: {
@@ -121,13 +121,13 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
                     autoSkip: true,
                     maxRotation: 0,
                     minRotation: 0,
-                    maxTicksLimit: 7,
+                    maxTicksLimit: 6,
                 },
             },
         },
         elements: {
             point: {
-                borderWidth: 0,
+                borderWidth: 1,
                 backgroundColor: 'rgba(0,0,0,0)',
             },
         },
@@ -135,6 +135,7 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
             legend: {
                 display: false,
             },
+
         },
     };
     return (
