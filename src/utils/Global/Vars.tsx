@@ -184,6 +184,7 @@ const chainToNameConfig = {
     '43114': 'AVAX',
     '250': 'FTM',
     '1': 'ETH',
+    '22417': 'EGLD',
 };
 
 const synths = {
