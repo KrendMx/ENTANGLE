@@ -20,7 +20,6 @@ const ElrondContainer = ({ isFiltered = false }) => {
     const dispatch = useDispatch();
     const { account, chainId, preLoader } = store.WalletEntity;
     const { data: CardData } = store.CardsEntity;
-    const { setDefaultCardData } = actions.Card;
     const { txLoading, isOpenModal } = store.UserEntity;
 
     const { setIsOpenModal, setPayData, setPositionSum } = actions.User;

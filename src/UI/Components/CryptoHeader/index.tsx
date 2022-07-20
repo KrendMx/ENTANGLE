@@ -140,7 +140,6 @@ const CryptoHeader: React.FC<CryptoHeaderProps> = ({
                         </div>
                         <div className={styles.info}>
                             <p className={styles.infoHeader}>
-                                Current Locked Amount
                                 {t('currentlyLocked')}
                             </p>
                             <p className={styles.infoData}>

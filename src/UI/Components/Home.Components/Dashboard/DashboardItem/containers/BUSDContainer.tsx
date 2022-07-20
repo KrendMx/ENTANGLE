@@ -53,7 +53,6 @@ const BUSDContainer = ({ isFiltered = false }) => {
     useEffect(() => {
         if (!preLoader) {
             (async () => {
-                dispatch(setDefaultCardData());
                 let [
                     available,
                     totalAvailable,

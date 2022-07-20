@@ -19,7 +19,6 @@ const ChangeNetwork = () => {
     const dispatch = useDispatch();
 
     const { chainId, provider } = store.WalletEntity;
-    const { setDefaultCardData } = actions.Card;
     const { changeNetwork } = asyncActions.Wallet;
 
     const handleClick = (chainIdEl: availableChains) => {

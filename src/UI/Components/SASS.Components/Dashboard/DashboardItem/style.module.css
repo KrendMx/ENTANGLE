@@ -29,11 +29,12 @@
 
 	padding-top: 125px;
 
+	margin-bottom: 10px;
+
 }
 
 .images {
 	display: flex;
-	margin-bottom: 5px;
 }
 
 .images span:first-child {

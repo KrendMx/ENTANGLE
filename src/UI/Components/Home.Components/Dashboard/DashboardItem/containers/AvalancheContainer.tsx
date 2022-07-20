@@ -26,10 +26,6 @@ const AvalancheContainer = ({ isFiltered = false }) => {
     const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
 
-    const closeModal = () => {
-        history.replaceState({}, '', '/');
-        dispatch(setIsOpenModal(false));
-    };
     const openModal = () => dispatch(setIsOpenModal(true));
 
     const data = {
