@@ -104,6 +104,7 @@ const Profile = () => {
     return (
         <div>
             <section className={styles.section}>
+                <Typography type="title" classNameModifier={styles.title}>Portfolio Summary</Typography>
                 <div className={styles.verticalWrapper}>
                     <div
                         className={classNames(
