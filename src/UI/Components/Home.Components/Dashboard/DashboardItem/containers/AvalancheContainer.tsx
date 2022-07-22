@@ -55,7 +55,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     currentDeposits,
                     price,
                 } = await Service.getCardData(
-                    account ? farms[chainId]?.AVAX : '68',
+                    account ? farms[chainId]?.AVAX : farms['43114']?.AVAX,
                 );
                 const percentage = Math.ceil(
                     (available / currentDeposits) * 100,

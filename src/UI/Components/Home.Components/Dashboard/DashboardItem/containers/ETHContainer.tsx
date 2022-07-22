@@ -60,7 +60,7 @@ const ETHContainer = ({ isFiltered = false }) => {
                 ] = [0, 0, 0, 0, 0];
                 try {
                     const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.ETH : '7',
+                        account ? farms[chainId]?.ETH : farms['43114']?.ETH,
                     );
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;

@@ -62,7 +62,7 @@ const BUSDContainer = ({ isFiltered = false }) => {
                 ] = [0, 0, 0, 0, 0];
                 try {
                     const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.BSC : '7',
+                        account ? farms[chainId]?.BSC : farms['43114']?.BSC,
                     );
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;

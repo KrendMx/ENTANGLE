@@ -59,7 +59,7 @@ const FantomContainer = ({ isFiltered = false }) => {
                 ] = [0, 0, 0, 0, 0];
                 try {
                     const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.FTM : '9',
+                        account ? farms[chainId]?.FTM : farms['43114']?.FTM,
                     );
                     available = cardData.available;
                     totalAvailable = cardData.totalAvailable;
