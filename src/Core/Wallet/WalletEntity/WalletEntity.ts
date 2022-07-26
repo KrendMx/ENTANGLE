@@ -42,11 +42,11 @@ export const WalletEntity = createSlice({
             if (connect) state.connect = connect;
         },
         removeWallet(state) {
-            state.walletKey = initialState.walletKey;
-            state.provider = initialState.provider;
-            state.account = initialState.account;
-            state.chainId = initialState.chainId;
-            state.connect = initialState.connect;
+            state.walletKey = null;
+            state.provider = null;
+            state.account = null;
+            state.chainId = '43114';
+            state.connect = null;
             localStorage.removeItem('wallet');
         },
         setNetwork(state, action: PayloadAction<{chainId: availableChains, provider: Web3Provider}>) {

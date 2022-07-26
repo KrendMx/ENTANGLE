@@ -89,7 +89,7 @@ const networks: networksType = {
     },
     '22417': {
         title: 'Elrond',
-        abbr: 'EGLD',
+        abbr: 'ELRD',
         icon: 'elrond.svg',
         description: '',
         bgGradient:
@@ -140,18 +140,21 @@ const farms = {
         AVAX: '8',
         BSC: '11',
         ETH: '12',
+        ELRD: '77',
     },
     '43114': {
         FTM: '67',
         AVAX: '68',
         BSC: '70',
         ETH: '71',
+        ELRD: '13',
     },
     '56': {
         FTM: '69',
         AVAX: '10',
         BSC: '7',
         ETH: '20',
+        ELRD: '27',
     },
 } as const;
 
@@ -177,6 +180,7 @@ const namesConfig = {
     AVAX: '43114',
     FTM: '250',
     ETH: '1',
+    ELRD: '22417',
 };
 
 const chainToNameConfig = {
@@ -184,7 +188,7 @@ const chainToNameConfig = {
     '43114': 'AVAX',
     '250': 'FTM',
     '1': 'ETH',
-    '22417': 'EGLD',
+    '22417': 'ELRD',
 };
 
 const synths = {

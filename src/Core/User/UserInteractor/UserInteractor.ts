@@ -53,6 +53,11 @@ export const createUserInteractor = (
                         '43114': { price: 0, positions: 0 },
                         '250': { price: 0, positions: 0 },
                     },
+                    'ELRD': {
+                        '56': { price: 0, positions: 0 },
+                        '43114': { price: 0, positions: 0 },
+                        '250': { price: 0, positions: 0 },
+                    },
                 };
                 let totalBalance = 0;
                 const keys = Object.keys(ChainConfig);

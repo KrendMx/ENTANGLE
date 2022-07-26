@@ -56,7 +56,7 @@ export class CardService implements ICardService {
         id: string,
     ) => {
         try {
-            if (this.name === 'ETH') {
+            if (this.name === 'ETH' || this.name === 'ELRD') {
                 return {
                     currentDeposits: 0,
                     totalDeposits: 0,
@@ -83,6 +83,10 @@ export class CardService implements ICardService {
                 token1Dec = 18;
                 break;
             case '26':
+                token0Dec = 18;
+                token1Dec = 18;
+                break;
+            case '100':
                 token0Dec = 18;
                 token1Dec = 18;
                 break;
@@ -145,11 +149,6 @@ export class CardService implements ICardService {
 
     public getCardData = async (id: string) => {
         try {
-            // const { data } = await axios.post(`${process.env.NEXT_PUBLIC_SITE}/api/getApr`, {
-            //     chainName: this.name,
-            // });
-
-            // TODO: как будет формула заменить
             const aprs = {
                 'AVAX': 2.50,
                 'FTM': 11.36,

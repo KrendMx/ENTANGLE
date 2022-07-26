@@ -2,7 +2,7 @@ type availableChains = '43114' | '250' | '56' | '1' | '22417';
 
 type availableSingleSideChains = '24886' | availableChains;
 
-type availableNames = 'AVAX' | 'FTM' | 'BSC' | 'ETH' | 'EGLD';
+type availableNames = 'AVAX' | 'FTM' | 'BSC' | 'ETH' | 'ELRD';
 
 type languages = 'en' | 'ru' | 'ch' | 'de' | 'ko';
 

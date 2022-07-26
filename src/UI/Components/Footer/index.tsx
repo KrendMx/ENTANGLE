@@ -50,7 +50,7 @@ const Footer = () => {
                     </span>
                     <span>
                         <Link passHref href="https://docs.entangle.fi/">
-                            <p className={styles.mainLink}>Whitepape</p>
+                            <p className={styles.mainLink}>Whitepaper</p>
                         </Link>
                     </span>
                 </nav>

@@ -603,6 +603,92 @@ export const ChainConfig = {
             },
         ],
     },
+    ELRD: {
+        NAME: 'EGLD-USDC Synthetic LP',
+        SYNTH: [
+            {
+                ID: '27',
+                FARMID: '100',
+                CROSSCHAIN: true,
+                CONTRACTS: {
+                    SYNTH: {
+                        address: '0xD1aF5dFa8fe427542D7690856b6B7AD0bB1Bbb7f',
+                        abi: avaSynth,
+                        chainId: 56,
+                    },
+                    DEX: {
+                        address: '0xBE9DAd3c99b27549d1D05B2Cf618465ee877A673',
+                        abi: dexOnDemand,
+                        chainId: 56,
+                    },
+                    STABLE: {
+                        address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+                        abi: avaSynth,
+                        chainId: 56,
+                    },
+                    FEE: {
+                        address: '0x8B2EBf0D1211B7cD921bb9C0cf79E8F33665D86A',
+                        abi: feeAbi,
+                        chainId: 56,
+                    },
+                },
+            },
+            {
+                ID: '77',
+                FARMID: '100',
+                CROSSCHAIN: true,
+                CONTRACTS: {
+                    SYNTH: {
+                        address: '0xCF81f0F04F191BD644e9CA62CD6992657574A408',
+                        abi: avaSynth,
+                        chainId: 250,
+                    },
+                    DEX: {
+                        address: '0xd9217E9BBE3e7D0d4803f447bdcCc0439739e7Fe',
+                        abi: dexOnDemand,
+                        chainId: 250,
+                    },
+                    STABLE: {
+                        address: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+                        abi: avaSynth,
+                        chainId: 250,
+                    },
+                    FEE: {
+                        address: '0x689e884D4BF9e7445eEE4813e27226BE9f98AfcF',
+                        abi: feeAbi,
+                        chainId: 250,
+                    },
+                },
+            },
+            {
+                ID: '13',
+                FARMID: '100',
+                CROSSCHAIN: true,
+                CONTRACTS: {
+                    SYNTH: {
+                        address: '0x39f0EFb3Ce44fd54c0B6faAAD3371eb6D34DBF7F',
+                        abi: ftmSynth,
+                        chainId: 43114,
+                    },
+                    DEX: {
+                        address: '0x10424388092fB8Cd3E235A623e950afDd1655561',
+                        abi: ftmDex,
+                        chainId: 43114,
+                    },
+                    STABLE: {
+                        address: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
+                        abi: ftmSynth,
+                        chainId: 43114,
+                    },
+                    FEE: {
+                        address: '0x871F2e8422F5104DE6436A40b8662183F221050f',
+                        abi: feeAbi,
+                        chainId: 43114,
+                    },
+                },
+            },
+        ],
+    },
 } as const;
 
 export const AdditionalConfig = {
