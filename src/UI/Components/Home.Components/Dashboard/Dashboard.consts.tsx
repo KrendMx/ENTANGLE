@@ -35,7 +35,7 @@ const ITEMS = [
         ),
     },
     {
-        filter: 22417,
+        filter: 100,
         query: ['elrond', 'egld', 'egld-usdt'],
         element: (isFiltered: boolean, key: number) => (
             <ElrondContainer isFiltered={isFiltered} key={key} />

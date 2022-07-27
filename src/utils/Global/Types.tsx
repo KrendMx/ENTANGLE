@@ -1,4 +1,4 @@
-type availableChains = '43114' | '250' | '56' | '1' | '22417';
+type availableChains = '43114' | '250' | '56' | '1' | '100';
 
 type availableSingleSideChains = '24886' | availableChains;
 

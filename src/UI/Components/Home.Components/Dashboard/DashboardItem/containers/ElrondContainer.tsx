@@ -38,7 +38,7 @@ const ElrondContainer = ({ isFiltered = false }) => {
         bgGradient:
             'linear-gradient(90deg, rgba(252,252,252,0.5) 0%, rgba(246, 246, 246, 0) 96.87%)',
         heading: 'EGLD-USDC',
-        chainId: '22417',
+        chainId: '100',
         priceCurrency: 'aDAI/aSUSD Synthetic LP',
         vendor: 'maiar.exchange',
         disabled: false,
@@ -96,7 +96,7 @@ const ElrondContainer = ({ isFiltered = false }) => {
                 );
                 dispatch(
                     setPayData({
-                        key: '22417',
+                        key: '100',
                         data: {
                             available: `${
                                 CardData[data.chainId].localChain === chainId
@@ -129,7 +129,7 @@ const ElrondContainer = ({ isFiltered = false }) => {
                         localStorage.removeItem('wallet');
                     }
                 }
-                dispatch(setPositionSum({ n: positions, key: '22417' }));
+                dispatch(setPositionSum({ n: positions, key: '100' }));
                 dispatch(
                     setCardInfo({
                         key: data.chainId,

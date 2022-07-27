@@ -50,12 +50,16 @@ const networks: networksType = {
     '1': {
         title: 'Ethereum',
         abbr: 'ETH',
-        icon: 'ethereum.svg',
+        icon: 'etheriumDashboard.svg',
         mmCurrency: 'ETH',
         currency: 'MIM/USDC Synthetic LP',
         currencyMin: 'MIM-UST',
         description:
             'Generates yield by running autocompounded aDAI/aSUSD strategy on convexfinance.com',
+        bgGradient:
+            'linear-gradient(90deg, rgba(152,152,152,0.15) 0%, rgba(246, 246, 246, 0) 100%)',
+        cardTypeLabelColor: '#000',
+        cardTypeLabelBg: '#fcfcfc',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
         rpc: 'https://rpc.ankr.com/eth',
@@ -87,7 +91,7 @@ const networks: networksType = {
         farm: 67,
         mainIcon: '/images/networks/fantomDashboard.svg',
     },
-    '22417': {
+    '100': {
         title: 'Elrond',
         abbr: 'ELRD',
         icon: 'elrond.svg',
@@ -180,7 +184,7 @@ const namesConfig = {
     AVAX: '43114',
     FTM: '250',
     ETH: '1',
-    ELRD: '22417',
+    ELRD: '100',
 };
 
 const chainToNameConfig = {
@@ -188,7 +192,7 @@ const chainToNameConfig = {
     '43114': 'AVAX',
     '250': 'FTM',
     '1': 'ETH',
-    '22417': 'ELRD',
+    '100': 'ELRD',
 };
 
 const synths = {
@@ -212,7 +216,7 @@ const synths = {
         AVAX: '',
         FTM: '',
     },
-    '22417': {
+    '100': {
         BSC: '',
         AVAX: '',
         FTM: '',

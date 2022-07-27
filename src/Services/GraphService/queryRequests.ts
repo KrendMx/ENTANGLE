@@ -6,7 +6,7 @@ import { GRAPH_CONFIG } from './config';
 class QueryRequests implements IQueryRequests {
     getGraphDataBuyData = async (account: string, url: string) => {
         const body = {
-            query: `{exchanges(where: {to: "${account}"}) {id block from to amount}}`,
+            query: `{exchanges(where: {to: "${account.toLowerCase()}"}) {id block from to amount}}`,
         };
         return axios.post(url, body);
     };
@@ -24,12 +24,14 @@ class QueryRequests implements IQueryRequests {
             'AVAX': { '56': 0, '43114': 0, '250': 0 },
             'BSC': { '56': 0, '43114': 0, '250': 0 },
             'ETH': { '56': 0, '43114': 0, '250': 0 },
+            'ELRD': { '56': 0, '43114': 0, '250': 0 },
         };
         const counter: { [key: string]: {[key: string]: number} } = {
             'FTM': { '56': 0, '43114': 0, '250': 0 },
             'AVAX': { '56': 0, '43114': 0, '250': 0 },
             'BSC': { '56': 0, '43114': 0, '250': 0 },
             'ETH': { '56': 0, '43114': 0, '250': 0 },
+            'ELRD': { '56': 0, '43114': 0, '250': 0 },
         };
         const names = Object.keys(GRAPH_CONFIG);
         for (const name of names) {

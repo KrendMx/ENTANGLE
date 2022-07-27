@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import moment from 'moment/moment';
 import classNames from 'classnames';
@@ -30,6 +30,10 @@ const HistoryCard: React.FC<CardProps> = ({
             return 'linear-gradient(90deg, rgba(0, 148, 255, 0.10) 0%, rgba(0, 148, 255, 0.04) 100%)';
         case '56':
             return 'linear-gradient(90deg, rgba(255, 199, 0, 0.10) 0%, rgba(255, 199, 0, 0.04) 100%)';
+        case '1':
+            return 'linear-gradient(90deg, rgba(152,152,152,0.15) 0%, rgba(246, 246, 246, 0) 100%)';
+        case '100':
+            return 'linear-gradient(90deg, rgba(252,252,252,0.5) 0%, rgba(246, 246, 246, 0) 100%)';
         default:
             return '';
         }
@@ -45,13 +49,13 @@ const HistoryCard: React.FC<CardProps> = ({
                     width={100}
                     height={100}
                     quality={100}
-                    src={`/images/networks/${networks[chainId].icon}`}
+                    src={`/images/networks/${networks[chainId]?.icon}`}
                     alt="alt"
                     className={styles.logo}
                 />
             </div>
             <div className={styles.main}>
-                <p className={styles.pare}>{networks[chainId].currencyMin}</p>
+                <p className={styles.pare}>{networks[chainId]?.currencyMin}</p>
                 <div className={styles.undertitle}>
                     {`${id.slice(0, 10)}...${id.slice(id.length - 10)}`}
                     <CopyBtn text={id} />

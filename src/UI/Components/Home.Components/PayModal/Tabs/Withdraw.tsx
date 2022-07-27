@@ -48,6 +48,8 @@ const Withdraw: React.FC<propsType> = ({
     const [maxError, setMaxError] = useState<boolean>(false);
     const [allow, setAllow] = useState<number>(0);
 
+    const { t } = useTranslation('index');
+
     const localChain = useMemo(
         () => namesConfig[sessionStorage.getItem('card')],
         [chainId],
@@ -115,7 +117,30 @@ const Withdraw: React.FC<propsType> = ({
         );
     };
 
-    const { t } = useTranslation('index');
+    const buttonData = useMemo(() => {
+        const res = {
+            title: t('dataLoading'),
+            disabled: true,
+            onClick: () => {},
+            loader: txLoading,
+        };
+        if (allowance[localChain] && payData[localChain]) {
+            if (allowance[localChain].toString().length > 1 && payData[localChain]?.price) {
+                res.title = t('sellFunds');
+            } else {
+                res.title = t('approve');
+            }
+        }
+        if (res.title === t('approve')) {
+            res.onClick = () => handleApprove();
+            res.disabled = false;
+        } else if (res.title === t('sellFunds')) {
+            res.disabled = !(Number(amount) !== 0 && Number(amount) <= Number(synthBalance));
+            res.onClick = () => sellToken(parseFloat(amount));
+        }
+
+        return res;
+    }, [amount, txLoading, payData, allowance]);
 
     return (
         <div className={styles.container}>
@@ -224,21 +249,14 @@ const Withdraw: React.FC<propsType> = ({
                 />
             ) : (
                 <GradientButton
-                    title={
-                        allowance[localChain] > 0
-                            ? payData[localChain as availableChains]?.price
-                                ? t('sellFunds')
-                                : t('dataLoading')
-                            : t('approve')
-                    }
-                    onClick={
-                        allowance[localChain] < 0
-                            ? () => sellToken(parseFloat(amount))
-                            : () => handleApprove()
-                    }
-                    disabled={
-                        allowance[localChain] < 0
-                        || (!!amount && amount > synthBalance)
+                    {...buttonData}
+                    loader={
+                        buttonData.loader && (
+                            <i
+                                className="fa fa-spinner fa-spin"
+                                style={{ marginLeft: '5px' }}
+                            />
+                        )
                     }
                 />
             )}

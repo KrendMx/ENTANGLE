@@ -54,7 +54,7 @@ const initialCardState: CardDataState = {
             localName: 'ETH',
             localChain: '1',
         },
-        '22417': {
+        '100': {
             apr: null,
             currentDeposits: null,
             totalDeposits: null,
@@ -65,7 +65,7 @@ const initialCardState: CardDataState = {
             positions: null,
             totalPositions: null,
             localName: 'ELRD',
-            localChain: '22417',
+            localChain: '100',
         },
     },
 };
