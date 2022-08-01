@@ -39,7 +39,7 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
             dispatch({ usdcAmount: target.value });
         }
     };
-    const miniButtons = ['25%', '50%', '75%', '100%'];
+    const miniButtons = ['25%', '50%', '100%'];
 
     return (
         <div
@@ -68,7 +68,6 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
                 <div>
                     <div className={classNames(styles.mgt, styles.mgb)}>
                         <Typography type="textBody" classNameModifier={styles.mgb}>
-                            Enter Amount of Locked USDC
                             {`${t('enterAmount')} USDC`}
                         </Typography>
                     </div>
@@ -103,16 +102,16 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
                 <div>
                     <div className={classNames(styles.mgb)}>
                         <Typography type="textBody">
-                            You will get
+                            {t('youWillGet')}
                         </Typography>
                     </div>
                     <Input
                         type="cut"
-                        placeholder="You will get"
+                        placeholder={t('youWillGet')}
                         onChange={() => {}}
                     />
                     <Text title={t('AvaiableToUnlock')} content="92 USDC" classText={styles.mgt2} />
-                    <Text title="The remainder of the lock" content="3 USDC" classText={styles.mgt2} />
+                    <Text title={t('remainder')} content="3 USDC" classText={styles.mgt2} />
                     <div className={styles.mgt}><GradientButton title={t('withdraw')} onClick={() => {}} /></div>
                 </div>
             </div>

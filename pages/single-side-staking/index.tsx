@@ -25,6 +25,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
             'index',
             'error',
             'ssasdep',
+            'modal',
             'ssas',
         ])),
     },

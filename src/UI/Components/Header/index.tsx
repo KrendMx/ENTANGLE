@@ -44,7 +44,7 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        if (window.location.search && provider) {
+        if (window.location.search && window.location.search.includes('net') && provider) {
             const searchArray = location.search.replace('&', '=').split('=');
             const chainId = searchArray[1] as availableChains;
             const card = searchArray[3];

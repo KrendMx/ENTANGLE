@@ -222,18 +222,23 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     </div>
                 </div>
                 <div className={styles.section}>
-                    <p className={styles.sectionTitle}>{t('price')}</p>
+                    <div>
+                        <div className={styles.sectionTitle}>
+                            <p>{t('price')}</p>
+                            <HintModal>
+                                <p>{t('price')}</p>
+                            </HintModal>
+                        </div>
+                        <p className={styles.sectionSubValue}>
+                            {priceCurrency}
+                        </p>
+                    </div>
                     <div className={styles.sectionRow}>
                         {price ? (
-                            <>
-                                <p className={styles.sectionValue}>
-                                    $
-                                    {price}
-                                </p>
-                                <p className={styles.sectionSubValue}>
-                                    {priceCurrency}
-                                </p>
-                            </>
+                            <p className={styles.sectionValue}>
+                                $
+                                {price}
+                            </p>
                         ) : (
                             <TextLoader bgGradient={bgGradient} />
                         )}
@@ -241,17 +246,33 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 </div>
                 {account ? (
                     <div className={styles.section}>
-                        <div className={styles.sectionTitle}>
-                            <p>{t('rty')}</p>
-                            <HintModal>
-                                <p>{t('rtyDesk')}</p>
-                            </HintModal>
+                        <div>
+                            <div className={styles.sectionTitle}>
+                                <p>{t('rty')}</p>
+                                <HintModal>
+                                    <p>{t('rtyDesk')}</p>
+                                </HintModal>
+                            </div>
+                            <p className={styles.sectionSubValue}>
+                                {`${
+                                    networks[chainId].abbr in profits
+                                        ? (Number(
+                                            profits[localName][
+                                                selectedChainId
+                                            ]?.stable,
+                                        ) * Number(price))
+                                        : '~'
+                                } ${priceCurrency}`}
+                            </p>
                         </div>
                         <div className={styles.sectionRow}>
                             {networks[chainId].abbr in profits ? (
                                 <p className={styles.sectionValue}>
                                     $
-                                    {profits[localName][selectedChainId]?.stable}
+                                    {
+                                        profits[localName][selectedChainId]
+                                            ?.stable
+                                    }
                                 </p>
                             ) : (
                                 <TextLoader bgGradient={bgGradient} />

@@ -32,7 +32,7 @@ youGetUSDC: You get USDC
 enterUSDCAmount: Enter USDC amount
 youGetSynt: You get SynthLP
 buyAndSell: Buy/Sell
-avgPrice: Avg Buy Price
+avgPrice: Buy Price
 profit: Profit
 back: Back
 withdrawStartPhrase: The approximate transaction execution time is

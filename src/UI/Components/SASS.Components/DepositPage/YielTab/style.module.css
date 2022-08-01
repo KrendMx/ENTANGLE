@@ -19,8 +19,6 @@
 
 	border-radius: 18px;
 	background: rgb(30 30 30 / 10%);
-	backdrop-filter: blur(15px);
-
 }
 
 .infoCard > span {

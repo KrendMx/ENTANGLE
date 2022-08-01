@@ -49,15 +49,38 @@ const ModalContextWrapper = () => {
 
     return (
         <>
-            {sucInfo && (
+            <CSSTransition
+                in={!!sucInfo}
+                classNames={{
+                    enter: styles['alert-enter'],
+                    enterActive: styles['alert-enter-active'],
+                    exit: styles['alert-exit'],
+                    exitActive: styles['alert-exit-active'],
+                }}
+                timeout={250}
+                unmountOnExit
+                mountOnEnter
+            >
                 <SuccessModal
                     transactionInfo={sucInfo}
                     handleClose={() => {
                         dispatch(setSucInfo(null));
                     }}
                 />
-            )}
-            {isOpenSelectWalletModal && (
+
+            </CSSTransition>
+            <CSSTransition
+                in={isOpenSelectWalletModal}
+                classNames={{
+                    enter: styles['alert-enter'],
+                    enterActive: styles['alert-enter-active'],
+                    exit: styles['alert-exit'],
+                    exitActive: styles['alert-exit-active'],
+                }}
+                timeout={250}
+                unmountOnExit
+                mountOnEnter
+            >
                 <SelectWalletModal
                     selectWallet={(walletProviderName: any) =>
                         dispatch(setWallet({ walletKey: walletProviderName }))}
@@ -65,7 +88,7 @@ const ModalContextWrapper = () => {
                         dispatch(setIsOpenSelectWalletModal(false));
                     }}
                 />
-            )}
+            </CSSTransition>
             {termsModal && <Disclaimer handleClose={handleClose} />}
             <CSSTransition
                 in={isOpenModal}
