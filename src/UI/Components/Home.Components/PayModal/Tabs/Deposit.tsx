@@ -28,23 +28,40 @@ const Deposit: React.FC<propsType> = ({
     balanceUSDC,
     available,
 }) => {
-    const { store, actions, asyncActions } = useStore((store) => ({
+    const {
+        store: {
+            WalletEntity: {
+                chainId,
+                account,
+                provider,
+            },
+            UserEntity: {
+                payData,
+            },
+            CardsEntity: {
+                data: CardData,
+            },
+            ContractEntity: {
+                allowance,
+                txLoading,
+            },
+        }, actions: {
+            Contract: {
+                changeLoadingTx,
+                setAllowance,
+            },
+        }, asyncActions: {
+            Contract: {
+                approve,
+            },
+        },
+    } = useStore((store) => ({
         WalletEntity: store.WalletEntity,
         UserEntity: store.UserEntity,
         CardsEntity: store.CardsEntity,
         ContractEntity: store.ContractEntity,
     }));
     const dispatch = useDispatch();
-    const { chainId, account, provider } = store.WalletEntity;
-    const { payData, txLoading } = store.UserEntity;
-    const { data: CardData } = store.CardsEntity;
-    const { allowance } = store.ContractEntity;
-
-    const { changeLoadingTx } = actions.User;
-
-    const { setAllowance } = actions.Contract;
-
-    const { approve } = asyncActions.Contract;
 
     const [amount, setAmount] = useState('');
     const [synthAmount, setSynthAmount] = useState('');

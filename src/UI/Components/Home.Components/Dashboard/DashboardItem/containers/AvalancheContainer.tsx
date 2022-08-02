@@ -8,20 +8,42 @@ import { useTranslation } from 'react-i18next';
 import DashboardItem from '../index';
 
 const AvalancheContainer = ({ isFiltered = false }) => {
-    const { store, actions, asyncActions } = useStore((store) => ({
+    const {
+        store: {
+            WalletEntity: {
+                account,
+                chainId,
+                preLoader,
+            },
+            UserEntity: {
+                isOpenModal,
+                profits,
+            },
+            ContractEntity: {
+                txLoading,
+            },
+            CardsEntity: {
+                data: CardData,
+            },
+        }, actions: {
+            User: {
+                setIsOpenModal,
+                setPayData,
+                setPositionSum,
+            },
+            Card: {
+                setCardInfo,
+            },
+        },
+    } = useStore((store) => ({
         UserEntity: store.UserEntity,
         WalletEntity: store.WalletEntity,
         AppEntity: store.AppEntity,
         CardsEntity: store.CardsEntity,
+        ContractEntity: store.ContractEntity,
     }));
 
     const dispatch = useDispatch();
-    const { account, chainId, preLoader } = store.WalletEntity;
-    const { data: CardData } = store.CardsEntity;
-    const { txLoading, isOpenModal, profits } = store.UserEntity;
-
-    const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
-    const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
 
     const openModal = () => dispatch(setIsOpenModal(true));
@@ -65,7 +87,7 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     setCardInfo({
                         key: data.chainId,
                         data: {
-                            positions: `$${Number(positions.toFixed(2))}`,
+                            positions: `$${Number(positions.toFixed(5))}`,
                             totalPositions: `${Number(
                                 totalPositions.toFixed(5),
                             )} USDC/USDC.e Synthetic LP`,

@@ -11,6 +11,7 @@ import type { IContractEntityState } from './ContractEntity.interfaces';
 const initialState: IContractEntityState & IWithHelperState = {
     ...withHelperState,
     allowance: {},
+    txLoading: false,
 };
 
 export const ContractEntity = createSlice({
@@ -24,6 +25,9 @@ export const ContractEntity = createSlice({
         },
         clearAllowance(state) {
             state.allowance = {};
+        },
+        changeLoadingTx(state, action: PayloadAction<boolean>) {
+            state.txLoading = action.payload;
         },
     },
 });

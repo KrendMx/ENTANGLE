@@ -21,7 +21,6 @@ export const createCardInteractor = (
         try {
             const res: IHttpClientResponse<IAprResponse> = await Repository.getAprs();
             for (const key in res?.data?.apr) {
-                console.log(namesConfig[key]);
                 dispatch(Entity.actions.setCardInfo({ key: namesConfig[key], data: { 'apr': res?.data?.apr[key] } }));
             }
         } catch (e) {

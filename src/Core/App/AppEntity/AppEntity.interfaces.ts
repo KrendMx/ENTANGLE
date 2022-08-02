@@ -8,6 +8,7 @@ interface IAppEntityState {
     isAppLoaded: boolean;
     isOpenSelectWalletModal: boolean;
     sucInfo: TransactionInfo | null;
+    isOpenWrongChainModal: boolean;
 }
 
 type TransactionInfo = { value: number; symbol: string; isReceived: boolean };

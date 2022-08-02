@@ -101,7 +101,7 @@ const TransactionHistory: React.FC = () => {
                     </div>
                 </div>
             </div>
-            {txLoaded ? (
+            {!txLoaded ? (
                 loader
             ) : (
                 <div>

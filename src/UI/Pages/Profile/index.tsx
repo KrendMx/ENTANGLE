@@ -82,6 +82,12 @@ const Profile = () => {
                     counter++;
                 }
             }
+            if (best.change === -Infinity) {
+                best.change = 0;
+            }
+            if (worst.change === Infinity) {
+                worst.change = 0;
+            }
             setChange([valueLocal / counter, changeLocal / counter]);
             setBestProfit(best as typeof bestProfit);
             setWorstProfit(worst as typeof worstProfit);

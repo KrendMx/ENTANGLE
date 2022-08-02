@@ -49,6 +49,25 @@
 	background-color: rgb(18 18 18 / 75%);
 }
 
+.white {
+  background: var(--white)!important;
+}
+
+.whiteTitle {
+  padding: 14px 30px;
+
+  text-align: center;
+  letter-spacing: 0.5px;
+
+  color: var(--color-11);
+  border-radius: inherit;
+  background-color: var(--white);
+  text-shadow: 0 3px 4px rgb(0 0 0 / 15%);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+
 .wrapper.disabled {
 	cursor: no-drop;
 

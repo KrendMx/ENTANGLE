@@ -20,18 +20,31 @@ const PayModal: React.FC<PayModalPropsType> = ({
     available,
     totalAvailable,
 }) => {
-    const { store, actions } = useStore((store) => ({
-        UserEntity: store.UserEntity,
+    const {
+        store: {
+            WalletEntity: {
+                chainId,
+                provider,
+                account,
+            },
+            ContractEntity: {
+                txLoading,
+            },
+        }, actions: {
+            App: {
+                setSucInfo,
+            },
+            Contract: {
+                changeLoadingTx,
+            },
+        },
+    } = useStore((store) => ({
+        ContractEntity: store.ContractEntity,
         WalletEntity: store.WalletEntity,
         AppEntity: store.AppEntity,
     }));
     const [activeTab, setActiveTab] = useState(0);
     const dispatch = useDispatch();
-    const { chainId, provider, account } = store.WalletEntity;
-    const { txLoading } = store.UserEntity;
-
-    const { changeLoadingTx } = actions.User;
-    const { setSucInfo } = actions.App;
 
     useEffect(() => {
         if (!(chainId in networks)) {

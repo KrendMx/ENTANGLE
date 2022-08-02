@@ -27,6 +27,7 @@ interface IQueryRequests {
         transactions: TransactionHistoryEntity[],
         balance: number,
         chainId: string,
+        price: number,
     ) => Promise<{ [key: string]: number }>;
 }
 

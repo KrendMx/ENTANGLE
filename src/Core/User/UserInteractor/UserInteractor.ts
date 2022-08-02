@@ -70,8 +70,8 @@ export const createUserInteractor = (
                         );
                         balances[key][ChainConfig[key].SYNTH[
                             i
-                        ].CONTRACTS.SYNTH.chainId] = { positions: Number(positions.toFixed(2)), price };
-                        totalBalance += Number(positions.toFixed(2)) * price;
+                        ].CONTRACTS.SYNTH.chainId] = { positions: Number(positions.toFixed(5)), price };
+                        totalBalance += Number(positions.toFixed(5)) * price;
                     }
                 }
                 dispatch(
@@ -106,19 +106,18 @@ export const createUserInteractor = (
         'UserInteractor/getChartData',
         async ({ account }, { dispatch }): Promise<any> => {
             try {
-                dispatch(Entity.actions.setTxLoaded(true));
+                dispatch(Entity.actions.setTxLoaded(false));
                 const res : any = await Repository.getProfileData(account);
                 const { data } = res;
                 const { response } = data;
                 dispatch(Entity.actions.setChartData(response.chart));
                 dispatch(Entity.actions.setTxHistory(response.txs));
-                console.log('get data about user transactions');
             } catch (e) {
                 Notification.error('Error', e.message);
                 console.log(e);
                 dispatch(Entity.actions.setError(e.message));
             } finally {
-                dispatch(Entity.actions.setTxLoaded(false));
+                dispatch(Entity.actions.setTxLoaded(true));
             }
         },
     ),

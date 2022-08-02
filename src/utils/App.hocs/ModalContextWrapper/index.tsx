@@ -2,17 +2,51 @@ import React, { useEffect, useState } from 'react';
 import SuccessModal from 'UI/Components/Modal/SuccessModal/SuccessModal';
 import SelectWalletModal from 'UI/Components/Modal/SelectWalletModal/SelectWalletModal';
 import Disclaimer from 'UI/Components/Disclaimer';
+import WrongNetModal from 'UI/Components/Modal/WrongNetModal/WrongNetModal';
 
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import Modal from 'src/UI/Components/Modal';
 import PayModal from 'src/UI/Components/Home.Components/PayModal';
-import { namesConfig } from 'src/utils/Global/Vars';
+import { availableChainsArray, namesConfig } from 'src/utils/Global/Vars';
 import { CSSTransition } from 'react-transition-group';
+import type { availableChains } from 'utils/Global/Types';
+import { ethers } from 'ethers';
 import styles from './style.module.css';
 
 const ModalContextWrapper = () => {
-    const { store, actions, asyncActions } = useStore((store) => ({
+    const {
+        store: {
+            AppEntity: {
+                isOpenSelectWalletModal,
+                sucInfo,
+                isOpenWrongChainModal,
+            },
+            UserEntity: {
+                isOpenModal,
+            },
+            CardEntity: {
+                data: CardData,
+            },
+            WalletEntity: {
+                chainId,
+            },
+        }, actions: {
+            App: {
+                setSucInfo,
+                setIsOpenSelectWalletModal,
+                setIsOpenWrongChainModal,
+            },
+            User: {
+                setIsOpenModal,
+            },
+        }, asyncActions: {
+            Wallet: {
+                setWallet,
+                changeNetwork,
+            },
+        },
+    } = useStore((store) => ({
         UserEntity: store.UserEntity,
         AppEntity: store.AppEntity,
         WalletEntity: store.WalletEntity,
@@ -20,14 +54,6 @@ const ModalContextWrapper = () => {
     }));
 
     const dispatch = useDispatch();
-
-    const { isOpenSelectWalletModal, sucInfo } = store.AppEntity;
-
-    const { setSucInfo, setIsOpenSelectWalletModal } = actions.App;
-    const { setWallet } = asyncActions.Wallet;
-    const { isOpenModal } = store.UserEntity;
-    const { setIsOpenModal } = actions.User;
-    const { data: CardData } = store.CardEntity;
 
     const [termsModal, setTermsModal] = useState(false);
 
@@ -46,6 +72,12 @@ const ModalContextWrapper = () => {
             setTermsModal(true);
         }
     }, []);
+
+    useEffect(() => {
+        if (!availableChainsArray.includes(chainId)) {
+            dispatch(setIsOpenWrongChainModal(true));
+        }
+    }, [chainId]);
 
     return (
         <>
@@ -89,6 +121,18 @@ const ModalContextWrapper = () => {
                     }}
                 />
             </CSSTransition>
+            )}
+            {
+                isOpenWrongChainModal && (
+                    <WrongNetModal
+                        handleClose={() => dispatch(setIsOpenWrongChainModal(false))}
+                        selectChain={(chain: availableChains) => {
+                            const provider = new ethers.providers.Web3Provider(window.ethereum);
+                            dispatch(changeNetwork({ chainId: chain, provider }));
+                        }}
+                    />
+                )
+            }
             {termsModal && <Disclaimer handleClose={handleClose} />}
             <CSSTransition
                 in={isOpenModal}

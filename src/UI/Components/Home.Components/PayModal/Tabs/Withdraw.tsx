@@ -27,21 +27,40 @@ const Withdraw: React.FC<propsType> = ({
     balanceSynth,
     chainThings,
 }) => {
-    const { store, actions, asyncActions } = useStore((store) => ({
+    const {
+        store: {
+            WalletEntity: {
+                chainId,
+                account,
+                provider,
+            },
+            UserEntity: {
+                payData,
+            },
+            CardsEntity: {
+                data: CardData,
+            },
+            ContractEntity: {
+                allowance,
+                txLoading,
+            },
+        }, actions: {
+            Contract: {
+                changeLoadingTx,
+                setAllowance,
+            },
+        }, asyncActions: {
+            Contract: {
+                approve,
+            },
+        },
+    } = useStore((store) => ({
         WalletEntity: store.WalletEntity,
         UserEntity: store.UserEntity,
         CardsEntity: store.CardsEntity,
         ContractEntity: store.ContractEntity,
     }));
     const dispatch = useDispatch();
-    const { chainId, account, provider } = store.WalletEntity;
-    const { payData, txLoading } = store.UserEntity;
-    const { data: CardData } = store.CardsEntity;
-    const { allowance } = store.ContractEntity;
-
-    const { changeLoadingTx } = actions.User;
-
-    const { approve } = asyncActions.Contract;
     const [synthAmount, setSynthAmount] = useState('');
     const [amount, setAmount] = useState<string>('');
     const [synthBalance, setSynthBalance] = useState<string>('');
@@ -90,7 +109,6 @@ const Withdraw: React.FC<propsType> = ({
     }, [amount]);
 
     const handleApprove = async () => {
-        dispatch(changeLoadingTx(true));
         const contracts = (
             ChainConfig[sessionStorage.getItem('card')].SYNTH as any
         ).find(
@@ -106,7 +124,6 @@ const Withdraw: React.FC<propsType> = ({
                 cardId: localChain,
             }),
         );
-        dispatch(changeLoadingTx(false));
     };
 
     const getMax = async () => {
