@@ -140,6 +140,18 @@ const Deposit: React.FC<propsType> = ({
 
     return (
         <div className={styles.container}>
+            {!moreThenAvailable ? (
+                <p className={styles.warn}>
+                    {`${t('withdrawStartPhrase')} 15 ${t('withdrawEndPhrase')}`}
+                </p>
+            ) : (
+                <p className={styles.warnScd}>
+                    {`${t('depositeStartPhrase')} 
+                    ${Number(synthAmount).toFixed(3)} ${t(
+                    'depositeEndPhrase',
+                )}`}
+                </p>
+            )}
             <div
                 className={styles.priceBlock}
                 style={
@@ -180,18 +192,6 @@ const Deposit: React.FC<propsType> = ({
                     />
                 </div>
             </div>
-            {!moreThenAvailable ? (
-                <p className={styles.warn}>
-                    {`${t('withdrawStartPhrase')} 15 ${t('withdrawEndPhrase')}`}
-                </p>
-            ) : (
-                <p className={styles.warnScd}>
-                    {`${t('depositeStartPhrase')} 
-                    ${Number(synthAmount).toFixed(3)} ${t(
-                    'depositeEndPhrase',
-                )}`}
-                </p>
-            )}
             <Text
                 title={t('aprCard')}
                 content={`${CardData[localChain].apr}%`}

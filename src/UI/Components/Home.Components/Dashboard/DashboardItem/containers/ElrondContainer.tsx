@@ -2,8 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import { CardService } from 'src/Services';
-import Modal from 'UI/Components/Modal';
-import PayModal from 'UI/Components/Home.Components/PayModal';
 import { farms } from 'utils/Global/Vars';
 import { Notification } from 'src/libs/Notification';
 import { useTranslation } from 'react-i18next';

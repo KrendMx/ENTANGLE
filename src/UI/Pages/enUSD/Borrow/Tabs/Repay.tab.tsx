@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import type { ChangeEvent } from 'react';
 import React, {
-    ChangeEventHandler,
-    useCallback,
     useReducer,
 } from 'react';
 import Image from 'next/image';

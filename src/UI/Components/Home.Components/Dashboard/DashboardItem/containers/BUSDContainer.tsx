@@ -1,5 +1,5 @@
 import React, {
-    useMemo, useEffect, useState, useTransition,
+    useMemo, useEffect, useState,
 } from 'react';
 import { CardService } from 'src/Services';
 import { farms } from 'utils/Global/Vars';
@@ -8,8 +8,6 @@ import { useDispatch } from 'react-redux';
 import { Notification } from 'src/libs/Notification';
 import { useTranslation } from 'react-i18next';
 import DashboardItem from '../index';
-import Modal from '../../../../Modal';
-import PayModal from '../../../PayModal';
 
 const BUSDContainer = ({ isFiltered = false }) => {
     const { store, actions } = useStore((store) => ({

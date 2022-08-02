@@ -7,14 +7,11 @@ import { networks } from 'utils/Global/Vars';
 
 import { useStore } from 'core/store';
 import type { ICardUnit } from 'UI/Components/Profile.Components/InvestCard/InvestCard.interfaces';
-import HintModal from 'UI/ui-kit/HintModal';
 import GradientButton from 'UI/ui-kit/GradientButton';
 
-import Modal from 'UI/Components/Modal';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import type { availableChains } from 'src/utils/Global/Types';
 import { useDispatch } from 'react-redux';
-import PayModal from '../../../Home.Components/PayModal';
 import styles from '../style.module.css';
 
 const InvestCardExp: React.FC<ICardUnit> = ({

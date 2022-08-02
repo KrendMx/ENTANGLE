@@ -72,13 +72,15 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                     {t('byUsingEntangle')}
                                 </p>
                             </div>
-                            <GradientCheckbox
-                                text={t('buttonText')}
-                                gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
-                                isChecked={checked}
-                                onClickHandler={() => setChecked(!checked)}
-                                additionalClass={styles.extraForCheckbox}
-                            />
+                            <div>
+                                <GradientCheckbox
+                                    text={t('buttonText')}
+                                    gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
+                                    isChecked={checked}
+                                    onClickHandler={() => setChecked(!checked)}
+                                    additionalClass={styles.extraForCheckbox}
+                                />
+                            </div>
                             <div className={styles.blockButton}>
                                 <GradientButton
                                     title={t('enter')}

@@ -144,6 +144,9 @@ const Withdraw: React.FC<propsType> = ({
 
     return (
         <div className={styles.container}>
+            <p className={styles.warn}>
+                {`${t('withdrawStartPhrase')} 15 ${t('withdrawEndPhrase')}`}
+            </p>
             <div
                 className={styles.priceBlock}
                 style={
@@ -184,9 +187,6 @@ const Withdraw: React.FC<propsType> = ({
                     />
                 </div>
             </div>
-            <p className={styles.warn}>
-                {`${t('withdrawStartPhrase')} 15 ${t('withdrawEndPhrase')}`}
-            </p>
             <div className={styles.mg2}>
                 <Text
                     title={t('aprCard')}

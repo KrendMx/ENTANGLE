@@ -5,8 +5,6 @@ import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import { Notification } from 'src/libs/Notification';
 import { useTranslation } from 'react-i18next';
-import PayModal from '../../../PayModal';
-import Modal from '../../../../Modal';
 import DashboardItem from '../index';
 
 const FantomContainer = ({ isFiltered = false }) => {
