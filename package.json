@@ -12,6 +12,15 @@
     "test": "jest",
     "stylelint": "npx stylelint \"**/*.css\""
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(ts|tsx)": "yarn prettier-eslint",
+    "*.module.css": "yarn stylelint-fix"
+  },
   "author": "Daniil Savochkin <dsavochkin4@gmail.com>",
   "license": "ISC",
   "browserslist": [

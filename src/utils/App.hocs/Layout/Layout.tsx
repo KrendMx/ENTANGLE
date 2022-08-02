@@ -10,7 +10,7 @@ import Header from 'UI/Components/Header';
 
 import { CardService, GraphService } from 'services/index';
 import QueryRequests from 'services/GraphService/queryRequests';
-import { namesConfig, availableChainsArray } from 'utils/Global/Vars';
+import { namesConfig, availableChainsArray, farms } from 'utils/Global/Vars';
 import { generateEmptyObject } from 'utils/helper/generateEmptyObject';
 import { Notification } from 'src/libs/Notification';
 import type { availableChains, availableNames } from 'src/utils/Global/Types';
@@ -49,8 +49,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         }, actions: {
             User: {
                 setCardLoaded,
-                setTxHistory,
-                setTxLoaded,
+                setPayData,
                 setProfit,
                 setError,
                 setLoading,
@@ -62,6 +61,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
             },
             Card: {
                 setDefaultCardData,
+                setCardInfo,
             },
             Contract: {
                 clearAllowance,
