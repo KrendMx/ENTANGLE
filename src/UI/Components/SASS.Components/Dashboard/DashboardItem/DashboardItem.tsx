@@ -195,13 +195,14 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                 </div>
             </div>
             <div className={styles.footer}>
-                <WhiteButton
+                <GradientButton
                     title={tIndex('select')}
                     onClick={() => {
                         Router.push(
                             `/single-side-staking/deposit?first=${firstChainId}&second=${secondChainId}&time=${term}`,
                         );
                     }}
+                    isWhite
                 />
             </div>
         </div>

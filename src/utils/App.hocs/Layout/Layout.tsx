@@ -39,6 +39,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 account,
                 chainId,
                 walletKey,
+                preLoader,
             },
             AppEntity: {
                 isAppLoaded,
@@ -150,58 +151,56 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     }, [account, txLoading]);
 
     useEffect(() => {
-        for (const key of cardDataConfig) {
-            const Service = new CardService(key.firstLabel as availableNames);
-            (async () => {
-                const {
-                    available,
-                    totalAvailable,
-                    totalDeposits,
-                    currentDeposits,
-                    price,
-                } = await Service.getCardData(
-                    account
-                        ? farms[chainId]?.[key.firstLabel]
-                        : key.firstLabel === 'ELRD'
-                            ? '13'
+        if (!preLoader) {
+            for (const key of cardDataConfig) {
+                const Service = new CardService(key.firstLabel as availableNames);
+                (async () => {
+                    const {
+                        available,
+                        totalAvailable,
+                        totalDeposits,
+                        currentDeposits,
+                        price,
+                    } = await Service.getCardData(
+                        account
+                            ? farms[chainId]?.[key.firstLabel]
                             : farms['43114']?.[key.firstLabel],
-                );
-                // const percentage = Math.ceil(
-                //     (available / currentDeposits) * 100,
-                // );
-                dispatch(
-                    setCardInfo({
-                        key: namesConfig[key.firstLabel],
-                        data: {
-                            available: `${
-                                namesConfig[key.firstLabel] === chainId
-                                    ? 'Unlimited'
-                                    : available.toFixed(2)
-                            }`,
-                            totalAvailable: totalAvailable.toString(),
-                            totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
-                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                            price: `${Number(price.toFixed(6))}`,
-                        },
-                    }),
-                );
-                dispatch(
-                    setPayData({
-                        key: namesConfig[key.firstLabel],
-                        data: {
-                            available: `${
-                                namesConfig[key.firstLabel] === chainId
-                                    ? 'Unlimited'
-                                    : Number(available.toFixed(5))
-                            }`,
-                            price: `${Number(price.toFixed(6))}`,
-                            totalAvailable: `$${totalAvailable}`,
-                        },
-                    }),
-                );
-            })();
+                    );
+
+                    dispatch(
+                        setCardInfo({
+                            key: namesConfig[key.firstLabel],
+                            data: {
+                                available: `${
+                                    namesConfig[key.firstLabel] === chainId
+                                        ? 'Unlimited'
+                                        : available.toFixed(2)
+                                }`,
+                                totalAvailable: totalAvailable.toString(),
+                                totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
+                                currentDeposits: `$${currentDeposits.toFixed(3)}`,
+                                price: `${Number(price.toFixed(6))}`,
+                            },
+                        }),
+                    );
+                    dispatch(
+                        setPayData({
+                            key: namesConfig[key.firstLabel],
+                            data: {
+                                available: `${
+                                    namesConfig[key.firstLabel] === chainId
+                                        ? 'Unlimited'
+                                        : Number(available.toFixed(5))
+                                }`,
+                                price: `${Number(price.toFixed(6))}`,
+                                totalAvailable: `$${totalAvailable}`,
+                            },
+                        }),
+                    );
+                })();
+            }
         }
-    }, [chainId]);
+    }, [chainId, isAppLoaded]);
 
     useEffect(() => {
         (async function GetProfit() {
