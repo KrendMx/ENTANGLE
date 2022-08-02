@@ -260,7 +260,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                                             profits[localName][
                                                 selectedChainId
                                             ]?.stable,
-                                        ) * Number(price))
+                                        ) * Number(price)).toFixed(5)
                                         : '~'
                                 } ${priceCurrency}`}
                             </p>
