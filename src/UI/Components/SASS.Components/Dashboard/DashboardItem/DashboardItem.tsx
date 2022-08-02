@@ -9,6 +9,7 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
 import { DescriptionGenerator } from 'src/UI/ui-kit/DescriptionGenerator';
 import { useRouter } from 'next/router';
+import WhiteButton from 'src/UI/ui-kit/WhiteButton/WhiteButton';
 import styles from './style.module.css';
 import type { IDashboardSASSItems } from '../Dashboard.interfaces';
 
@@ -43,15 +44,15 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
             <div className={styles.cardHeader}>
                 <div className={styles.images}>
                     <Image
-                        width={33}
-                        height={33}
+                        width={26}
+                        height={26}
                         quality={100}
                         alt=""
                         src={availableSingleSideNetworks[firstChainId].mainIcon}
                     />
                     <Image
-                        width={33}
-                        height={33}
+                        width={26}
+                        height={26}
                         quality={100}
                         className={styles.absImage}
                         alt=""
@@ -194,7 +195,7 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                 </div>
             </div>
             <div className={styles.footer}>
-                <GradientButton
+                <WhiteButton
                     title={tIndex('select')}
                     onClick={() => {
                         Router.push(
