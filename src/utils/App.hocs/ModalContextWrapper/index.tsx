@@ -121,7 +121,6 @@ const ModalContextWrapper = () => {
                     }}
                 />
             </CSSTransition>
-            )}
             {
                 isOpenWrongChainModal && (
                     <WrongNetModal

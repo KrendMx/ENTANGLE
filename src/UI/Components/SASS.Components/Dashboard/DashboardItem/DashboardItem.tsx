@@ -9,7 +9,6 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
 import { DescriptionGenerator } from 'src/UI/ui-kit/DescriptionGenerator';
 import { useRouter } from 'next/router';
-import WhiteButton from 'src/UI/ui-kit/WhiteButton/WhiteButton';
 import styles from './style.module.css';
 import type { IDashboardSASSItems } from '../Dashboard.interfaces';
 
