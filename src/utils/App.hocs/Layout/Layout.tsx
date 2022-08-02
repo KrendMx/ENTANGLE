@@ -200,7 +200,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 })();
             }
         }
-    }, [chainId, isAppLoaded]);
+    }, [chainId, isAppLoaded, preLoader]);
 
     useEffect(() => {
         (async function GetProfit() {
