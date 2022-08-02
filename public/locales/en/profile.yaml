@@ -1,7 +1,7 @@
 currentBalance: Current Balance
 allProfit: All Time Profit
-bestPerformer: Best performer
-worstPermormer: Worst performer
+bestPerformer: Best Performer
+worstPermormer: Worst Performer
 yourAssets: Your Entangle Assets
 transactionHistory: Transaction history
 nowAsset: You have no assets now
@@ -11,12 +11,11 @@ priceIn: Price increase
 priceDec: Price decrease
 profIn: Profit increase
 profDec: Profit decrease
-allActivity: All activity
+allActivity: All Activity
 buy: Buy
 sell: Sell
-recentLast: Recent last
-recentFirst: Recent first
-inDev: In Development
+recentLast: Latest First
+recentFirst: Earliest first
 dateTime:	Date/Time
 price:	Price
 amount:	Amount

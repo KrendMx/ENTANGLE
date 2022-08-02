@@ -7,12 +7,14 @@
 	cursor: pointer;
 }
 
-.dFlex {
-	display: flex;
+.back > p {
+	cursor: auto;
+
+	color: var(--gray);
 }
 
-.back p {
-	margin-left: .8rem;
+.dFlex {
+	display: flex;
 }
 
 .wrapper {

@@ -73,9 +73,10 @@ const CryptoHeader: React.FC<CryptoHeaderProps> = ({
                             quality={100}
                             alt="back-asset"
                         />
-                        <p>{tIndex('back')}</p>
+                        <p style={{ paddingLeft: '5px' }}>{t('back')}</p>
                     </span>
                 </Link>
+                <p>&nbsp;/ USDC</p>
             </div>
 
             <div className={styles.wrapper}>

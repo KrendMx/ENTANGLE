@@ -1,15 +1,15 @@
 stakeStablecoins: Stake Stablecoins for Synth-LP Liquidity
-tvl: TVL
-slpSupply: Total Synth-LP Circulating
+tvl: TVL of
+slpSupply: Synth-LP Circulation Supply
 assets: Assets
 availableNetwork: Available Networks 
 pastVolume: Past 24h Volume
 newAsset: New assets coming soon
 view: View
 walletBalance: Wallet Balance
-currentlyLocked: Currently locked amount
+currentlyLocked: Currently Locked Amount
 currentAPR: Current APR
-totalEarned: Total earned
+totalEarned: Total Earned
 lock: Lock
 withdraw: Withdraw
 select: Select
@@ -25,3 +25,6 @@ AvaiableToUnlock: Avaiable to unlock
 CurrentPrice: Current price
 ProjectedAPR: Projected APR
 StakeUSDC: Lock
+back: Lock Stablecoin
+youWillGet: You will get
+remainder: The remainder of the lock

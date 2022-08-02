@@ -111,7 +111,7 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                 <div className={classNames(styles.actionCard)}>
                     <div>
                         <TokenSelect
-                            defaultLabel={`${t('SelectYour').split(' ')[0]} LP`}
+                            defaultLabel={`${t('SelectYour')} LP`}
                             value={state.synthLp}
                             onChange={(value: string) =>
                                 dispatch({ synthLp: value })}
@@ -145,7 +145,7 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                             type="textBody"
                             classNameModifier={styles.mgb}
                         >
-                            {`${t('LendYour')} Synthetic LP`}
+                            {`${t('LendYour')} Synth-LP`}
                         </Typography>
                         <Input
                             type="number"

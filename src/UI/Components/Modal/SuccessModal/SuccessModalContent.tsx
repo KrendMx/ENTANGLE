@@ -8,6 +8,7 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 import { networks, synths } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import styles from './style.module.css';
 import type { SuccessModalProps } from './SuccessModal.interface';
 
@@ -22,6 +23,8 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
 
     const { chainId, provider } = store.WalletEntity;
     const { importToken } = asyncActions.Wallet;
+
+    const { t } = useTranslation('modal');
 
     return (
         <div className={styles.wrapper}>
@@ -47,10 +50,10 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                     />
                 </div>
             </div>
-            <div className={styles.errorText}>Success transaction!</div>
+            <div className={styles.errorText}>{t('SuccessTransaction')}</div>
             <div className={styles.valueTextWrapper}>
                 <span className={styles.valueText}>
-                    You will recieve
+                    {t('youReceive')}
                     {' '}
                     {transactionInfo.value}
                     {' '}
@@ -68,7 +71,7 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                     <GradientButton
                         titleElement={(
                             <div className={styles.metamaskBtnWrapper}>
-                                <div className={styles.metamaskText}>Add to MetaMask</div>
+                                <div className={styles.metamaskText}>{t('addToMet')}</div>
                                 <Image
                                     width={24}
                                     height={24}

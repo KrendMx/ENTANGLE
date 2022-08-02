@@ -38,7 +38,7 @@ const AssetPage: React.FC<AssetPageProps> = ({ stable }) => {
                 <div className={styles.chartBlock}>
                     <div className={classNames(styles.chart, styles.mgr)}>
                         <ChartWrapper
-                            label={t('tvl')}
+                            label={`${t('tvl')} USDC`}
                             data={generateGraph()}
                             labels={Array.from(Array(25).keys())}
                             total="1568'530'000"

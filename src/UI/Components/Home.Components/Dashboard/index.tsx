@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useStore } from 'core/store';
 import type { CardData } from 'core/Cards/CardEntity/CardEntity.interfaces';
 import Typography from 'src/UI/ui-kit/Typography';
+import Image from 'next/image';
 import styles from './style.module.css';
 import ITEMS from './Dashboard.consts';
 import type { IDashboardProps } from './Dashboard.interfaces';
@@ -83,7 +84,21 @@ const Dashboard: React.FC<IDashboardProps> = ({
                     (el) => el,
                 ).length === 0 ? (
                     // eslint-disable-next-line react/jsx-indent
-                        <div style={{ textAlign: 'center' }}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: 'column',
+                                marginTop: '100px',
+                            }}
+                        >
+                            <Image
+                                src="/images/bar-graph.png"
+                                width={104}
+                                height={90}
+                                quality={100}
+                                alt="Not found"
+                            />
                             <Typography type="title">
                                 Nothing found for your request
                             </Typography>

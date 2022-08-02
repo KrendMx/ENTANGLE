@@ -7,6 +7,8 @@
 .modal {
 	z-index: 5;
 
+	height: 20px;
+
 	margin-left: 4px;
 }
 
@@ -15,8 +17,6 @@
 	z-index: 100;
 
 	display: inline-block;
-
-	min-width: 55 px;
 
 	border-bottom:  1px doted #606060;
 }
@@ -47,7 +47,7 @@
 	position:absolute;
 	z-index: 1;
 	bottom:-8px;
-	left:113px;
+	left:115px;
 
 	width: 15px;
 	height: 15px;

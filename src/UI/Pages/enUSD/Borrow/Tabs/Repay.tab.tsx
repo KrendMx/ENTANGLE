@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import type { ChangeEvent } from 'react';
 import React, {
-    ChangeEventHandler,
-    useCallback,
     useReducer,
 } from 'react';
 import Image from 'next/image';
@@ -35,7 +33,7 @@ const RepayTab: React.FC<IRepayProps> = () => {
         },
     );
 
-    const miniButtons = ['25%', '50%', '75%', '100%'];
+    const miniButtons = ['25%', '50%', '100%'];
 
     const dolgi = {
         '56': {
@@ -114,7 +112,7 @@ const RepayTab: React.FC<IRepayProps> = () => {
                 <div className={classNames(styles.actionCard)}>
                     <div>
                         <TokenSelect
-                            defaultLabel="Select Position"
+                            defaultLabel={t('SelectPosition')}
                             value={state.repayToken}
                             onChange={(value: string) =>
                                 dispatch({
@@ -205,7 +203,12 @@ const RepayTab: React.FC<IRepayProps> = () => {
                     />
                     <Text
                         title={t('Interest')}
-                        content="$27 EnUSD"
+                        content="27%"
+                        classText={styles.mgt}
+                    />
+                    <Text
+                        title={`${t('Interest')} USD`}
+                        content="$27"
                         classText={styles.mgt}
                     />
                     <Text

@@ -2,7 +2,6 @@
 	position: relative;
 
 	display: flex;
-	overflow: hidden;
 	flex-direction: column;
 
 	width: 100%;
@@ -16,7 +15,6 @@
 
 .topBg {
 	--bg-height: 112px;
-	overflow: hidden;
 
 	height: var(--bg-height);
 }
@@ -28,6 +26,8 @@
 	left: 0;
 
 	height: var(--bg-height);
+
+	border-top-left-radius: 15px;
 
 	background: linear-gradient(
 		90deg,
@@ -118,7 +118,10 @@
 }
 
 .section {
-	margin-bottom: 8px;
+	display: flex;
+	justify-content: space-between;
+
+	margin-bottom: 20px;
 }
 
 .sectionTitle {
@@ -126,7 +129,6 @@
 	align-items: center;
 
 	margin-right: 5px;
-	margin-bottom: 6px;
 
 	color: var(--gray);
 
@@ -142,7 +144,7 @@
 }
 
 .sectionSubValue {
-	color: var(--color-6);
+	color: var(--gray);
 
 	font-size: 12px;
 	font-weight: 300;
@@ -156,11 +158,11 @@
 
 .sectionRow {
 	display: flex;
-	align-items: flex-end;
-	justify-content: flex-start;
+	align-items: center;
+	justify-content: flex-end;
 
-	width: 100%;
-	margin-bottom: 15px;
+	min-width: 130px;
+
 	gap: 10px;
 }
 
@@ -181,7 +183,7 @@
 }
 
 .mt2 {
-	margin-top: 40px;
+	margin-top: 10px;
 }
 
 .buttonWrapper {
@@ -203,7 +205,6 @@
 	position: relative;
 
 	display: flex;
-	overflow: hidden;
 
 	width: 100%;
 

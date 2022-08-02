@@ -8,12 +8,12 @@ import Preloader from 'UI/ui-kit/Preloader';
 import Footer from 'UI/Components/Footer';
 import Header from 'UI/Components/Header';
 
-import { GraphService } from 'src/Services';
+import { CardService, GraphService } from 'services/index';
 import QueryRequests from 'services/GraphService/queryRequests';
 import { namesConfig, availableChainsArray } from 'utils/Global/Vars';
 import { generateEmptyObject } from 'utils/helper/generateEmptyObject';
 import { Notification } from 'src/libs/Notification';
-import type { availableChains } from 'src/utils/Global/Types';
+import type { availableChains, availableNames } from 'src/utils/Global/Types';
 import styles from './style.module.css';
 
 type ILayoutProps = {
@@ -90,12 +90,20 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         CardEntity: store.CardsEntity,
     }));
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(setIsAppLoaded(true));
+        dispatch(getCardApr());
     }, []);
 
     const Graph = useMemo(() => new GraphService(account), [account]);
+
+    const cardDataConfig = [
+        { firstLabel: 'AVAX', secondId: '' },
+        { firstLabel: 'FTM', secondId: '' },
+        { firstLabel: 'BSC', secondId: '' },
+        { firstLabel: 'ETH', secondId: '' },
+        { firstLabel: 'ELRD', secondId: '' },
+    ];
 
     useEffect(() => {
         (async function getAvg() {
@@ -142,8 +150,58 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     }, [account, txLoading]);
 
     useEffect(() => {
-        dispatch(getCardApr());
-    }, []);
+        for (const key of cardDataConfig) {
+            const Service = new CardService(key.firstLabel as availableNames);
+            (async () => {
+                const {
+                    available,
+                    totalAvailable,
+                    totalDeposits,
+                    currentDeposits,
+                    price,
+                } = await Service.getCardData(
+                    account
+                        ? farms[chainId]?.[key.firstLabel]
+                        : key.firstLabel === 'ELRD'
+                            ? '13'
+                            : farms['43114']?.[key.firstLabel],
+                );
+                // const percentage = Math.ceil(
+                //     (available / currentDeposits) * 100,
+                // );
+                dispatch(
+                    setCardInfo({
+                        key: namesConfig[key.firstLabel],
+                        data: {
+                            available: `${
+                                namesConfig[key.firstLabel] === chainId
+                                    ? 'Unlimited'
+                                    : available.toFixed(2)
+                            }`,
+                            totalAvailable: totalAvailable.toString(),
+                            totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
+                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
+                            price: `${Number(price.toFixed(6))}`,
+                        },
+                    }),
+                );
+                dispatch(
+                    setPayData({
+                        key: namesConfig[key.firstLabel],
+                        data: {
+                            available: `${
+                                namesConfig[key.firstLabel] === chainId
+                                    ? 'Unlimited'
+                                    : Number(available.toFixed(5))
+                            }`,
+                            price: `${Number(price.toFixed(6))}`,
+                            totalAvailable: `$${totalAvailable}`,
+                        },
+                    }),
+                );
+            })();
+        }
+    }, [chainId]);
 
     useEffect(() => {
         (async function GetProfit() {

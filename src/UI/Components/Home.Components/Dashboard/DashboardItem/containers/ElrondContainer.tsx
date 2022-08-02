@@ -2,8 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import { CardService } from 'src/Services';
-import Modal from 'UI/Components/Modal';
-import PayModal from 'UI/Components/Home.Components/PayModal';
 import { farms } from 'utils/Global/Vars';
 import { Notification } from 'src/libs/Notification';
 import { useTranslation } from 'react-i18next';
@@ -69,70 +67,6 @@ const ElrondContainer = ({ isFiltered = false }) => {
     } as const;
 
     const Service = useMemo(() => new CardService('ELRD'), []);
-
-    useEffect(() => {
-        if (!preLoader) {
-            (async () => {
-                let [
-                    available,
-                    totalAvailable,
-                    totalDeposits,
-                    currentDeposits,
-                    price,
-                ] = [0, 0, 0, 0, 0];
-                try {
-                    const cardData = await Service.getCardData(
-                        account ? farms[chainId]?.ELRD : '13',
-                    );
-                    available = cardData.available;
-                    totalAvailable = cardData.totalAvailable;
-                    totalDeposits = cardData.totalDeposits;
-                    currentDeposits = cardData.currentDeposits;
-                    price = cardData.price;
-                } catch (e) {
-                    if ((e.code as number) === -32002) {
-                        localStorage.removeItem('wallet');
-                    }
-                }
-                const percentage = Math.ceil(
-                    (available / currentDeposits) * 100,
-                );
-                setRowGradient(
-                    `linear-gradient(90deg, #0F598E 0%, rgba(15, 89, 142, 0) ${percentage}%)`,
-                );
-                dispatch(
-                    setCardInfo({
-                        key: data.chainId,
-                        data: {
-                            available: `${
-                                CardData[data.chainId].localChain === chainId
-                                    ? 'Unlimited'
-                                    : available
-                            }`,
-                            totalAvailable: totalAvailable.toFixed(2),
-                            totalDeposits: `${totalDeposits} EGLD/USDC Synthetic LP`,
-                            currentDeposits: `$${currentDeposits.toFixed(3)}`,
-                            price: `${Number(price.toFixed(6))}`,
-                        },
-                    }),
-                );
-                dispatch(
-                    setPayData({
-                        key: '100',
-                        data: {
-                            available: `${
-                                CardData[data.chainId].localChain === chainId
-                                    ? 'Unlimited'
-                                    : Number(available.toFixed(5))
-                            }`,
-                            price: `${Number(price.toFixed(6))}`,
-                            totalAvailable: `$${totalAvailable}`,
-                        },
-                    }),
-                );
-            })();
-        }
-    }, [txLoading, chainId, preLoader]);
 
     useEffect(() => {
         (async () => {

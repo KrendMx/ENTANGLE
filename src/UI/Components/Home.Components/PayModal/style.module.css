@@ -108,7 +108,7 @@
 
 	text-align: center;
 
-	color: #FFF;
+	color: var(--gray);
 
 	font-size: 12px;
 	font-weight: 400;
@@ -134,5 +134,5 @@
 }
 
 .mgT {
-	margin: 0.64rem 0;
+	margin: 1rem 0;
 }
