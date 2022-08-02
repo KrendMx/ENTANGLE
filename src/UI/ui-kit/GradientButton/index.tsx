@@ -12,6 +12,7 @@ type GradientButtonProps = {
     disabled?: boolean;
     loader?: JSX.Element;
     active?: boolean;
+    isWhite?: boolean;
 };
 
 const GradientButton: React.FC<GradientButtonProps> = ({
@@ -23,6 +24,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({
     disabled = false,
     loader,
     gradient = 'linear-gradient(90deg, #FF5EBA 0%, #6831D6DE 87%, #0094FF 100%)',
+    isWhite = false,
     ...props
 }) => (
     <div
@@ -34,6 +36,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({
         style={{ background: gradient }}
         className={classNames(wrapperClass, styles.wrapper, {
             [styles.disabled]: disabled,
+            [styles.white]: isWhite,
         })}
     >
         {titleElement ? (
@@ -42,8 +45,10 @@ const GradientButton: React.FC<GradientButtonProps> = ({
             </div>
         ) : (
             <p
-                className={classNames(styles.title, titleClass || null, {
+                className={classNames(titleClass || null, {
                     [styles.active]: props?.active,
+                    [styles.title]: !isWhite,
+                    [styles.whiteTitle]: isWhite,
                 })}
             >
                 {title}

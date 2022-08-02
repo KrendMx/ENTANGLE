@@ -71,6 +71,7 @@ export const createContractInteractor = (
         }, { dispatch }) => {
             try {
                 dispatch(Entity.actions.setLoading(true));
+                dispatch(Entity.actions.changeLoadingTx(true));
                 const contract = new Contract(
                     tokenAddress,
                     opToken,
@@ -91,6 +92,7 @@ export const createContractInteractor = (
                 dispatch(Entity.actions.setError(e));
             } finally {
                 dispatch(Entity.actions.setLoading(false));
+                dispatch(Entity.actions.changeLoadingTx(false));
             }
         },
     ),

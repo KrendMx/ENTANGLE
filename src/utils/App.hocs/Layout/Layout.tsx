@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, memo } from 'react';
+import React, {
+    useEffect, useMemo, memo,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { useStore } from 'core/store';
 import Preloader from 'UI/ui-kit/Preloader';
@@ -6,9 +8,10 @@ import Preloader from 'UI/ui-kit/Preloader';
 import Footer from 'UI/Components/Footer';
 import Header from 'UI/Components/Header';
 
-import { GraphService } from 'services/index';
+import { GraphService } from 'src/Services';
 import QueryRequests from 'services/GraphService/queryRequests';
-import { namesConfig, farms } from 'utils/Global/Vars';
+import { namesConfig, availableChainsArray } from 'utils/Global/Vars';
+import { generateEmptyObject } from 'utils/helper/generateEmptyObject';
 import { Notification } from 'src/libs/Notification';
 import type { availableChains } from 'src/utils/Global/Types';
 import styles from './style.module.css';
@@ -25,7 +28,61 @@ type synthArrayType = {
 
 // eslint-disable-next-line react/display-name
 export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
-    const { store, actions, asyncActions } = useStore((store) => ({
+    const {
+        store: {
+            UserEntity: {
+                balances,
+                txHistory,
+                txLoaded,
+            },
+            WalletEntity: {
+                account,
+                chainId,
+                walletKey,
+            },
+            AppEntity: {
+                isAppLoaded,
+            },
+            ContractEntity: {
+                txLoading,
+            },
+        }, actions: {
+            User: {
+                setCardLoaded,
+                setTxHistory,
+                setTxLoaded,
+                setProfit,
+                setError,
+                setLoading,
+            },
+            Wallet: {
+                removeWallet,
+                setChain,
+                setAccount,
+            },
+            Card: {
+                setDefaultCardData,
+            },
+            Contract: {
+                clearAllowance,
+            },
+            App: {
+                setIsAppLoaded,
+            },
+        }, asyncActions: {
+            Wallet: {
+                changeNetwork,
+            },
+            Card: {
+                getCardApr,
+            },
+            User: {
+                calculateBalances,
+                getAverageBuyPrice,
+                getChartData,
+            },
+        },
+    } = useStore((store) => ({
         UserEntity: store.UserEntity,
         AppEntity: store.AppEntity,
         WalletEntity: store.WalletEntity,
@@ -33,31 +90,6 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         CardEntity: store.CardsEntity,
     }));
     const dispatch = useDispatch();
-
-    const {
-        balances, txLoading, txHistory, txLoaded,
-    } = store.UserEntity;
-    const { isAppLoaded } = store.AppEntity;
-    const { account, chainId, provider } = store.WalletEntity;
-
-    const { clearAllowance } = actions.Contract;
-
-    const { setDefaultCardData } = actions.Card;
-
-    const { changeNetwork } = asyncActions.Wallet;
-
-    const { setIsAppLoaded } = actions.App;
-    const {
-        setCardLoaded,
-        setTxHistory,
-        setTxLoaded,
-        setProfit,
-        setError,
-        setLoading,
-    } = actions.User;
-
-    const { calculateBalances, getAverageBuyPrice, getChartData } = asyncActions.User;
-    const { getCardApr } = asyncActions.Card;
 
     useEffect(() => {
         dispatch(setIsAppLoaded(true));
@@ -71,6 +103,30 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
             dispatch(getAverageBuyPrice({ account }));
         }());
     }, [account]);
+
+    const disconnect = () => dispatch(removeWallet());
+
+    const changeAccount = (accounts: string[]) => dispatch(setAccount({ accounts }));
+
+    const chainChange = (chainId: string) => {
+        dispatch(setChain(chainId as availableChains));
+    };
+
+    useEffect(() => {
+        if (walletKey) {
+            const eventProvider = window.ethereum;
+            eventProvider.on('disconnect', disconnect);
+            eventProvider.on('accountsChanged', changeAccount);
+            eventProvider.on('chainChanged', chainChange);
+            return () => {
+                const removeEventKey = 'removeListener';
+                eventProvider[removeEventKey]('disconnect', disconnect);
+                eventProvider[removeEventKey]('accountsChanged', changeAccount);
+                eventProvider[removeEventKey]('chainChanged', chainChange);
+            };
+        }
+        return () => {};
+    }, [walletKey]);
 
     useEffect(() => {
         (async () => {
@@ -94,33 +150,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
             try {
                 dispatch(setLoading(true));
                 if (txHistory.length) {
-                    const res = {
-                        FTM: {
-                            '56': { percentage: 0, stable: 0 },
-                            '43114': { percentage: 0, stable: 0 },
-                            '250': { percentage: 0, stable: 0 },
-                        },
-                        AVAX: {
-                            '56': { percentage: 0, stable: 0 },
-                            '43114': { percentage: 0, stable: 0 },
-                            '250': { percentage: 0, stable: 0 },
-                        },
-                        BSC: {
-                            '56': { percentage: 0, stable: 0 },
-                            '43114': { percentage: 0, stable: 0 },
-                            '250': { percentage: 0, stable: 0 },
-                        },
-                        ETH: {
-                            '56': { percentage: 0, stable: 0 },
-                            '43114': { percentage: 0, stable: 0 },
-                            '250': { percentage: 0, stable: 0 },
-                        },
-                        ELRD: {
-                            '56': { percentage: 0, stable: 0 },
-                            '43114': { percentage: 0, stable: 0 },
-                            '250': { percentage: 0, stable: 0 },
-                        },
-                    };
+                    const res = generateEmptyObject();
                     const names = Object.keys(balances);
                     for (const name of names) {
                         const chains = Object.keys(balances[name]);
@@ -133,6 +163,8 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                                     (balances[name][chains[i]] as any)
                                         .positions,
                                     namesConfig[name],
+                                    (balances[name][chains[i]] as any)
+                                        .price,
                                 );
                                 res[name][chains[i]] = { percentage, stable };
                             } else {
@@ -144,17 +176,8 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                         }
                     }
                     dispatch(setProfit(res));
-                } else if (!txHistory.length && txLoaded) {
-                    const chains = Object.keys(balances);
-                    for (let i = 0; i < chains.length; i++) {
-                        dispatch(
-                            setProfit({
-                                n: 0,
-                                change: 0,
-                                key: namesConfig[chains[i]],
-                            }),
-                        );
-                    }
+                } else if (txLoaded) {
+                    dispatch(setProfit(generateEmptyObject()));
                 }
             } catch (e) {
                 Notification.error('Error', e.message);

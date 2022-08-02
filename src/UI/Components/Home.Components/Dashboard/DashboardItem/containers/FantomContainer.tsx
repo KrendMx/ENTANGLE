@@ -10,20 +10,42 @@ import Modal from '../../../../Modal';
 import DashboardItem from '../index';
 
 const FantomContainer = ({ isFiltered = false }) => {
-    const { store, actions, asyncActions } = useStore((store) => ({
+    const {
+        store: {
+            WalletEntity: {
+                account,
+                chainId,
+                preLoader,
+            },
+            UserEntity: {
+                isOpenModal,
+                profits,
+            },
+            ContractEntity: {
+                txLoading,
+            },
+            CardsEntity: {
+                data: CardData,
+            },
+        }, actions: {
+            User: {
+                setIsOpenModal,
+                setPayData,
+                setPositionSum,
+            },
+            Card: {
+                setCardInfo,
+            },
+        },
+    } = useStore((store) => ({
         UserEntity: store.UserEntity,
         WalletEntity: store.WalletEntity,
         AppEntity: store.AppEntity,
         CardsEntity: store.CardsEntity,
+        ContractEntity: store.ContractEntity,
     }));
 
     const dispatch = useDispatch();
-    const { account, chainId, preLoader } = store.WalletEntity;
-    const { data: CardData } = store.CardsEntity;
-    const { txLoading, isOpenModal, profits } = store.UserEntity;
-
-    const { setIsOpenModal, setPayData, setPositionSum } = actions.User;
-    const { setCardInfo } = actions.Card;
     const [rowGradient, setRowGradient] = useState<string>('');
     const closeModal = () => {
         history.replaceState({}, '', '/');

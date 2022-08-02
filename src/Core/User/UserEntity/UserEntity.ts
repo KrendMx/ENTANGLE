@@ -18,11 +18,8 @@ const initialState: IUserEntityState & IWithHelperState = {
     totalBalance: 0,
     balances: {},
     cardLoaded: false,
-    txLoading: false,
     txHistory: [],
     chartData: [],
-    txChartData: [],
-    isChartLoaded: false,
     txLoaded: false,
     isOpenModal: false,
     payData: {},
@@ -52,9 +49,6 @@ export const UserEntity = createSlice({
         setTxLoaded(state, action: PayloadAction<boolean>) {
             state.txLoaded = action.payload;
         },
-        changeLoadingTx(state, action: PayloadAction<boolean>) {
-            state.txLoading = action.payload;
-        },
         setCardLoaded(state, action: PayloadAction<boolean>) {
             state.cardLoaded = action.payload;
         },
@@ -70,12 +64,6 @@ export const UserEntity = createSlice({
         },
         setChartData(state, action: PayloadAction<IChartData[]>) {
             state.chartData = action.payload;
-        },
-        setTxChartData(state, action: PayloadAction<TX[]>) {
-            state.txChartData = action.payload;
-        },
-        setIsChartLoaded(state, action: PayloadAction<boolean>) {
-            state.isChartLoaded = action.payload;
         },
     },
 });

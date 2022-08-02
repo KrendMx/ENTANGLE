@@ -1,0 +1,98 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 428px;
+  height: 476px;
+
+  background: #101010;
+  backdrop-filter: blur(15px);
+
+  border-radius: 12px;
+}
+
+.header {
+	margin: 4rem 0 1.5rem 0;
+}
+
+.content {
+  margin-bottom: 1rem;
+}
+
+.additionalText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  color: #A3A3A3;
+  margin-bottom: 2rem;
+}
+
+.closeWrapper {
+	cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.headerText {
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 35px;
+  color: #FFFFFF;
+}
+
+.walletElement {
+  width: 380px;
+  height: 48px;
+  margin-bottom: .5rem;
+  border-radius: 12px;
+  background: #101010;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.selected {
+  background: linear-gradient(90deg, #FF5EBA 0%, #6831D6DE 87%, #0094FF 100%);
+  padding: 1px;
+  border: none;
+}
+
+.name {
+	color: #FCFCFD;
+
+	font-size: 14px;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 16px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 10px;
+  gap: 106px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: #101010;
+}
+
+.buttonContainer {
+  width: 380px;
+  height: 48px;
+}
+
+.buttonWrapper {
+  background: #FFFFFF;
+  box-shadow: 0px 3px 12px rgba(74, 58, 255, 0.18);
+  border-radius: 12px;
+  padding: 16px 40px;
+}
+
+.logo {
+	margin: 41.5% 0 40%;
+}

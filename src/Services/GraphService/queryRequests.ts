@@ -20,18 +20,26 @@ class QueryRequests implements IQueryRequests {
 
     calculateAVG = async (account: string) => {
         const res: { [key: string]: {[key: string]: number} } = {
-            'FTM': { '56': 0, '43114': 0, '250': 0 },
-            'AVAX': { '56': 0, '43114': 0, '250': 0 },
-            'BSC': { '56': 0, '43114': 0, '250': 0 },
-            'ETH': { '56': 0, '43114': 0, '250': 0 },
-            'ELRD': { '56': 0, '43114': 0, '250': 0 },
+            'FTM': {
+                '56': 0, '43114': 0, '250': 0, '100': 0, '1': 0,
+            },
+            'AVAX': {
+                '56': 0, '43114': 0, '250': 0, '100': 0, '1': 0,
+            },
+            'BSC': {
+                '56': 0, '43114': 0, '250': 0, '100': 0, '1': 0,
+            },
         };
         const counter: { [key: string]: {[key: string]: number} } = {
-            'FTM': { '56': 0, '43114': 0, '250': 0 },
-            'AVAX': { '56': 0, '43114': 0, '250': 0 },
-            'BSC': { '56': 0, '43114': 0, '250': 0 },
-            'ETH': { '56': 0, '43114': 0, '250': 0 },
-            'ELRD': { '56': 0, '43114': 0, '250': 0 },
+            'FTM': {
+                '56': 0, '43114': 0, '250': 0, '100': 0, '1': 0,
+            },
+            'AVAX': {
+                '56': 0, '43114': 0, '250': 0, '100': 0, '1': 0,
+            },
+            'BSC': {
+                '56': 0, '43114': 0, '250': 0, '100': 0, '1': 0,
+            },
         };
         const names = Object.keys(GRAPH_CONFIG);
         for (const name of names) {
@@ -55,17 +63,23 @@ class QueryRequests implements IQueryRequests {
         return res;
     };
 
-    calculateProfit = async (transactions: TransactionHistoryEntity[], balance: number, chainId: string) => {
+    calculateProfit = async (
+        transactions: TransactionHistoryEntity[],
+        balance: number,
+        chainId: string,
+        price: number,
+    ) => {
         let [Sout, Sstart, Sin] = [0, 0, 0];
         const filteredTxs = transactions.filter((el) => String(el.crypto) === chainId);
-        Sstart = Number(filteredTxs[filteredTxs.length - 1]?.amount);
+        Sstart = Number(filteredTxs[filteredTxs.length - 1]?.amount) * price;
         for (let j = 0; j < filteredTxs.length; j++) {
             if (filteredTxs[j].type === 'buy') {
-                Sin += Number(filteredTxs[j].amount) / 10 ** 18;
+                Sin += Number(filteredTxs[j].amount) * price;
             } else {
-                Sout += Number(filteredTxs[j].amount) / 10 ** 18;
+                Sout += Number(filteredTxs[j].amount) * price;
             }
         }
+        Sin -= Sstart;
         const stable = (balance + Sout) - (Sstart + Sin);
         return {
             stable: Number(stable.toFixed(6)),

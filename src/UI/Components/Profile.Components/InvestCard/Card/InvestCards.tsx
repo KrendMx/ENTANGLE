@@ -3,7 +3,7 @@ import Image from 'next/image';
 import classNames from 'classnames';
 
 import { useTranslation } from 'react-i18next';
-import { networks } from 'utils/Global/Vars';
+import { chainToNameConfig, networks, namesConfig } from 'utils/Global/Vars';
 
 import { useStore } from 'core/store';
 import type { ICardUnit } from 'UI/Components/Profile.Components/InvestCard/InvestCard.interfaces';
@@ -27,21 +27,31 @@ const InvestCardExp: React.FC<ICardUnit> = ({
     cardTypeLabelColor,
     currencyName,
 }) => {
-    const { store, actions } = useStore((store) => ({
+    const {
+        store: {
+            UserEntity: {
+                profits,
+                avgPrices,
+            },
+            CardEntity: {
+                data: cardData,
+            },
+        },
+        actions: {
+            User: {
+                setIsOpenModal,
+            },
+        },
+    } = useStore((store) => ({
         UserEntity: store.UserEntity,
         CardEntity: store.CardsEntity,
     }));
 
     const dispatch = useDispatch();
 
-    const { profits, avgPrices } = store.UserEntity;
-
-    const { setIsOpenModal } = actions.User;
-
     const payModalHandleOpen = () => {
         dispatch(setIsOpenModal(true));
     };
-    const { data: cardData } = store.CardEntity;
 
     const { t } = useTranslation('index');
     const { t: tProfile } = useTranslation('profile');
@@ -97,7 +107,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                 <li className={styles.listItem}>
                     <p className={styles.undertitle}>{t('yourPosition')}</p>
                     <p className={styles.itemValue}>
-                        {Number(positions.toFixed(2))}
+                        {Number(positions.toFixed(5))}
                     </p>
                 </li>
             </ul>
@@ -129,7 +139,7 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                     {'AVAX' in avgPrices ? (
                         <p className={styles.itemValue}>
                             $
-                            {avgPrices[currencyName][chainId]}
+                            {avgPrices[chainToNameConfig[chainId]][namesConfig[currencyName]]}
                         </p>
                     ) : (
                         <div className={styles.itemValue}>
