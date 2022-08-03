@@ -38,8 +38,8 @@ const HintModal: React.FC<Props> = ({ children }) => {
                     </CSSTransition>
                     <Image
                         src="/images/i.svg"
-                        width={18}
-                        height={18}
+                        width={15}
+                        height={15}
                         quality={100}
                         alt=""
                     />

@@ -15,6 +15,7 @@ import GradientSlider from 'UI/ui-kit/GradientSlider';
 import { networks, chainToNameConfig } from 'utils/Global/Vars';
 
 import Typography from 'UI/ui-kit/Typography';
+import { Arrow } from 'src/UI/ui-kit/Arrow';
 import type { IBorrowProps, BorrowState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
@@ -89,11 +90,14 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
         if (!state.synthLp) return;
         dispatch({
             lendSynthLp:
-                balances[chainToNameConfig[state.synthLp]][chainId].positions.toString(),
+                balances[chainToNameConfig[state.synthLp]][
+                    chainId
+                ].positions.toString(),
             getEnUSD: Number(
                 (
                     Number(
-                        balances[chainToNameConfig[state.synthLp]][chainId].positions,
+                        balances[chainToNameConfig[state.synthLp]][chainId]
+                            .positions,
                     )
                     * (Number(state.LTVRate) / 100)
                 ).toFixed(2),
@@ -128,9 +132,9 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                                         balances[chainToNameConfig[el]]?.[
                                             chainId
                                         ]?.positions
-                                            ? balances[
-                                                chainToNameConfig[el]
-                                            ][chainId]?.positions.toString()
+                                            ? balances[chainToNameConfig[el]][
+                                                chainId
+                                            ]?.positions.toString()
                                             : 'Buy now'
                                     }
                                     currency="SYNTHUSDC"
@@ -161,15 +165,7 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                     </div>
                 </div>
                 <div className={classNames(styles.actionCard)}>
-                    <div className={styles.arrow}>
-                        <Image
-                            src="/images/Arrow.svg"
-                            width={100}
-                            height={100}
-                            quality={100}
-                            alt="arrow-icon"
-                        />
-                    </div>
+                    <Arrow />
                     <div className={styles.infoContainer}>
                         <p className={classNames(styles.white)}>
                             {t('SetLTV')}
@@ -229,25 +225,20 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                             style={{
                                 backgroundColor: 'rgb(17,17,17)',
                                 minHeight: '150px',
-                                height: 'auto',
+                                height: '100px',
                             }}
                         >
                             <div className="inner">
-                                <p>{t('infoText')}</p>
+                                <div className={styles.infoBlock}>
+                                    <p>{t('infoText')}</p>
+                                    <p>{t('Note')}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className={styles.actionCard}>
-                    <div className={styles.arrow}>
-                        <Image
-                            src="/images/Arrow.svg"
-                            width={100}
-                            height={100}
-                            quality={100}
-                            alt="arrow-icon"
-                        />
-                    </div>
+                    <Arrow />
                     <div>
                         <Typography
                             type="textBody"
@@ -267,19 +258,30 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                             getMax={getMax}
                         />
                     </div>
-
-                    <Text
-                        title={t('CurrentAVG')}
-                        content={`${state.AVGCollaterization}%`}
-                    />
-                    <Text
-                        title={t('ExchangeRate')}
-                        content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                    />
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            paddingBottom: '0.5rem',
+                        }}
+                    >
+                        <Text
+                            title={t('CurrentAVG')}
+                            content={`${state.AVGCollaterization}%`}
+                            classText={local.mg1Top}
+                        />
+                        <Text
+                            title={t('ExchangeRate')}
+                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                            classText={local.mg1Top}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={styles.helper}>
                 <GradientButton
+                    isWhite
                     title={`${t('Mint')} EnUSD`}
                     onClick={() => {}}
                 />

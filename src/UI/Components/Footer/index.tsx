@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import classNames from 'classnames';
@@ -8,7 +8,8 @@ import styles from './style.module.css';
 import { NAVIGATE, SOCIALS } from './Footer.constant';
 
 const Footer = () => {
-    const { t } = useTranslation('footer');
+    const { t } = useTranslation('header');
+    const { t: tFooter } = useTranslation('footer');
 
     return (
         <footer className={styles.wrapper}>
@@ -27,25 +28,25 @@ const Footer = () => {
                 <nav className={styles.navigate}>
                     <span>
                         <Link passHref href="/">
-                            <p className={styles.mainLink}>Synthetic Vaults</p>
+                            <p className={styles.mainLink}>{t('syntheticVaults')}</p>
                         </Link>
                     </span>
                     <span>
                         <p className={styles.mainLink}>EnUSD</p>
                         <Link passHref href="/borrow">
-                            <p className={styles.addLink}>Borrow</p>
+                            <p className={styles.addLink}>{t('borrow')}</p>
                         </Link>
                     </span>
                     <span>
-                        <p className={styles.mainLink}>Stake</p>
+                        <p className={styles.mainLink}>{t('stake')}</p>
                         <Link passHref href="/stake-entangle">
                             <p className={styles.addLink}>Entangle</p>
                         </Link>
                         <Link passHref href="/stake-stablecoin">
-                            <p className={styles.addLink}>Stablecoin</p>
+                            <p className={styles.addLink}>{t('stablecoin')}</p>
                         </Link>
                         <Link passHref href="/single-side-staking">
-                            <p className={styles.addLink}>SSAS</p>
+                            <p className={styles.addLink}>SALP</p>
                         </Link>
                     </span>
                     <span>
@@ -68,7 +69,7 @@ const Footer = () => {
                     ))}
                 </div>
             </div>
-            <p className={styles.product}>{`2022. Entangle. ${t('rule')}`}</p>
+            <p className={styles.product}>{`2022. Entangle. ${tFooter('rule')}`}</p>
         </footer>
     );
 };

@@ -259,17 +259,20 @@ const Deposit: React.FC<propsType> = ({
                 }}
                 getMax={getMax}
             />
-            <GradientButton
-                {...buttonData}
-                loader={
-                    buttonData.loader && (
-                        <i
-                            className="fa fa-spinner fa-spin"
-                            style={{ marginLeft: '5px' }}
-                        />
-                    )
-                }
-            />
+            <div style={{ marginTop: '30px' }}>
+                <GradientButton
+                    isWhite
+                    {...buttonData}
+                    loader={
+                        buttonData.loader && (
+                            <i
+                                className="fa fa-spinner fa-spin"
+                                style={{ marginLeft: '5px' }}
+                            />
+                        )
+                    }
+                />
+            </div>
         </div>
     );
 };

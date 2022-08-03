@@ -283,6 +283,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 <div className={styles.buttonWrapper}>
                     <div className={styles.mt2}>
                         <GradientButton
+                            isWhite
                             title={t(buttonValue)}
                             onClick={handleSelectClick}
                             disabled={disabled || selectedChainId === '1'}

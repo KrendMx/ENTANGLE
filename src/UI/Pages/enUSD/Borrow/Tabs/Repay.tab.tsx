@@ -12,6 +12,7 @@ import MiniButton from 'UI/ui-kit/MiniButton';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import { networks, chainToNameConfig } from 'utils/Global/Vars';
 import Typography from 'UI/ui-kit/Typography';
+import { Arrow } from 'src/UI/ui-kit/Arrow';
 import type { IRepayProps, RepayState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
@@ -156,28 +157,21 @@ const RepayTab: React.FC<IRepayProps> = () => {
                                 repayPositionChangeHandler(target.value)}
                             getMax={getMax}
                         />
+                        <div className={styles.miniButtonsGroup}>
+                            {miniButtons.map((el, idx) => (
+                                <MiniButton
+                                    key={idx}
+                                    title={el}
+                                    clickHandler={() => buttonChangeHandler(el)}
+                                    active={el === state.activeButtonRepay}
+                                />
+                            ))}
+                        </div>
                     </div>
-                    <div className={styles.miniButtonsGroup}>
-                        {miniButtons.map((el, idx) => (
-                            <MiniButton
-                                key={idx}
-                                title={el}
-                                clickHandler={() => buttonChangeHandler(el)}
-                                active={el === state.activeButtonRepay}
-                            />
-                        ))}
-                    </div>
+
                 </div>
                 <div className={classNames(styles.actionCard)}>
-                    <div className={styles.arrow}>
-                        <Image
-                            src="/images/Arrow.svg"
-                            width={100}
-                            height={100}
-                            quality={100}
-                            alt="arrow-icon"
-                        />
-                    </div>
+                    <Arrow />
                     <div>
                         <Typography
                             type="textBody"
@@ -196,31 +190,34 @@ const RepayTab: React.FC<IRepayProps> = () => {
                             getMax={getMax}
                         />
                     </div>
-                    <Text
-                        title={t('TotalBorrowed')}
-                        content="$900 EnUSD"
-                        classText={styles.mgt}
-                    />
-                    <Text
-                        title={t('Interest')}
-                        content="27%"
-                        classText={styles.mgt}
-                    />
-                    <Text
-                        title={`${t('Interest')} USD`}
-                        content="$27"
-                        classText={styles.mgt}
-                    />
-                    <Text
-                        title={t('ExchangeRate')}
-                        content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                        classText={styles.mgt}
-                    />
+                    <div>
+                        <Text
+                            title={t('TotalBorrowed')}
+                            content="$900 EnUSD"
+                            classText={styles.mgt}
+                        />
+                        <Text
+                            title={t('Interest')}
+                            content="27%"
+                            classText={styles.mgt}
+                        />
+                        <Text
+                            title={`${t('Interest')} USD`}
+                            content="$27"
+                            classText={styles.mgt}
+                        />
+                        <Text
+                            title={t('ExchangeRate')}
+                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                            classText={styles.mgt}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={styles.helper}>
                 <GradientButton
                     title={t('RepayLoan')}
+                    isWhite
                     onClick={() => {}}
                     disabled={
                         Number(state.repayPosition) < Number(state.enterEnUSD)

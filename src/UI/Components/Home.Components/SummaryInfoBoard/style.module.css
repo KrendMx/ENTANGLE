@@ -1,8 +1,6 @@
 .wrapper {
 	display: grid;
 	justify-content: space-between;
-
-	padding: 0 0 40px;
 	grid-template-columns: repeat(2, 1fr);
 	column-gap: 20px;
 	row-gap: 20px;

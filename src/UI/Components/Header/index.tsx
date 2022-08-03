@@ -259,7 +259,7 @@ const Header = () => {
                                                 passHref
                                             >
                                                 <p className={styles.dropItem}>
-                                                    SSAS
+                                                    SALP
                                                 </p>
                                             </Link>
                                         </>

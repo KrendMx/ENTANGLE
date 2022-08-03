@@ -27,7 +27,7 @@ const Borrow: React.FC = () => {
     const buttons = [t('Borrow'), t('Repay')];
 
     return (
-        <div style={{ marginBottom: '5rem' }}>
+        <div style={{ height: '800px' }}>
             <div className={styles.wrapper}>
                 <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>{`SynthLP ${t('inCollateral')}`}</p>

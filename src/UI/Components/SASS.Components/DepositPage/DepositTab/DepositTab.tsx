@@ -34,7 +34,7 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
             enterAmount: '',
             activeAssets: '',
             activeButton: 5,
-            miniButtons: ['25%', '50%', '75%', '100%'],
+            miniButtons: ['25%', '50%', '100%'],
         },
     );
 
@@ -193,6 +193,7 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                     </span>
                     <div className={styles.buttonContainer}>
                         <GradientButton
+                            isWhite
                             title={tDep('deposit')}
                             onClick={() => {}}
                         />

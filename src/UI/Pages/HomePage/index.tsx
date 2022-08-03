@@ -11,6 +11,7 @@ const HomePage = () => {
 
     return (
         <div className={styles.wrapper}>
+            <SummaryInfoBoard />
             <ActionPanel
                 filter={filter}
                 search={search}
@@ -19,7 +20,6 @@ const HomePage = () => {
                 sort={sort}
                 setSort={setSort}
             />
-            <SummaryInfoBoard />
             <Dashboard filter={filter} query={search} sort={sort} />
         </div>
     );

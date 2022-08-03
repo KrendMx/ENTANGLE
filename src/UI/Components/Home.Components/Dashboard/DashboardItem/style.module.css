@@ -130,7 +130,7 @@
 
 	margin-right: 5px;
 
-	color: var(--gray);
+	color: white;
 
 	font-size: 16px;
 }
@@ -138,7 +138,7 @@
 .sectionValue {
 	color: var(--color-6);
 
-	font-size: 24px;
+	font-size: 18px;
 	font-weight: 600;
 	line-height: 1em;
 }
@@ -188,7 +188,7 @@
 
 .buttonWrapper {
 	width: 100%;
-	margin-top: auto;
+	margin-top: 10px;
 }
 
 .overlayDisabled {

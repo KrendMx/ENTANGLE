@@ -250,33 +250,37 @@ const Withdraw: React.FC<propsType> = ({
                 }}
                 getMax={getMax}
             />
-            {txLoading || maxError ? (
-                <GradientButton
-                    title={maxError ? 'Sell funds' : 'Waiting'}
-                    onClick={() => {}}
-                    disabled
-                    loader={
-                        !maxError ? (
-                            <i
-                                className="fa fa-spinner fa-spin"
-                                style={{ marginLeft: '5px' }}
-                            />
-                        ) : undefined
-                    }
-                />
-            ) : (
-                <GradientButton
-                    {...buttonData}
-                    loader={
-                        buttonData.loader && (
-                            <i
-                                className="fa fa-spinner fa-spin"
-                                style={{ marginLeft: '5px' }}
-                            />
-                        )
-                    }
-                />
-            )}
+            <div style={{ marginTop: '30px' }}>
+                {txLoading || maxError ? (
+                    <GradientButton
+                        isWhite
+                        title={maxError ? 'Sell funds' : 'Waiting'}
+                        onClick={() => {}}
+                        disabled
+                        loader={
+                            !maxError ? (
+                                <i
+                                    className="fa fa-spinner fa-spin"
+                                    style={{ marginLeft: '5px' }}
+                                />
+                            ) : undefined
+                        }
+                    />
+                ) : (
+                    <GradientButton
+                        isWhite
+                        {...buttonData}
+                        loader={
+                            buttonData.loader && (
+                                <i
+                                    className="fa fa-spinner fa-spin"
+                                    style={{ marginLeft: '5px' }}
+                                />
+                            )
+                        }
+                    />
+                )}
+            </div>
         </div>
     );
 };

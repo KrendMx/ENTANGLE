@@ -11,6 +11,7 @@ import { networks } from 'utils/Global/Vars';
 import Typography from 'UI/ui-kit/Typography';
 import Text from 'UI/Components/Home.Components/PayModal/Text';
 import MiniButton from 'UI/ui-kit/MiniButton';
+import { Arrow } from 'src/UI/ui-kit/Arrow';
 import type { IWithdrawState, WithdrawProps } from './Tabs.interfaces';
 import styles from './style.module.css';
 
@@ -30,7 +31,9 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
 
     const { t } = useTranslation('stable');
 
-    const inputChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>): void => {
+    const inputChangeHandler = ({
+        target,
+    }: ChangeEvent<HTMLInputElement>): void => {
         if (target.value === '' && state.usdcAmount.length === 1) {
             dispatch({ usdcAmount: '' });
             return;
@@ -67,7 +70,10 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
                 </div>
                 <div>
                     <div className={classNames(styles.mgt, styles.mgb)}>
-                        <Typography type="textBody" classNameModifier={styles.mgb}>
+                        <Typography
+                            type="textBody"
+                            classNameModifier={styles.mgb}
+                        >
                             {`${t('enterAmount')} USDC`}
                         </Typography>
                     </div>
@@ -90,15 +96,7 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
                 </div>
             </div>
             <div className={classNames(styles.actionCard)}>
-                <div className={styles.arrow}>
-                    <Image
-                        src="/images/Arrow.svg"
-                        width={100}
-                        height={100}
-                        quality={100}
-                        alt="arrow-icon"
-                    />
-                </div>
+                <Arrow />
                 <div>
                     <div className={classNames(styles.mgb)}>
                         <Typography type="textBody">
@@ -110,9 +108,25 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
                         placeholder={t('youWillGet')}
                         onChange={() => {}}
                     />
-                    <Text title={t('AvaiableToUnlock')} content="92 USDC" classText={styles.mgt2} />
-                    <Text title={t('remainder')} content="3 USDC" classText={styles.mgt2} />
-                    <div className={styles.mgt}><GradientButton title={t('withdraw')} onClick={() => {}} /></div>
+
+                    <Text
+                        title={t('AvaiableToUnlock')}
+                        content="92 USDC"
+                        classText={styles.mgt2}
+                    />
+                    <Text
+                        title={t('remainder')}
+                        content="3 USDC"
+                        classText={styles.mgt2}
+                    />
+                </div>
+
+                <div className={styles.mgt}>
+                    <GradientButton
+                        title={t('withdraw')}
+                        onClick={() => {}}
+                        isWhite
+                    />
                 </div>
             </div>
         </div>
