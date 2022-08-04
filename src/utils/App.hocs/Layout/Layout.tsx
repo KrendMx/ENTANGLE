@@ -123,21 +123,21 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     const chainChange = (chainId: string) =>
         dispatch(changeNetwork({ chainId: toNormalChainId(chainId) as availableChains, provider }));
 
-    useEffect(() => {
-        if (walletKey) {
-            const eventProvider = window.ethereum;
-            eventProvider.on('disconnect', disconnect);
-            eventProvider.on('accountsChanged', changeAccount);
-            eventProvider.on('chainChanged', chainChange);
-            return () => {
-                const removeEventKey = 'removeListener';
-                eventProvider[removeEventKey]('disconnect', disconnect);
-                eventProvider[removeEventKey]('accountsChanged', changeAccount);
-                eventProvider[removeEventKey]('chainChanged', chainChange);
-            };
-        }
-        return () => {};
-    }, [walletKey]);
+    // useEffect(() => {
+    //     if (walletKey) {
+    //         const eventProvider = window.ethereum;
+    //         eventProvider.on('disconnect', disconnect);
+    //         eventProvider.on('accountsChanged', changeAccount);
+    //         eventProvider.on('chainChanged', chainChange);
+    //         return () => {
+    //             const removeEventKey = 'removeListener';
+    //             eventProvider[removeEventKey]('disconnect', disconnect);
+    //             eventProvider[removeEventKey]('accountsChanged', changeAccount);
+    //             eventProvider[removeEventKey]('chainChanged', chainChange);
+    //         };
+    //     }
+    //     return () => {};
+    // }, [walletKey]);
 
     useEffect(() => {
         (async () => {
