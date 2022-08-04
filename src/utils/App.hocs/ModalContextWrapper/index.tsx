@@ -20,7 +20,6 @@ const ModalContextWrapper = () => {
             AppEntity: {
                 isOpenSelectWalletModal,
                 sucInfo,
-                isOpenWrongChainModal,
             },
             UserEntity: {
                 isOpenModal,
@@ -30,15 +29,18 @@ const ModalContextWrapper = () => {
             },
             WalletEntity: {
                 chainId,
+                isOpenWrongChainModal,
             },
         }, actions: {
             App: {
                 setSucInfo,
                 setIsOpenSelectWalletModal,
-                setIsOpenWrongChainModal,
             },
             User: {
                 setIsOpenModal,
+            },
+            Wallet: {
+                setIsOpenWrongChainModal,
             },
         }, asyncActions: {
             Wallet: {
@@ -72,12 +74,6 @@ const ModalContextWrapper = () => {
             setTermsModal(true);
         }
     }, []);
-
-    useEffect(() => {
-        if (!availableChainsArray.includes(chainId)) {
-            dispatch(setIsOpenWrongChainModal(true));
-        }
-    }, [chainId]);
 
     return (
         <>

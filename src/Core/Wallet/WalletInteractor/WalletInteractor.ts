@@ -6,7 +6,7 @@ import type { Web3Provider } from '@ethersproject/providers/src.ts/web3-provider
 
 // Deps
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { networks } from 'utils/Global/Vars';
+import { availableChainsArray, networks } from 'utils/Global/Vars';
 import { Notification } from 'src/libs/Notification';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { ethers } from 'ethers';
@@ -36,6 +36,10 @@ export const createWalletInteractor = (
                         await provider.send('wallet_switchEthereumChain', [
                             { chainId: toChainId(chainId) },
                         ]);
+                        console.log(chainId);
+                        if (!availableChainsArray.includes(chainId)) {
+                            dispatch(Entity.actions.setIsOpenWrongChainModal(true));
+                        }
                     } catch (switchError: any) {
                         if (switchError.code === 4902) {
                             await provider.send('wallet_addEthereumChain', [
@@ -114,6 +118,9 @@ export const createWalletInteractor = (
                         networkData.chainId.toString(),
                         10,
                     ).toString() as availableChains;
+                    if (!availableChainsArray.includes(newChainId)) {
+                        dispatch(Entity.actions.setIsOpenWrongChainModal(true));
+                    }
                 }
                 dispatch(Entity.actions.setWallet({
                     walletKey, chainId: newChainId, provider, account, connect,

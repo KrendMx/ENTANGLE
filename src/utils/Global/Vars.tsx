@@ -1,4 +1,4 @@
-import type {availableChains, networksType} from './Types';
+import type { availableChains, networksType } from './Types';
 
 const networks: networksType = {
     '43114': {
@@ -124,7 +124,7 @@ const availableSingleSideNetworks = {
     ...networks,
 };
 
-const availableChainsArray: availableChains[] = ['43114', '250', '1', '100', '56'];
+const availableChainsArray: availableChains[] = ['43114', '250', '56'];
 
 const WalletProviderNames = {
     MetaMask: 'MetaMask',

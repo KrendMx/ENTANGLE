@@ -14,6 +14,7 @@ import { namesConfig, availableChainsArray, farms } from 'utils/Global/Vars';
 import { generateEmptyObject } from 'utils/helper/generateEmptyObject';
 import { Notification } from 'src/libs/Notification';
 import type { availableChains, availableNames } from 'src/utils/Global/Types';
+import toNormalChainId from 'utils/toChainId/toNormalChainId';
 import styles from './style.module.css';
 
 type ILayoutProps = {
@@ -40,6 +41,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 chainId,
                 walletKey,
                 preLoader,
+                provider,
             },
             AppEntity: {
                 isAppLoaded,
@@ -59,6 +61,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 removeWallet,
                 setChain,
                 setAccount,
+                setIsOpenWrongChainModal,
             },
             Card: {
                 setDefaultCardData,
@@ -113,25 +116,28 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         }());
     }, [account]);
 
+    const disconnect = () => dispatch(removeWallet());
+
     const changeAccount = (accounts: string[]) => dispatch(setAccount({ accounts }));
 
-    const chainChange = (chainId: string) => {
-        dispatch(setChain(chainId as availableChains));
-    };
+    const chainChange = (chainId: string) =>
+        dispatch(changeNetwork({ chainId: toNormalChainId(chainId) as availableChains, provider }));
 
-    // useEffect(() => {
-    //     if (walletKey) {
-    //         const eventProvider = window.ethereum;
-    //         eventProvider.on('accountsChanged', changeAccount);
-    //         eventProvider.on('chainChanged', chainChange);
-    //         return () => {
-    //             const removeEventKey = 'removeListener';
-    //             eventProvider[removeEventKey]('accountsChanged', changeAccount);
-    //             eventProvider[removeEventKey]('chainChanged', chainChange);
-    //         };
-    //     }
-    //     return () => {};
-    // }, [walletKey]);
+    useEffect(() => {
+        if (walletKey) {
+            const eventProvider = window.ethereum;
+            eventProvider.on('disconnect', disconnect);
+            eventProvider.on('accountsChanged', changeAccount);
+            eventProvider.on('chainChanged', chainChange);
+            return () => {
+                const removeEventKey = 'removeListener';
+                eventProvider[removeEventKey]('disconnect', disconnect);
+                eventProvider[removeEventKey]('accountsChanged', changeAccount);
+                eventProvider[removeEventKey]('chainChanged', chainChange);
+            };
+        }
+        return () => {};
+    }, [walletKey]);
 
     useEffect(() => {
         (async () => {
