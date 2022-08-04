@@ -119,19 +119,19 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         dispatch(setChain(chainId as availableChains));
     };
 
-    useEffect(() => {
-        if (walletKey) {
-            const eventProvider = window.ethereum;
-            eventProvider.on('accountsChanged', changeAccount);
-            eventProvider.on('chainChanged', chainChange);
-            return () => {
-                const removeEventKey = 'removeListener';
-                eventProvider[removeEventKey]('accountsChanged', changeAccount);
-                eventProvider[removeEventKey]('chainChanged', chainChange);
-            };
-        }
-        return () => {};
-    }, [walletKey]);
+    // useEffect(() => {
+    //     if (walletKey) {
+    //         const eventProvider = window.ethereum;
+    //         eventProvider.on('accountsChanged', changeAccount);
+    //         eventProvider.on('chainChanged', chainChange);
+    //         return () => {
+    //             const removeEventKey = 'removeListener';
+    //             eventProvider[removeEventKey]('accountsChanged', changeAccount);
+    //             eventProvider[removeEventKey]('chainChanged', chainChange);
+    //         };
+    //     }
+    //     return () => {};
+    // }, [walletKey]);
 
     useEffect(() => {
         (async () => {
