@@ -1,6 +1,4 @@
-import React, {
-    useEffect, useMemo, memo,
-} from 'react';
+import React, { useEffect, useMemo, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useStore } from 'core/store';
 import Preloader from 'UI/ui-kit/Preloader';
@@ -30,24 +28,14 @@ type synthArrayType = {
 export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     const {
         store: {
-            UserEntity: {
-                balances,
-                txHistory,
-                txLoaded,
-            },
+            UserEntity: { balances, txHistory, txLoaded },
             WalletEntity: {
-                account,
-                chainId,
-                walletKey,
-                preLoader,
+                account, chainId, walletKey, preLoader,
             },
-            AppEntity: {
-                isAppLoaded,
-            },
-            ContractEntity: {
-                txLoading,
-            },
-        }, actions: {
+            AppEntity: { isAppLoaded },
+            ContractEntity: { txLoading },
+        },
+        actions: {
             User: {
                 setCardLoaded,
                 setPayData,
@@ -55,33 +43,15 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 setError,
                 setLoading,
             },
-            Wallet: {
-                removeWallet,
-                setChain,
-                setAccount,
-            },
-            Card: {
-                setDefaultCardData,
-                setCardInfo,
-            },
-            Contract: {
-                clearAllowance,
-            },
-            App: {
-                setIsAppLoaded,
-            },
-        }, asyncActions: {
-            Wallet: {
-                changeNetwork,
-            },
-            Card: {
-                getCardApr,
-            },
-            User: {
-                calculateBalances,
-                getAverageBuyPrice,
-                getChartData,
-            },
+            Wallet: { removeWallet, setChain, setAccount },
+            Card: { setDefaultCardData, setCardInfo },
+            Contract: { clearAllowance },
+            App: { setIsAppLoaded },
+        },
+        asyncActions: {
+            Wallet: { changeNetwork },
+            Card: { getCardApr },
+            User: { calculateBalances, getAverageBuyPrice, getChartData },
         },
     } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -98,13 +68,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
 
     const Graph = useMemo(() => new GraphService(account), [account]);
 
-    const cardDataConfig = [
-        { firstLabel: 'AVAX', secondId: '' },
-        { firstLabel: 'FTM', secondId: '' },
-        { firstLabel: 'BSC', secondId: '' },
-        { firstLabel: 'ETH', secondId: '' },
-        { firstLabel: 'ELRD', secondId: '' },
-    ];
+    const cardDataConfig = ['AVAX', 'FTM', 'BSC', 'ETH', 'ELRD'];
 
     useEffect(() => {
         (async function getAvg() {
@@ -115,7 +79,8 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
 
     const disconnect = () => dispatch(removeWallet());
 
-    const changeAccount = (accounts: string[]) => dispatch(setAccount({ accounts }));
+    const changeAccount = (accounts: string[]) =>
+        dispatch(setAccount({ accounts }));
 
     const chainChange = (chainId: string) => {
         dispatch(setChain(chainId as availableChains));
@@ -151,9 +116,11 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     }, [account, txLoading]);
 
     useEffect(() => {
-        if (!preLoader) {
+        if (!preLoader && chainId !== '1') {
             for (const key of cardDataConfig) {
-                const Service = new CardService(key.firstLabel as availableNames);
+                const Service = new CardService(
+                    key as availableNames,
+                );
                 (async () => {
                     const {
                         available,
@@ -163,32 +130,34 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                         price,
                     } = await Service.getCardData(
                         account
-                            ? farms[chainId]?.[key.firstLabel]
-                            : farms['43114']?.[key.firstLabel],
+                            ? farms[chainId]?.[key]
+                            : farms['43114']?.[key],
                     );
 
                     dispatch(
                         setCardInfo({
-                            key: namesConfig[key.firstLabel],
+                            key: namesConfig[key],
                             data: {
                                 available: `${
-                                    namesConfig[key.firstLabel] === chainId
+                                    namesConfig[key] === chainId
                                         ? 'Unlimited'
                                         : available.toFixed(2)
                                 }`,
                                 totalAvailable: totalAvailable.toString(),
                                 totalDeposits: `${totalDeposits} aDAI/aSUSD Synthetic LP`,
-                                currentDeposits: `$${currentDeposits.toFixed(3)}`,
+                                currentDeposits: `$${currentDeposits.toFixed(
+                                    3,
+                                )}`,
                                 price: `${Number(price.toFixed(6))}`,
                             },
                         }),
                     );
                     dispatch(
                         setPayData({
-                            key: namesConfig[key.firstLabel],
+                            key: namesConfig[key],
                             data: {
                                 available: `${
-                                    namesConfig[key.firstLabel] === chainId
+                                    namesConfig[key] === chainId
                                         ? 'Unlimited'
                                         : Number(available.toFixed(5))
                                 }`,

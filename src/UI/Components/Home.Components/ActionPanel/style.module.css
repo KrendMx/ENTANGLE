@@ -48,6 +48,8 @@
 @media screen and (max-width: 660px) {
 	.wrapper {
 		flex-direction: column;
+
+		margin: 10px 0 20px;
 	}
 
 	.filterWrapper, .searchWrapper {
@@ -56,12 +58,14 @@
 	}
 
 	.filterWrapper {
-		flex-direction: column;
 		order: 1;
+		gap: 10px;
+
+		margin: 0;
 	}
 
 	.filterWrapperSelect {
 		width: 100%;
-		margin: 5px auto;
+		margin: 0 auto;
 	}
 }

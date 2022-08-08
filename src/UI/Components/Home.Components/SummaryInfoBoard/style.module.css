@@ -6,13 +6,6 @@
 	row-gap: 20px;
 }
 
-
-@media screen and (max-width: 660px) {
-	.wrapper {
-		grid-template-columns: 1fr;
-	}
-}
-
 .blockValue {
 	color: #FFF;
 
@@ -44,4 +37,23 @@
 
 	border-radius: 18px;
 	background: #1E1E1E;
+}
+
+@media screen and (max-width: 660px) {
+	.wrapper {
+		grid-template-columns: 1fr;
+	}
+
+	.blockValue {
+		padding-top: 10px;
+
+		font-size: 22px;
+		line-height: 30px;
+	}
+
+	.blockWrapper {
+		padding: 20px 12px;
+
+		text-align: left;
+	}
 }
