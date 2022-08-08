@@ -9,7 +9,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-    
+
 }
 
 .wrapper::before {
@@ -53,7 +53,7 @@
 }
 
 .content {
-	max-width: 45rem;
+	max-width: 44%;
 	padding: 25px 60px;
 
 	border: 1px solid rgb(255 255 255 / 10%);
@@ -94,17 +94,38 @@
 	margin: 3rem 0;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 1600px) {
 	.content {
-		max-width: 23rem;
+		max-width: 75%;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.content {
+		max-width: 95%;
+		height: 99vh;
 		padding: 15px 30px;
 
-		font-size: .65rem;
+		font-size: .75rem;
 	}
-    
+
+	.header {
+		margin-top: 5px;
+	}
+
+	.mainContent {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
 	.extraForCheckbox {
-		margin-bottom: 3rem;
-		margin-left: 0;
+		margin: 0;
 	}
+
+	.blockButton {
+		margin-top: 55px;
+	}
+
 }
 
