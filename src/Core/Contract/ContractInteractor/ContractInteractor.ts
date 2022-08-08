@@ -57,7 +57,6 @@ export const createContractInteractor = (
                     Entity.actions.setAllowance({ cardId, value }),
                 );
             } catch (e) {
-                Notification.error('Error', e.message);
                 dispatch(Entity.actions.setError(e));
             } finally {
                 dispatch(Entity.actions.setLoading(false));

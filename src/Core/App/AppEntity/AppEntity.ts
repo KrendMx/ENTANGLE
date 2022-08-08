@@ -15,7 +15,6 @@ const initialState: IAppEntityState & IWithHelperState = {
     isAppLoaded: false,
     isOpenSelectWalletModal: false,
     sucInfo: null,
-    isOpenWrongChainModal: false,
 };
 
 export const AppEntity = createSlice({
@@ -37,9 +36,6 @@ export const AppEntity = createSlice({
         },
         setSucInfo(state, action: PayloadAction<TransactionInfo>) {
             state.sucInfo = action.payload;
-        },
-        setIsOpenWrongChainModal(state, action: PayloadAction<boolean>) {
-            state.isOpenWrongChainModal = action.payload;
         },
     },
 });

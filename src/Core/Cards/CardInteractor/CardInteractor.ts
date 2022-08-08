@@ -24,8 +24,6 @@ export const createCardInteractor = (
                 dispatch(Entity.actions.setCardInfo({ key: namesConfig[key], data: { 'apr': res?.data?.apr[key] } }));
             }
         } catch (e) {
-            Notification.error('Error', e.message);
-            console.log(e);
             dispatch(Entity.actions.setError(e.message));
         }
     }),

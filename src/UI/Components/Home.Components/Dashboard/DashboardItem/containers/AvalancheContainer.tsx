@@ -77,7 +77,6 @@ const AvalancheContainer = ({ isFiltered = false }) => {
                     positions = personalData.positions;
                     totalPositions = personalData.totalPositions;
                 } catch (e: any) {
-                    Notification.error(tError('error'), e.message);
                     if ((e.code as number) === -32002) {
                         localStorage.removeItem('wallet');
                     }
