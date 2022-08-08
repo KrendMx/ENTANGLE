@@ -7,9 +7,9 @@
 .modal {
 	z-index: 5;
 
-	height: 20px;
+	height: 22px;
 
-	margin-left: 4px;
+	margin-left: 9px;
 }
 
 .tooltip {
@@ -18,9 +18,11 @@
 
 	display: inline-block;
 
+	white-space: normal;
+
 	border-bottom:  1px doted #606060;
 }
-  
+
 .tooltip .tooltiptext {
 	position: absolute;
 	z-index: 100;
@@ -52,7 +54,7 @@
 	width: 15px;
 	height: 15px;
 
-	content:''; 
+	content:'';
 	transform: rotate(45deg);
 
 	border-right: solid 1px #606060;

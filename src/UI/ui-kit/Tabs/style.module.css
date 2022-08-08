@@ -27,6 +27,8 @@
 .tabWrapper {
 	display: flex;
 
+  white-space: nowrap;
+
 	width: 100%;
 }
 

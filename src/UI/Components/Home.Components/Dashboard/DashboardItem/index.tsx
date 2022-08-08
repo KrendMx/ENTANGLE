@@ -256,11 +256,13 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             <p className={styles.sectionSubValue}>
                                 {`${
                                     networks[chainId].abbr in profits
-                                        ? (Number(
-                                            profits[localName][
-                                                selectedChainId
-                                            ]?.stable,
-                                        ) * Number(price)).toFixed(5)
+                                        ? (
+                                            Number(
+                                                profits[localName][
+                                                    selectedChainId
+                                                ]?.stable,
+                                            ) * Number(price)
+                                        ).toFixed(5)
                                         : '~'
                                 } ${priceCurrency}`}
                             </p>
@@ -283,9 +285,14 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                 <div className={styles.buttonWrapper}>
                     <div className={styles.mt2}>
                         <GradientButton
+                            isWhite
                             title={t(buttonValue)}
                             onClick={handleSelectClick}
-                            disabled={disabled || selectedChainId === '1'}
+                            disabled={
+                                disabled
+                                || selectedChainId === '1'
+                                || !networks[selectedChainId]
+                            }
                         />
                     </div>
                 </div>

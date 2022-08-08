@@ -93,6 +93,8 @@ const Header = () => {
             return 'DEU';
         case 'ko':
             return 'KOR';
+        case 'vie':
+            return 'VIE';
         default:
             return 'undfined lang';
         }
@@ -259,7 +261,7 @@ const Header = () => {
                                                 passHref
                                             >
                                                 <p className={styles.dropItem}>
-                                                    SSAS
+                                                    SALP
                                                 </p>
                                             </Link>
                                         </>

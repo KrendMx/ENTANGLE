@@ -86,8 +86,8 @@ const ModalInput: React.FC<IModalInput> = ({
             <div className={styles.arrow}>
                 <Image
                     src="/images/Arrow.svg"
-                    width={45}
-                    height={45}
+                    width={50}
+                    height={50}
                     quality={100}
                     alt="arrow-icon"
                 />

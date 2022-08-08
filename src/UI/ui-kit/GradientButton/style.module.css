@@ -29,6 +29,8 @@
 .title {
 	padding: 14px 30px;
 
+	transition: all .2s;
+
 	text-align: center;
 	letter-spacing: 0.5px;
 
@@ -50,23 +52,33 @@
 }
 
 .white {
-  background: var(--white)!important;
+	background: var(--white)!important;
 }
 
 .whiteTitle {
-  padding: 14px 30px;
+	padding: 14px 30px;
 
-  text-align: center;
-  letter-spacing: 0.5px;
+	transition: all .2s;
 
-  color: var(--color-11);
-  border-radius: inherit;
-  background-color: var(--white);
-  text-shadow: 0 3px 4px rgb(0 0 0 / 15%);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
+	text-align: center;
+	letter-spacing: 0.5px;
+
+	color: var(--color-11);
+	border-radius: inherit;
+	background-color: var(--white);
+	text-shadow: 0 3px 4px rgb(0 0 0 / 15%);
+
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 20px;
 }
+
+.wrapper:not(.disabled):hover .whiteTitle{
+	color: white;
+	background: black !important;
+}
+
+
 
 .wrapper.disabled {
 	cursor: no-drop;

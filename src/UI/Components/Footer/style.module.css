@@ -9,6 +9,9 @@
 	align-items: flex-start;
 	justify-content: space-evenly;
 
+	width: 85%;
+	margin: auto;
+
 	padding-bottom: 50px;
 }
 
@@ -48,6 +51,7 @@
 
 .mainLink {
 	cursor: pointer;
+	white-space: nowrap;
 
 	font-size: 16px;
 	line-height: 16px;
@@ -59,7 +63,7 @@
 	cursor: pointer;
 
 	color: var(--gray);
-} 
+}
 
 .link {
 	cursor: pointer;
@@ -98,8 +102,10 @@
 
 @media screen and (max-width: 1024px) {
 	.content {
-		align-items: center;
+		align-items: left;
 		flex-direction: column;
+
+		margin-left: 15px;
 	}
 
 	.navigate {

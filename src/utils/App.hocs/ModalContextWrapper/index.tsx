@@ -75,6 +75,11 @@ const ModalContextWrapper = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (!availableChainsArray.includes(chainId) || chainId === '1') {
+            dispatch(setIsOpenWrongChainModal(true));
+        }
+    }, [chainId]);
     return (
         <>
             <CSSTransition

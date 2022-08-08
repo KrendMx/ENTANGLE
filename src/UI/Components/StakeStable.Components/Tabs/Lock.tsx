@@ -12,6 +12,7 @@ import Text from 'UI/Components/Home.Components/PayModal/Text';
 import Tabs from 'UI/ui-kit/Tabs';
 import Typography from 'UI/ui-kit/Typography';
 import MiniButton from 'UI/ui-kit/MiniButton';
+import { Arrow } from 'src/UI/ui-kit/Arrow';
 import type { LockProps, ILockState } from './Tabs.interfaces';
 import styles from './style.module.css';
 
@@ -35,7 +36,9 @@ const Lock: React.FC<LockProps> = ({ token }) => {
 
     const { t } = useTranslation('stable');
 
-    const inputChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>): void => {
+    const inputChangeHandler = ({
+        target,
+    }: ChangeEvent<HTMLInputElement>): void => {
         if (target.value === '' && state.usdcAmount.length === 1) {
             dispatch({ usdcAmount: '' });
             return;
@@ -63,10 +66,7 @@ const Lock: React.FC<LockProps> = ({ token }) => {
                         selectedTitle="title"
                     >
                         {Object.keys(networks).map((el, idx) => (
-                            <TokenOption
-                                value={el}
-                                key={idx}
-                            >
+                            <TokenOption value={el} key={idx}>
                                 {networks[el].title}
                             </TokenOption>
                         ))}
@@ -98,27 +98,28 @@ const Lock: React.FC<LockProps> = ({ token }) => {
                 </div>
             </div>
             <div className={classNames(styles.actionCard)}>
-                <div className={styles.arrow}>
-                    <Image
-                        src="/images/Arrow.svg"
-                        width={100}
-                        height={100}
-                        quality={100}
-                        alt="arrow-icon"
-                    />
-                </div>
+                <Arrow />
                 <div>
-                    <Typography type="textBody" classNameModifier={styles.mgb}>{t('ChooseLock')}</Typography>
+                    <Typography type="textBody" classNameModifier={styles.mgb}>
+                        {t('ChooseLock')}
+                    </Typography>
                     <Tabs
-                        buttons={[`3 ${t('MonthOne')}`, `6 ${t('MonthTwo')}`, `12 ${t('MonthTwo')}`]}
+                        buttons={[
+                            `3 ${t('MonthOne')}`,
+                            `6 ${t('MonthTwo')}`,
+                            `12 ${t('MonthTwo')}`,
+                        ]}
                         switchHandler={(tab: number) =>
                             dispatch({ lockPeriod: tab })}
                         activeTab={state.lockPeriod}
                         customClassTabName={styles.customTabsMonths}
                         customClassButtonName={styles.customButton}
                     />
-                    <Text title={`${t('YouGet')} $ENTGL`} content="3 $ENTGL" classText={styles.mgt} />
-                    <Text title={t('TradingFee')} content="92 $ENTGL" classText={styles.mgt} />
+                    <Text
+                        title={t('TradingFee')}
+                        content="92 $ENTGL"
+                        classText={styles.mgt}
+                    />
                     <Text
                         title={`${t('ProjectedAPR')}`}
                         content="25%"
@@ -128,7 +129,11 @@ const Lock: React.FC<LockProps> = ({ token }) => {
                     />
                 </div>
                 <div className={styles.helper}>
-                    <GradientButton title={`${t('StakeUSDC')} ${token}`} onClick={() => {}} />
+                    <GradientButton
+                        isWhite
+                        title={`${t('StakeUSDC')} ${token}`}
+                        onClick={() => {}}
+                    />
                 </div>
             </div>
         </div>

@@ -1,0 +1,25 @@
+currentBalance: số tiền còn lại hiện tại
+allProfit: Lợi nhuận mọi lúc
+bestPerformer: người thực hiện tốt nhất
+worstPermormer: người thực hiện tệ nhất
+yourAssets: Tài sản vướng mắc của bạn
+transactionHistory: lịch sử giao dịch
+nowAsset: hiện tai, bạn không có tài sản
+nowTransaction: hiện tai, bạn không có giao dịch
+sortBy: phân loại
+priceIn: tăng giá
+priceDec: hạ giá
+profIn: lãi tăng
+profDec: lãi giảm
+allActivity: tất cả các hoạt động
+buy: mua
+sell: bán
+recentLast: Latest First
+recentFirst: Earliest first
+dateTime: ngày/thời gian
+price: giá
+amount: số tiền
+yield: Yield
+viewExplorer:
+network: mạng lưới
+inDev: sự phát triển

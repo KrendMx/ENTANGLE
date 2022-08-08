@@ -130,7 +130,9 @@
 
 	margin-right: 5px;
 
-	color: var(--gray);
+	white-space: nowrap;
+
+	color: white;
 
 	font-size: 16px;
 }
@@ -138,7 +140,7 @@
 .sectionValue {
 	color: var(--color-6);
 
-	font-size: 24px;
+	font-size: 18px;
 	font-weight: 600;
 	line-height: 1em;
 }
@@ -161,7 +163,7 @@
 	align-items: center;
 	justify-content: flex-end;
 
-	min-width: 130px;
+	min-width: 100px;
 
 	gap: 10px;
 }
@@ -188,7 +190,7 @@
 
 .buttonWrapper {
 	width: 100%;
-	margin-top: auto;
+	margin-top: 10px;
 }
 
 .overlayDisabled {

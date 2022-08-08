@@ -27,7 +27,7 @@ const ChangeNetwork = () => {
 
     return (
         <div className={styles.wrapper}>
-            {chainId in networks ? (
+            {chainId in networks && chainId !== '1' ? (
                 <div className={styles.selected}>
                     {networks[chainId]?.title}
                     <Image

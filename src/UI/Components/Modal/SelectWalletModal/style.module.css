@@ -74,3 +74,14 @@
 .logo {
 	margin: 41.5% 0 40%;
 }
+@media screen and (max-width: 1000px) {
+	.wrapper {
+		width: 95vw;
+		margin: auto;
+		padding: 20px;
+	}
+
+	.walletElement {
+		width: 100%;
+	}
+}
