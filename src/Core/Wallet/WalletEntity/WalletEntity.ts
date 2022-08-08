@@ -17,6 +17,7 @@ const initialState: IWalletEntityState & IWithHelperState = {
     chainId: '43114',
     connect: null,
     preLoader: true,
+    isOpenWrongChainModal: false,
 };
 
 export const WalletEntity = createSlice({
@@ -59,6 +60,9 @@ export const WalletEntity = createSlice({
         },
         setPreloader(state, action: PayloadAction<boolean>) {
             state.preLoader = action.payload;
+        },
+        setIsOpenWrongChainModal(state, action: PayloadAction<boolean>) {
+            state.isOpenWrongChainModal = action.payload;
         },
     },
 });

@@ -104,7 +104,6 @@ export class CardService implements ICardService {
                 totalDeposits: lpAmount,
             };
         } catch (e) {
-            Notification.error('Error', 'Error while calculating current deposit');
             console.log(e);
         }
     };
@@ -128,7 +127,6 @@ export class CardService implements ICardService {
                 price,
             };
         } catch (e) {
-            Notification.error('Error', 'Error while calculating remain data');
             console.log(e);
         }
     };
@@ -176,7 +174,6 @@ export class CardService implements ICardService {
                 price,
             };
         } catch (e) {
-            Notification.error('Error', 'Error calculating card data');
             console.log(e);
         }
     };
@@ -206,7 +203,6 @@ export class CardService implements ICardService {
                 totalPositions,
             };
         } catch (e) {
-            Notification.error('Error', 'Error while calculating positions sum');
             console.log(e);
         }
     };

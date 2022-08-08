@@ -9,6 +9,7 @@ interface IWalletEntityState {
     chainId?: availableChains,
     connect?: WalletConnectProvider;
     preLoader?: boolean;
+    isOpenWrongChainModal?: boolean;
 }
 
 interface IWalletInfo {
