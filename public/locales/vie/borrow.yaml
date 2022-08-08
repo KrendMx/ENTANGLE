@@ -1,0 +1,26 @@
+inCollateral: In Collateral
+SelectYour: chọn
+LendYour: vay, mượn
+SetLTV: đặt tỉ lệ cho vay trên giá trị
+GetStarted: vay tiền đô
+CurrenLTV: tỉ lệ cho vay trên giá trị hiện tại
+LiquidationComm: tiền hoa hồng
+AmountOfEnUSD: vay tiền đô
+CurrentAVG: tỉ lệ trung bình cho vay trên giá trị hiện tại
+ExchangeRate: tỷ giá
+Mint: cây bạc hà
+infoText: Khoản vay trên Giá trị là một tỷ lệ xác định rủi ro cho vay và điều chỉnh số tiền có thể cho vay sao cho phù hợp.
+Note: Khoản vay trên Giá trị là một tỷ lệ xác định rủi ro cho vay và điều chỉnh số tiền có thể cho vay sao cho phù hợp.
+DebtPositions: vị trí cho vay
+RepayPosition: vị trí hoàn trả
+Unlocked: mở khoá
+AmountIn: số tiền
+TotalBorrowed: Tổng số tiền đã vay
+Interest: lãi
+RepayLoan: hoàn trả khoảng vay
+balance: tiền còn lại
+Borrowed: số tiền đã vay
+Repay: hoàn trả
+Borrow: vay
+info: thông tin
+YouWillGet: bạn sẽ nhận

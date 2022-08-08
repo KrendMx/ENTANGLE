@@ -4,7 +4,7 @@ type availableSingleSideChains = '24886' | availableChains;
 
 type availableNames = 'AVAX' | 'FTM' | 'BSC' | 'ETH' | 'ELRD';
 
-type languages = 'en' | 'ru' | 'ch' | 'de' | 'ko';
+type languages = 'en' | 'ru' | 'ch' | 'de' | 'ko' | 'vie';
 
 type networksType = {
     [key: string]: {

@@ -1,0 +1,46 @@
+filterBy: Filter By
+sortBy: Sort By
+search: Search
+tpe: Total Revenue Accrued
+tvd: Total Value Deposited
+apr: APR
+aprCard: Current Projected APR
+aprDesk: The current annual percentage received on this farm
+valueLP: Value of LP Staked
+valueLPCard: Value of LPs Staked
+valueLPDesk: The amount of currency available for purchase without creating a new one
+desFirstPart: Generates yield by running an autocompound
+desSecPart: strategy on
+price: Price
+yourPosition: Your Position
+copy: Copy token address
+copied: Token address copied
+metamask: Add to MetaMask
+rty: Real Time Yield
+yield: Yield
+network: Network
+rtyDesk: Your Current Accrued Yield
+select: Select
+highGas: High Gas Fees. Excluded from MVP
+notAvailable: Not Available
+connectWallet: Connect Wallet
+unlimited: Unlimited
+yourSynthBalance: Your SynthLP Balance
+yourUSDCBalance: Your USDC Balance
+enterSynthAmount: Enter SynthLP amount
+youGetUSDC: You get USDC
+enterUSDCAmount: Enter USDC amount
+youGetSynt: You get SynthLP
+buyAndSell: Sell
+avgPrice: Buy Price
+profit: Profit
+back: Back
+withdrawStartPhrase: The approximate transaction execution time is
+withdrawEndPhrase: seconds!
+depositeStartPhrase: Transaction for more than
+depositeEndPhrase: SynthLPs can take between 5-30 minutes!
+maxValueLength: Max value length
+sellFunds: Sell funds
+addFunds: Add funds
+dataLoading: Data Loading
+approve: Approve

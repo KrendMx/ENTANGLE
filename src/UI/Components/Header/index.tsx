@@ -93,6 +93,8 @@ const Header = () => {
             return 'DEU';
         case 'ko':
             return 'KOR';
+        case 'vie':
+            return 'VIE';
         default:
             return 'undfined lang';
         }
