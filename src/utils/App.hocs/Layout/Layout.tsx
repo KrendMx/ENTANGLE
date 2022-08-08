@@ -29,7 +29,11 @@ type synthArrayType = {
 export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     const {
         store: {
-            UserEntity: { balances, txHistory, txLoaded },
+            UserEntity: {
+                balances,
+                txHistory,
+                txLoaded,
+            },
             WalletEntity: {
                 account,
                 chainId,
@@ -40,7 +44,6 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
             AppEntity: {
                 isAppLoaded,
             },
-            AppEntity: { isAppLoaded },
             ContractEntity: { txLoading },
         },
         actions: {
@@ -51,32 +54,19 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 setError,
                 setLoading,
             },
-            Wallet: { removeWallet, setChain, setAccount },
-            Card: { setDefaultCardData, setCardInfo },
-            Contract: { clearAllowance },
-            App: { setIsAppLoaded },
-        },
-        asyncActions: {
-            Wallet: { changeNetwork },
-            Card: { getCardApr },
-            User: { calculateBalances, getAverageBuyPrice, getChartData },
             Wallet: {
                 removeWallet,
                 setChain,
                 setAccount,
-                setIsOpenWrongChainModal,
             },
             Card: {
                 setDefaultCardData,
                 setCardInfo,
             },
-            Contract: {
-                clearAllowance,
-            },
-            App: {
-                setIsAppLoaded,
-            },
-        }, asyncActions: {
+            Contract: { clearAllowance },
+            App: { setIsAppLoaded },
+        },
+        asyncActions: {
             Wallet: {
                 changeNetwork,
             },
@@ -119,7 +109,10 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         dispatch(setAccount({ accounts }));
 
     const chainChange = (chainId: string) =>
-        dispatch(changeNetwork({ chainId: toNormalChainId(chainId) as availableChains, provider }));
+        dispatch(changeNetwork({
+            chainId: toNormalChainId(chainId) as availableChains,
+            provider,
+        }));
 
     // useEffect(() => {
     //     if (walletKey) {
@@ -219,7 +212,10 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                             if (
                                 (balances[name][chains[i]] as any).positions > 0
                             ) {
-                                const { percentage, stable } = await QueryRequests.calculateProfit(
+                                const {
+                                    percentage,
+                                    stable,
+                                } = await QueryRequests.calculateProfit(
                                     txHistory,
                                     (balances[name][chains[i]] as any)
                                         .positions,
@@ -227,7 +223,10 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                                     (balances[name][chains[i]] as any)
                                         .price,
                                 );
-                                res[name][chains[i]] = { percentage, stable };
+                                res[name][chains[i]] = {
+                                    percentage,
+                                    stable,
+                                };
                             } else {
                                 res[name][chains[i]] = {
                                     percentage: 0,
