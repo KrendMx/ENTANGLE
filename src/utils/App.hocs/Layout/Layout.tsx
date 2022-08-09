@@ -144,7 +144,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     }, [account, txLoading]);
 
     useEffect(() => {
-        if (!preLoader && chainId !== '1') {
+        if (!preLoader && availableChainsArray.includes(chainId)) {
             for (const key of cardDataConfig) {
                 const Service = new CardService(
                     key as availableNames,
