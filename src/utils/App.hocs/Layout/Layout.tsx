@@ -86,7 +86,9 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         ContractEntity: store.ContractEntity,
         CardEntity: store.CardsEntity,
     }));
+
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(setIsAppLoaded(true));
         dispatch(getCardApr());
@@ -144,7 +146,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     }, [account, txLoading]);
 
     useEffect(() => {
-        if (!preLoader && chainId !== '1') {
+        if (!preLoader && availableChainsArray.includes(chainId)) {
             for (const key of cardDataConfig) {
                 const Service = new CardService(
                     key as availableNames,

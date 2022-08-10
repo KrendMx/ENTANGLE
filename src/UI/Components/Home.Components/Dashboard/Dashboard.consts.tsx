@@ -4,6 +4,8 @@ import FantomContainer from './DashboardItem/containers/FantomContainer';
 import BUSDContainer from './DashboardItem/containers/BUSDContainer';
 import ETHContainer from './DashboardItem/containers/ETHContainer';
 import ElrondContainer from './DashboardItem/containers/ElrondContainer';
+import OptimistContainer from 'UI/Components/Home.Components/Dashboard/DashboardItem/containers/OptimistContainer';
+import ArbitrumContainer from 'UI/Components/Home.Components/Dashboard/DashboardItem/containers/ArbitrumContainer';
 
 const ITEMS = [
     {
@@ -39,6 +41,20 @@ const ITEMS = [
         query: ['elrond', 'egld', 'egld-usdt'],
         element: (isFiltered: boolean, key: number) => (
             <ElrondContainer isFiltered={isFiltered} key={key} />
+        ),
+    },
+    {
+        filter: 400,
+        query: ['optimism', 'opt'],
+        element: (isFiltered: boolean, key: number) => (
+            <OptimistContainer isFiltered={isFiltered} key={key} />
+        ),
+    },
+    {
+        filter: 500,
+        query: ['arbitrum', 'opt'],
+        element: (isFiltered: boolean, key: number) => (
+            <ArbitrumContainer isFiltered={isFiltered} key={key} />
         ),
     },
 ];
