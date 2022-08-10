@@ -6,6 +6,8 @@ const enum InfoBlockTypes {
     ABOUT_MONEY,
     SIMPLE_PERCENTAGE,
     ABOUT,
+    SIMPLE_TEXT,
+    DIVIDED_NUMBER,
 }
 
 /**

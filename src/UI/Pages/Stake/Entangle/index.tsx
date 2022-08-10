@@ -6,49 +6,55 @@ import Typography from 'UI/ui-kit/Typography';
 
 import InfoBlock from 'src/UI/ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from 'src/UI/ui-kit/InfoBlock/InfoBlock.constants';
+import Lock from 'src/UI/Components/StakeEntangle.Components/Deposite/Lock';
+import Withdraw from 'src/UI/Components/StakeEntangle.Components/Withdraw/Withdraw';
+import { useTranslation } from 'react-i18next';
 import styles from './style.module.css';
 
 const StakeEntangle: React.FC = () => {
-    const [amount, setAmount] = useState<string>();
     const [activeTab, setActiveTab] = useState(0);
-    const [stakeDate, setStakeDate] = useState<string>('no lock');
-    const [dropValue, setDropValue] = useState<string>('alpha');
 
-    const handleChangeValidatorDrop = (value: string) => setDropValue(value);
-
-    const getMax = () => setAmount('100');
+    const { t } = useTranslation('entangle');
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.description}>
                 <Typography type="title" classNameModifier={styles.header}>
-                    Entangle Staking
+                    {t('EntangleStaking')}
                 </Typography>
                 <p className={styles.descriptItem}>
-                    Deposit a single asset to be paired with other users
-                    liquidity for access to yield, while minimizing % exposure
-                    to impermanent loss
+                    {t('desc')}
                 </p>
             </div>
             <div className={styles.headerInfo}>
                 <InfoBlock
-                    info="Total ENTGL Staked"
-                    value={Number('123')}
-                    type={InfoBlockTypes.MONEY}
+                    info={t('TotalENTGLStaked')}
+                    value={13000000}
+                    type={InfoBlockTypes.DIVIDED_NUMBER}
                 />
-                {' '}
                 <InfoBlock
-                    info="Active Validators"
-                    value={Number('123')}
-                    type={InfoBlockTypes.MONEY}
+                    info={t('ActiveValidators')}
+                    value={Number('32')}
+                    type={InfoBlockTypes.SIMPLE_TEXT}
                 />
-                {' '}
                 <InfoBlock
-                    info="AVG Validators Uptime"
+                    info={t('AVGUptime')}
                     value={Number('94')}
                     type={InfoBlockTypes.SIMPLE_PERCENTAGE}
                 />
             </div>
+            <div className={styles.switcherContainer}>
+                <div>
+                    <Tabs
+                        activeTab={activeTab}
+                        switchHandler={setActiveTab}
+                        buttons={['Deposite', 'Withdraw']}
+                        customClassButtonName={styles.wrap}
+                        isBlack
+                    />
+                </div>
+            </div>
+            {activeTab === 0 ? <Lock /> : <Withdraw token="USDC" />}
         </div>
     );
 };

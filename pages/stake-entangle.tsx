@@ -26,6 +26,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
             'modal',
             'error',
             'footer',
+            'stable',
+            'entangle',
         ])),
     },
 });

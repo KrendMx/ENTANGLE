@@ -1,0 +1,13 @@
+EntangleStaking: Entangle Staking
+desc: Deposit a single asset to be paired with other users liquidity for access to yield, while minimizing % exposure to impermanent loss
+TotalENTGLStaked: Total ENTGL Staked
+ActiveValidators: Active Validators
+AVGUptime: AVG Validators Uptime
+Deposit: Deposit
+Withdraw: Withdraw
+SelectValidator: Select Validator
+StakeEntangleTokens: Stake Entangle Tokens
+EnterAmount: Enter Amount 
+ENTGLapr: ENTGL Stacking APR
+YourShare: Your Share of Validator's pool
+Stake: Stake

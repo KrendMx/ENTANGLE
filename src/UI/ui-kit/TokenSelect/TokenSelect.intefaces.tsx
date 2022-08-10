@@ -23,7 +23,8 @@ interface TokenOptionProps {
     extraSymbol?: JSX.Element;
     state?: string;
     amount?: string;
-    name?:string
+    name?:string;
+    isImage?: boolean;
 }
 
 export type {
