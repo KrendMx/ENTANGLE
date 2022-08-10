@@ -27,6 +27,14 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
             valueText = `~$${numberFormatter(value, 4)}`;
             break;
         }
+        case InfoBlockTypes.SIMPLE_PERCENTAGE: {
+            valueText = `${numberFormatter(value, 4)}%`;
+            break;
+        }
+        case InfoBlockTypes.ABOUT: {
+            valueText = `~${numberFormatter(value, 4)}`;
+            break;
+        }
         case InfoBlockTypes.BALANCE: {
             valueText = `$${Number(value).toFixed(4)}`;
 
@@ -40,13 +48,10 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
             };
             additionalBottomBlock = (
                 <div className={styles.horisontalWrapper}>
-                    <div
-                        className={classNames(additionalBottomBlockClass)}
-                    >
+                    <div className={classNames(additionalBottomBlockClass)}>
                         {`${sign}$${Number(Math.abs(changeValue)).toFixed(
                             4,
                         )}`}
-
                     </div>
                     <div className={styles.bordered}>{changePeriod}</div>
                 </div>
@@ -77,13 +82,18 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
                     {image && (
                         <div className={styles.smallImg}>{image}</div>
                     )}
-                    <div style={{ color: '#fff' }}>{`${sign}${value?.toFixed(4)}%`}</div>
+                    <div
+                        style={{ color: '#fff' }}
+                    >
+                        {`${sign}${value?.toFixed(4)}%`}
+
+                    </div>
                     <div>
                         (&nbsp;
                         {signChange}
                         $
                         {Number(Math.abs(changeValue)).toFixed(4)}
-                        &nbsp;)
+                            &nbsp;)
                     </div>
                 </div>
             );
