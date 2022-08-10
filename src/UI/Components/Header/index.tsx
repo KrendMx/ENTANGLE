@@ -103,7 +103,7 @@ const Header = () => {
     const { asPath, locale, pathname } = useRouter();
     const { t } = useTranslation('header');
 
-    useEffect(() => { setIsOpen(false); }, [pathname]);
+    useEffect(() => { setIsOpen(false); }, [pathname, account]);
 
     const networkBtns = (
         <div

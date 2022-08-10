@@ -27,21 +27,21 @@ const Borrow: React.FC = () => {
     const buttons = [t('Borrow'), t('Repay')];
 
     return (
-        <div style={{ height: '800px' }}>
+        <div>
             <div className={styles.wrapper}>
-                <div className={styles.blockWrapper}>
+                <div className={styles.blockWrapper} id="a">
                     <p className={styles.sectionTitle}>{`SynthLP ${t('inCollateral')}`}</p>
                     <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpInCollateral}`}
                     </p>
                 </div>
-                <div className={styles.blockWrapper}>
+                <div className={styles.blockWrapper} id="b">
                     <p className={styles.sectionTitle}>{`SynthLP ${t('balance')}`}</p>
                     <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpBalance}`}
                     </p>
                 </div>
-                <div className={styles.blockWrapper}>
+                <div className={styles.blockWrapper} id="c">
                     <p className={styles.sectionTitle}>{`EnUSD ${t('Borrowed')}`}</p>
                     <p className={styles.sectionValue}>
                         {`$${infoValuesState.EnUSDBorrowed}`}

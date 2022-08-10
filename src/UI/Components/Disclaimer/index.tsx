@@ -16,82 +16,78 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
         <div className={styles.wrapper}>
             <ScrollLock>
                 <div className={styles.content}>
-                    <div>
-                        <div className={styles.header}>
-                            <h1 className={styles.headerText}>
-                                {t('disclaimer')}
-                            </h1>
-                        </div>
-                        <div className={styles.mainContent}>
-                            <div className={styles.blockText}>
-                                <p className={styles.paragraph}>
-                                    <span className={styles.highLight}>
-                                        {t('unauditedMVP')}
-                                    </span>
-                                    :
-                                    {' '}
-                                    {t('firstPhrase')}
-                                    {' '}
-                                    (
-                                    <span className={styles.blueText}>
-                                        {t('max30')}
-                                    </span>
-                                    )
-                                    {' '}
-                                    {t('secondPhrase')}
-                                </p>
-                                <p className={styles.paragraph}>
-                                    {t('welcomeTo')}
-                                </p>
-                                <p className={styles.paragraph}>
-                                    {t('inTheNear')}
-                                    {' '}
-                                    (
-                                    <span className={styles.blueText}>
-                                        enUSD
-                                    </span>
-                                    )
-                                    {' '}
-                                    {t('aCrossChain')}
-                                </p>
+                    <div className={styles.header}>
+                        <h1 className={styles.headerText}>
+                            {t('disclaimer')}
+                        </h1>
+                    </div>
+                    <div className={styles.mainContent}>
+                        <div className={styles.blockText}>
+                            <p className={styles.paragraph}>
+                                <span className={styles.highLight}>
+                                    {t('unauditedMVP')}
+                                </span>
+                                :
+                                {' '}
+                                {t('firstPhrase')}
+                                {' '}
+                                (
+                                <span className={styles.blueText}>
+                                    {t('max30')}
+                                </span>
+                                )
+                                {' '}
+                                {t('secondPhrase')}
+                            </p>
+                            <p className={styles.paragraph}>
+                                {t('welcomeTo')}
+                            </p>
+                            <p className={styles.paragraph}>
+                                {t('inTheNear')}
+                                {' '}
+                                (
+                                <span className={styles.blueText}>
+                                    enUSD
+                                </span>
+                                )
+                                {' '}
+                                {t('aCrossChain')}
+                            </p>
 
-                                <p className={styles.paragraph}>
-                                    {t('noRepresentation')}
-                                </p>
-                                <p className={styles.paragraph}>
-                                    {t('youTakeFull')}
-                                </p>
-                                <p className={styles.paragraph}>
-                                    {t('isNotAvailable')}
+                            <p className={styles.paragraph}>
+                                {t('noRepresentation')}
+                            </p>
+                            <p className={styles.paragraph}>
+                                {t('youTakeFull')}
+                            </p>
+                            <p className={styles.paragraph}>
+                                {t('isNotAvailable')}
                                     &nbsp;
-                                    <span className={styles.highLight}>
-                                        {t('placement')}
-                                    </span>
-                                </p>
-                                <p className={styles.paragraph}>
-                                    {t('byUsingEntangle')}
-                                </p>
-                            </div>
-                            <div>
-                                <GradientCheckbox
-                                    text={t('buttonText')}
-                                    gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
-                                    isChecked={checked}
-                                    onClickHandler={() => setChecked(!checked)}
-                                    additionalClass={styles.extraForCheckbox}
-                                />
-                            </div>
-                            <div className={styles.blockButton}>
-                                <GradientButton
-                                    title={t('enter')}
-                                    gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
-                                    onClick={checked ? handleClose : undefined}
-                                    wrapperClass={styles.btn}
-                                    disabled={!checked}
-                                />
-                            </div>
+                                <span className={styles.highLight}>
+                                    {t('placement')}
+                                </span>
+                            </p>
+                            <p className={styles.paragraph}>
+                                {t('byUsingEntangle')}
+                            </p>
+                        </div>
+                        <div>
+                            <GradientCheckbox
+                                text={t('buttonText')}
+                                gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
+                                isChecked={checked}
+                                onClickHandler={() => setChecked(!checked)}
+                                additionalClass={styles.extraForCheckbox}
+                            />
                         </div>
                     </div>
+                    <GradientButton
+                        title={t('enter')}
+                        gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
+                        onClick={checked ? handleClose : undefined}
+                        wrapperClass={styles.btn}
+                        disabled={!checked}
+                    />
                 </div>
             </ScrollLock>
         </div>
