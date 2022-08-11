@@ -199,7 +199,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                         </HintModal>
                     </div>
                     <div className={styles.sectionRow}>
-                        {apr ? (
+                        {apr !== null ? (
                             <p className={styles.sectionValue}>{`${apr}%`}</p>
                         ) : (
                             <TextLoader bgGradient={bgGradient} />

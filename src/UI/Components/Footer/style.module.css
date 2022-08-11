@@ -19,7 +19,7 @@
 	position: absolute;
 	bottom: 0;
 
-	width: 100%;
+	width: 100vw;
 	height: 1px;
 
 	content: '';
@@ -88,7 +88,7 @@
 }
 
 .product {
-	width: 100%;
+	width: 100vw !important;
 	margin-top: 24px;
 	margin-bottom: 24px;
 
