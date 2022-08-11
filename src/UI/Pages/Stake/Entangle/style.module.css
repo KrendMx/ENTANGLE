@@ -2,22 +2,30 @@
 	margin: 5rem 0;
 }
 
-.header {
-	margin-bottom: 16px;
-
-	font-size: 35px !important;
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
+
+.graphData {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	margin-bottom: 1rem;
+} 
 
 .description {
 	display: flex;
 	flex-direction: column;
 
 	width: 100%;
-	max-width: 60%;
+	max-width: 674px;
 }
 
 .descriptItem {
-	margin-bottom: 15px;
+	margin-bottom: 1rem;
 
 	opacity: 0.8;
 	color: #FFF;
@@ -28,42 +36,60 @@
 	line-height: 150%;
 }
 
-.headerInfo {
-	display: grid;
-
-	margin-top: 15px;
-	grid-template: 110px / repeat(3, 1fr);
-	gap: 20px;
+.validatorData {
+	width: 40%;
 }
 
-.infoContainer {
-	width: 100%;
-	height: 100%;
-
-	border: 0.5px solid rgb(255 255 255 / 5%);
-
-
-	border-radius: 18px;
-	background: rgb(30 30 30 / 30%);
-
-	backdrop-filter: blur(15px);
+.validators {
+	margin-top: 5rem;
 }
 
-.switcherContainer {
+.desItem {
+	margin-bottom: 2rem;
+}
+
+.formItem {
+	margin-top: 1rem;
+}
+
+.miniButtonsContainer {
 	display: flex;
-	justify-content: flex-end;
+	flex-direction: row;
+	justify-content: space-between;
 
+	margin: 1rem 0;
+}
+
+.stakeForm {
 	width: 100%;
-	margin: 30px 0 3px;
+	max-width: 380px;
+	height: 100%;
+	max-height: 546px;
+	padding: 3rem 2rem;
+
+	border: 2px solid #121212;
+	border-radius: 18px;
+	background: rgb(30 30 30 / 10%);
+	box-shadow: 0 4px 4px rgb(0 0 0 / 25%), inset 0 -4px 4px rgb(255 255 255 / 25%), inset 0 0 68px rgb(255 255 255 / 5%), inset 0 4px 4px rgb(255 255 255 / 15%);
+	backdrop-filter: blur(62px);
 }
 
-.switcherContainer > div {
-	min-width: 100px;
-}
+@media (max-width: 900px) {
+	.container, .wrapper {
+		flex-direction: column;
 
+		width: 100%;
+		margin: 5rem auto;
+	}
 
-@media screen and (max-width: 900px){
-	.headerInfo {
-		grid-template-columns: 1fr;
+	.description {
+		max-width: 100%;
+		margin: 0 auto;
+
+		text-align: center;
+	}
+
+	.stakeForm {
+		margin: 2rem auto;
 	}
 }
