@@ -29,19 +29,19 @@ const Borrow: React.FC = () => {
     return (
         <div>
             <div className={styles.wrapper}>
-                <div className={styles.blockWrapper} id="a">
+                <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>{`SynthLP ${t('inCollateral')}`}</p>
                     <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpInCollateral}`}
                     </p>
                 </div>
-                <div className={styles.blockWrapper} id="b">
+                <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>{`SynthLP ${t('balance')}`}</p>
                     <p className={styles.sectionValue}>
                         {`$${infoValuesState.slpBalance}`}
                     </p>
                 </div>
-                <div className={styles.blockWrapper} id="c">
+                <div className={styles.blockWrapper}>
                     <p className={styles.sectionTitle}>{`EnUSD ${t('Borrowed')}`}</p>
                     <p className={styles.sectionValue}>
                         {`$${infoValuesState.EnUSDBorrowed}`}

@@ -70,13 +70,24 @@ const PayModal: React.FC<PayModalPropsType> = ({
         };
     }, [account, chainId]);
 
+    useEffect(() => {
+        (async () => {
+            console.log((
+                (
+                    await chainThingsStable.contract.balanceOf(account)
+                )
+                / (10 ** (await chainThingsStable.contract.decimals()))
+            ));
+        })();
+    }, []);
+
     const balanceUSDC = useMemo(
         async () =>
             Number(
                 (
                     await chainThingsStable.contract.balanceOf(account)
-                ).toBigInt()
-                    / BigInt(10 ** (await chainThingsStable.contract.decimals())),
+                )
+                    / (10 ** (await chainThingsStable.contract.decimals())),
             ),
         [account, txLoading, chainId],
     );
