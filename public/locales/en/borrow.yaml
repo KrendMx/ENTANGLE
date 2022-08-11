@@ -1,9 +1,9 @@
 inCollateral: in Collateral
-SelectYour: Select 
+SelectYour: Select
 LendYour: Lend
 SetLTV: Set LTV Rate
 GetStarted: Borrow EnUSD
-CurrenLTV: Current LTV Rate 
+CurrenLTV: Current LTV Rate
 LiquidationComm: Liquidation Commission
 AmountOfEnUSD: Borrow $EnUSD
 CurrentAVG: Current Average LTV Rate
@@ -13,8 +13,8 @@ infoText: LTV, or Loan-to-Value is a ratio that determines your lending risk and
 Note: 'Note: Borrowing more may increase risk of liquidation in an unexpected event.'
 DebtPositions: Debt Positions
 RepayPosition: Repay Position
-Unlocked: Unlocked
-AmountIn: Amount in 
+Unlocked: Unlock
+AmountIn: Amount in
 TotalBorrowed: Total Borrowed
 Interest: Interest
 RepayLoan: Repay Loan
