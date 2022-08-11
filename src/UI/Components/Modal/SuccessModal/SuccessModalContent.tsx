@@ -55,9 +55,9 @@ const SuccessModalContent: React.FC<SuccessModalProps> = ({
                 <span className={styles.valueText}>
                     {t('youReceive')}
                     {' '}
-                    {transactionInfo.value}
+                    {transactionInfo?.value}
                     {' '}
-                    {transactionInfo.symbol}
+                    {transactionInfo?.symbol}
                 </span>
             </div>
             <div className={styles.btnWrapper}>

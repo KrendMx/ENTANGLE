@@ -13,18 +13,9 @@
 	transform: rotate(-90deg);
 }
 
-@media (max-width: 1124px) {
-	.rotate {
-		top: -23px;
-		left: 94%;
-
-		transform: rotate(45deg);
-	}
-}
-
 @media (max-width: 900px) {
 	.arrow {
-		top: -30px;
+		top: -40px;
 		left: calc((100% - 40px) / 2 - 5px);
 
 		display: block;

@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, memo } from 'react';
+import React, {
+    useEffect, useMemo, memo, useCallback,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { useStore } from 'core/store';
 import Preloader from 'UI/ui-kit/Preloader';
@@ -29,21 +31,11 @@ type synthArrayType = {
 export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     const {
         store: {
-            UserEntity: {
-                balances,
-                txHistory,
-                txLoaded,
-            },
+            UserEntity: { balances, txHistory, txLoaded },
             WalletEntity: {
-                account,
-                chainId,
-                walletKey,
-                preLoader,
-                provider,
+                account, chainId, walletKey, preLoader, provider,
             },
-            AppEntity: {
-                isAppLoaded,
-            },
+            AppEntity: { isAppLoaded },
             ContractEntity: { txLoading },
         },
         actions: {
@@ -54,30 +46,15 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                 setError,
                 setLoading,
             },
-            Wallet: {
-                removeWallet,
-                setChain,
-                setAccount,
-            },
-            Card: {
-                setDefaultCardData,
-                setCardInfo,
-            },
+            Wallet: { removeWallet, setChain, setAccount },
+            Card: { setDefaultCardData, setCardInfo },
             Contract: { clearAllowance },
             App: { setIsAppLoaded },
         },
         asyncActions: {
-            Wallet: {
-                changeNetwork,
-            },
-            Card: {
-                getCardApr,
-            },
-            User: {
-                calculateBalances,
-                getAverageBuyPrice,
-                getChartData,
-            },
+            Wallet: { changeNetwork },
+            Card: { getCardApr },
+            User: { calculateBalances, getAverageBuyPrice, getChartData },
         },
     } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -86,7 +63,9 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         ContractEntity: store.ContractEntity,
         CardEntity: store.CardsEntity,
     }));
+
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(setIsAppLoaded(true));
         dispatch(getCardApr());
@@ -108,27 +87,30 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     const changeAccount = (accounts: string[]) =>
         dispatch(setAccount({ accounts }));
 
-    const chainChange = (chainId: string) =>
-        dispatch(changeNetwork({
-            chainId: toNormalChainId(chainId) as availableChains,
-            provider,
-        }));
+    const chainChange = useCallback(
+        (chainId: string) =>
+            dispatch(
+                changeNetwork({
+                    chainId: toNormalChainId(chainId) as availableChains,
+                    provider,
+                }),
+            ),
+        [],
+    );
 
-    // useEffect(() => {
-    //     if (walletKey) {
-    //         const eventProvider = window.ethereum;
-    //         eventProvider.on('disconnect', disconnect);
-    //         eventProvider.on('accountsChanged', changeAccount);
-    //         eventProvider.on('chainChanged', chainChange);
-    //         return () => {
-    //             const removeEventKey = 'removeListener';
-    //             eventProvider[removeEventKey]('disconnect', disconnect);
-    //             eventProvider[removeEventKey]('accountsChanged', changeAccount);
-    //             eventProvider[removeEventKey]('chainChanged', chainChange);
-    //         };
-    //     }
-    //     return () => {};
-    // }, [walletKey]);
+    useEffect(() => {
+        if (walletKey && window) {
+            const eventProvider = window.ethereum;
+            eventProvider.on('chainChanged', chainChange);
+            eventProvider.on('disconnect', () => {
+                console.log(`${Date.now()} disconnect`);
+            });
+            return () => {
+                const removeEventKey = 'removeListener';
+                eventProvider[removeEventKey]('chainChanged', chainChange);
+            };
+        }
+    }, [walletKey]);
 
     useEffect(() => {
         (async () => {
@@ -146,9 +128,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
     useEffect(() => {
         if (!preLoader && availableChainsArray.includes(chainId)) {
             for (const key of cardDataConfig) {
-                const Service = new CardService(
-                    key as availableNames,
-                );
+                const Service = new CardService(key as availableNames);
                 (async () => {
                     const {
                         available,
@@ -157,9 +137,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                         currentDeposits,
                         price,
                     } = await Service.getCardData(
-                        account
-                            ? farms[chainId]?.[key]
-                            : farms['43114']?.[key],
+                        account ? farms[chainId]?.[key] : farms['43114']?.[key],
                     );
 
                     dispatch(
@@ -212,10 +190,7 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
                             if (
                                 (balances[name][chains[i]] as any).positions > 0
                             ) {
-                                const {
-                                    percentage,
-                                    stable,
-                                } = await QueryRequests.calculateProfit(
+                                const { percentage, stable } = await QueryRequests.calculateProfit(
                                     txHistory,
                                     (balances[name][chains[i]] as any)
                                         .positions,

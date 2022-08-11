@@ -15,7 +15,7 @@ withdraw: Withdraw
 select: Select
 network: Network
 enterAmount: Enter amount
-ChooseLock: Choose lock period
+ChooseLock: Choose Lock period
 MonthOne: Months
 MonthTwo: Months
 YouGet: You will get

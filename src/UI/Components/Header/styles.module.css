@@ -299,6 +299,8 @@ div.dashboardList {
 		display: flex;
 		align-items: flex-start;
 		flex-direction: column;
+
+		margin-top: 25px;
 	}
 
 	.connectButton {
@@ -332,8 +334,7 @@ div.dashboardList {
 	}
 
 	.header.isOpen {
-		height: 100vh;
-		max-height: 100vh;
+		height: 100%;
 
 		transition: all 0.4s ease-in;
 

@@ -18,6 +18,7 @@ export const TokenOption: React.FC<TokenOptionProps> = ({
     children,
     currency,
     amount,
+    isImage = true,
     ...props
 }) => (
     <li
@@ -33,17 +34,19 @@ export const TokenOption: React.FC<TokenOptionProps> = ({
             data-select-amount={amount}
             data-select-abbr={props?.name}
         >
-            <Image
-                src={`/images/alternativeAssets/${chainToNameConfig[value]}.svg`}
-                width={24}
-                height={24}
-                quality={100}
-                className={styles.image}
-                alt={`${chainToNameConfig[value]}-asset`}
-                data-select-value={value}
-                data-select-amount={amount}
-                data-select-abbr={props?.name}
-            />
+            {isImage && (
+                <Image
+                    src={`/images/alternativeAssets/${chainToNameConfig[value]}.svg`}
+                    width={24}
+                    height={24}
+                    quality={100}
+                    className={styles.image}
+                    alt={`${chainToNameConfig[value]}-asset`}
+                    data-select-value={value}
+                    data-select-amount={amount}
+                    data-select-abbr={props?.name}
+                />
+            )}
             <p
                 className={styles.assetText}
                 data-select-value={value}
@@ -106,7 +109,9 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
             children as any,
             (child) => {
                 if (child?.props?.value === value && selected !== value) {
-                    if (child?.props?.amount) { setBalance(child?.props?.amount.split(' ')[0]); }
+                    if (child?.props?.amount) {
+                        setBalance(child?.props?.amount.split(' ')[0]);
+                    }
                     setSelected(child?.props?.value);
                 }
             },
@@ -130,8 +135,12 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
                 );
                 payModalHandleOpen();
             }
-            if (selectWrapperNode.current.contains(target as Node)) { setIsOpen(!isOpen); }
-            if (!selectWrapperNode.current.contains(target as Node)) { setIsOpen(false); }
+            if (selectWrapperNode.current.contains(target as Node)) {
+                setIsOpen(!isOpen);
+            }
+            if (!selectWrapperNode.current.contains(target as Node)) {
+                setIsOpen(false);
+            }
         };
         window.addEventListener('click', handleClick);
         return () => window.removeEventListener('click', handleClick);

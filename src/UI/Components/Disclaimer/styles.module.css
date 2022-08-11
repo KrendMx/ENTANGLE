@@ -44,7 +44,7 @@
 	align-items: center;
 	justify-content: center;
 
-	margin: 20px 0;
+	margin: 10px 0;
 }
 
 
@@ -53,17 +53,22 @@
 }
 
 .content {
+	display: flex;
+	flex-direction: column;
+
 	max-width: 44%;
+	height: 99%;
 	padding: 25px 60px;
 
 	border: 1px solid rgb(255 255 255 / 10%);
 	border-radius: 20px;
 	background: linear-gradient(104.82deg, rgb(255 94 186 / 5.1%) 1.73%, rgb(0 240 255 / 5.4%) 100%), rgb(30 30 30 / 10%);
 	backdrop-filter: blur(15px);
+
 }
 
 .paragraph {
-	margin: 1.5rem 0;
+	margin: 1.1vw 0;
 }
 
 .highLight {
@@ -78,20 +83,16 @@
 	font-weight: bold;
 }
 
-.blockButton {
-	margin-top: 60px;
-}
-
 .btn {
-	width: 100%;
-	margin-bottom: 1rem;
+	width: 80%;
+	margin: auto;
 
 	font-weight: 700;
 }
 
 
 .extraForCheckbox {
-	margin: 3rem 0;
+	margin: 3rem 0 0;
 }
 
 @media screen and (max-width: 1600px) {
@@ -102,30 +103,41 @@
 
 @media screen and (max-width: 900px) {
 	.content {
-		max-width: 95%;
-		height: 99vh;
+		max-width: 98vw;
+		height: 95vh;
 		padding: 15px 30px;
 
-		font-size: .75rem;
+		font-size: 1.7vw;
 	}
 
 	.header {
-		margin-top: 5px;
+		margin-top: 0.5vw;
 	}
 
 	.mainContent {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
+
+		height: calc(100% - 30px);
 	}
 
 	.extraForCheckbox {
 		margin: 0;
 	}
 
+
 	.blockButton {
-		margin-top: 55px;
+		margin-bottom: auto;
+	}
+
+	.paragraph {
+		margin: 4vw auto;
+	}
+}
+
+@media screen and (max-width: 450px){
+	.content {
+		font-size: .65rem;
 	}
 
 }
-

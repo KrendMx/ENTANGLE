@@ -91,12 +91,12 @@ const Deposit: React.FC<propsType> = ({
             );
             dispatch(setAllowance({ cardId: localChain, value }));
         }());
-    }, [chainId]);
+    }, [chainId, txLoading]);
 
     useEffect(() => {
         (async function calcBalances() {
-            const firstBalance = String(await balanceUSDC);
-            const secondBalance = String(await balanceSynth);
+            const firstBalance = (await balanceUSDC).toFixed(3);
+            const secondBalance = (await balanceSynth).toFixed(3);
             setBalances({ usdc: firstBalance, synth: secondBalance });
         }());
     }, [balanceSynth, balanceUSDC]);
@@ -109,7 +109,6 @@ const Deposit: React.FC<propsType> = ({
     }, [synthAmount]);
 
     const handleApprove = async () => {
-        dispatch(changeLoadingTx(true));
         dispatch(
             approve({
                 tokenAddress: chainThings.genered.CONTRACTS.STABLE.address,
@@ -119,7 +118,6 @@ const Deposit: React.FC<propsType> = ({
                 cardId: localChain,
             }),
         );
-        dispatch(changeLoadingTx(false));
     };
 
     const getMax = async () => {
@@ -133,7 +131,7 @@ const Deposit: React.FC<propsType> = ({
     const buttonData = useMemo(() => {
         const res = {
             title: t('dataLoading'),
-            disabled: true,
+            disabled: txLoading,
             onClick: () => {},
             loader: txLoading,
         };
@@ -146,12 +144,15 @@ const Deposit: React.FC<propsType> = ({
         }
         if (res.title === t('approve')) {
             res.onClick = () => handleApprove();
-            res.disabled = false;
         } else if (res.title === t('addFunds')) {
             res.disabled = !(Number(amount) !== 0 && Number(amount) <= Number(balances.usdc));
             res.onClick = () => buyToken(parseFloat(amount));
         }
-
+        if (txLoading) {
+            res.disabled = true;
+            res.title = t('Waiting');
+            res.loader = true;
+        }
         return res;
     }, [amount, txLoading, payData, allowance]);
 
