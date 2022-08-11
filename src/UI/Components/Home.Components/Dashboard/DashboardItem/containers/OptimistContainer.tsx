@@ -37,7 +37,7 @@ const OptimistContainer = ({ isFiltered = false }) => {
         ...state,
     } as const;
 
-    return <DashboardItem {...data} isFiltered={isFiltered} disabled />;
+    return <DashboardItem {...data} isFiltered={isFiltered} disabled rty={0} />;
 };
 
 export default OptimistContainer;

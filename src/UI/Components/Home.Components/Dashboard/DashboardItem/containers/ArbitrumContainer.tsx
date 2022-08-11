@@ -32,12 +32,12 @@ const OptimistContainer = ({ isFiltered = false }) => {
         heading: 'ARB/USDC',
         chainId: '43114',
         priceCurrency: 'ARB/USDC Synthetic LP',
-        vendor: 'quickswap.exchange',
+        vendor: 'convexfinance.com',
         disabled: true,
         ...state,
     } as const;
 
-    return <DashboardItem {...data} isFiltered={isFiltered} disabled />;
+    return <DashboardItem {...data} isFiltered={isFiltered} disabled rty={0} />;
 };
 
 export default OptimistContainer;
