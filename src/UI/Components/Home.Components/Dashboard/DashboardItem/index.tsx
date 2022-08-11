@@ -21,6 +21,7 @@ type DashboardItemProps = {
     icon: string;
     heading: string;
     vendor: string;
+    rty?: number;
     priceCurrency: string;
     disabled: boolean;
     isFiltered: boolean;
@@ -42,6 +43,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     isFiltered = false,
     localChain,
     localName,
+    rty = null,
 }) => {
     const { store, asyncActions, actions } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -272,7 +274,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                                 <p className={styles.sectionValue}>
                                     $
                                     {
-                                        profits[localName][selectedChainId]
+                                        rty !== null ? rty : profits[localName][selectedChainId]
                                             ?.stable
                                     }
                                 </p>
