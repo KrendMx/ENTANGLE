@@ -116,8 +116,8 @@ const PayModal: React.FC<PayModalPropsType> = ({
             Number(
                 (
                     await chainThingsSynth.contract.balanceOf(account)
-                ).toBigInt()
-                    / BigInt(10 ** (await chainThingsSynth.contract.decimals())),
+                )
+                    / (10 ** (await chainThingsSynth.contract.decimals())),
             ),
         [account, txLoading, chainId],
     );
