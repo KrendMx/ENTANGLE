@@ -214,14 +214,14 @@ const synths = {
         FTM: '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
     },
     '1': {
-        BSC: '',
-        AVAX: '',
-        FTM: '',
+        BSC: '0x6fDa2e4C4187017D92a11D02b455C51E8CFF7FEA',
+        AVAX: '0xf066F23C55D7aF2259Da196862B3c23702B9320b',
+        FTM: '0xAe8aF48Ea0E9dc54Cc3328a872a323F039920ceb',
     },
     '100': {
-        BSC: '',
-        AVAX: '',
-        FTM: '',
+        BSC: '0xD1aF5dFa8fe427542D7690856b6B7AD0bB1Bbb7f',
+        AVAX: '0x39f0EFb3Ce44fd54c0B6faAAD3371eb6D34DBF7F',
+        FTM: '0xCF81f0F04F191BD644e9CA62CD6992657574A408',
     },
 };
 

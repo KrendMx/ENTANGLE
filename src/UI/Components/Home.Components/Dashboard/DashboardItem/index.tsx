@@ -4,7 +4,9 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
-import { synths, WalletProviderNames, networks } from 'utils/Global/Vars';
+import {
+    synths, WalletProviderNames, networks, chainToNameConfig,
+} from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import type { availableChains } from 'utils/Global/Types';
@@ -93,7 +95,9 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
             dispatch(changeNetwork({ chainId: localChain, provider }));
             setAddingToken(true);
         } else {
-            const synthAddress = synths[chainId][localName];
+            const synthAddress = synths[chainId][chainToNameConfig[selectedChainId]];
+            console.log(selectedChainId);
+            console.log(localName);
             dispatch(importToken({ synthAddress, provider }));
         }
     };
