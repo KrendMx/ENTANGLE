@@ -3,13 +3,13 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './style.module.css';
 
-type ITextGroupStake = {
+type TextGroupStakeProps = {
     title: string;
     value: string;
     hintText?: string;
 };
 
-const TextGroupStake: React.FC<ITextGroupStake> = ({
+const TextGroupStake: React.FC<TextGroupStakeProps> = ({
     title,
     value,
     hintText,

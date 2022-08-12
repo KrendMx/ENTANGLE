@@ -1,9 +1,5 @@
 import type { availableChains } from 'src/utils/Global/Types';
 
-interface IChainServiceVars { }
-
-interface IChainService extends IChainServiceVars { }
-
 type chefDataType = {
     [key in availableChains]: {
         compounds: CompoundObject[];
@@ -25,6 +21,5 @@ type CompoundObject = {
 }
 
 export type {
-    IChainService,
     chefDataType,
 };

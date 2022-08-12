@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 import styles from './style.module.css';
 
-type Props = {
+type HintModalProps = {
     children: JSX.Element;
 };
 
-const HintModal: React.FC<Props> = ({ children }) => {
+const HintModal: React.FC<HintModalProps> = ({ children }) => {
     const [visible, setVisible] = useState<boolean>(false);
 
     return (

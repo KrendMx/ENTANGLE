@@ -2,12 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 
-type CopyBtnProps = {
+type HoverTooltipProps = {
     text: string;
     isVisible: boolean;
     wrapperClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
 };
-const HoverTooltip: React.FC<CopyBtnProps> = ({
+const HoverTooltip: React.FC<HoverTooltipProps> = ({
     text,
     isVisible = false,
     wrapperClassName,

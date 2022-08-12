@@ -2,13 +2,13 @@ import classNames from 'classnames';
 import React from 'react';
 import styles from './style.module.css';
 
-type IMiniButton = {
+type MiniButtonProps = {
     title: string;
     active: boolean;
     clickHandler: () => void;
 };
 
-const MiniButton: React.FC<IMiniButton> = ({ title, clickHandler, active }) => (
+const MiniButton: React.FC<MiniButtonProps> = ({ title, clickHandler, active }) => (
     <button
         type="button"
         onClick={clickHandler}

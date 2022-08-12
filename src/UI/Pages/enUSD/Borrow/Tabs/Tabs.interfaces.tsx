@@ -1,5 +1,3 @@
-type IBorrowProps = {};
-
 type BorrowState = {
     synthLp: string;
     lendSynthLp: string;
@@ -10,8 +8,6 @@ type BorrowState = {
     exchangeRate: string;
 };
 
-type IRepayProps = {}
-
 type RepayState = {
     enterEnUSD: string;
     repayToken: string;
@@ -20,9 +16,7 @@ type RepayState = {
     activeButtonRepay: string;
     AVGCollaterization: string;
     exchangeRate: string;
-    currentLTVRate: string
-}
-
-export type {
-    IBorrowProps, BorrowState, IRepayProps, RepayState,
+    currentLTVRate: string;
 };
+
+export type { BorrowState, RepayState };

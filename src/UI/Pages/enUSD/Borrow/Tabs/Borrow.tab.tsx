@@ -5,7 +5,6 @@ import React, {
     useEffect, useCallback, useReducer, useState,
 } from 'react';
 
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Input from 'UI/ui-kit/Input';
 import Text from 'UI/Components/Home.Components/PayModal/Text';
@@ -16,12 +15,12 @@ import { networks, chainToNameConfig } from 'utils/Global/Vars';
 
 import Typography from 'UI/ui-kit/Typography';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
-import type { IBorrowProps, BorrowState } from './Tabs.interfaces';
+import type { BorrowState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
 import local from './style.module.css';
 
-const BorrowTab: React.FC<IBorrowProps> = () => {
+const BorrowTab: React.FC = () => {
     const [state, dispatch] = useReducer(
         (oldState: BorrowState, newState: Partial<BorrowState>) => ({
             ...oldState,

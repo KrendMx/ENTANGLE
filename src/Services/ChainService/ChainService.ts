@@ -3,12 +3,11 @@ import axios from 'axios';
 import { ChainConfig, NETWORKS } from './config';
 import type {
     chefDataType,
-    IChainService,
 } from './ChainService.interface';
 import type { shefEvent } from '../GraphService/GraphService.interfaces';
 import { CHEF_CONFIG } from '../GraphService/config';
 
-export class ChainService implements IChainService {
+export class ChainService {
     public static readonly SynthsContractsArray: { [key: string]: Contract } = {};
 
     public static contracts: any = (() => {

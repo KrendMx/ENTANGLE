@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './style.module.css';
 import HintModal from '../HintModal';
 
-type ITextGroup = {
+type TextGroupProps = {
     title: string;
     value: string;
     hintText?: string;
@@ -11,7 +11,7 @@ type ITextGroup = {
     customClassNameValue?: React.HTMLAttributes<HTMLDivElement>['className'];
 };
 
-const TextGroup: React.FC<ITextGroup> = ({
+const TextGroup: React.FC<TextGroupProps> = ({
     title,
     value,
     hintText,

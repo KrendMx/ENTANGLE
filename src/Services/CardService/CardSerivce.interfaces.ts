@@ -15,10 +15,6 @@ interface IPersonalData {
     totalPositions: number;
 }
 
-interface IResult {
-    result: number;
-}
-
 type SynthContracts = {
     SYNTH: Contract;
     DEX: Contract;

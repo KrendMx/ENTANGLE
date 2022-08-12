@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 
-interface IProps {
+interface GradientCheckboxProps {
     isChecked: boolean;
     text: string;
     gradient: string;
@@ -10,7 +10,7 @@ interface IProps {
     onClickHandler: () => void;
 }
 
-const GradientCheckbox: React.FC<IProps> = ({
+const GradientCheckbox: React.FC<GradientCheckboxProps> = ({
     text,
     isChecked,
     onClickHandler,

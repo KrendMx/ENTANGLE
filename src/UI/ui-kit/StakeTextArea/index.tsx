@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './style.module.css';
 
-type IStakeTextArea = {
+type StakeTextAreaProps = {
     title: string;
     children: string;
     extraText?: string;
 }
 
-const StakeTextArea: React.FC<IStakeTextArea> = ({ title, children, extraText }) => (
+const StakeTextArea: React.FC<StakeTextAreaProps> = ({ title, children, extraText }) => (
     <div className={styles.container}>
         <p className={styles.title}>{title}</p>
         <div className={styles.extraBlock}>

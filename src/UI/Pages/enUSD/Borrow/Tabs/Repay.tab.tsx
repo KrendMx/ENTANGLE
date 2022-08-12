@@ -3,20 +3,19 @@ import type { ChangeEvent } from 'react';
 import React, {
     useReducer,
 } from 'react';
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Input from 'UI/ui-kit/Input';
 import Text from 'UI/Components/Home.Components/PayModal/Text';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import MiniButton from 'UI/ui-kit/MiniButton';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
-import { networks, chainToNameConfig } from 'utils/Global/Vars';
+import { networks } from 'utils/Global/Vars';
 import Typography from 'UI/ui-kit/Typography';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
-import type { IRepayProps, RepayState } from './Tabs.interfaces';
+import type { RepayState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
-const RepayTab: React.FC<IRepayProps> = () => {
+const RepayTab: React.FC = () => {
     const [state, dispatch] = useReducer(
         (oldState: RepayState, newState: Partial<RepayState>) => ({
             ...oldState,

@@ -7,7 +7,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useStore } from 'core/store';
 import type { walletKeyType, availableChains, languages } from 'utils/Global/Types';
-import {availableChainsArray, chainToNameConfig} from 'utils/Global/Vars';
+import { chainToNameConfig } from 'utils/Global/Vars';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.css';
 import Dropout from './Dropout';

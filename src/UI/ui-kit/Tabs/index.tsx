@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './style.module.css';
 
-type ITabs = {
+type TabsProps = {
     activeTab: number;
     isBlack?: boolean;
     switchHandler: (idx: number) => void;
@@ -11,7 +11,7 @@ type ITabs = {
     customClassButtonName?: React.HTMLAttributes<HTMLDivElement>['className'];
 };
 
-const Tabs: React.FC<ITabs> = ({
+const Tabs: React.FC<TabsProps> = ({
     switchHandler,
     activeTab,
     buttons,

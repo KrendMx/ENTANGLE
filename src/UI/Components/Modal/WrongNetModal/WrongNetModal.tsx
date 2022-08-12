@@ -1,10 +1,10 @@
 import React from 'react';
 
-import type { SelectWalletProps } from './WrongNetModal.interface';
+import type { SelectWrongWalletProps } from './WrongNetModal.interface';
 import Modal from '../index';
 import WrongNetModalContent from './WrongNetModal.content';
 
-const WrongNetModal: React.FC<SelectWalletProps> = ({
+const WrongNetModal: React.FC<SelectWrongWalletProps> = ({
     selectChain,
     handleClose,
 }) => (
