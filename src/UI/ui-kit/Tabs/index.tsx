@@ -11,7 +11,7 @@ type TabsProps = {
     customClassButtonName?: React.HTMLAttributes<HTMLDivElement>['className'];
 };
 
-const Tabs: React.FC<TabsProps> = ({
+const Tabs: React.FC<TabsProps> = React.memo(({
     switchHandler,
     activeTab,
     buttons,
@@ -40,5 +40,5 @@ const Tabs: React.FC<TabsProps> = ({
             ))}
         </div>
     </div>
-);
+));
 export default Tabs;

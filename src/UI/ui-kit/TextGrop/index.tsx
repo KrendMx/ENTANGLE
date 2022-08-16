@@ -7,34 +7,32 @@ type TextGroupProps = {
     title: string;
     value: string;
     hintText?: string;
+    customClassNameWrapper?: React.HTMLAttributes<HTMLDivElement>['className'];
     customClassNameTitle?: React.HTMLAttributes<HTMLDivElement>['className'];
     customClassNameValue?: React.HTMLAttributes<HTMLDivElement>['className'];
 };
 
-const TextGroup: React.FC<TextGroupProps> = ({
+const TextGroup: React.FC<TextGroupProps> = React.memo(({
     title,
     value,
     hintText,
     ...props
 }) => (
-    <div className={classNames(styles.formItem, styles.shareText, {
-        [props?.customClassNameTitle]: props?.customClassNameTitle,
-    })}
-    >
+    <div className={classNames(styles.formItem, styles.shareText, props?.customClassNameWrapper)}>
         <div
-            className={classNames(styles.iBlock)}
+            className={classNames(styles.shareText)}
         >
-            <p>{title}</p>
+            <p className={props?.customClassNameTitle}>{title}</p>
             {hintText && (
                 <HintModal>
                     <p>{hintText}</p>
                 </HintModal>
             )}
         </div>
-        <p>
+        <p className={props?.customClassNameValue}>
             {value}
         </p>
     </div>
-);
+));
 
 export default TextGroup;

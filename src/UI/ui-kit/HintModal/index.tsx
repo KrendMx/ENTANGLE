@@ -8,7 +8,7 @@ type HintModalProps = {
     children: JSX.Element;
 };
 
-const HintModal: React.FC<HintModalProps> = ({ children }) => {
+const HintModal: React.FC<HintModalProps> = React.memo(({ children }) => {
     const [visible, setVisible] = useState<boolean>(false);
 
     return (
@@ -47,6 +47,6 @@ const HintModal: React.FC<HintModalProps> = ({ children }) => {
             </div>
         </div>
     );
-};
+});
 
 export default HintModal;

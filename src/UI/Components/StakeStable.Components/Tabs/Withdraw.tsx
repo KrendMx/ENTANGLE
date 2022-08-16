@@ -15,7 +15,7 @@ import { Arrow } from 'src/UI/ui-kit/Arrow';
 import type { IWithdrawState, WithdrawProps } from './Tabs.interfaces';
 import styles from './style.module.css';
 
-const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
+const Withdraw: React.FC<WithdrawProps> = React.memo(({ token }) => {
     const [state, dispatch] = useReducer(
         (oldState: IWithdrawState, newState: Partial<IWithdrawState>) => ({
             ...oldState,
@@ -131,6 +131,6 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
             </div>
         </div>
     );
-};
+});
 
 export default Withdraw;

@@ -10,7 +10,7 @@ interface GradientCheckboxProps {
     onClickHandler: () => void;
 }
 
-const GradientCheckbox: React.FC<GradientCheckboxProps> = ({
+const GradientCheckbox: React.FC<GradientCheckboxProps> = React.memo(({
     text,
     isChecked,
     onClickHandler,
@@ -28,6 +28,6 @@ const GradientCheckbox: React.FC<GradientCheckboxProps> = ({
             {text}
         </label>
     </div>
-);
+));
 
 export default GradientCheckbox;

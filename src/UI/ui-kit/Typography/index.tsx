@@ -13,7 +13,7 @@ type TypographyProps = {
     classNameModifier?: HTMLAttributes<HTMLTextAreaElement>['className']
 }
 
-const Typography: React.FC<TypographyProps> = ({
+const Typography: React.FC<TypographyProps> = React.memo(({
     type,
     children,
     underline,
@@ -32,6 +32,6 @@ const Typography: React.FC<TypographyProps> = ({
     default:
         return null;
     }
-};
+});
 
 export default Typography;

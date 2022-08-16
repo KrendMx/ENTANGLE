@@ -15,7 +15,7 @@ type GradientButtonProps = {
     isWhite?: boolean;
 };
 
-const GradientButton: React.FC<GradientButtonProps> = ({
+const GradientButton: React.FC<GradientButtonProps> = React.memo(({
     title,
     titleElement,
     titleClass,
@@ -56,6 +56,6 @@ const GradientButton: React.FC<GradientButtonProps> = ({
             </p>
         )}
     </div>
-);
+));
 
 export default GradientButton;

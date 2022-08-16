@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 
 import type { OptionProps, SelectProps } from './Select.interfaces';
 
-export const Option: React.FC<OptionProps> = ({
+export const Option: React.FC<OptionProps> = React.memo(({
     value,
     children,
     extraSymbol,
@@ -23,9 +23,9 @@ export const Option: React.FC<OptionProps> = ({
             }
         })()}
     </li>
-);
+));
 
-const Select: React.FC<SelectProps> = ({
+const Select: React.FC<SelectProps> = React.memo(({
     value,
     onChange,
     children,
@@ -105,6 +105,6 @@ const Select: React.FC<SelectProps> = ({
             </CSSTransition>
         </div>
     );
-};
+});
 
 export default Select;

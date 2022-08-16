@@ -7,7 +7,7 @@ type HoverTooltipProps = {
     isVisible: boolean;
     wrapperClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
 };
-const HoverTooltip: React.FC<HoverTooltipProps> = ({
+const HoverTooltip: React.FC<HoverTooltipProps> = React.memo(({
     text,
     isVisible = false,
     wrapperClassName,
@@ -26,6 +26,6 @@ const HoverTooltip: React.FC<HoverTooltipProps> = ({
             {text}
         </div>
     </div>
-);
+));
 
 export default HoverTooltip;

@@ -12,6 +12,7 @@ import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import { networks } from 'utils/Global/Vars';
 import Typography from 'UI/ui-kit/Typography';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { RepayState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
@@ -190,25 +191,33 @@ const RepayTab: React.FC = () => {
                         />
                     </div>
                     <div>
-                        <Text
+                        <TextGroup
                             title={t('TotalBorrowed')}
-                            content="$900 EnUSD"
-                            classText={styles.mgt}
+                            value="$900 EnUSD"
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={t('Interest')}
-                            content="27%"
-                            classText={styles.mgt}
+                            value="27%"
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={`${t('Interest')} USD`}
-                            content="$27"
-                            classText={styles.mgt}
+                            value="$27"
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={t('ExchangeRate')}
-                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                            classText={styles.mgt}
+                            value={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
                     </div>
                 </div>

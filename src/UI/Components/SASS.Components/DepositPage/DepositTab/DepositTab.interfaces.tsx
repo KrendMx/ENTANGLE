@@ -13,9 +13,12 @@ interface depositStore {
     availableFirst: string;
     availableSecond: string;
     enterAmount: string;
+}
+
+interface GraphStore {
     activeAssets: string;
     activeButton: number;
     miniButtons: string[];
 }
 
-export type { IDepositTabProps, depositStore };
+export type { IDepositTabProps, depositStore, GraphStore };

@@ -15,6 +15,7 @@ import { networks, chainToNameConfig } from 'utils/Global/Vars';
 
 import Typography from 'UI/ui-kit/Typography';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { BorrowState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
@@ -203,17 +204,19 @@ const BorrowTab: React.FC = () => {
                                         setOutsideVariable={changeLTVRate}
                                     />
                                 </div>
-                                <Text
+                                <TextGroup
                                     title={t('CurrenLTV')}
-                                    content={`${state.LTVRate}%`}
-                                    hasTooltip
-                                    tooltipText="Test"
-                                    classText={local.mg1}
+                                    value={`${state.LTVRate}%`}
+                                    customClassNameWrapper={local.mg1}
+                                    customClassNameTitle={styles.textTitle}
+                                    customClassNameValue={styles.textValue}
                                 />
-                                <Text
+                                <TextGroup
                                     title={t('LiquidationComm')}
-                                    content={`${state.commision}%`}
-                                    classText={local.mg1}
+                                    value={`${state.commision}%`}
+                                    customClassNameWrapper={local.mg1}
+                                    customClassNameTitle={styles.textTitle}
+                                    customClassNameValue={styles.textValue}
                                 />
                             </div>
                         </div>
@@ -261,19 +264,21 @@ const BorrowTab: React.FC = () => {
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
-                            paddingBottom: '0.5rem',
+                            justifyContent: 'space-between',
                         }}
                     >
-                        <Text
+                        <TextGroup
                             title={t('CurrentAVG')}
-                            content={`${state.AVGCollaterization}%`}
-                            classText={local.mg1Top}
+                            value={`${state.AVGCollaterization}%`}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={t('ExchangeRate')}
-                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                            classText={local.mg1Top}
+                            value={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameWrapper={local.mg1Top}
+                            customClassNameValue={styles.textValue}
                         />
                     </div>
                 </div>

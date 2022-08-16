@@ -13,7 +13,7 @@ type CopyBtnProps = {
     height?: number;
 };
 
-const CopyBtn: React.FC<CopyBtnProps> = ({
+const CopyBtn: React.FC<CopyBtnProps> = React.memo(({
     onCopy = () => {},
     text,
     wrapperClassName,
@@ -81,6 +81,6 @@ const CopyBtn: React.FC<CopyBtnProps> = ({
             </div>
         </CopyToClipboard>
     );
-};
+});
 
 export default CopyBtn;

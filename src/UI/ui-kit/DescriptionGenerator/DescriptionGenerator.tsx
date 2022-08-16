@@ -7,7 +7,7 @@ type DescriptionGeneratorProps = {
     customClassName: React.HTMLAttributes<HTMLDivElement>['className'];
 };
 
-const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
+const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = React.memo(({
     currencyName,
     currencySite,
     customClassName,
@@ -20,6 +20,6 @@ const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
             )} ${currencySite}`}
         </p>
     );
-};
+});
 
 export { DescriptionGenerator };

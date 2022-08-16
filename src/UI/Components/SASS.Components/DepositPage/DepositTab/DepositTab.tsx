@@ -12,10 +12,10 @@ import type { availableSingleSideChains } from 'utils/Global/Types';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
 import { ActiveCurrency } from '../ActiveCurrency';
 import styles from './style.module.css';
-import type { IDepositTabProps, depositStore } from './DepositTab.interfaces';
+import type { IDepositTabProps, depositStore, GraphStore } from './DepositTab.interfaces';
 import { CurrencyLabel } from '../../CurrencyLabel';
 
-export const DepositTab: React.FC<IDepositTabProps> = ({
+export const DepositTab: React.FC<IDepositTabProps> = React.memo(({
     first,
     second,
     time,
@@ -32,8 +32,17 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
             availableFirst: '150',
             availableSecond: '1500',
             enterAmount: '',
+        },
+    );
+
+    const [graphStore, graphDispatch] = useReducer(
+        (oldState: GraphStore, newState: Partial<GraphStore>) => ({
+            ...oldState,
+            ...newState,
+        }),
+        {
             activeAssets: '',
-            activeButton: 5,
+            activeButton: null,
             miniButtons: ['25%', '50%', '100%'],
         },
     );
@@ -47,10 +56,10 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
     };
 
     const changeActiveAssets = (value: availableSingleSideChains) => {
-        if (store.activeAssets.includes(value)) {
-            dispatch({ activeAssets: store.activeAssets.replace(value, '') });
+        if (graphStore.activeAssets.includes(value)) {
+            graphDispatch({ activeAssets: graphStore.activeAssets.replace(value, '') });
         } else {
-            dispatch({ activeAssets: `${store.activeAssets} ${value}` });
+            graphDispatch({ activeAssets: `${graphStore.activeAssets} ${value}` });
         }
     };
 
@@ -131,22 +140,24 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                     <ActiveCurrency
                         assets={[first, second]}
                         changeActiveAssets={changeActiveAssets}
-                        activeAsset={store.activeAssets}
+                        activeAsset={graphStore.activeAssets}
                     />
                     {/*---------------------------------------------------*/}
                     <div className={styles.balancesBlock}>
                         <TextGroup
-                            customClassNameTitle={styles.customTextGroop}
-                            hintText="asdf"
-                            customClassNameValue={styles.customTextGroop}
+                            hintText="Test"
+                            customClassNameWrapper={styles.customTextGroop}
+                            customClassNameTitle={styles.shareTextTitle}
+                            customClassNameValue={styles.shareTextValue}
                             title={`${tDep('availableBalance')} ${
                                 availableSingleSideNetworks[first].abbr
                             }`}
                             value={`${store.availableFirst} ${availableSingleSideNetworks[first].abbr}`}
                         />
                         <TextGroup
-                            customClassNameTitle={styles.customTextGroop}
-                            customClassNameValue={styles.customTextGroop}
+                            customClassNameWrapper={styles.customTextGroop}
+                            customClassNameTitle={styles.shareTextTitle}
+                            customClassNameValue={styles.shareTextValue}
                             title={`${tDep('availableBalance')} ${
                                 availableSingleSideNetworks[second].abbr
                             }`}
@@ -171,12 +182,12 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                             />
                         </div>
                         <div className={styles.miniButtons}>
-                            {store.miniButtons.map((el, idx) => (
+                            {graphStore.miniButtons.map((el, idx) => (
                                 <MiniButton
                                     key={idx}
                                     title={el}
                                     clickHandler={() => {
-                                        dispatch({ activeButton: idx });
+                                        graphDispatch({ activeButton: idx });
                                         enterAmountChangeHandler(
                                             (
                                                 (Number(store.availableFirst)
@@ -187,7 +198,7 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                                             ).toString(),
                                         );
                                     }}
-                                    active={store.activeButton === idx}
+                                    active={graphStore.activeButton === idx}
                                 />
                             ))}
                         </div>
@@ -203,4 +214,4 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
             </div>
         </div>
     );
-};
+});

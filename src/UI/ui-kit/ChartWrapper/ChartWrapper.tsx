@@ -31,7 +31,7 @@ ChartJS.register(
     LineElement,
 );
 
-const ChartWrapper: React.FC<ChartDataProps> = ({
+const ChartWrapper: React.FC<ChartDataProps> = React.memo(({
     labels,
     labelFormat = 'DD MMM',
     data: dataProps,
@@ -148,6 +148,6 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
             />
         </div>
     );
-};
+});
 
 export default ChartWrapper;

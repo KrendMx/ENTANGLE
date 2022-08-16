@@ -6,8 +6,8 @@ type TextLoaderProps = {
     margin?: string;
 };
 
-const TextLoader: React.FC<TextLoaderProps> = ({ bgGradient, margin = '0.25 0' }) => (
+const TextLoader: React.FC<TextLoaderProps> = React.memo(({ bgGradient, margin = '0.25 0' }) => (
     <div className={styles.wrapper} style={{ background: bgGradient, margin }} />
-);
+));
 
 export default TextLoader;

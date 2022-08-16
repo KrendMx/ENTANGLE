@@ -25,14 +25,16 @@
 
 }
 
+
+
 .infoCard > span {
 	display: flex;
 
 	padding-bottom: 5px;
 }
 
-.customTextGroop p {
-	font-size: 17px !important;
+.customTextGroop {
+	margin-top: 10px;
 }
 
 .infoCard > span > p {
@@ -128,6 +130,28 @@
 
 .buttonContainer {
 	margin-top: 21px;
+}
+
+.shareTextTitle {
+	display: flex !important;
+
+	color: var(--gray);
+
+	font-size: 17px;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 14px;
+}
+
+.shareTextValue {
+	display: flex !important;
+
+	color: var(--white);
+
+	font-size: 17px;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 16px;
 }
 
 @media (max-width: 900px){

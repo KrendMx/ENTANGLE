@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './style.module.css';
 
-export const Arrow = () => (
+export const Arrow = React.memo(() => (
     <div className={styles.arrow}>
         <Image
             src="/images/Arrow.svg"
@@ -12,4 +12,4 @@ export const Arrow = () => (
             alt="arrow-icon"
         />
     </div>
-);
+));

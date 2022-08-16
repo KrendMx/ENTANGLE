@@ -12,7 +12,7 @@ import type {
 
 import styles from './style.module.css';
 
-export const TokenOption: React.FC<TokenOptionProps> = ({
+export const TokenOption: React.FC<TokenOptionProps> = React.memo(({
     key,
     value,
     children,
@@ -71,9 +71,9 @@ export const TokenOption: React.FC<TokenOptionProps> = ({
             {amount !== 'Buy now' ? currency : undefined}
         </p>
     </li>
-);
+));
 
-const TokenSelect: React.FC<TokenSelectProps> = ({
+const TokenSelect: React.FC<TokenSelectProps> = React.memo(({
     value,
     onChange,
     children,
@@ -205,6 +205,6 @@ const TokenSelect: React.FC<TokenSelectProps> = ({
             </div>
         </>
     );
-};
+});
 
 export default TokenSelect;

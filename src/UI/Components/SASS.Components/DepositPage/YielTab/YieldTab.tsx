@@ -12,7 +12,7 @@ import styles from './style.module.css';
 import { ActiveCurrency } from '../ActiveCurrency';
 import { CurrencyLabel } from '../../CurrencyLabel';
 
-export const YieldTab: React.FC<IYieldTabProps> = ({
+export const YieldTab: React.FC<IYieldTabProps> = React.memo(({
     firstChainId,
     secondChainId,
     duration,
@@ -285,4 +285,4 @@ export const YieldTab: React.FC<IYieldTabProps> = ({
             )}
         </div>
     );
-};
+});

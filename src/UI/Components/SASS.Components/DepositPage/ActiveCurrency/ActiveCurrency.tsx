@@ -6,7 +6,7 @@ import { availableSingleSideNetworks } from 'utils/Global/Vars';
 import styles from './style.module.css';
 import type { IAssetsSelectorProps } from './ActiveCurrency.interfaces';
 
-export const ActiveCurrency: React.FC<IAssetsSelectorProps> = (props) => {
+export const ActiveCurrency: React.FC<IAssetsSelectorProps> = React.memo((props) => {
     const { assets, activeAsset, changeActiveAssets } = props;
     const { t } = useTranslation('ssasdep');
     return (
@@ -55,4 +55,4 @@ export const ActiveCurrency: React.FC<IAssetsSelectorProps> = (props) => {
                 ))}
         </div>
     );
-};
+});

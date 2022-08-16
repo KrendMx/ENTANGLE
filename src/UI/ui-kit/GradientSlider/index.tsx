@@ -9,7 +9,7 @@ type GradientSliderProps = {
     setOutsideVariable: (x: string) => void;
 };
 
-const GradientSlider: React.FC<GradientSliderProps> = ({
+const GradientSlider: React.FC<GradientSliderProps> = React.memo(({
     min,
     max,
     setOutsideVariable,
@@ -82,6 +82,6 @@ const GradientSlider: React.FC<GradientSliderProps> = ({
             </p>
         </div>
     );
-};
+});
 
 export default GradientSlider;

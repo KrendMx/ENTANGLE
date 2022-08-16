@@ -17,7 +17,7 @@ type InputProps = {
     min?: string;
 };
 
-const Input: React.FC<InputProps> = ({
+const Input: React.FC<InputProps> = React.memo(({
     value,
     onChange,
     classNameInputModifier,
@@ -63,6 +63,6 @@ const Input: React.FC<InputProps> = ({
             )}
         </div>
     </>
-);
+));
 
 export default Input;

@@ -16,7 +16,7 @@ import { Arrow } from 'src/UI/ui-kit/Arrow';
 import type { LockProps, ILockState } from './Tabs.interfaces';
 import styles from './style.module.css';
 
-const Lock: React.FC<LockProps> = ({ token }) => {
+const Lock: React.FC<LockProps> = React.memo(({ token }) => {
     const [state, dispatch] = useReducer(
         (oldState: ILockState, newState: Partial<ILockState>) => ({
             ...oldState,
@@ -138,6 +138,6 @@ const Lock: React.FC<LockProps> = ({ token }) => {
             </div>
         </div>
     );
-};
+});
 
 export default Lock;

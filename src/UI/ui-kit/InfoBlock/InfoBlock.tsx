@@ -5,7 +5,7 @@ import { InfoBlockTypes, numberFormatter } from './InfoBlock.constants';
 
 import styles from './style.module.css';
 
-const InfoBlock: React.FC<InfoBlockProps> = ({
+const InfoBlock: React.FC<InfoBlockProps> = React.memo(({
     value,
     type,
     info,
@@ -142,6 +142,6 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
             {additionalBottomBlock}
         </div>
     );
-};
+});
 
 export default InfoBlock;
