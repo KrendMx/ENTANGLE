@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import type { ChartDataProps } from 'UI/ui-kit/ChartWrapper/ChartWrapper.interfaces';
 import ChartWrapper from 'UI/ui-kit/ChartWrapper/ChartWrapper';
-import SoonChart from 'UI/ui-kit/SoonChart/SoonChart';
 import { useStore } from 'core/store';
 import type { BalanceChartTick } from './ProfileChart.ineterfaces';
 import styles from './style.module.css';
@@ -75,15 +74,11 @@ const ProfileChart: React.FC = () => {
                     </div>
                 ))}
             </div>
-            {chartData ? (
-                <ChartWrapper
-                    labelFormat={labelFormats[selectedFilter]}
-                    labels={chartData.labels}
-                    data={chartData.data}
-                />
-            ) : (
-                <SoonChart />
-            )}
+            <ChartWrapper
+                labelFormat={labelFormats[selectedFilter]}
+                labels={chartData.labels}
+                data={chartData.data}
+            />
         </div>
     );
 };

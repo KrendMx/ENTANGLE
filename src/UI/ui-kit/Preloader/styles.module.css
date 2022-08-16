@@ -27,12 +27,12 @@
 	.preloader::before {
 		backdrop-filter: blur(62px);
 
-		background-color: rgb(0 0 0 / 10%);
+		background-color: rgb(0 0 0 / 50%);
 	}
 }
 
 .preloaderExitActive {
-	animation: preloader-on-exit 0.5s forwards 0.5s;
+	animation: preloader-on-exit 1s forwards 0.3s;
 }
 
 @keyframes preloader-on-exit {

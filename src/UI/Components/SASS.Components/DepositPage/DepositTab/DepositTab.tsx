@@ -137,6 +137,7 @@ export const DepositTab: React.FC<IDepositTabProps> = ({
                     <div className={styles.balancesBlock}>
                         <TextGroup
                             customClassNameTitle={styles.customTextGroop}
+                            hintText="asdf"
                             customClassNameValue={styles.customTextGroop}
                             title={`${tDep('availableBalance')} ${
                                 availableSingleSideNetworks[first].abbr

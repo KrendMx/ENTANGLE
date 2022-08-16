@@ -7,9 +7,6 @@
 	flex-direction: row;
 }
 
-.iBlock p:first-child {
-	margin-right: .4rem;
-}
 
 .shareText {
 	display: flex;
