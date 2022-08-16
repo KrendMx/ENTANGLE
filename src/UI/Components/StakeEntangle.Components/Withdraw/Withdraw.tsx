@@ -1,6 +1,5 @@
 import type { ChangeEvent } from 'react';
 import React, { useReducer } from 'react';
-import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -9,9 +8,9 @@ import Input from 'UI/ui-kit/Input';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import { networks } from 'utils/Global/Vars';
 import Typography from 'UI/ui-kit/Typography';
-import Text from 'UI/Components/Home.Components/PayModal/Text';
 import MiniButton from 'UI/ui-kit/MiniButton';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { IWithdrawState, WithdrawProps } from '../Tabs.interfaces';
 import styles from '../style.module.css';
 
@@ -109,15 +108,19 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
                         onChange={() => {}}
                     />
 
-                    <Text
+                    <TextGroup
                         title={t('AvaiableToUnlock')}
-                        content="92 USDC"
-                        classText={styles.mgt2}
+                        value="92 USDC"
+                        customClassNameWrapper={styles.mgt2}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
                     />
-                    <Text
+                    <TextGroup
                         title={t('remainder')}
-                        content="3 USDC"
-                        classText={styles.mgt2}
+                        value="3 USDC"
+                        customClassNameWrapper={styles.mgt2}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
                     />
                 </div>
 

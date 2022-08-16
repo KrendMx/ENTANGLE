@@ -7,12 +7,11 @@ import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import Input from 'UI/ui-kit/Input';
 import { networks } from 'utils/Global/Vars';
-import Text from 'UI/Components/Home.Components/PayModal/Text';
-
 import Tabs from 'UI/ui-kit/Tabs';
 import Typography from 'UI/ui-kit/Typography';
 import MiniButton from 'UI/ui-kit/MiniButton';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { LockProps, ILockState } from './Tabs.interfaces';
 import styles from './style.module.css';
 
@@ -115,17 +114,20 @@ const Lock: React.FC<LockProps> = React.memo(({ token }) => {
                         customClassTabName={styles.customTabsMonths}
                         customClassButtonName={styles.customButton}
                     />
-                    <Text
+                    <TextGroup
                         title={t('TradingFee')}
-                        content="92 $ENTGL"
-                        classText={styles.mgt}
+                        value="92 $ENTGL"
+                        customClassNameWrapper={styles.mgt2}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
                     />
-                    <Text
+                    <TextGroup
                         title={`${t('ProjectedAPR')}`}
-                        content="25%"
-                        classText={styles.mgt}
-                        hasTooltip
-                        tooltipText="Test"
+                        value="25%"
+                        customClassNameWrapper={styles.mgt2}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
+                        hintText="Test"
                     />
                 </div>
                 <div className={styles.helper}>

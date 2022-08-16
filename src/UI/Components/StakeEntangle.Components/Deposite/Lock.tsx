@@ -1,18 +1,17 @@
 import type { ChangeEvent } from 'react';
 import React, { useReducer } from 'react';
-import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import Input from 'UI/ui-kit/Input';
 import { networks } from 'utils/Global/Vars';
-import Text from 'UI/Components/Home.Components/PayModal/Text';
 
 import Tabs from 'UI/ui-kit/Tabs';
 import Typography from 'UI/ui-kit/Typography';
 import MiniButton from 'UI/ui-kit/MiniButton';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { ILockState } from '../Tabs.interfaces';
 import styles from '../style.module.css';
 
@@ -116,17 +115,20 @@ const Lock: React.FC = () => {
                         customClassTabName={styles.customTabsMonths}
                         customClassButtonName={styles.customButton}
                     />
-                    <Text
+                    <TextGroup
                         title={`${tEnt('ENTGLapr')}`}
-                        content="25%"
-                        classText={styles.mgt}
-                        hasTooltip
-                        tooltipText="Test"
+                        value="25%"
+                        customClassNameWrapper={styles.mgt}
+                        hintText="Test"
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
                     />
-                    <Text
+                    <TextGroup
                         title={tEnt('YourShare')}
-                        content="92 $ENTGL"
-                        classText={styles.mgt}
+                        value="92 $ENTGL"
+                        customClassNameWrapper={styles.mgt}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
                     />
                 </div>
                 <div className={styles.helper}>
