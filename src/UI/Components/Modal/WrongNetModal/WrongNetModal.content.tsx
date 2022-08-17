@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { availableChainsArray, networks, WalletProviderNames } from 'utils/Global/Vars';
+import { networks } from 'utils/Global/Vars';
 import type { availableChains } from 'utils/Global/Types';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import classNames from 'classnames';
-import type { SelectWalletProps } from './WrongNetModal.interface';
+import type { SelectWrongWalletProps } from './WrongNetModal.interface';
 
 import styles from './style.module.css';
 
-const WrongNetModalContent: React.FC<SelectWalletProps> = ({
+const WrongNetModalContent: React.FC<SelectWrongWalletProps> = ({
     selectChain,
     handleClose,
 }) => {
-    const chains = ['250', '43114', '56'];
+    const chains = ['250', '43114', '56', '10', '42161'];
     const [selectedChain, setSelectedChain] = useState<string | null>(null);
     return (
         <div className={styles.wrapper}>

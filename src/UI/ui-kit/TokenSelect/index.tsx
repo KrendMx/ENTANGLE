@@ -84,7 +84,9 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(({
     defaultLabel,
     disabled,
     showPayModal = false,
+    showImage = true,
     selectedTitle = 'currencyMin',
+    ...props
 }) => {
     const [selected, setSelected] = useState<string | null>(null);
     const [balance, setBalance] = useState<string | null>(null);
@@ -156,7 +158,7 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(({
                 ref={selectWrapperNode}
             >
                 <div className={styles.asset}>
-                    {selected && (
+                    {selected && showImage && (
                         <Image
                             src={`/images/alternativeAssets/${chainToNameConfig[selected]}.svg`}
                             width={24}
@@ -166,7 +168,7 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(({
                         />
                     )}
                     <label className={styles.label}>
-                        {networks[selected]?.[selectedTitle]
+                        {props?.customSelectedLabel ? props?.customSelectedLabel : networks[selected]?.[selectedTitle]
                             ? networks[selected][selectedTitle]
                             : defaultLabel}
                     </label>

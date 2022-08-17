@@ -13,10 +13,11 @@
 	flex-direction: column;
 
 	width: 100%;
-	max-width: 60%;
+	max-width: 50vw;
 }
 
 .descriptItem {
+	width: 100%;
 	margin-bottom: 15px;
 
 	opacity: 0.8;
@@ -65,5 +66,9 @@
 @media screen and (max-width: 900px){
 	.headerInfo {
 		grid-template-columns: 1fr;
+	}
+
+	.description {
+		max-width: 90%;
 	}
 }

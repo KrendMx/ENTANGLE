@@ -112,6 +112,48 @@ const networks: networksType = {
         order: 55,
         farm: 555,
     },
+    '10': {
+        title: 'Optimism',
+        abbr: 'OPT',
+        icon: 'optimismDashboard.svg',
+        description: '',
+        bgGradient: 'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
+        cardTypeLabelBg: 'rgba(155, 155, 155, 0.8)',
+        cardTypeLabelColor: 'rgba(55, 55, 55, 0.8)',
+        mainColor: 'rgba(255, 255, 255, 0.2)',
+        mainIcon: '/images/networks/optimismDashboard.svg',
+        mmCurrency: 'sUSD/USDC',
+        currency: 'sUSD/USDC Synthetic LP',
+        currencyMin: 'sUSD/USDC',
+        rpc: 'https://mainnet.optimism.io',
+        // TODO Не готово
+        dex: '',
+        fiat: '',
+        synth: '',
+        order: 0,
+        farm: 0,
+    },
+    '42161': {
+        title: 'Arbitrum',
+        abbr: 'ARB',
+        icon: 'arbitrumDashboard.svg',
+        description: '',
+        bgGradient: 'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
+        cardTypeLabelBg: 'rgba(155, 155, 155, 0.8)',
+        cardTypeLabelColor: 'rgba(55, 55, 55, 0.8)',
+        mainColor: 'rgba(255, 255, 255, 0.2)',
+        mmCurrency: 'ARB/USDC',
+        currency: 'ARB/USDC Synthetic LP',
+        currencyMin: 'ARB/USDC',
+        mainIcon: '/images/networks/arbitrumDashboard.svg',
+        // TODO Не готово
+        dex: '',
+        fiat: '',
+        rpc: 'https://arb1.arbitrum.io/rpc',
+        synth: '',
+        order: 0,
+        farm: 0,
+    },
 } as const;
 
 const availableSingleSideNetworks = {
@@ -124,7 +166,7 @@ const availableSingleSideNetworks = {
     ...networks,
 };
 
-const availableChainsArray: availableChains[] = ['43114', '250', '56'];
+const availableChainsArray: availableChains[] = ['43114', '250', '56', '10', '42161'];
 
 const WalletProviderNames = {
     MetaMask: 'MetaMask',
@@ -147,6 +189,8 @@ const farms = {
         BSC: '11',
         ETH: '12',
         ELRD: '77',
+        OPT: '',
+        ARB: '',
     },
     '43114': {
         FTM: '67',
@@ -154,6 +198,8 @@ const farms = {
         BSC: '70',
         ETH: '71',
         ELRD: '13',
+        OPT: '',
+        ARB: '',
     },
     '56': {
         FTM: '69',
@@ -161,6 +207,26 @@ const farms = {
         BSC: '7',
         ETH: '20',
         ELRD: '27',
+        OPT: '',
+        ARB: '',
+    },
+    '10': {
+        FTM: '69',
+        AVAX: '10',
+        BSC: '7',
+        ETH: '20',
+        ELRD: '27',
+        OPT: '',
+        ARB: '',
+    },
+    '42161': {
+        FTM: '69',
+        AVAX: '10',
+        BSC: '7',
+        ETH: '20',
+        ELRD: '27',
+        OPT: '',
+        ARB: '',
     },
 } as const;
 
@@ -187,6 +253,8 @@ const namesConfig = {
     FTM: '250',
     ETH: '1',
     ELRD: '100',
+    OPT: '10',
+    ARB: '42161',
 };
 
 const chainToNameConfig = {
@@ -195,6 +263,8 @@ const chainToNameConfig = {
     '250': 'FTM',
     '1': 'ETH',
     '100': 'ELRD',
+    '42161': 'ARB',
+    '10': 'OPT',
 };
 
 const synths = {
@@ -202,26 +272,50 @@ const synths = {
         BSC: '0x4e726245a362c1FE0947151199Bb225c0131C362',
         AVAX: '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
         FTM: '0x19ffF7129dC1121d013908aECd14A70aa58bD0Ea',
+        OPT: '',
+        ARB: '',
     },
     '43114': {
         BSC: '0x50780f5825ACf7A85d38368c2dFABE39d512cC26',
         AVAX: '0x998e0ffb556A114a8c22C3378775A4066b7432A7',
         FTM: '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
+        OPT: '',
+        ARB: '',
     },
     '56': {
         BSC: '0xBD289C7596e4130B367dE865e3d87E239eCB2438',
         AVAX: '0x901D6D195f9fF29051E499792291186B9A9CdBFc',
         FTM: '0x441Cf9aC9B694Bc72A7cd35FdD7eC928fb75bAFD',
+        OPT: '',
+        ARB: '',
     },
     '1': {
         BSC: '0x6fDa2e4C4187017D92a11D02b455C51E8CFF7FEA',
         AVAX: '0xf066F23C55D7aF2259Da196862B3c23702B9320b',
         FTM: '0xAe8aF48Ea0E9dc54Cc3328a872a323F039920ceb',
+        OPT: '',
+        ARB: '',
     },
     '100': {
         BSC: '0xD1aF5dFa8fe427542D7690856b6B7AD0bB1Bbb7f',
         AVAX: '0x39f0EFb3Ce44fd54c0B6faAAD3371eb6D34DBF7F',
         FTM: '0xCF81f0F04F191BD644e9CA62CD6992657574A408',
+        OPT: '',
+        ARB: '',
+    },
+    '42161': {
+        BSC: '',
+        AVAX: '',
+        FTM: '',
+        OPT: '',
+        ARB: '',
+    },
+    '10': {
+        BSC: '',
+        AVAX: '',
+        FTM: '',
+        OPT: '',
+        ARB: '',
     },
 };
 

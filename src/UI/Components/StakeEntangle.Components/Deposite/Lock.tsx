@@ -1,11 +1,11 @@
 import type { ChangeEvent } from 'react';
-import React, { useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import Input from 'UI/ui-kit/Input';
-import { networks } from 'utils/Global/Vars';
+import { ethers } from 'ethers';
 
 import Tabs from 'UI/ui-kit/Tabs';
 import Typography from 'UI/ui-kit/Typography';
@@ -23,6 +23,7 @@ const Lock: React.FC = () => {
         }),
         {
             network: '',
+            activeValidator: '',
             usdcAmount: '',
             lockPeriod: 0,
             apr: '25',
@@ -35,6 +36,8 @@ const Lock: React.FC = () => {
 
     const { t } = useTranslation('stable');
     const { t: tEnt } = useTranslation('entangle');
+
+    const validators = useMemo(() => new Array(15).fill(10).map(() => ethers.Wallet.createRandom().address), []);
 
     const inputChangeHandler = ({
         target,
@@ -57,23 +60,44 @@ const Lock: React.FC = () => {
                 <div>
                     <TokenSelect
                         defaultLabel={`${tEnt('SelectValidator')}`}
-                        value={state.network}
+                        value={state.activeValidator}
                         onChange={(value: string) =>
-                            dispatch({ network: value })}
+                            dispatch({ activeValidator: value })}
                         title={`${tEnt('SelectValidator')}`}
                         withBalance={false}
                         showPayModal={false}
                         selectedTitle="title"
+                        showImage={false}
+                        customSelectedLabel={state.activeValidator}
                     >
-                        {Object.keys(networks).map((el, idx) => (
+                        {validators.map((el, idx) => (
                             <TokenOption value={el} key={idx} isImage={false}>
-                                0x915B9ccB47...38cb337
+                                {el}
                             </TokenOption>
                         ))}
                     </TokenSelect>
                 </div>
+                <div className={styles.mgb}>
+                    <TextGroup
+                        title={`${tEnt('ENTGLapr')}`}
+                        value="25%"
+                        hintText="Test"
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
+                    />
+                    <TextGroup
+                        title={tEnt('YourShare')}
+                        value="0.11%"
+                        customClassNameWrapper={styles.mgt}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
+                    />
+                </div>
+            </div>
+            <div className={classNames(styles.actionCard)}>
+                <Arrow />
                 <div>
-                    <div className={classNames(styles.mgb, styles.mgt)}>
+                    <div className={classNames(styles.mgb)}>
                         <Typography type="textBody">
                             {`${tEnt('StakeEntangleTokens')}`}
                         </Typography>
@@ -95,41 +119,6 @@ const Lock: React.FC = () => {
                             />
                         ))}
                     </div>
-                </div>
-            </div>
-            <div className={classNames(styles.actionCard)}>
-                <Arrow />
-                <div>
-                    <Typography type="textBody" classNameModifier={styles.mgb}>
-                        {t('ChooseLock')}
-                    </Typography>
-                    <Tabs
-                        buttons={[
-                            `3 ${t('MonthOne')}`,
-                            `6 ${t('MonthTwo')}`,
-                            `12 ${t('MonthTwo')}`,
-                        ]}
-                        switchHandler={(tab: number) =>
-                            dispatch({ lockPeriod: tab })}
-                        activeTab={state.lockPeriod}
-                        customClassTabName={styles.customTabsMonths}
-                        customClassButtonName={styles.customButton}
-                    />
-                    <TextGroup
-                        title={`${tEnt('ENTGLapr')}`}
-                        value="25%"
-                        customClassNameWrapper={styles.mgt}
-                        hintText="Test"
-                        customClassNameTitle={styles.textTitle}
-                        customClassNameValue={styles.textValue}
-                    />
-                    <TextGroup
-                        title={tEnt('YourShare')}
-                        value="92 $ENTGL"
-                        customClassNameWrapper={styles.mgt}
-                        customClassNameTitle={styles.textTitle}
-                        customClassNameValue={styles.textValue}
-                    />
                 </div>
                 <div className={styles.helper}>
                     <GradientButton

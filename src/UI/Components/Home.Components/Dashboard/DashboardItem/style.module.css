@@ -14,7 +14,7 @@
 }
 
 .topBg {
-	--bg-height: 112px;
+	--bg-height: 75px;
 
 	height: var(--bg-height);
 }
@@ -199,6 +199,8 @@
 
 	width: 100%;
 	height: 100%;
+
+	border-radius: 18px;
 
 	background: rgb(0 0 0 / 35%);
 }

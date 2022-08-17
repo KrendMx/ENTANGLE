@@ -1,9 +1,9 @@
 .wrapper {
 	display: grid;
-	justify-content: space-between;
 	grid-template-columns: repeat(2, 1fr);
 	column-gap: 20px;
 	row-gap: 20px;
+
 }
 
 .blockValue {
@@ -29,6 +29,10 @@
 }
 
 .blockWrapper {
+	position: relative;
+
+	overflow: hidden;
+
 	flex: 1;
 
 	padding: 24px 12px;
@@ -36,8 +40,41 @@
 	text-align: center;
 
 	border-radius: 18px;
-	background: #1E1E1E;
+
+	background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgb(255 255 255 / 2%) 0%, rgb(255 255 255 / 0%) 100%) 
 }
+
+.blockWrapper::after {
+	position: absolute;
+
+	z-index: 5;
+	top: 90%;
+	left: 30%;
+
+	width: 40%;
+	height: 30%;
+
+	content: '';
+
+	border-radius: 50px;
+
+	background: linear-gradient(180deg, #FB37FF 0%, #0094FF 100%);
+
+	filter: blur(50px);
+}
+
+@media screen and (max-width: 1010px){
+	.blockWrapper {
+		display: grid;
+		grid-template-columns: 40% 20%;
+		grid-gap: 40%;
+	}
+
+	.blockWrapper * {
+		text-align: left !important;
+	}
+}
+
 
 @media screen and (max-width: 660px) {
 	.wrapper {
@@ -55,5 +92,13 @@
 		padding: 20px 12px;
 
 		text-align: left;
+	}
+
+	.blockWrapper::after {
+		left: -10%;
+
+		width: 60%;
+
+		transform: rotate(90deg);
 	}
 }

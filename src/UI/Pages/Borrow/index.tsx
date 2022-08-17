@@ -1,6 +1,8 @@
 import React, { useReducer, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import Tabs from 'UI/ui-kit/Tabs';
+import InfoBlock from 'src/UI/ui-kit/InfoBlock/InfoBlock';
+import { InfoBlockTypes } from 'src/UI/ui-kit/InfoBlock/InfoBlock.constants';
 import styles from './style.module.css';
 import BorrowTab from './Tabs/Borrow.tab';
 import type { infoReducer } from './Borrow.intefaces';
@@ -29,24 +31,21 @@ const Borrow: React.FC = () => {
     return (
         <div>
             <div className={styles.wrapper}>
-                <div className={styles.blockWrapper}>
-                    <p className={styles.sectionTitle}>{`SynthLP ${t('inCollateral')}`}</p>
-                    <p className={styles.sectionValue}>
-                        {`$${infoValuesState.slpInCollateral}`}
-                    </p>
-                </div>
-                <div className={styles.blockWrapper}>
-                    <p className={styles.sectionTitle}>{`SynthLP ${t('balance')}`}</p>
-                    <p className={styles.sectionValue}>
-                        {`$${infoValuesState.slpBalance}`}
-                    </p>
-                </div>
-                <div className={styles.blockWrapper}>
-                    <p className={styles.sectionTitle}>{`EnUSD ${t('Borrowed')}`}</p>
-                    <p className={styles.sectionValue}>
-                        {`$${infoValuesState.EnUSDBorrowed}`}
-                    </p>
-                </div>
+                <InfoBlock
+                    value={infoValuesState.slpInCollateral}
+                    info={`SynthLP ${t('inCollateral')}`}
+                    type={InfoBlockTypes.MONEY}
+                />
+                <InfoBlock
+                    value={infoValuesState.slpInCollateral}
+                    info={`SynthLP ${t('inCollateral')}`}
+                    type={InfoBlockTypes.MONEY}
+                />
+                <InfoBlock
+                    value={infoValuesState.slpInCollateral}
+                    info={`SynthLP ${t('inCollateral')}`}
+                    type={InfoBlockTypes.MONEY}
+                />
             </div>
             <div className={styles.switcher}>
                 <h1>{t('GetStarted')}</h1>

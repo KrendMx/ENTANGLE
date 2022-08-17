@@ -12,7 +12,9 @@ interface TokenSelectProps {
     defaultLabel: string;
     withBalance?: boolean;
     showPayModal?: boolean;
-    selectedTitle?:string
+    selectedTitle?:string;
+    customSelectedLabel?: string;
+    showImage?: boolean;
 }
 
 interface TokenOptionProps {

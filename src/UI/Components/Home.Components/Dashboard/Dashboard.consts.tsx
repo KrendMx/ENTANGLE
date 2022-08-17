@@ -1,11 +1,11 @@
+import OptimistContainer from 'UI/Components/Home.Components/Dashboard/DashboardItem/containers/OptimistContainer';
+import ArbitrumContainer from 'UI/Components/Home.Components/Dashboard/DashboardItem/containers/ArbitrumContainer';
 import AvalancheContainer from './DashboardItem/containers/AvalancheContainer';
 import FantomContainer from './DashboardItem/containers/FantomContainer';
 
 import BUSDContainer from './DashboardItem/containers/BUSDContainer';
 import ETHContainer from './DashboardItem/containers/ETHContainer';
 import ElrondContainer from './DashboardItem/containers/ElrondContainer';
-import OptimistContainer from 'UI/Components/Home.Components/Dashboard/DashboardItem/containers/OptimistContainer';
-import ArbitrumContainer from 'UI/Components/Home.Components/Dashboard/DashboardItem/containers/ArbitrumContainer';
 
 const ITEMS = [
     {

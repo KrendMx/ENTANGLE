@@ -26,6 +26,7 @@ type DashboardItemProps = {
     priceCurrency: string;
     disabled: boolean;
     isFiltered: boolean;
+    rty?: number,
     openModal?: () => void;
 } & ContainerStateType;
 
@@ -44,6 +45,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     isFiltered = false,
     localChain,
     localName,
+    ...props
 }) => {
     const { store, asyncActions, actions } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -272,11 +274,11 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             </p>
                         </div>
                         <div className={styles.sectionRow}>
-                            {networks[chainId].abbr in profits ? (
+                            {networks[chainId].abbr in profits || props?.rty === 0 ? (
                                 <p className={styles.sectionValue}>
                                     $
                                     {
-                                        profits[localName][selectedChainId]
+                                        props?.rty === 0 ? props?.rty : profits[localName][selectedChainId]
                                             ?.stable
                                     }
                                 </p>
