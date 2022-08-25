@@ -10,8 +10,8 @@ import type { availableChains } from 'utils/Global/Types';
 import { ChainConfig } from 'src/Services';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import { opToken } from 'utils/ABIs';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import styles from '../style.module.css';
-import Text from '../Text';
 import ModalInput from '../ModalInput';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
 
@@ -205,14 +205,20 @@ const Withdraw: React.FC<propsType> = ({
                 </div>
             </div>
             <div className={styles.mg2}>
-                <Text
+                <TextGroup
                     title={t('aprCard')}
-                    content={`${CardData[localChain].apr}%`}
+                    value={`${CardData[localChain].apr}%`}
+                    customClassNameWrapper={styles.mgt2}
+                    customClassNameTitle={styles.textTitle}
+                    customClassNameValue={styles.textValue}
                 />
                 <br />
-                <Text
+                <TextGroup
                     title={t('yourSynthBalance')}
-                    content={`${synthBalance} SynthLP`}
+                    value={`${synthBalance} SynthLP`}
+                    customClassNameWrapper={styles.mgt2}
+                    customClassNameTitle={styles.textTitle}
+                    customClassNameValue={styles.textValue}
                 />
             </div>
             <ModalInput

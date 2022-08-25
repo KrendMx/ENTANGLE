@@ -1,5 +1,5 @@
 EntangleStaking: Стэйкинг Entangle
-desc: Внесите один актив, который будет использоваться в паре с ликвидностью других пользователей для получения доступа к доходности, минимизируя при этом % риска непостоянных потерь
+desc: Помогите защитить сеть Entangle, делегировав свои токены Entangle выбранному вами валидатору
 TotalENTGLStaked: Всего в стейке ENTGL
 ActiveValidators: Активных валидаторов
 AVGUptime: Средняя активность валидаторов
@@ -11,3 +11,5 @@ EnterAmount: Введите значение
 ENTGLapr: APR Стейкинга ENTGL
 YourShare: Ваша доля в пуле валидаторов
 Stake: Стэйк
+AvaiableForWithdraw: Доступно для снятия
+Withdraw Entangle Tokens: Снятие Entangle токенов

@@ -7,6 +7,7 @@ import { networks } from 'utils/Global/Vars';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import CopyBtn from 'UI/ui-kit/CopyBtn/CopyBtn';
 import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 import styles from './style.module.css';
 
 type CardProps = {
@@ -40,25 +41,27 @@ const HistoryCard: React.FC<CardProps> = ({
     };
 
     return (
-        <div
-            className={styles.root}
-            style={{ backgroundImage: detectGradient() }}
-        >
+        <div className={styles.root}>
             <div className={styles.logoWrapper}>
                 <Image
-                    width={100}
-                    height={100}
+                    width={32}
+                    height={32}
                     quality={100}
                     src={`/images/networks/${networks[chainId]?.icon}`}
                     alt="alt"
                     className={styles.logo}
                 />
-            </div>
-            <div className={styles.main}>
-                <p className={styles.pare}>{networks[chainId]?.currencyMin}</p>
-                <div className={styles.undertitle}>
-                    {`${id.slice(0, 10)}...${id.slice(id.length - 10)}`}
-                    <CopyBtn text={id} />
+
+                <div className={styles.main}>
+                    <p className={styles.pare}>
+                        {networks[chainId]?.currencyMin}
+                    </p>
+                    <div
+                        className={classNames(styles.undertitle, styles.dflex)}
+                    >
+                        {`${id.slice(0, 5)}...${id.slice(id.length - 5)}`}
+                        <CopyBtn text={id} />
+                    </div>
                 </div>
             </div>
             <ul className={styles.list}>
@@ -89,12 +92,16 @@ const HistoryCard: React.FC<CardProps> = ({
             </ul>
             <ul className={styles.list}>
                 <li className={styles.listItem}>
-                    <GradientButton
-                        wrapperClass={styles.wrapperButtonClass}
-                        title={t('viewExplorer')}
-                        onClick={() => {}}
-                        titleClass={styles.buttonTitleClass}
-                    />
+                    <div className={styles.link}>
+                        <p>View in Explorer</p>
+                        <Image
+                            src="/images/ArrowWithoutBg.svg"
+                            width={14}
+                            height={10}
+                            alt="arrow image"
+                            quality={100}
+                        />
+                    </div>
                 </li>
             </ul>
         </div>

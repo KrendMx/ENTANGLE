@@ -1,9 +1,8 @@
-import type { WalletProviderNames } from 'utils/Global/Vars';
 import type { availableChains } from 'utils/Global/Types';
 
-type SelectWalletProps = {
+type SelectWrongWalletProps = {
     selectChain: (chainId: availableChains) => any;
     handleClose: () => any;
 };
 
-export type { SelectWalletProps };
+export type { SelectWrongWalletProps };

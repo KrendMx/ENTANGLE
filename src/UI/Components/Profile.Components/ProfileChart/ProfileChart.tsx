@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import type { ChartDataProps } from 'UI/ui-kit/ChartWrapper/ChartWrapper.interfaces';
 import ChartWrapper from 'UI/ui-kit/ChartWrapper/ChartWrapper';
-import SoonChart from 'UI/ui-kit/SoonChart/SoonChart';
 import { useStore } from 'core/store';
+import Typography from 'src/UI/ui-kit/Typography';
+import { useTranslation } from 'react-i18next';
 import type { BalanceChartTick } from './ProfileChart.ineterfaces';
 import styles from './style.module.css';
 import ChartLoader from './ProfileCharts.constant';
@@ -56,34 +57,37 @@ const ProfileChart: React.FC = () => {
         filterChanged();
     }, [selectedFilter, isLoaded]);
 
+    const { t } = useTranslation('profile');
+
     if (!isLoaded) return <ChartLoader />;
 
     return (
         <div className={styles.chartWrapper}>
             <div className={styles.filterWrapper}>
-                {Object.keys(filters).map((i) => (
-                    <div
-                        onClick={() => {
-                            setSelectedFilter(i as keyof typeof filters);
-                        }}
-                        key={i}
-                        className={classNames(styles.filter, {
-                            [styles.filterActive]: i === selectedFilter,
-                        })}
-                    >
-                        {i}
-                    </div>
-                ))}
+                <Typography type="title" classNameModifier={styles.customTitle}>
+                    {t('Portfolio Performance')}
+                </Typography>
+                <div style={{ display: 'flex', gap: '0.5vw' }}>
+                    {Object.keys(filters).map((i) => (
+                        <div
+                            onClick={() => {
+                                setSelectedFilter(i as keyof typeof filters);
+                            }}
+                            key={i}
+                            className={classNames(styles.filter, {
+                                [styles.filterActive]: i === selectedFilter,
+                            })}
+                        >
+                            {i}
+                        </div>
+                    ))}
+                </div>
             </div>
-            {chartData ? (
-                <ChartWrapper
-                    labelFormat={labelFormats[selectedFilter]}
-                    labels={chartData.labels}
-                    data={chartData.data}
-                />
-            ) : (
-                <SoonChart />
-            )}
+            <ChartWrapper
+                labelFormat={labelFormats[selectedFilter]}
+                labels={chartData.labels}
+                data={chartData.data}
+            />
         </div>
     );
 };

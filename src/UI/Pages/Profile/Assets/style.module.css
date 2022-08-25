@@ -1,0 +1,13 @@
+.wrapper {
+	display: block;
+}
+
+.titleMargin {
+	margin: 40px 0;
+}
+
+@media screen and (max-width: 600px) {
+	.titleMargin {
+		margin: 80px 0 40px;
+	}
+}

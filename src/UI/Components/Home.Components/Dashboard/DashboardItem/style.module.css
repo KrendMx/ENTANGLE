@@ -5,7 +5,7 @@
 	flex-direction: column;
 
 	width: 100%;
-	padding: 0 20px 33px;
+	padding: 0 10px 33px;
 
 	border: 2px solid rgb(255 255 255 / 10%);
 	border-radius: 18px;
@@ -13,7 +13,7 @@
 }
 
 .topBg {
-	--bg-height: 112px;
+	--bg-height: 75px;
 
 	height: var(--bg-height);
 }
@@ -118,6 +118,7 @@
 
 .section {
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 
 	margin-bottom: 20px;
@@ -137,6 +138,8 @@
 }
 
 .sectionValue {
+	height: 1em;
+
 	color: var(--color-6);
 
 	font-size: 18px;
@@ -147,7 +150,7 @@
 .sectionSubValue {
 	color: var(--gray);
 
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 300;
 }
 
@@ -165,6 +168,8 @@
 	min-width: 100px;
 
 	gap: 10px;
+
+	height: 1.3rem;
 }
 
 .sectionAvailable {
@@ -198,6 +203,8 @@
 
 	width: 100%;
 	height: 100%;
+
+	border-radius: 18px;
 
 	background: rgb(0 0 0 / 35%);
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
@@ -5,7 +6,10 @@ import { useTranslation } from 'react-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import {
-    synths, WalletProviderNames, networks, chainToNameConfig,
+    synths,
+    WalletProviderNames,
+    networks,
+    chainToNameConfig,
 } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
@@ -45,7 +49,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
     isFiltered = false,
     localChain,
     localName,
-    rty = null,
+    ...props
 }) => {
     const { store, asyncActions, actions } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -242,7 +246,7 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                     <div className={styles.sectionRow}>
                         {price ? (
                             <p className={styles.sectionValue}>
-                                $
+$
                                 {price}
                             </p>
                         ) : (
@@ -274,17 +278,18 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                             </p>
                         </div>
                         <div className={styles.sectionRow}>
-                            {networks[chainId].abbr in profits ? (
-                                <p className={styles.sectionValue}>
+                            {networks[chainId].abbr in profits
+                            || props?.rty === 0 ? (
+                                    <p className={styles.sectionValue}>
                                     $
-                                    {
-                                        rty !== null ? rty : profits[localName][selectedChainId]
-                                            ?.stable
-                                    }
-                                </p>
-                            ) : (
-                                <TextLoader bgGradient={bgGradient} />
-                            )}
+                                        {props?.rty === 0
+                                            ? props?.rty
+                                            : profits[localName][selectedChainId]
+                                                ?.stable}
+                                    </p>
+                                ) : (
+                                    <TextLoader bgGradient={bgGradient} />
+                                )}
                         </div>
                     </div>
                 ) : null}

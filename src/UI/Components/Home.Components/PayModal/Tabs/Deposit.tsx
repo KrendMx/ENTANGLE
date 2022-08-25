@@ -9,7 +9,7 @@ import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import { opToken } from 'utils/ABIs';
-import Text from '../Text';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { ContainerStateType } from '../../Dashboard/DashboardItem/containers/types';
 import ModalInput from '../ModalInput';
 import styles from '../style.module.css';
@@ -210,20 +210,26 @@ const Deposit: React.FC<propsType> = ({
                     />
                 </div>
             </div>
-            <Text
+            <TextGroup
                 title={t('aprCard')}
-                content={`${CardData[localChain].apr}%`}
-                classText={styles.mgT}
+                value={`${CardData[localChain].apr}%`}
+                customClassNameWrapper={styles.mgT}
+                customClassNameTitle={styles.textTitle}
+                customClassNameValue={styles.textValue}
             />
-            <Text
+            <TextGroup
                 title={t('yourSynthBalance')}
-                content={`${balances.synth} SynthLP`}
-                classText={styles.mgT}
+                value={`${balances.synth} SynthLP`}
+                customClassNameWrapper={styles.mgT}
+                customClassNameTitle={styles.textTitle}
+                customClassNameValue={styles.textValue}
             />
-            <Text
+            <TextGroup
                 title={t('yourUSDCBalance')}
-                content={`${balances.usdc} USDC`}
-                classText={styles.mgT}
+                value={`${balances.usdc} USDC`}
+                customClassNameWrapper={styles.mgT}
+                customClassNameTitle={styles.textTitle}
+                customClassNameValue={styles.textValue}
             />
             <ModalInput
                 currencyReceive={networks[chainId as availableChains].currency}

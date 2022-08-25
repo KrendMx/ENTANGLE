@@ -9,10 +9,13 @@ interface TokenSelectProps {
     customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     customOptionClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
     disabled?:boolean;
+    showHashImage?:boolean;
     defaultLabel: string;
     withBalance?: boolean;
     showPayModal?: boolean;
-    selectedTitle?:string
+    selectedTitle?:string;
+    customSelectedLabel?: string;
+    showImage?: boolean;
 }
 
 interface TokenOptionProps {
@@ -25,6 +28,8 @@ interface TokenOptionProps {
     amount?: string;
     name?:string;
     isImage?: boolean;
+    isHashImage?: boolean;
+    hashImage?: string;
 }
 
 export type {

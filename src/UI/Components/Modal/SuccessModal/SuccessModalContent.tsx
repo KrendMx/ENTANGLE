@@ -2,10 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 
 import classNames from 'classnames';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import GradientButton from 'UI/ui-kit/GradientButton';
-import { networks, synths } from 'utils/Global/Vars';
+import { synths } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';

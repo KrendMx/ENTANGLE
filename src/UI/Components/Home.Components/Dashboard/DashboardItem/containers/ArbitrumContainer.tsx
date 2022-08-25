@@ -21,7 +21,7 @@ const OptimistContainer = ({ isFiltered = false }) => {
                 'linear-gradient(90deg, rgba(40, 160, 240, 0.2) 0%, rgba(40, 160, 240, 0) 100%)',
             yieldTime: '$0',
             localChain: '250',
-            localName: 'FTM',
+            localName: 'ARB',
         },
     );
 
@@ -30,9 +30,9 @@ const OptimistContainer = ({ isFiltered = false }) => {
         bgGradient:
             'linear-gradient(90deg, rgba(40, 160, 240, 0.2) 0%, rgba(40, 160, 240, 0) 100%);',
         heading: 'ARB/USDC',
-        chainId: '43114',
+        chainId: '42161',
         priceCurrency: 'ARB/USDC Synthetic LP',
-        vendor: 'convexfinance.com',
+        vendor: 'stargate.finance',
         disabled: true,
         ...state,
     } as const;

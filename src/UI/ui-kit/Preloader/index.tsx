@@ -9,7 +9,7 @@ type PreloaderProps = {
   timeout?: number,
 }
 
-const Preloader: React.FC<PreloaderProps> = ({ isVisible, timeout = 1000 }) => (
+const Preloader: React.FC<PreloaderProps> = React.memo(({ isVisible, timeout = 1000 }) => (
     <CSSTransition
         in={isVisible}
         timeout={timeout}
@@ -21,6 +21,6 @@ const Preloader: React.FC<PreloaderProps> = ({ isVisible, timeout = 1000 }) => (
             <Image width={205} height={50} quality={100} src="/images/logo.svg" alt="Logo" />
         </div>
     </CSSTransition>
-);
+));
 
 export default Preloader;

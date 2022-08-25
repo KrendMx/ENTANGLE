@@ -5,10 +5,8 @@ import React, {
     useEffect, useCallback, useReducer, useState,
 } from 'react';
 
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Input from 'UI/ui-kit/Input';
-import Text from 'UI/Components/Home.Components/PayModal/Text';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientSlider from 'UI/ui-kit/GradientSlider';
@@ -16,12 +14,13 @@ import { networks, chainToNameConfig } from 'utils/Global/Vars';
 
 import Typography from 'UI/ui-kit/Typography';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
-import type { IBorrowProps, BorrowState } from './Tabs.interfaces';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
+import type { BorrowState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
 import local from './style.module.css';
 
-const BorrowTab: React.FC<IBorrowProps> = () => {
+const BorrowTab: React.FC = () => {
     const [state, dispatch] = useReducer(
         (oldState: BorrowState, newState: Partial<BorrowState>) => ({
             ...oldState,
@@ -204,17 +203,21 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                                         setOutsideVariable={changeLTVRate}
                                     />
                                 </div>
-                                <Text
+                                <TextGroup
                                     title={t('CurrenLTV')}
-                                    content={`${state.LTVRate}%`}
-                                    hasTooltip
-                                    tooltipText="Test"
-                                    classText={local.mg1}
+                                    value={`${state.LTVRate}%`}
+                                    hintText="Test"
+                                    customClassNameWrapper={local.mg1}
+                                    customClassNameTitle={styles.textTitle}
+                                    customClassNameValue={styles.textValue}
                                 />
-                                <Text
+                                <TextGroup
                                     title={t('LiquidationComm')}
-                                    content={`${state.commision}%`}
-                                    classText={local.mg1}
+                                    value={`${state.commision}%`}
+                                    hintText="Test"
+                                    customClassNameWrapper={local.mg1}
+                                    customClassNameTitle={styles.textTitle}
+                                    customClassNameValue={styles.textValue}
                                 />
                             </div>
                         </div>
@@ -262,19 +265,21 @@ const BorrowTab: React.FC<IBorrowProps> = () => {
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
-                            paddingBottom: '0.5rem',
+                            justifyContent: 'space-between',
                         }}
                     >
-                        <Text
+                        <TextGroup
                             title={t('CurrentAVG')}
-                            content={`${state.AVGCollaterization}%`}
-                            classText={local.mg1Top}
+                            value={`${state.AVGCollaterization}%`}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={t('ExchangeRate')}
-                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                            classText={local.mg1Top}
+                            value={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameWrapper={local.mg1Top}
+                            customClassNameValue={styles.textValue}
                         />
                     </div>
                 </div>

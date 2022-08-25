@@ -1,25 +1,72 @@
-import React, {
-    useEffect, useState, useMemo,
-} from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import type { availableChains } from 'utils/Global/Types';
 import InvestCardExp from 'UI/Components/Profile.Components/InvestCard/Card/InvestCards';
+import { networks } from 'src/utils/Global/Vars';
+import GradientButton from 'src/UI/ui-kit/GradientButton';
+import Typography from 'src/UI/ui-kit/Typography';
+import { useRouter } from 'next/router';
 import { CardsOrder, generateInitState } from './InvestCards.const';
 import type { IProps, ICardUnit } from './InvestCard.interfaces';
 
 import styles from './style.module.css';
-import Pager from '../TransactionHistory/Pager/Pager';
+
+const ProfileCard: React.FC<{
+    position: number;
+    priceInUSD: number;
+    name: string;
+    key: number;
+}> = ({
+    position, priceInUSD, name, key,
+}) => {
+    const detectedChainId = (chainName: string): availableChains => {
+        for (const key in networks) {
+            if (networks[key].abbr === chainName) {
+                return key as availableChains;
+            }
+        }
+    };
+
+    return (
+        <div className={styles.profileCard} key={key}>
+            <div className={styles.currencyInfo}>
+                <Image
+                    src={`/images/networks/${
+                        networks[detectedChainId(name)].icon
+                    }`}
+                    alt=""
+                    width={32}
+                    height={32}
+                />
+                <p className={styles.title}>
+                    {networks[detectedChainId(name)].currencyMin}
+                </p>
+            </div>
+            <div className={styles.priceInfo}>
+                <p className={styles.primary}>
+                    {position}
+                    {networks[detectedChainId(name)].mmCurrency}
+                </p>
+                <p className={styles.secondary}>
+                    ~$
+                    {priceInUSD}
+                </p>
+            </div>
+        </div>
+    );
+};
 
 const InvestCard: React.FC<IProps> = ({
     balances,
     filter,
     hasTokens,
+    smallCard = true,
 }) => {
     const [cards, setCards] = useState<ICardUnit[]>([]);
 
-    const InitCards = useMemo(() => (generateInitState(balances)), [balances]);
+    const InitCards = useMemo(() => generateInitState(balances), [balances]);
 
     const updateCardsFilter = () => {
         let cardsPrepared = [...cards];
@@ -43,17 +90,29 @@ const InvestCard: React.FC<IProps> = ({
         updateCards();
     }, []);
 
-    const [currentPage, setCurrentPage] = useState<number>(1);
-
-    const [pageLimit, setPageLimit] = useState<number>(5);
-
     const { t } = useTranslation('profile');
 
+    const Router = useRouter();
+
     return (
-        <div>
+        <div className={styles.cardsWrapper}>
             {!hasTokens ? (
-                <>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        height: '100%',
+                        width: '100%',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}
+                    >
                         <Image
                             src="/images/bar-graph.png"
                             alt=""
@@ -73,52 +132,40 @@ const InvestCard: React.FC<IProps> = ({
                     >
                         {t('nowAsset')}
                     </h2>
-                </>
+                </div>
             ) : (
-                <>
-                    <div className={styles.cardsWrapper}>
-                        {cards.slice(
-                            (currentPage - 1) * pageLimit,
-                            currentPage * pageLimit,
-                        ).map((el, key) => (Number(el.positions) ? (
-                            <InvestCardExp
-                                key={key}
-                                chainId={el.chainId as availableChains}
-                                description={el.description}
-                                positions={el.positions}
-                                price={el.price}
-                                bgGradient={el.bgGradient}
-                                cardType={el.cardType}
-                                cardTypeLabelBg={el.cardTypeLabelBg}
-                                cardTypeLabelColor={el.cardTypeLabelColor}
-                                currencyName={el.currencyName}
-                            />
-                        ) : undefined))}
-                    </div>
-                    <div
-                        className={classNames(
-                            styles.flex,
-                            styles.itemsCenter,
-                            styles.my1,
-                        )}
-                    >
-                        <div className={classNames(styles.flex, styles.mxAuto)}>
-                            <Pager
-                                selectedPage={currentPage}
-                                pageCount={Math.max(
-                                    Math.ceil(
-                                        cards.length / pageLimit,
-                                    ),
-                                    1,
-                                )}
-                                onPageChange={(n) => {
-                                    setCurrentPage(n);
-                                }}
-                            />
-
+                <div className={styles.betweenContainer}>
+                    <div>
+                        <Typography type="textBody">
+                            {t('Your Entangle Assets')}
+                        </Typography>
+                        <div className={classNames({ [styles.assetsPage]: !smallCard })}>
+                            {cards
+                                .reverse()
+                                .slice(0, 3)
+                                .map((el, key) =>
+                                    (Number(el.positions) ? (
+                                        <ProfileCard
+                                            key={key}
+                                            position={el.positions}
+                                            priceInUSD={
+                                                el.positions * el.price
+                                            }
+                                            name={el.currencyName}
+                                        />
+                                    ) : undefined))}
                         </div>
                     </div>
-                </>
+                    {smallCard && (
+                        <GradientButton
+                            title="View All"
+                            onClick={() => {
+                                Router.push('/profile/assets');
+                            }}
+                            isWhite
+                        />
+                    )}
+                </div>
             )}
         </div>
     );

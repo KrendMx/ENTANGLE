@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import styles from './style.module.css';
+import SearchIcon from '../SearchIcon';
 
 type GradientButtonProps = {
     title: string;
@@ -12,50 +13,73 @@ type GradientButtonProps = {
     disabled?: boolean;
     loader?: JSX.Element;
     active?: boolean;
+    isSearch?: boolean;
     isWhite?: boolean;
 };
 
-const GradientButton: React.FC<GradientButtonProps> = ({
-    title,
-    titleElement,
-    titleClass,
-    wrapperClass,
-    onClick,
-    disabled = false,
-    loader,
-    gradient = 'linear-gradient(90deg, #FF5EBA 0%, #6831D6DE 87%, #0094FF 100%)',
-    isWhite = false,
-    ...props
-}) => (
-    <div
-        onClick={() => {
-            if (!disabled) {
-                onClick();
-            }
-        }}
-        style={{ background: gradient }}
-        className={classNames(wrapperClass, styles.wrapper, {
-            [styles.disabled]: disabled,
-            [styles.white]: isWhite,
-        })}
-    >
-        {titleElement ? (
-            <div className={classNames(titleClass, styles.titleElement)}>
-                {titleElement}
-            </div>
-        ) : (
-            <p
-                className={classNames(titleClass || null, {
-                    [styles.active]: props?.active,
-                    [styles.title]: !isWhite,
-                    [styles.whiteTitle]: isWhite,
+const GradientButton: React.FC<GradientButtonProps> = React.memo(
+    ({
+        title,
+        titleElement,
+        titleClass,
+        wrapperClass,
+        onClick,
+        disabled = false,
+        loader,
+        gradient = 'linear-gradient(90deg, #FF5EBA 0%, #6831D6DE 87%, #0094FF 100%)',
+        isWhite = false,
+        isSearch = false,
+        ...props
+    }) => {
+        const [hover, setHover] = useState(false);
+
+        return (
+            <div
+                onClick={() => {
+                    if (!disabled) {
+                        onClick();
+                    }
+                }}
+                onMouseEnter={() => {
+                    setHover(true);
+                }}
+                onMouseLeave={() => {
+                    setHover(false);
+                }}
+                style={{ background: gradient }}
+                className={classNames(wrapperClass, styles.wrapper, {
+                    [styles.disabled]: disabled,
+                    [styles.white]: isWhite,
                 })}
             >
-                {title}
-                {loader}
-            </p>
-        )}
-    </div>
+                {titleElement ? (
+                    <div
+                        className={classNames(titleClass, styles.titleElement)}
+                    >
+                        {titleElement}
+                    </div>
+                ) : (
+                    <div
+                        className={classNames(titleClass || null, styles.dflex, {
+                            [styles.active]: props?.active,
+                            [styles.title]: !isWhite,
+                            [styles.whiteTitle]: isWhite,
+                        })}
+                    >
+                        {isSearch ? (
+                            <SearchIcon
+                                customClassName={styles.buttonIcon}
+                                color={!hover ? 'black' : 'white'}
+                                size={16}
+                            />
+                        ) : null}
+                        <p>{title}</p>
+                        {loader}
+                    </div>
+                )}
+            </div>
+        );
+    },
 );
 
 export default GradientButton;

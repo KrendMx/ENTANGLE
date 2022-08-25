@@ -49,16 +49,22 @@ export const SingleSide = () => {
             <div className={styles.infoWrapper}>
                 <InfoBlock
                     info={t('tvl')}
+                    customWrapperClassName={styles.customInfoWrapper}
+                    customValueClassName={styles.customInfoValue}
                     value={Number(store.tvl)}
                     type={InfoBlockTypes.MONEY}
                 />
                 <InfoBlock
                     info={t('volume24')}
+                    customWrapperClassName={styles.customInfoWrapper}
+                    customValueClassName={styles.customInfoValue}
                     value={Number(store.volume)}
                     type={InfoBlockTypes.MONEY}
                 />
                 <InfoBlock
                     info={t('totalEarned')}
+                    customWrapperClassName={styles.customInfoWrapper}
+                    customValueClassName={styles.customInfoValue}
                     value={Number(store.totalEarned)}
                     type={InfoBlockTypes.ABOUT_MONEY}
                 />

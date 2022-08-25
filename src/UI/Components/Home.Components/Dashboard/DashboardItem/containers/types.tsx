@@ -1,4 +1,4 @@
-import type { availableChains } from 'src/utils/Global/Types';
+import type { availableChains, availableNames } from 'src/utils/Global/Types';
 
 export type ContainerStateType = {
     apr: string | null;
@@ -12,5 +12,5 @@ export type ContainerStateType = {
     rowGradient: string;
     yieldTime: string | null;
     localChain: availableChains;
-    localName: 'FTM' | 'AVAX' | 'BSC' | 'ETH' | 'ELRD';
+    localName: availableNames;
 };

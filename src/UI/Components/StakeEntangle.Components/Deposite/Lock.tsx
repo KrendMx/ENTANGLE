@@ -1,22 +1,21 @@
 import type { ChangeEvent } from 'react';
-import React, { useReducer } from 'react';
-import Image from 'next/image';
+import React, { useMemo, useReducer } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import Input from 'UI/ui-kit/Input';
-import { networks } from 'utils/Global/Vars';
-import Text from 'UI/Components/Home.Components/PayModal/Text';
+import { ethers } from 'ethers';
 
 import Tabs from 'UI/ui-kit/Tabs';
 import Typography from 'UI/ui-kit/Typography';
 import MiniButton from 'UI/ui-kit/MiniButton';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { ILockState } from '../Tabs.interfaces';
 import styles from '../style.module.css';
 
-const Lock: React.FC = () => {
+const Lock: React.FC<{validators: string[]}> = ({ validators }) => {
     const [state, dispatch] = useReducer(
         (oldState: ILockState, newState: Partial<ILockState>) => ({
             ...oldState,
@@ -24,6 +23,7 @@ const Lock: React.FC = () => {
         }),
         {
             network: '',
+            activeValidator: '',
             usdcAmount: '',
             lockPeriod: 0,
             apr: '25',
@@ -58,23 +58,45 @@ const Lock: React.FC = () => {
                 <div>
                     <TokenSelect
                         defaultLabel={`${tEnt('SelectValidator')}`}
-                        value={state.network}
+                        value={state.activeValidator}
                         onChange={(value: string) =>
-                            dispatch({ network: value })}
+                            dispatch({ activeValidator: value })}
                         title={`${tEnt('SelectValidator')}`}
                         withBalance={false}
+                        showHashImage
                         showPayModal={false}
                         selectedTitle="title"
+                        showImage={false}
+                        customSelectedLabel={state.activeValidator}
                     >
-                        {Object.keys(networks).map((el, idx) => (
-                            <TokenOption value={el} key={idx} isImage={false}>
-                                0x915B9ccB47...38cb337
+                        {validators.map((el, idx) => (
+                            <TokenOption value={el} key={idx} isImage={false} isHashImage>
+                                {el}
                             </TokenOption>
                         ))}
                     </TokenSelect>
                 </div>
                 <div>
-                    <div className={classNames(styles.mgb, styles.mgt)}>
+                    <TextGroup
+                        title={`${tEnt('ENTGLapr')}`}
+                        value="25%"
+                        hintText="Test"
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
+                    />
+                    <TextGroup
+                        title={tEnt('YourShare')}
+                        value="0.11%"
+                        customClassNameWrapper={styles.mgt}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
+                    />
+                </div>
+            </div>
+            <div className={classNames(styles.actionCard)}>
+                <Arrow />
+                <div>
+                    <div className={classNames(styles.mgb)}>
                         <Typography type="textBody">
                             {`${tEnt('StakeEntangleTokens')}`}
                         </Typography>
@@ -97,42 +119,10 @@ const Lock: React.FC = () => {
                         ))}
                     </div>
                 </div>
-            </div>
-            <div className={classNames(styles.actionCard)}>
-                <Arrow />
-                <div>
-                    <Typography type="textBody" classNameModifier={styles.mgb}>
-                        {t('ChooseLock')}
-                    </Typography>
-                    <Tabs
-                        buttons={[
-                            `3 ${t('MonthOne')}`,
-                            `6 ${t('MonthTwo')}`,
-                            `12 ${t('MonthTwo')}`,
-                        ]}
-                        switchHandler={(tab: number) =>
-                            dispatch({ lockPeriod: tab })}
-                        activeTab={state.lockPeriod}
-                        customClassTabName={styles.customTabsMonths}
-                        customClassButtonName={styles.customButton}
-                    />
-                    <Text
-                        title={`${tEnt('ENTGLapr')}`}
-                        content="25%"
-                        classText={styles.mgt}
-                        hasTooltip
-                        tooltipText="Test"
-                    />
-                    <Text
-                        title={tEnt('YourShare')}
-                        content="92 $ENTGL"
-                        classText={styles.mgt}
-                    />
-                </div>
                 <div className={styles.helper}>
                     <GradientButton
                         isWhite
-                        title={`${t('Stake')}`}
+                        title={`${tEnt('Stake')}`}
                         onClick={() => {}}
                     />
                 </div>

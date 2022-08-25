@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './style.module.css';
 
-type PropTypes = {
+type GradientSliderProps = {
     min: number;
     max: number;
     extraSymbol?: string;
@@ -9,7 +9,7 @@ type PropTypes = {
     setOutsideVariable: (x: string) => void;
 };
 
-const GradientSlider: React.FC<PropTypes> = ({
+const GradientSlider: React.FC<GradientSliderProps> = React.memo(({
     min,
     max,
     setOutsideVariable,
@@ -82,6 +82,6 @@ const GradientSlider: React.FC<PropTypes> = ({
             </p>
         </div>
     );
-};
+});
 
 export default GradientSlider;

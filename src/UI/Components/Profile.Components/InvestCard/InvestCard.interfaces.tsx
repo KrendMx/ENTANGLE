@@ -12,6 +12,7 @@ interface IProps {
     filter: keyof typeof CardsOrder | 'Sort by';
     totalBalance: number;
     hasTokens: boolean;
+    smallCard?: boolean;
 }
 
 type CardValues = {

@@ -35,7 +35,7 @@ ChartJS.register(
     LineElement,
 );
 
-const ChartWrapper: React.FC<ChartDataProps> = ({
+const ChartWrapper: React.FC<ChartDataProps> = React.memo(({
     label,
     labels,
     total,
@@ -192,6 +192,6 @@ const ChartWrapper: React.FC<ChartDataProps> = ({
             </div>
         </div>
     );
-};
+});
 
 export default React.memo(ChartWrapper);

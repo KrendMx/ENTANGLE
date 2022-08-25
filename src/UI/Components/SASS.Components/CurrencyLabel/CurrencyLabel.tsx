@@ -12,7 +12,7 @@ type ICurrencyLabelProps = {
     isImage?: boolean;
 };
 
-export const CurrencyLabel: React.FC<ICurrencyLabelProps> = ({
+export const CurrencyLabel: React.FC<ICurrencyLabelProps> = React.memo(({
     chainId,
     value,
     isImage = true,
@@ -48,4 +48,4 @@ export const CurrencyLabel: React.FC<ICurrencyLabelProps> = ({
             )}
         </div>
     );
-};
+});

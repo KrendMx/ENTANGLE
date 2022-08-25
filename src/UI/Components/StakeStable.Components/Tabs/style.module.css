@@ -52,7 +52,6 @@
 	border: 2px solid rgb(255 255 255 / 10%);
 	border-radius: 18px;
 	background: rgb(30 30 30 / 10%);
-	backdrop-filter: blur(62px);
 }
 
 
@@ -160,6 +159,24 @@
 
 .miniButtonsGroup > button {
 	width: 100%;
+}
+
+.textTitle {
+	color: #A3A3A3 !important;
+
+	font-size: 16px !important;
+	font-weight: 400 !important;
+	font-style: normal !important;
+	line-height: 22px !important;
+}
+
+.textValue {
+	color: #ECECEC !important;
+
+	font-size: 16px !important;
+	font-weight: 400 !important;
+	font-style: normal !important;
+	line-height: 22px !important;
 }
 
 @media screen and (max-width: 1124px) {

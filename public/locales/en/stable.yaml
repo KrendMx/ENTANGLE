@@ -5,7 +5,7 @@ assets: Assets
 availableNetwork: Available Networks 
 pastVolume: Past 24h Volume
 newAsset: New assets coming soon
-view: View
+view: Select
 walletBalance: Wallet Balance
 currentlyLocked: Currently Locked Amount
 currentAPR: Current APR
@@ -28,3 +28,4 @@ StakeUSDC: Lock
 back: Lock Stablecoin
 youWillGet: You will get
 remainder: The remainder of the lock
+Repay Loan: Repay Loan

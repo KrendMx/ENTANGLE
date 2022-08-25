@@ -3,20 +3,19 @@ import type { ChangeEvent } from 'react';
 import React, {
     useReducer,
 } from 'react';
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Input from 'UI/ui-kit/Input';
-import Text from 'UI/Components/Home.Components/PayModal/Text';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import MiniButton from 'UI/ui-kit/MiniButton';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
-import { networks, chainToNameConfig } from 'utils/Global/Vars';
+import { networks } from 'utils/Global/Vars';
 import Typography from 'UI/ui-kit/Typography';
 import { Arrow } from 'src/UI/ui-kit/Arrow';
-import type { IRepayProps, RepayState } from './Tabs.interfaces';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
+import type { RepayState } from './Tabs.interfaces';
 import styles from '../style.module.css';
 
-const RepayTab: React.FC<IRepayProps> = () => {
+const RepayTab: React.FC = () => {
     const [state, dispatch] = useReducer(
         (oldState: RepayState, newState: Partial<RepayState>) => ({
             ...oldState,
@@ -177,7 +176,7 @@ const RepayTab: React.FC<IRepayProps> = () => {
                             type="textBody"
                             classNameModifier={styles.mgb}
                         >
-                            {`${t('Unlocked')} Synth-LP`}
+                            {`${t('Unlocked')} SynthLP`}
                         </Typography>
                         <Input
                             type="number"
@@ -191,25 +190,33 @@ const RepayTab: React.FC<IRepayProps> = () => {
                         />
                     </div>
                     <div>
-                        <Text
+                        <TextGroup
                             title={t('TotalBorrowed')}
-                            content="$900 EnUSD"
-                            classText={styles.mgt}
+                            value="$900 EnUSD"
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={t('Interest')}
-                            content="27%"
-                            classText={styles.mgt}
+                            value="27%"
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={`${t('Interest')} USD`}
-                            content="$27"
-                            classText={styles.mgt}
+                            value="$27"
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
-                        <Text
+                        <TextGroup
                             title={t('ExchangeRate')}
-                            content={`1 SynthLP = ${state.exchangeRate} enUSD`}
-                            classText={styles.mgt}
+                            value={`1 SynthLP = ${state.exchangeRate} enUSD`}
+                            customClassNameWrapper={styles.mgt}
+                            customClassNameTitle={styles.textTitle}
+                            customClassNameValue={styles.textValue}
                         />
                     </div>
                 </div>

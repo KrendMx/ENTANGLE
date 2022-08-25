@@ -10,7 +10,11 @@ interface IAppEntityState {
     sucInfo: TransactionInfo | null;
 }
 
-type TransactionInfo = { value: number; symbol: string; isReceived: boolean };
+type TransactionInfo = {
+    value: number;
+    symbol: string;
+    isReceived: boolean;
+};
 
 export type {
     IAppEntityState,

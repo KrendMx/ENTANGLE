@@ -20,8 +20,8 @@ const OptimistContainer = ({ isFiltered = false }) => {
             rowGradient:
                 'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
             yieldTime: '$0',
-            localChain: '250',
-            localName: 'FTM',
+            localChain: '10',
+            localName: 'OPT',
         },
     );
 
@@ -29,10 +29,10 @@ const OptimistContainer = ({ isFiltered = false }) => {
         icon: 'optimismDashboard.svg',
         bgGradient:
             'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
-        heading: 'vAMM-OP/USDC',
-        chainId: '43114',
+        heading: 'sUSD/USDC',
+        chainId: '10',
         priceCurrency: 'vAMM-OP/USDC Synthetic LP',
-        vendor: 'quickswap.exchange',
+        vendor: 'velodrome.finance',
         disabled: true,
         ...state,
     } as const;

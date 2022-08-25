@@ -1,8 +1,8 @@
-type availableChains = '43114' | '250' | '56' | '1' | '100';
+type availableChains = '43114' | '250' | '56' | '1' | '100' | '10' | '42161';
 
 type availableSingleSideChains = '24886' | availableChains;
 
-type availableNames = 'AVAX' | 'FTM' | 'BSC' | 'ETH' | 'ELRD';
+type availableNames = 'AVAX' | 'FTM' | 'BSC' | 'ETH' | 'ELRD' | 'ARB' | 'OPT';
 
 type languages = 'en' | 'ru' | 'ch' | 'de' | 'ko' | 'vie';
 
@@ -20,12 +20,12 @@ type networksType = {
         bgGradient?: string;
         cardTypeLabelColor?: string;
         cardTypeLabelBg?: string;
-        dex: string;
-        fiat: string;
-        rpc: string;
-        synth: string;
-        mainColor: string;
-        mainIcon: string;
+        dex?: string;
+        fiat?: string;
+        rpc?: string;
+        synth?: string;
+        mainColor?: string;
+        mainIcon?: string;
     };
 };
 

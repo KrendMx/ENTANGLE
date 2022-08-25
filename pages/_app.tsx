@@ -6,9 +6,7 @@ import { NotificationComponent } from 'src/libs/Notification';
 
 import { store } from 'core/store';
 import { Layout } from 'src/utils/App.hocs/Layout';
-// import { ServiceProvider } from '@/src/context/ServiceContext';
 import ModalContextWrapper from 'utils/App.hocs/ModalContextWrapper';
-import { ErrorBoundary } from 'src/utils/App.hocs/ErrorBoundary';
 import '../styles/index.css';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
@@ -22,6 +20,5 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
         <ModalContextWrapper />
     </Provider>
 );
-// { /* <ServiceProvider value={service}> */ }
-// {/* </ErrorBoundary> */}
+
 export default appWithTranslation(MyApp);

@@ -4,7 +4,8 @@ interface ILockState {
     lockPeriod: number;
     apr: string;
     apr24: string;
-    activeButtonRepay: string
+    activeButtonRepay: string;
+    activeValidator: string;
 }
 
 interface WithdrawProps {
@@ -13,6 +14,7 @@ interface WithdrawProps {
 
 interface IWithdrawState {
     network: string;
+    activeValidator: string;
     activeButtonRepay:string;
     usdcAmount: string;
     getUsdc: string;

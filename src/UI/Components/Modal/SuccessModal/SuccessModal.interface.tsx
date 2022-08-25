@@ -1,4 +1,8 @@
-type TransactionInfo = { value: number, symbol: string, isReceived: boolean }
+type TransactionInfo = {
+    value: number;
+    symbol: string;
+    isReceived: boolean;
+};
 type SuccessModalProps = {
     transactionInfo: TransactionInfo;
     handleClose: () => any;

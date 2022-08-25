@@ -47,7 +47,7 @@
 
 .options {
 	position: absolute;
-	z-index: 3;
+	z-index: 6;
 	top: calc(100% + 3px);
 	left: 0;
 

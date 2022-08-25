@@ -5,7 +5,7 @@ import Select, { Option } from 'UI/ui-kit/Select';
 import type { IActionPanelProps } from './ActionPanel.interfaces';
 import styles from './style.module.css';
 
-export const ActionPanel: React.FC<IActionPanelProps> = (props) => {
+export const ActionPanel: React.FC<IActionPanelProps> = React.memo((props) => {
     const {
         search,
         network,
@@ -64,4 +64,4 @@ export const ActionPanel: React.FC<IActionPanelProps> = (props) => {
             </div>
         </div>
     );
-};
+});

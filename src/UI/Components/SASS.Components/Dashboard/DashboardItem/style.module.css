@@ -6,7 +6,7 @@
 	flex-direction: column;
 
 	width: 100%;
-	padding: 0 30px;
+	padding: 0 10px;
 
 	border: 1px solid rgb(255 255 255 / 10%);
 
@@ -18,7 +18,7 @@
 	left: -30px;
 
 	width: calc(100% + 30px);
-	height: 112px;
+	height: 71px;
 }
 
 .cardHeader {
@@ -26,10 +26,11 @@
 
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 
 	margin-bottom: 10px;
 
-	padding-top: 125px;
+	padding-top: 50px;
 
 }
 
@@ -39,12 +40,14 @@
 
 .images span:first-child {
 	z-index: 5;
+
 }
 
 .images span:last-child {
 	position: relative;
 	z-index: 4;
 	left: -10px !important;
+
 }
 
 .headerTitle {
@@ -79,21 +82,24 @@
 
 	margin-top: 6px;
 
-	margin-right: 5px;
 	margin-bottom: 6px;
+
+	white-space: nowrap;
 
 	color: var(--gray);
 
-	font-size: 16px;
+	font-size: 14px;
 
 	font-weight: 400;
 	line-height: 22px;
 }
 
 .sectionValue {
+	white-space: nowrap;
+
 	color: var(--color-6);
 
-	font-size: 16px;
+	font-size: 14px;
 
 	font-weight: 400;
 	line-height: 22px;

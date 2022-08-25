@@ -2,10 +2,13 @@
 .wrapper {
 	display: flex;
 
+	align-items: center;
+
 	width: 100%;
 	padding: 1px;
 
 	cursor: pointer;
+
 	user-select: none;
 
 	border-radius: 12px;
@@ -78,13 +81,18 @@
 	background: black !important;
 }
 
-.wrapper.white.disabled {
-
+.dflex {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-
 
 .wrapper.disabled {
 	cursor: no-drop;
 
 	opacity: .4;
+}
+
+.buttonIcon {
+	margin-right: 5px;
 }
