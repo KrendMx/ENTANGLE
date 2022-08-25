@@ -226,10 +226,6 @@
 		grid-column: 1/2;
 	}
 
-	.actionCard > div {
-		min-height: 50%;
-	}
-
 	.helper {
 		width: 70%;
 	}

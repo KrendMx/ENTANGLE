@@ -36,19 +36,19 @@
 	position: absolute;
 
 	z-index: -1;
-	top: 100%;
+	top: 60%;
 
 	width: 100%;
-	height: 40%;
+	height: 58%;
 
 	content: '';
 
 	opacity: .8;
 	border-radius: 100%;
 
-	background: linear-gradient(90deg, rgb(16 101 212 / 100%) 0%, rgb(16 16 16 / 100%) 20%, rgb(16 16 16 / 100%) 35%, rgb(16 101 212 / 100%) 50%, rgb(16 16 16 / 100%) 65%, rgb(16 16 16 / 100%) 80%, rgb(16 101 212 / 100%) 90%);
+	background: linear-gradient(90deg, #785BF865 0%, #785BF865 10%, #785BF80F 20%, #785BF80F  40%, #785BF865 50%, #785BF80F  60%, #785BF80F  90%, #785BF865 90%);
 
-	filter: blur(50px);
+	filter: blur(15px);
 }
 
 .container {

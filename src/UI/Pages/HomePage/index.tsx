@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ActionPanel from 'UI/Components/Home.Components/ActionPanel';
-import Dashboard from 'UI/Components/Home.Components/Dashboard';
+import Dashboard from 'src/UI/Components/Home.Components/Dashboard';
 import SummaryInfoBoard from 'UI/Components/Home.Components/SummaryInfoBoard/SummaryInfoBoard';
 import styles from './style.module.css';
 

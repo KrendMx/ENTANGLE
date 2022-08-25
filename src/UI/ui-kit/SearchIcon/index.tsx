@@ -6,7 +6,7 @@ const SearchIcon: React.FC<{
     size: number;
     customClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
 }> = ({ color, size, ...props }) => (
-    <div className={props?.customClassName}>
+    <div className={props?.customClassName} style={{ width: '16px', height: '16px' }}>
         <svg
             width={`${size}`}
             height={`${size}`}
