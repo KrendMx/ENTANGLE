@@ -23,6 +23,7 @@ type DashboardItemProps = {
     icon: string;
     heading: string;
     vendor: string;
+    rty?: number;
     priceCurrency: string;
     disabled: boolean;
     isFiltered: boolean;
@@ -278,8 +279,8 @@ const DashboardItem: React.FC<DashboardItemProps> = ({
                                 <p className={styles.sectionValue}>
                                     $
                                     {
-                                        props?.rty === 0 ? props?.rty : profits[localName][selectedChainId]
-                                            ?.stable
+                                        props?.rty === 0 ? props?.rty : profits[localName][selectedChainId]               
+                                        ?.stable
                                     }
                                 </p>
                             ) : (
