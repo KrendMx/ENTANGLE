@@ -9,20 +9,48 @@
 .infoCard {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: space-between;
 
 	height: 100%;
 
+	padding-top: 5px;
+}
+
+.infoCardContainer {
+	display: flex;
+
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.customWrapperInfoCard {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: space-evenly;
+
 	padding: 18px 25px;
+}
 
-	border: 2px solid rgb(255 255 255 / 10%);
+.customTitleInfoCard {
+	color: var(--gray);
 
-	border-radius: 18px;
-	background: rgb(30 30 30 / 10%);
+	font-size: 16px;
+}
+
+.customValueInfoCard {
+	color: white;
+
+	font-size: 18px;
+
+	font-weight: 500;
+	line-height: 25px;
 }
 
 .infoCard > span {
 	display: flex;
+
+	margin-bottom: 10px;
 
 	padding-bottom: 5px;
 }
@@ -160,6 +188,9 @@
 
 .assetsAmount {
 	display: flex;
+
+	padding-bottom: 10px;
+	padding-left: 10px;
 }
 
 @media (max-width: 900px){

@@ -13,8 +13,7 @@ const networks: networksType = {
         bgGradient:
             'linear-gradient(90deg, rgba(241, 78, 86, 0.10) 0%, rgba(241, 78, 86, 0.04) 100%)',
         cardTypeLabelColor: '#E7252E',
-        cardTypeLabelBg:
-            'linear-gradient(180deg, #F14E5640 -23.33%, #E7252E40 118.33%)',
+        cardTypeLabelBg: '#37050E',
         dex: '0x9A43E738194DE3369D457C918E2A4CF6FA8BdB8d',
         fiat: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
         rpc: 'https://rpc.ankr.com/avalanche',
@@ -37,7 +36,7 @@ const networks: networksType = {
             'linear-gradient(90deg, rgba(255, 199, 0, 0.10) 0%, rgba(255, 199, 0, 0.04) 100%)',
         cardTypeLabelColor: '#FF8A00',
         cardTypeLabelBg:
-            'linear-gradient(180deg, #FFC70045 -23.33%, #FF8A0045 118.33%)',
+            '#3F2A00',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
         rpc: 'https://rpc.ankr.com/bsc',
@@ -81,7 +80,7 @@ const networks: networksType = {
         bgGradient:
             'linear-gradient(90deg, rgba(0, 148, 255, 0.10) 0%, rgba(0, 148, 255, 0.04) 100%)',
         cardTypeLabelColor: '#00AFFF',
-        cardTypeLabelBg: '#0094FF40',
+        cardTypeLabelBg: '#001025',
         dex: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
         fiat: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
         rpc: 'https://rpc.ankr.com/fantom',
@@ -117,7 +116,8 @@ const networks: networksType = {
         abbr: 'OPT',
         icon: 'optimismDashboard.svg',
         description: '',
-        bgGradient: 'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
+        bgGradient:
+            'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
         cardTypeLabelBg: 'rgba(155, 155, 155, 0.8)',
         cardTypeLabelColor: 'rgba(55, 55, 55, 0.8)',
         mainColor: 'rgba(255, 255, 255, 0.2)',
@@ -138,7 +138,8 @@ const networks: networksType = {
         abbr: 'ARB',
         icon: 'arbitrumDashboard.svg',
         description: '',
-        bgGradient: 'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
+        bgGradient:
+            'linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
         cardTypeLabelBg: 'rgba(155, 155, 155, 0.8)',
         cardTypeLabelColor: 'rgba(55, 55, 55, 0.8)',
         mainColor: 'rgba(255, 255, 255, 0.2)',
@@ -166,7 +167,13 @@ const availableSingleSideNetworks = {
     ...networks,
 };
 
-const availableChainsArray: availableChains[] = ['43114', '250', '56', '10', '42161'];
+const availableChainsArray: availableChains[] = [
+    '43114',
+    '250',
+    '56',
+    '10',
+    '42161',
+];
 
 const WalletProviderNames = {
     MetaMask: 'MetaMask',
@@ -180,6 +187,9 @@ const init = {
     AVAX: { '56': 0, '43114': 0, '250': 0 },
     BSC: { '56': 0, '43114': 0, '250': 0 },
     ETH: { '56': 0, '43114': 0, '250': 0 },
+    EGLD: { '56': 0, '43114': 0, '250': 0 },
+    OPT: { '56': 0, '43114': 0, '250': 0 },
+    ARB: { '56': 0, '43114': 0, '250': 0 },
 };
 
 const farms = {
@@ -211,20 +221,20 @@ const farms = {
         ARB: '',
     },
     '10': {
-        FTM: '69',
-        AVAX: '10',
-        BSC: '7',
-        ETH: '20',
-        ELRD: '27',
+        FTM: '',
+        AVAX: '',
+        BSC: '',
+        ETH: '',
+        ELRD: '',
         OPT: '',
         ARB: '',
     },
     '42161': {
-        FTM: '69',
-        AVAX: '10',
-        BSC: '7',
-        ETH: '20',
-        ELRD: '27',
+        FTM: '',
+        AVAX: '',
+        BSC: '',
+        ETH: '',
+        ELRD: '',
         OPT: '',
         ARB: '',
     },

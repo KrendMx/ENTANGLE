@@ -62,6 +62,22 @@
 	min-width: 100px;
 }
 
+.customInfoWrapper {
+	padding: 24px !important;
+
+	text-align: left !important;
+}
+
+.customInfoTitle {
+	justify-content: flex-end;
+}
+
+.customInfoValue {
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 25px;
+}
+
 
 @media screen and (max-width: 900px){
 	.headerInfo {

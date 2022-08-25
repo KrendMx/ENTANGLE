@@ -8,6 +8,7 @@ const enum InfoBlockTypes {
     ABOUT,
     SIMPLE_TEXT,
     DIVIDED_NUMBER,
+    DAYS
 }
 
 /**

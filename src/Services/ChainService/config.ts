@@ -624,11 +624,531 @@ export const ChainConfig = {
     },
     OPT: {
         NAME: 'sUSD/USDC Synthetic LP',
-        SYNTH: [],
+        SYNTH: [
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: true,
+            //     CONTRACTS: {
+            //         SYNTH: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         DEX: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         STABLE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         FEE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         SYNTHCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         STABLESYNTCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         CHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         PAIR: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //         ROUTER: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 42161,
+            //         },
+            //     },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {
+            //         SYNTH: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         DEX: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         FEE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         SYNTHCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLESYNTCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         CHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         PAIR: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         ROUTER: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //     },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {
+            //         SYNTH: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         DEX: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         FEE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         SYNTHCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLESYNTCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         CHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         PAIR: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         ROUTER: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //     },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {
+            //     SYNTH: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     DEX: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     FEE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     SYNTHCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLESYNTCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     CHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     PAIR: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     ROUTER: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            // },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {
+            //     SYNTH: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     DEX: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     FEE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     SYNTHCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLESYNTCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     CHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     PAIR: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     ROUTER: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            // },
+            // },
+        ],
     },
     ARB: {
         NAME: 'ARB/USDC Synthetic LP',
-        SYNTH: [],
+        SYNTH: [
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: true,
+            //     CONTRACTS: {
+            //         SYNTH: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         DEX: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         STABLE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         FEE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         SYNTHCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         STABLESYNTCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         CHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         PAIR: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //         ROUTER: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: 10,
+            //         },
+            //     },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {
+            //         SYNTH: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         DEX: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         FEE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         SYNTHCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLESYNTCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         CHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         PAIR: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         ROUTER: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //     },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {
+            //         SYNTH: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         DEX: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         FEE: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         SYNTHCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         STABLESYNTCHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         CHEF: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         PAIR: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //         ROUTER: {
+            //             address: '',
+            //             abi: ,
+            //             chainId: ,
+            //         },
+            //     },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {SYNTH: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     DEX: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     FEE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     SYNTHCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLESYNTCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     CHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     PAIR: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     ROUTER: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            // },
+            // },
+            // {
+            //     ID: '',
+            //     FARMID: '',
+            //     CROSSCHAIN: false,
+            //     CONTRACTS: {SYNTH: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     DEX: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     FEE: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     SYNTHCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     STABLESYNTCHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     CHEF: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     PAIR: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            //     ROUTER: {
+            //         address: '',
+            //         abi: ,
+            //         chainId: ,
+            //     },
+            // },
+            // },
+        ],
     },
     BSC: {
         NAME: 'USDT/BUSD Synthetic LP',

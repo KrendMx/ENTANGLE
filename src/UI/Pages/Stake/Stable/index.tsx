@@ -6,7 +6,7 @@ import Select, { Option } from 'UI/ui-kit/Select';
 import Typography from 'UI/ui-kit/Typography';
 import ChartWrapper from 'UI/ui-kit/ChartWrapperNew/ChartWrapper';
 import AssetItem from 'UI/Components/StakeStable.Components/AssetItem';
-import { CHART_DATA_TEST, initState } from './Stable.const';
+import { initState } from './Stable.const';
 import type { IAssetItem } from './Stable.interfaces';
 
 import styles from './style.module.css';
@@ -103,13 +103,24 @@ const StakeStable: React.FC = () => {
                     <div className={styles.soon}>
                         <p>{t('newAsset')}</p>
                     </div>
-                    <Image
-                        src="/images/coming.png"
-                        width={1267}
-                        height={345}
-                        quality={100}
-                        alt="coming-banner"
-                    />
+                    <div className={styles.soonDesk}>
+                        <Image
+                            src="/images/coming.png"
+                            width={1267}
+                            height={345}
+                            quality={100}
+                            alt="coming-banner"
+                        />
+                    </div>
+                    <div className={styles.soonMobile}>
+                        <Image
+                            src="/images/coming_mobile.png"
+                            width={956}
+                            height={680}
+                            quality={100}
+                            alt="coming-banner"
+                        />
+                    </div>
                 </div>
             </div>
             <div className={classNames(styles.glow, styles.purple)}>

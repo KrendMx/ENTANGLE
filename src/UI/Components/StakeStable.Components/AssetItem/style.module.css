@@ -12,7 +12,6 @@
 	border: 1px solid rgb(255 255 255 / 3%);
 	border-radius: 18px;
 	background: rgb(255 255 255 / 5%);
-	backdrop-filter: blur(100px);
 }
 
 .asset {
@@ -66,11 +65,13 @@
 	filter: drop-shadow(-4px 4px 4px rgb(0 0 0 / 25%));
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 1025px) {
 	.container {
 		align-items: center;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: space-between;
+
+		padding: 20px;
 
 		text-align: center;
 	}
@@ -80,26 +81,52 @@
 	}
 
 	.asset {
-		align-items: center;
-		flex-direction: column;
-		justify-content: center;
+		display: flex;
+		align-items: flex-start;
+		align-self: flex-start;
+		flex-direction: row;
+		justify-content: flex-start;
 
 		margin-bottom: 1rem;
+
+		text-align: left;
+	}
+
+	.asset span {
+		margin-right: 10px !important;
 	}
 
 	.available {
-		margin-bottom: 2.5rem;
+		display: flex;
+
+		justify-content: space-between;
+
+		width: 100%;
+		margin-bottom: 1rem;
 	}
 
 	.netBlock {
-		left: 35px;
+		width: calc(18px * 4);
 	}
 
 	.apr {
+		display: flex;
+		justify-content: space-between;
+
+		width: 100%;
 		margin-bottom: 1rem;
 	}
 
 	.volume {
+		display: flex;
+		justify-content: space-between;
+
+		width: 100%;
+
 		margin-bottom: 1rem;
+	}
+
+	.button {
+		width: 100%;
 	}
 }

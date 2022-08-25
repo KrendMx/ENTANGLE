@@ -10,11 +10,12 @@ import { InfoBlockTypes } from 'UI/ui-kit/InfoBlock/InfoBlock.constants';
 import { networks } from 'utils/Global/Vars';
 import { useStore } from 'core/store';
 import type { availableChains } from 'utils/Global/Types';
+import GradientButton from 'src/UI/ui-kit/GradientButton';
 import styles from './style.module.css';
 import ProfileChart from '../../Components/Profile.Components/ProfileChart/ProfileChart';
 import TransactionHistory from '../../Components/Profile.Components/TransactionHistory/TransactionHistory';
 import InvestCard from '../../Components/Profile.Components/InvestCard';
-import { SortArray, loader } from './Profile.constant';
+import { loader } from './Profile.constant';
 import type { IFilter } from './Profile.interfaces';
 
 const Profile = () => {
@@ -109,131 +110,94 @@ const Profile = () => {
 
     return (
         <div>
-            <section className={styles.section}>
-                <Typography type="title" classNameModifier={styles.title}>Portfolio Summary</Typography>
-                <div className={styles.verticalWrapper}>
-                    <div
-                        className={classNames(
-                            styles.horisontalWrapper,
-                            styles.pt2,
-                            styles.smCol,
-                        )}
-                    >
-                        <ProfileChart />
+            <Typography type="title" classNameModifier={styles.title}>
+                {t('Portfolio Summary')}
+            </Typography>
+            <div className={styles.infoContainer}>
+                <InfoBlock
+                    info={t('currentBalance')}
+                    value={totalBalance}
+                    type={InfoBlockTypes.MONEY}
+                    customTitleClassName={styles.customTitleInfoBlock}
+                    customValueClassName={styles.customValueInfoBlock}
+                    customWrapperClassName={styles.customWrapperInfoBlock}
+                />
+                <InfoBlock
+                    info={t('allProfit')}
+                    value={change[0] || 0}
+                    options={{ changeValue: change[1] || 0 }}
+                    type={InfoBlockTypes.PERCENTAGE}
+                    customTitleClassName={styles.customTitleInfoBlock}
+                    customValueClassName={styles.customValueInfoBlock}
+                    customWrapperClassName={styles.customWrapperInfoBlock}
+                />
+                <InfoBlock
+                    info={t('bestPerformer')}
+                    value={bestProfit.change}
+                    options={{
+                        changeValue: bestProfit.value,
+                        image: (
+                            <Image
+                                width={30}
+                                height={30}
+                                quality={100}
+                                src={networks[bestProfit.chain].mainIcon}
+                                alt="best coin@"
+                            />
+                        ),
+                    }}
+                    type={InfoBlockTypes.PERCENTAGE_MIXED}
+                    customTitleClassName={styles.customTitleInfoBlock}
+                    customValueClassName={styles.customValueInfoBlock}
+                    customWrapperClassName={styles.customWrapperInfoBlock}
+                />
+                <InfoBlock
+                    info={t('worstPermormer')}
+                    value={worstProfit.change}
+                    options={{
+                        changeValue: worstProfit.value,
+                        image: (
+                            <Image
+                                width={30}
+                                height={30}
+                                quality={100}
+                                src={networks[worstProfit.chain].mainIcon}
+                                alt="worst coin"
+                            />
+                        ),
+                    }}
+                    type={InfoBlockTypes.PERCENTAGE_MIXED}
+                    customTitleClassName={styles.customTitleInfoBlock}
+                    customValueClassName={styles.customValueInfoBlock}
+                    customWrapperClassName={styles.customWrapperInfoBlock}
+                />
+            </div>
+            <div className={styles.chartContainer}>
+                <ProfileChart />
+                <div>
+                    {!cardLoaded ? (
                         <div
-                            className={classNames(
-                                styles.verticalWrapper,
-                                styles.flex1,
-                                styles.smCol,
-                                styles.smRow,
-                            )}
+                            style={{
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                height: '100%',
+                                borderRadius: '16px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
                         >
-                            <div
-                                className={classNames(
-                                    styles.flex1,
-                                    styles.flex,
-                                )}
-                            >
-                                <InfoBlock
-                                    info={t('currentBalance')}
-                                    value={totalBalance}
-                                    type={InfoBlockTypes.BALANCE}
-                                    options={{ changeValue: change[1] || 0 }}
-                                />
-                            </div>
-                            <div
-                                className={classNames(
-                                    styles.smFlex1,
-                                    styles.smFlex,
-                                )}
-                            >
-                                <InfoBlock
-                                    info={t('allProfit')}
-                                    value={change[0] || 0}
-                                    options={{ changeValue: change[1] || 0 }}
-                                    type={InfoBlockTypes.PERCENTAGE_MIXED}
-                                />
-                            </div>
+                            {loader}
                         </div>
-                    </div>
-                    <div className={styles.horisontalWrapper}>
-                        <div className={styles.flex1}>
-                            <InfoBlock
-                                info={t('bestPerformer')}
-                                value={bestProfit.change}
-                                options={{
-                                    changeValue: bestProfit.value,
-                                    image: (
-                                        <Image
-                                            width={30}
-                                            height={30}
-                                            quality={100}
-                                            src={
-                                                networks[bestProfit.chain]
-                                                    .mainIcon
-                                            }
-                                            alt="best coin@"
-                                        />
-                                    ),
-                                }}
-                                type={InfoBlockTypes.PERCENTAGE_MIXED}
-                            />
-                        </div>
-                        <div className={styles.flex1}>
-                            <InfoBlock
-                                info={t('worstPermormer')}
-                                value={worstProfit.change}
-                                options={{
-                                    changeValue: worstProfit.value,
-                                    image: (
-                                        <Image
-                                            width={30}
-                                            height={30}
-                                            quality={100}
-                                            src={
-                                                networks[worstProfit.chain]
-                                                    .mainIcon
-                                            }
-                                            alt="worst coin"
-                                        />
-                                    ),
-                                }}
-                                type={InfoBlockTypes.PERCENTAGE_MIXED}
-                            />
-                        </div>
-                    </div>
+                    ) : (
+                        <InvestCard
+                            balances={balances}
+                            totalBalance={totalBalance}
+                            filter={filter}
+                            hasTokens={hasTokens}
+                        />
+                    )}
                 </div>
-            </section>
-            <section className={styles.section}>
-                <div className={styles.panel}>
-                    <Typography type="title">{t('yourAssets')}</Typography>
-                    <div className={styles.selectWrapper}>
-                        <Select
-                            value={filter}
-                            isCenter
-                            onChange={handleChangeFilter}
-                        >
-                            <Option value="Sort by">{t('sortBy')}</Option>
-                            {SortArray.map((el, key) => (
-                                <Option value={el.sort} key={key}>
-                                    {t(el.title)}
-                                </Option>
-                            ))}
-                        </Select>
-                    </div>
-                </div>
-                {!cardLoaded ? (
-                    loader
-                ) : (
-                    <InvestCard
-                        balances={balances}
-                        totalBalance={totalBalance}
-                        filter={filter}
-                        hasTokens={hasTokens}
-                    />
-                )}
-            </section>
-
+            </div>
             <section className={styles.section}>
                 <TransactionHistory />
             </section>

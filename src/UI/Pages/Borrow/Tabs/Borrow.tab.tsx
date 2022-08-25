@@ -206,6 +206,7 @@ const BorrowTab: React.FC = () => {
                                 <TextGroup
                                     title={t('CurrenLTV')}
                                     value={`${state.LTVRate}%`}
+                                    hintText="Test"
                                     customClassNameWrapper={local.mg1}
                                     customClassNameTitle={styles.textTitle}
                                     customClassNameValue={styles.textValue}
@@ -213,6 +214,7 @@ const BorrowTab: React.FC = () => {
                                 <TextGroup
                                     title={t('LiquidationComm')}
                                     value={`${state.commision}%`}
+                                    hintText="Test"
                                     customClassNameWrapper={local.mg1}
                                     customClassNameTitle={styles.textTitle}
                                     customClassNameValue={styles.textValue}

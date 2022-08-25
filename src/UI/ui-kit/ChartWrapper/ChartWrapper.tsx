@@ -145,6 +145,7 @@ const ChartWrapper: React.FC<ChartDataProps> = React.memo(({
                 type="line"
                 options={options}
                 data={chartData}
+                width={10}
             />
         </div>
     );

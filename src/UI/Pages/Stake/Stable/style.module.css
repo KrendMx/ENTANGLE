@@ -2,6 +2,11 @@
 	margin: 3rem 0;
 }
 
+.assetWrapper {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
 .textHeader {
 	font-size: 35px;
 	line-height: 48px;
@@ -20,6 +25,7 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	gap: 20px;
 }
 
 .assetHeader {
@@ -60,6 +66,14 @@
 	width: 40%;
 }
 
+.soonDesk {
+	display: block;
+}
+
+.soonMobile {
+	display: none;
+}
+
 .mgr {
 	margin-right: 1rem;
 }
@@ -67,12 +81,15 @@
 .glow {
 	position: absolute;
 	z-index: -9999;
-	filter: blur(50px);
+
+	filter: blur(20px);
 }
 
 .purple {
-	right: -190px;
+	right: 0;
 	bottom: 0;
+
+	opacity: .3;
 }
 
 .blue {
@@ -97,6 +114,26 @@
 	.chart {
 		width: 100%;
 	}
+
+	.assetWrapper {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.soonDesk {
+		display: none;
+	}
+
+	.soonMobile {
+		position: relative;
+
+		display: block;
+
+		width: 100%;
+
+		height: 100%;
+
+		padding: 10px;
+	}
 }
 
 @media screen and (max-width: 900px) {
@@ -111,6 +148,7 @@
 	.textHeader {
 		margin-bottom: 1rem;
 	}
+
 
 	.filterBlock {
 		display: flex;
@@ -130,5 +168,11 @@
 
 	.glow {
 		display: none;
+	}
+}
+
+@media screen and (max-width: 750px) {
+	.assetWrapper {
+		grid-template-columns: repeat(1, 1fr);
 	}
 }

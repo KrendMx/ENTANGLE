@@ -14,6 +14,7 @@ interface WithdrawProps {
 
 interface IWithdrawState {
     network: string;
+    activeValidator: string;
     activeButtonRepay:string;
     usdcAmount: string;
     getUsdc: string;

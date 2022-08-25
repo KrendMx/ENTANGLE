@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import { networks, STABLES } from 'utils/Global/Vars';
 import { useRouter } from 'next/router';
+import SearchIcon from 'src/UI/ui-kit/SearchIcon';
 import type { IAssetItem } from '../../../Pages/Stake/Stable/Stable.interfaces';
 
 import styles from './style.module.css';
@@ -43,7 +44,7 @@ const AssetItem: React.FC<IAssetItem> = ({
                             <div
                                 key={idx}
                                 className={styles.netItem}
-                                style={{ left: `${idx}rem` }}
+                                style={{ left: `${idx * 16}px` }}
                             >
                                 <Image
                                     src={`/images/alternativeAssets/${networks[el].abbr}.svg`}
@@ -78,6 +79,8 @@ const AssetItem: React.FC<IAssetItem> = ({
                         }}
                         titleClass={styles.titleClass}
                         wrapperClass={styles.blockClass}
+                        isWhite
+                        isSearch
                     />
                 </div>
             </div>

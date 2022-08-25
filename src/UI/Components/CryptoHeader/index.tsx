@@ -66,13 +66,6 @@ const CryptoHeader: React.FC<CryptoHeaderProps> = ({
             <div className={styles.back}>
                 <Link href={backHref} passHref>
                     <span className={styles.dFlex}>
-                        <Image
-                            src="/images/back.svg"
-                            width={9}
-                            height={15}
-                            quality={100}
-                            alt="back-asset"
-                        />
                         <p style={{ paddingLeft: '5px' }}>{t('back')}</p>
                     </span>
                 </Link>
@@ -125,9 +118,6 @@ const CryptoHeader: React.FC<CryptoHeaderProps> = ({
                                     </div>
                                 )}
                             </div>
-                            <p className={styles.fullName}>
-                                {STABLES[token].full}
-                            </p>
                         </div>
                     </div>
                     <div className={styles.infoWrapper}>

@@ -15,7 +15,7 @@ import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { ILockState } from '../Tabs.interfaces';
 import styles from '../style.module.css';
 
-const Lock: React.FC = () => {
+const Lock: React.FC<{validators: string[]}> = ({ validators }) => {
     const [state, dispatch] = useReducer(
         (oldState: ILockState, newState: Partial<ILockState>) => ({
             ...oldState,
@@ -36,8 +36,6 @@ const Lock: React.FC = () => {
 
     const { t } = useTranslation('stable');
     const { t: tEnt } = useTranslation('entangle');
-
-    const validators = useMemo(() => new Array(15).fill(10).map(() => ethers.Wallet.createRandom().address), []);
 
     const inputChangeHandler = ({
         target,
@@ -65,19 +63,20 @@ const Lock: React.FC = () => {
                             dispatch({ activeValidator: value })}
                         title={`${tEnt('SelectValidator')}`}
                         withBalance={false}
+                        showHashImage
                         showPayModal={false}
                         selectedTitle="title"
                         showImage={false}
                         customSelectedLabel={state.activeValidator}
                     >
                         {validators.map((el, idx) => (
-                            <TokenOption value={el} key={idx} isImage={false}>
+                            <TokenOption value={el} key={idx} isImage={false} isHashImage>
                                 {el}
                             </TokenOption>
                         ))}
                     </TokenSelect>
                 </div>
-                <div className={styles.mgb}>
+                <div>
                     <TextGroup
                         title={`${tEnt('ENTGLapr')}`}
                         value="25%"
@@ -123,7 +122,7 @@ const Lock: React.FC = () => {
                 <div className={styles.helper}>
                     <GradientButton
                         isWhite
-                        title={`${t('Stake')}`}
+                        title={`${tEnt('Stake')}`}
                         onClick={() => {}}
                     />
                 </div>

@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react';
-import React, { useReducer } from 'react';
+import React, { useReducer, useMemo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,7 @@ import TextGroup from 'src/UI/ui-kit/TextGrop';
 import type { IWithdrawState, WithdrawProps } from '../Tabs.interfaces';
 import styles from '../style.module.css';
 
-const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
+const Withdraw: React.FC<{validators: string[]}> = ({ validators }) => {
     const [state, dispatch] = useReducer(
         (oldState: IWithdrawState, newState: Partial<IWithdrawState>) => ({
             ...oldState,
@@ -24,11 +24,13 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
             network: '',
             usdcAmount: '',
             getUsdc: '',
+            activeValidator: '',
             activeButtonRepay: '',
         },
     );
 
     const { t } = useTranslation('stable');
+    const { t: tEnt } = useTranslation('entangle');
 
     const inputChangeHandler = ({
         target,
@@ -51,36 +53,55 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
             <div className={classNames(styles.actionCard)}>
                 <div>
                     <TokenSelect
-                        defaultLabel={`${t('select')} ${t('network')}`}
-                        value={state.network}
+                        defaultLabel={`${tEnt('SelectValidator')}`}
+                        value={state.activeValidator}
                         onChange={(value: string) =>
-                            dispatch({ network: value })}
-                        title={`${t('select')} ${t('network')}`}
+                            dispatch({ activeValidator: value })}
+                        title={`${tEnt('SelectValidator')}`}
                         withBalance={false}
                         showPayModal={false}
+                        showImage={false}
+                        showHashImage
+                        customSelectedLabel={state.activeValidator}
                         selectedTitle="title"
                     >
-                        {Object.keys(networks).map((el, idx) => (
-                            <TokenOption value={el} key={idx}>
-                                {networks[el].title}
+                        {validators.map((el, idx) => (
+                            <TokenOption value={el} key={idx} isImage={false} isHashImage>
+                                {el}
                             </TokenOption>
                         ))}
                     </TokenSelect>
                 </div>
+                <div className={classNames(styles.mgt)}>
+                    <TextGroup
+                        title={tEnt('AvaiableForWithdraw')}
+                        value="-"
+                        hintText="Test text"
+                        customClassNameWrapper={styles.mgt2}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
+                    />
+                    <TextGroup
+                        title={tEnt('YourShare')}
+                        value="0.011%"
+                        customClassNameWrapper={classNames(styles.mgt2, styles.disabled)}
+                        customClassNameTitle={styles.textTitle}
+                        customClassNameValue={styles.textValue}
+                    />
+                </div>
+            </div>
+            <div className={classNames(styles.actionCard)}>
+                <Arrow />
                 <div>
-                    <div className={classNames(styles.mgt, styles.mgb)}>
-                        <Typography
-                            type="textBody"
-                            classNameModifier={styles.mgb}
-                        >
-                            {`${t('enterAmount')} USDC`}
+                    <div className={classNames(styles.mgb)}>
+                        <Typography type="textBody">
+                            {tEnt('Withdraw Entangle Tokens')}
                         </Typography>
                     </div>
                     <Input
-                        type="number"
-                        value={state.usdcAmount}
-                        placeholder={`${t('enterAmount')} ${token}`}
-                        onChange={inputChangeHandler}
+                        type="cut"
+                        placeholder={tEnt('EnterAmount')}
+                        onChange={() => {}}
                     />
                     <div className={styles.miniButtonsGroup}>
                         {miniButtons.map((el, idx) => (
@@ -93,38 +114,7 @@ const Withdraw: React.FC<WithdrawProps> = ({ token }) => {
                         ))}
                     </div>
                 </div>
-            </div>
-            <div className={classNames(styles.actionCard)}>
-                <Arrow />
-                <div>
-                    <div className={classNames(styles.mgb)}>
-                        <Typography type="textBody">
-                            {t('youWillGet')}
-                        </Typography>
-                    </div>
-                    <Input
-                        type="cut"
-                        placeholder={t('youWillGet')}
-                        onChange={() => {}}
-                    />
-
-                    <TextGroup
-                        title={t('AvaiableToUnlock')}
-                        value="92 USDC"
-                        customClassNameWrapper={styles.mgt2}
-                        customClassNameTitle={styles.textTitle}
-                        customClassNameValue={styles.textValue}
-                    />
-                    <TextGroup
-                        title={t('remainder')}
-                        value="3 USDC"
-                        customClassNameWrapper={styles.mgt2}
-                        customClassNameTitle={styles.textTitle}
-                        customClassNameValue={styles.textValue}
-                    />
-                </div>
-
-                <div className={styles.mgt}>
+                <div className={classNames(styles.helper)}>
                     <GradientButton
                         title={t('withdraw')}
                         onClick={() => {}}

@@ -9,6 +9,7 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
 import { DescriptionGenerator } from 'src/UI/ui-kit/DescriptionGenerator';
 import { useRouter } from 'next/router';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import styles from './style.module.css';
 import type { IDashboardSASSItems } from '../Dashboard.interfaces';
 
@@ -41,17 +42,21 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                 }
             />
             <div className={styles.cardHeader}>
+                <Typography type="title" classNameModifier={styles.headerTitle}>
+                    {`${availableSingleSideNetworks[firstChainId].abbr}/
+                    ${availableSingleSideNetworks[secondChainId].abbr}`}
+                </Typography>
                 <div className={styles.images}>
                     <Image
-                        width={26}
-                        height={26}
+                        width={44}
+                        height={44}
                         quality={100}
                         alt=""
                         src={availableSingleSideNetworks[firstChainId].mainIcon}
                     />
                     <Image
-                        width={26}
-                        height={26}
+                        width={44}
+                        height={44}
                         quality={100}
                         className={styles.absImage}
                         alt=""
@@ -60,10 +65,6 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                         }
                     />
                 </div>
-                <Typography type="title" classNameModifier={styles.headerTitle}>
-                    {`${availableSingleSideNetworks[firstChainId].abbr}/
-                    ${availableSingleSideNetworks[secondChainId].abbr}`}
-                </Typography>
             </div>
             <DescriptionGenerator
                 customClassName={styles.description}
@@ -71,76 +72,60 @@ export const DashboardItem: React.FC<IDashboardSASSItems> = (props) => {
                     ${availableSingleSideNetworks[secondChainId].abbr}`}
                 currencySite={site}
             />
-            <div className={styles.section}>
-                <div className={styles.sectionTitle}>
-                    <p>
-                        {`${t('depositeIn')} ${
-                            availableSingleSideNetworks[firstChainId].abbr
-                        }`}
+            <TextGroup
+                title={`${t('depositeIn')} ${
+                    availableSingleSideNetworks[firstChainId].abbr
+                }`}
+                value={depositeInFirstCurrency !== null ? (
+                    <p className={styles.sectionValue}>
+                        {depositeInFirstCurrency !== 0 ? (
+                            `${depositeInFirstCurrency} ${availableSingleSideNetworks[firstChainId].abbr}`
+                        ) : (
+                            <span style={{ color: 'var(--green)' }}>
+                                {t('awaitingDeposit')}
+                            </span>
+                        )}
                     </p>
-                    <HintModal>
-                        <p>
-                            {`${t('depositeIn')} ${
-                                availableSingleSideNetworks[secondChainId].abbr
-                            }`}
-                        </p>
-                    </HintModal>
-                </div>
-                <div className={styles.sectionRow}>
-                    {depositeInFirstCurrency !== null ? (
-                        <p className={styles.sectionValue}>
-                            {depositeInFirstCurrency !== 0 ? (
-                                `${depositeInFirstCurrency} ${availableSingleSideNetworks[firstChainId].abbr}`
-                            ) : (
-                                <span style={{ color: 'var(--green)' }}>
-                                    {t('awaitingDeposit')}
-                                </span>
-                            )}
-                        </p>
-                    ) : (
-                        <TextLoader
-                            bgGradient={`linear-gradient(to right, 
-                            ${availableSingleSideNetworks[firstChainId].mainColor}, 
-                            ${availableSingleSideNetworks[secondChainId].mainColor})`}
-                        />
-                    )}
-                </div>
-            </div>
-            <div className={styles.section}>
-                <div className={styles.sectionTitle}>
-                    <p>
-                        {`${t('depositeIn')} ${
-                            availableSingleSideNetworks[secondChainId].abbr
-                        }`}
-                    </p>
-                    <HintModal>
-                        <p>
-                            {`${t('depositeIn')} ${
-                                availableSingleSideNetworks[secondChainId].abbr
-                            }`}
-                        </p>
-                    </HintModal>
-                </div>
-                <div className={styles.sectionRow}>
-                    {depositeInSecondCurrency !== null ? (
-                        <p className={styles.sectionValue}>
-                            {depositeInSecondCurrency !== 0 ? (
-                                `${depositeInSecondCurrency} ${availableSingleSideNetworks[secondChainId].abbr}`
-                            ) : (
-                                <span style={{ color: 'var(--green)' }}>
-                                    {t('awaitingDeposit')}
-                                </span>
-                            )}
-                        </p>
-                    ) : (
-                        <TextLoader
-                            bgGradient={`linear-gradient(to right, 
+                ) : (
+                    <TextLoader
+                        bgGradient={`linear-gradient(to right, 
                         ${availableSingleSideNetworks[firstChainId].mainColor}, 
                         ${availableSingleSideNetworks[secondChainId].mainColor})`}
-                        />
-                    )}
-                </div>
-            </div>
+                    />
+                )}
+                hintText={`${t('depositeIn')} ${
+                    availableSingleSideNetworks[secondChainId].abbr
+                }`}
+                customClassNameTitle={styles.sectionTitle}
+                customClassNameValue={styles.sectionValue}
+            />
+            <TextGroup
+                title={`${t('depositeIn')} ${
+                    availableSingleSideNetworks[secondChainId].abbr
+                }`}
+                value={depositeInSecondCurrency !== null ? (
+                    <p className={styles.sectionValue}>
+                        {depositeInSecondCurrency !== 0 ? (
+                            `${depositeInSecondCurrency} ${availableSingleSideNetworks[firstChainId].abbr}`
+                        ) : (
+                            <span style={{ color: 'var(--green)' }}>
+                                {t('awaitingDeposit')}
+                            </span>
+                        )}
+                    </p>
+                ) : (
+                    <TextLoader
+                        bgGradient={`linear-gradient(to right, 
+                        ${availableSingleSideNetworks[firstChainId].mainColor}, 
+                        ${availableSingleSideNetworks[secondChainId].mainColor})`}
+                    />
+                )}
+                hintText={`${t('depositeIn')} ${
+                    availableSingleSideNetworks[secondChainId].abbr
+                }`}
+                customClassNameTitle={styles.sectionTitle}
+                customClassNameValue={styles.sectionValue}
+            />
             <div className={styles.section}>
                 <div className={styles.sectionTitle}>
                     <p>{t('stakingTerm')}</p>

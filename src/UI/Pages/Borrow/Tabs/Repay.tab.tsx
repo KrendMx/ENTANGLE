@@ -5,7 +5,6 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import Input from 'UI/ui-kit/Input';
-import Text from 'UI/Components/Home.Components/PayModal/Text';
 import GradientButton from 'UI/ui-kit/GradientButton';
 import MiniButton from 'UI/ui-kit/MiniButton';
 import TokenSelect, { TokenOption } from 'UI/ui-kit/TokenSelect';
@@ -177,7 +176,7 @@ const RepayTab: React.FC = () => {
                             type="textBody"
                             classNameModifier={styles.mgb}
                         >
-                            {`${t('Unlocked')} Synth-LP`}
+                            {`${t('Unlocked')} SynthLP`}
                         </Typography>
                         <Input
                             type="number"

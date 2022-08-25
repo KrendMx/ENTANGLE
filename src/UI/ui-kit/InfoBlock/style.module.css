@@ -3,7 +3,7 @@
 
 	color: var(--white);
 
-	font-size: 24px;
+	font-size: 32px;
 	font-weight: 600;
 }
 
@@ -59,6 +59,10 @@
 }
 
 .blockInfo {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: center;
+
 	color: var(--gray);
 
 	font-size: 16px;
@@ -68,40 +72,43 @@
 .blockWrapper {
 	position: relative;
 
-	overflow: hidden;
 	flex: 1;
 
-	padding: 24px 12px 24px 32px;
+	padding: 15px 12px 20px;
 
 	text-align: center !important;
 
-	border: 1px solid var(--color-9);
+	border: 1px solid var(--color-10);
 
 	border-radius: 18px;
 	background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgb(255 255 255 / 2%) 0%, rgb(255 255 255 / 0%) 100%) 
 }
 
-.blockWrapper::after {
+.gradientContainer {
 	position: absolute;
+	z-index: -40;
+	bottom: 0;
 
-	z-index: 5;
-	top: 90%;
-	left: 25%;
+	left: 0%;
 
-	width: 50%;
-	height: 30%;
+	overflow: hidden;
 
-	content: '';
+	width: 100%;
+	height: 100%;
 
-	border-radius: 50px;
-
-	background: linear-gradient(180deg, #FB37FF 0%, #0094FF 100%);
-
-	filter: blur(50px);
+	border-radius: 18px;
 }
 
-@media screen and (max-width: 640px) {
-	.linedValue {
-		flex-direction: column;
-	}
+.gradient {
+	width: 100%;
+
+	height: 65%;
+
+	margin-top: 60px;
+
+	border-radius: 100%;
+
+	background: linear-gradient(90deg,#10101033 0%, #785BF875 40%, #10101033 100%);
+
+	filter: blur(30px);
 }

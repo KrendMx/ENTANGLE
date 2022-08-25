@@ -5,7 +5,7 @@ import HintModal from '../HintModal';
 
 type TextGroupProps = {
     title: string;
-    value: string;
+    value: string | JSX.Element;
     hintText?: string;
     customClassNameWrapper?: React.HTMLAttributes<HTMLDivElement>['className'];
     customClassNameTitle?: React.HTMLAttributes<HTMLDivElement>['className'];
@@ -29,9 +29,11 @@ const TextGroup: React.FC<TextGroupProps> = React.memo(({
                 </HintModal>
             )}
         </div>
-        <p className={props?.customClassNameValue}>
-            {value}
-        </p>
+        {typeof value === 'string' ? (
+            <p className={props?.customClassNameValue}>
+                {value}
+            </p>
+        ) : <div>{value}</div>}
     </div>
 ));
 

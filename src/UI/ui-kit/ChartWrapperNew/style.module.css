@@ -9,7 +9,6 @@
 	border: 2px solid rgb(190 150 150 / 3%);
 	border-radius: 15px;
 	background: #121218;
-	backdrop-filter: blur(100px);
 }
 
 .info {

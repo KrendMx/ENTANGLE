@@ -6,9 +6,9 @@ totalEarned: Всего заработано
 Network: Сеть
 all: Все
 days: дней
-depositeIn: Депозит в
+depositeIn: Депозит
 stakingTerm: Время стейка
 apr: APR
 name: названия
-awaitingDeposit: Ожидает депозита
+awaitingDeposit: Ожидает
 ProjectedIL: Прогнозируемая защита IL

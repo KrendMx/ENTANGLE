@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
@@ -12,13 +12,13 @@ import GradientButton from 'UI/ui-kit/GradientButton';
 import TextLoader from 'UI/ui-kit/TextLoader/TextLoader';
 import type { availableChains } from 'src/utils/Global/Types';
 import { useDispatch } from 'react-redux';
+import TextGroup from 'src/UI/ui-kit/TextGrop';
 import styles from '../style.module.css';
 
 const InvestCardExp: React.FC<ICardUnit> = ({
     positions,
     price,
     chainId,
-    description,
     bgGradient,
     cardTypeLabelBg,
     cardTypeLabelColor,
@@ -26,18 +26,11 @@ const InvestCardExp: React.FC<ICardUnit> = ({
 }) => {
     const {
         store: {
-            UserEntity: {
-                profits,
-                avgPrices,
-            },
-            CardEntity: {
-                data: cardData,
-            },
+            UserEntity: { profits, avgPrices },
+            CardEntity: { data: cardData },
         },
         actions: {
-            User: {
-                setIsOpenModal,
-            },
+            User: { setIsOpenModal },
         },
     } = useStore((store) => ({
         UserEntity: store.UserEntity,
@@ -61,11 +54,15 @@ const InvestCardExp: React.FC<ICardUnit> = ({
         }
     };
     return (
-        <div className={styles.root} style={{ background: bgGradient || '' }}>
+        <div className={styles.root}>
+            <div
+                className={styles.headerGradient}
+                style={{ background: bgGradient || '' }}
+            />
             <div className={styles.logoWrapper}>
                 <Image
-                    width={64}
-                    height={64}
+                    width={44}
+                    height={44}
                     quality={100}
                     src={`/images/networks/${
                         networks[detectedChainId(currencyName)].icon
@@ -73,107 +70,116 @@ const InvestCardExp: React.FC<ICardUnit> = ({
                     alt="alt"
                     className={styles.logo}
                 />
-            </div>
-            <div className={styles.main}>
-                <div className={styles.pare}>
-                    <div className={styles.assetTitle}>
-                        <p>
-                            {`${
-                                networks[detectedChainId(currencyName)]
-                                    .currencyMin
-                            }`}
-                        </p>
-                    </div>
-                    <button
-                        className={styles.cardLabel}
-                        style={{ background: cardTypeLabelBg }}
-                    >
-                        <p style={{ color: cardTypeLabelColor }}>Syntetic-LP</p>
-                    </button>
+                <div
+                    className={styles.cardLabel}
+                    style={{ background: cardTypeLabelBg }}
+                >
+                    <p style={{ color: cardTypeLabelColor }}>Syntetic-LP</p>
                 </div>
             </div>
-            <ul className={styles.list}>
-                <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{`${tProfile('network')}`}</p>
-                    <p className={styles.itemValue}>
-                        {networks[chainId].title}
-                    </p>
-                </li>
-            </ul>
-            <ul className={styles.list}>
-                <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{t('yourPosition')}</p>
-                    <p className={styles.itemValue}>
-                        {Number(positions.toFixed(5))}
-                    </p>
-                </li>
-            </ul>
-            <ul className={styles.list}>
-                <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{`${t('APR')} (%)`}</p>
-                    {cardData[detectedChainId(currencyName)].apr ? (
-                        <p className={styles.itemValue}>
-                            {`${cardData[detectedChainId(currencyName)].apr}`}
-                        </p>
-                    ) : (
-                        <div className={styles.itemValue}>
-                            <TextLoader bgGradient={bgGradient} />
-                        </div>
-                    )}
-                </li>
-            </ul>
-            <ul className={styles.list}>
-                <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{t('price')}</p>
-                    <p className={styles.itemValue}>
-                        {`$${Number(price.toFixed(6))}`}
-                    </p>
-                </li>
-            </ul>
-            <ul className={styles.list}>
-                <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{t('avgPrice')}</p>
-                    {'AVAX' in avgPrices ? (
-                        <p className={styles.itemValue}>
-                            $
-                            {avgPrices[chainToNameConfig[chainId]][namesConfig[currencyName]]}
-                        </p>
-                    ) : (
-                        <div className={styles.itemValue}>
-                            <TextLoader bgGradient={bgGradient} />
-                        </div>
-                    )}
-                </li>
-            </ul>
-            <ul className={styles.list}>
-                <li className={styles.listItem}>
-                    <p className={styles.undertitle}>{t('yield')}</p>
-                    {'AVAX' in profits ? (
-                        <p className={styles.itemValue}>
-                            $
-                            {profits[currencyName][chainId]?.stable}
-                        </p>
-                    ) : (
-                        <div className={styles.itemValue}>
-                            <TextLoader bgGradient={bgGradient} />
-                        </div>
-                    )}
-                </li>
-            </ul>
-            <ul className={styles.list}>
-                <li className={styles.listItem}>
-                    <GradientButton
-                        title={t('buyAndSell')}
-                        disabled={false}
-                        onClick={() => {
-                            sessionStorage.setItem('card', currencyName);
-                            payModalHandleOpen();
-                        }}
-                        wrapperClass={styles.wrapperButtonClass}
-                        titleClass={styles.buttonTitleClass}
-                    />
-                </li>
-            </ul>
+            <div className={styles.header}>
+                <p>
+                    {`${networks[detectedChainId(currencyName)].currencyMin}`}
+                </p>
+            </div>
+            <div className={styles.list}>
+                <TextGroup
+                    title={`${tProfile('network')}`}
+                    value={networks[chainId].title}
+                    customClassNameTitle={styles.customTitleGroup}
+                    customClassNameValue={styles.customValueGroup}
+                />
+            </div>
+            <div className={styles.list}>
+                <TextGroup
+                    title={t('yourPosition')}
+                    value={positions.toFixed(5)}
+                    customClassNameTitle={styles.customTitleGroup}
+                    customClassNameValue={styles.customValueGroup}
+                />
+            </div>
+            <div className={styles.list}>
+                <TextGroup
+                    title={`${t('APR')} (%)`}
+                    value={
+                        cardData[detectedChainId(currencyName)].apr !== null ? (
+                            <p className={styles.customValueGroup}>
+                                {`${
+                                    cardData[detectedChainId(currencyName)].apr
+                                }%`}
+                            </p>
+                        ) : (
+                            <div className={styles.itemValue}>
+                                <TextLoader bgGradient={bgGradient} />
+                            </div>
+                        )
+                    }
+                    customClassNameTitle={styles.customTitleGroup}
+                    customClassNameValue={styles.customValueGroup}
+                />
+            </div>
+            <div className={styles.list}>
+                <TextGroup
+                    title={t('price')}
+                    value={`$${Number(price.toFixed(6))}`}
+                    customClassNameTitle={styles.customTitleGroup}
+                    customClassNameValue={styles.customValueGroup}
+                />
+            </div>
+            <div className={styles.list}>
+                <TextGroup
+                    title={t('avgPrice')}
+                    value={
+                        'AVAX' in avgPrices ? (
+                            <p className={styles.customValueGroup}>
+                                $
+                                {
+                                    avgPrices[chainToNameConfig[chainId]][
+                                        namesConfig[currencyName]
+                                    ]
+                                }
+                            </p>
+                        ) : (
+                            <div className={styles.itemValue}>
+                                <TextLoader bgGradient={bgGradient} />
+                            </div>
+                        )
+                    }
+                    customClassNameTitle={styles.customTitleGroup}
+                    customClassNameValue={styles.customValueGroup}
+                />
+            </div>
+            <div className={styles.list}>
+                <TextGroup
+                    title={t('yield')}
+                    value={
+                        'AVAX' in profits ? (
+                            <p className={styles.customValueGroup}>
+                                {`${profits[currencyName][chainId]?.stable} USDC`}
+                            </p>
+                        ) : (
+                            <div className={styles.itemValue}>
+                                <TextLoader bgGradient={bgGradient} />
+                            </div>
+                        )
+                    }
+                    customClassNameTitle={styles.customTitleGroup}
+                    customClassNameValue={styles.customValueGroup}
+                />
+            </div>
+            <div className={classNames(styles.list, styles.buttonContainer)}>
+                <GradientButton
+                    title={t('select')}
+                    disabled={false}
+                    isWhite
+                    onClick={() => {
+                        sessionStorage.setItem('card', currencyName);
+                        payModalHandleOpen();
+                    }}
+                    wrapperClass={styles.wrapperButtonClass}
+                    titleClass={styles.buttonTitleClass}
+                />
+            </div>
         </div>
     );
 };

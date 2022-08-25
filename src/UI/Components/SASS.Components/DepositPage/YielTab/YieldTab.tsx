@@ -7,6 +7,8 @@ import GradientButton from 'src/UI/ui-kit/GradientButton';
 import { useTranslation } from 'react-i18next';
 import { availableSingleSideNetworks } from 'utils/Global/Vars';
 import type { availableSingleSideChains } from 'src/utils/Global/Types';
+import InfoBlock from 'src/UI/ui-kit/InfoBlock/InfoBlock';
+import { InfoBlockTypes } from 'src/UI/ui-kit/InfoBlock/InfoBlock.constants';
 import type { IYieldTabProps, IYieldTabStore } from './YieldTab.interfaces';
 import styles from './style.module.css';
 import { ActiveCurrency } from '../ActiveCurrency';
@@ -61,105 +63,93 @@ export const YieldTab: React.FC<IYieldTabProps> = React.memo(({
                             } as React.CSSProperties
                         }
                     >
-                        <div className={styles.infoCard}>
-                            <span>
-                                <p>
-                                    {`${t('youStaked')} ${
-                                        availableSingleSideNetworks[
-                                            firstChainId
-                                        ].abbr
-                                    }`}
-                                </p>
-                                <HintModal>
-                                    <p>
-                                        {`${t('youStaked')} ${
-                                            availableSingleSideNetworks[
-                                                firstChainId
-                                            ].abbr
-                                        }`}
-                                    </p>
-                                </HintModal>
-                            </span>
-                            <CurrencyLabel
-                                chainId={firstChainId}
-                                value={store.firstUserStake}
-                            />
-                        </div>
+                        <InfoBlock
+                            type={InfoBlockTypes.DAYS}
+                            value={123}
+                            info={`${t('youStaked')} ${
+                                availableSingleSideNetworks[
+                                    firstChainId
+                                ].abbr
+                            }`}
+                            customValueClassName={styles.customValueInfoCard}
+                            customWrapperClassName={styles.customWrapperInfoCard}
+                            customTitleClassName={styles.customTitleInfoCard}
+                            hintText="HintModal"
+                            isCurrencyLabel
+                            currencyProps={{
+                                chainId: firstChainId,
+                                value: store.firstUserStake,
+                            }}
+                        />
                         {store?.secondUserStake ? (
-                            <div className={styles.infoCard}>
-                                <span>
-                                    <p>
-                                        {`${t('youStaked')} ${
-                                            availableSingleSideNetworks[
-                                                secondChainId
-                                            ].abbr
-                                        }`}
-                                    </p>
-                                    <HintModal>
-                                        <p>
-                                            {`${t('youStaked')} ${
-                                                availableSingleSideNetworks[
-                                                    secondChainId
-                                                ].abbr
-                                            }`}
-                                        </p>
-                                    </HintModal>
-                                </span>
-                                <CurrencyLabel
-                                    chainId={secondChainId}
-                                    value={store.secondUserStake}
-                                />
-                            </div>
+                            <InfoBlock
+                                type={InfoBlockTypes.DAYS}
+                                value={123}
+                                info={`${t('youStaked')} ${
+                                    availableSingleSideNetworks[
+                                        secondChainId
+                                    ].abbr
+                                }`}
+                                customValueClassName={styles.customValueInfoCard}
+                                customWrapperClassName={styles.customWrapperInfoCard}
+                                customTitleClassName={styles.customTitleInfoCard}
+                                hintText="HintModal"
+                                isCurrencyLabel
+                                currencyProps={{
+                                    chainId: secondChainId,
+                                    value: store.secondUserStake,
+                                }}
+                            />
                         ) : null}
-                        <div className={styles.infoCard}>
-                            <span>
-                                <p>{t('stakeAmount')}</p>
-                                <HintModal>
-                                    <p>{t('stakeAmount')}</p>
-                                </HintModal>
-                            </span>
-                            <p className={styles.cardMainInfoText}>
-                                {`${store.stakedAmount}$`}
-                            </p>
-                        </div>
-                        <div className={styles.infoCard}>
-                            <span style={{ justifyContent: 'space-between' }}>
-                                <div style={{ display: 'flex' }}>
-                                    {t('stakingTerm')}
-                                    <HintModal>
-                                        <p>{t('stakingTerm')}</p>
-                                    </HintModal>
-                                </div>
-                                <div>
-                                    {store.stakinTerm}
-                                    <span
-                                        style={{
-                                            color: 'var(--gray)',
-                                            fontSize: '13px',
-                                        }}
-                                    >
-                                        {`/${duration} DAYS`}
-                                    </span>
-                                </div>
-                            </span>
-                            <span
-                                className={styles.loader}
-                                style={
+                        <InfoBlock
+                            type={InfoBlockTypes.MONEY}
+                            value={240}
+                            info={t('stakeAmount')}
+                            customValueClassName={styles.customValueInfoCard}
+                            customWrapperClassName={styles.customWrapperInfoCard}
+                            customTitleClassName={styles.customTitleInfoCard}
+                            hintText="HintModal"
+                        />
+                        <InfoBlock value={2314} info="123" type={InfoBlockTypes.ABOUT} customFilling>
+                            <div className={styles.infoCard}>
+                                <span style={{ justifyContent: 'space-between' }}>
+                                    <div style={{ display: 'flex' }}>
+                                        {t('stakingTerm')}
+                                        <HintModal>
+                                            <p>{t('stakingTerm')}</p>
+                                        </HintModal>
+                                    </div>
+                                    <div>
+                                        {store.stakinTerm}
+                                        <span
+                                            style={{
+                                                color: 'var(--gray)',
+                                                fontSize: '13px',
+                                            }}
+                                        >
+                                            {`/${duration} DAYS`}
+                                        </span>
+                                    </div>
+                                </span>
+                                <span
+                                    className={styles.loader}
+                                    style={
                                     {
                                         '--load': `${
                                             (store.stakinTerm / duration) * 100
                                         }%`,
                                     } as React.CSSProperties
-                                }
-                            />
-                            {store.stakinTerm === 0 ? (
-                                <p className={styles.awaitingTitle}>
-                                    {tSsas('awaitingDeposit')}
-                                </p>
-                            ) : (
-                                <p />
-                            )}
-                        </div>
+                                    }
+                                />
+                                {store.stakinTerm === 0 ? (
+                                    <p className={styles.awaitingTitle}>
+                                        {tSsas('awaitingDeposit')}
+                                    </p>
+                                ) : (
+                                    <p />
+                                )}
+                            </div>
+                        </InfoBlock>
                     </div>
                     <div className={styles.assetInfo}>
                         <div className={styles.mainAsset}>
@@ -191,13 +181,14 @@ export const YieldTab: React.FC<IYieldTabProps> = React.memo(({
                             </div>
                             <div>
                                 <GradientButton
-                                    title={t('withdraw')}
+                                    title={t('withdrawAssets')}
                                     onClick={() => {}}
+                                    isWhite
                                 />
                             </div>
                         </div>
                         <div className={styles.infoCard}>
-                            <span>
+                            <div className={styles.infoCardContainer}>
                                 <p>
                                     {store.secondUserStake
                                         ? t('currentAssets')
@@ -210,7 +201,7 @@ export const YieldTab: React.FC<IYieldTabProps> = React.memo(({
                                 <HintModal>
                                     <p>Current Assets Amount</p>
                                 </HintModal>
-                            </span>
+                            </div>
                             <div className={styles.assetsAmount}>
                                 <CurrencyLabel
                                     chainId={firstChainId}
@@ -225,41 +216,47 @@ export const YieldTab: React.FC<IYieldTabProps> = React.memo(({
                             </div>
                         </div>
                         <div className={styles.infoCard}>
-                            <span>
+                            <div className={styles.infoCardContainer}>
                                 <p>{t('profitAmount')}</p>
                                 <HintModal>
                                     <p>{t('profitAmount')}</p>
                                 </HintModal>
-                            </span>
-                            <CurrencyLabel
-                                value={store.profitAmount.toString()}
-                                chainId="24886"
-                            />
+                            </div>
+                            <div className={styles.assetsAmount}>
+                                <CurrencyLabel
+                                    value={store.profitAmount.toString()}
+                                    chainId="24886"
+                                />
+                            </div>
                         </div>
                         <div className={styles.projected}>
                             <div className={styles.infoCard}>
-                                <span>
+                                <div className={styles.infoCardContainer}>
                                     <p>{t('ProjectedIL')}</p>
                                     <HintModal>
                                         <p>{t('ProjectedIL')}</p>
                                     </HintModal>
-                                </span>
-                                <p className={styles.cardMainInfoText}>
-                                    {store.ProjectedILPercentage}
-                                    %
-                                </p>
+                                </div>
+                                <div className={styles.assetsAmount}>
+                                    <p className={styles.cardMainInfoText}>
+                                        {store.ProjectedILPercentage}
+                                        %
+                                    </p>
+                                </div>
                             </div>
                             <div className={styles.infoCard}>
-                                <span>
+                                <div className={styles.infoCardContainer}>
                                     <p>{t('ImpermanentWin')}</p>
                                     <HintModal>
                                         <p>{t('ImpermanentWin')}</p>
                                     </HintModal>
-                                </span>
-                                <p className={styles.cardMainInfoText}>
-                                    {store.impermanentWinPercentage}
-                                    %
-                                </p>
+                                </div>
+                                <div className={styles.assetsAmount}>
+                                    <p className={styles.cardMainInfoText}>
+                                        {store.impermanentWinPercentage}
+                                        %
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

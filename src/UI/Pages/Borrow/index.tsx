@@ -33,17 +33,17 @@ const Borrow: React.FC = () => {
             <div className={styles.wrapper}>
                 <InfoBlock
                     value={infoValuesState.slpInCollateral}
-                    info={`SynthLP ${t('inCollateral')}`}
+                    info={`Synthetic LP ${t('balance')}`}
                     type={InfoBlockTypes.MONEY}
                 />
                 <InfoBlock
                     value={infoValuesState.slpInCollateral}
-                    info={`SynthLP ${t('inCollateral')}`}
+                    info={`Synthetic LP ${t('inCollateral')}`}
                     type={InfoBlockTypes.MONEY}
                 />
                 <InfoBlock
                     value={infoValuesState.slpInCollateral}
-                    info={`SynthLP ${t('inCollateral')}`}
+                    info={`EnUSD ${t('Borrowed')}`}
                     type={InfoBlockTypes.MONEY}
                 />
             </div>

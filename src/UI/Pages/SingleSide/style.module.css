@@ -1,5 +1,5 @@
 .wrapper {
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 .header {
@@ -15,10 +15,35 @@
 }
 
 .infoWrapper {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 
 	margin: 30px 0;
 	gap: 30px;
+}
+
+.customInfoWrapper {
+	display: block;
+
+	padding: 24px !important;
+
+	text-align: center !important;
+}
+
+.customInfoValue {
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 25px;
+}
+
+@media screen and (max-width: 768px) {
+	.infoWrapper {
+		grid-template-columns: 1fr;
+		gap: 15px;
+	}
+	
+	.customInfoWrapper {
+		display: flex;
+		justify-content: space-between;
+	}
 }

@@ -133,7 +133,7 @@ const Lock: React.FC<LockProps> = React.memo(({ token }) => {
                 <div className={styles.helper}>
                     <GradientButton
                         isWhite
-                        title={`${t('StakeUSDC')} ${token}`}
+                        title={`${t('Repay Loan')}`}
                         onClick={() => {}}
                     />
                 </div>
