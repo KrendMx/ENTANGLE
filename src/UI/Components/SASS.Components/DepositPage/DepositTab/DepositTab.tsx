@@ -116,7 +116,7 @@ export const DepositTab: React.FC<IDepositTabProps> = React.memo(
                         }}
                     />
                     <InfoBlock
-                        type={InfoBlockTypes.PERCENTAGE}
+                        type={InfoBlockTypes.SIMPLE_PERCENTAGE}
                         value={Number(store.apr)}
                         info={tDep('currentAPR')}
                         customValueClassName={styles.customValueInfoCard}
