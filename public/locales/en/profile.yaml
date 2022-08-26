@@ -12,8 +12,8 @@ priceDec: Price decrease
 profIn: Profit increase
 profDec: Profit decrease
 allActivity: All Activity
-buy: Buy
-sell: Sell
+buy: Mint
+sell: Burn
 recentLast: Latest First
 recentFirst: Earliest first
 dateTime:	Date/Time

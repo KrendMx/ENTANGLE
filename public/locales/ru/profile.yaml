@@ -12,8 +12,8 @@ priceDec: Убыванию цены
 profIn: Возрастанию профита
 profDec: Убыванию профита
 allActivity: Все действия
-buy: Покупка
-sell: Продажа
+buy: Выпуск
+sell: Сжигание
 recentLast: Сначала старые
 recentFirst: Сначала новые
 dateTime: Дата/Время
