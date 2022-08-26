@@ -7,25 +7,10 @@
 
 	display: flex;
 	align-items: flex-start;
-	justify-content: space-evenly;
+	justify-content: space-between;
 
 	width: 85%;
 	margin: auto;
-
-	padding-bottom: 50px;
-}
-
-.content::after {
-	position: absolute;
-	bottom: 0;
-
-	width: 100vw;
-	height: 1px;
-
-	content: '';
-
-	opacity: 0.1;
-	background-color: var(--white);
 }
 
 .logo {
@@ -36,10 +21,9 @@
 
 .navigate {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
 
-	width: 30%;
-	column-gap: 60px;
+	width: 50%;
 }
 
 .navigate > span {
@@ -51,7 +35,6 @@
 
 .mainLink {
 	cursor: pointer;
-	white-space: nowrap;
 
 	font-size: 16px;
 	line-height: 16px;
@@ -84,18 +67,24 @@
 .connection {
 	display: flex;
 	align-items: center;
+
+	padding-top: 10px;
 	column-gap: 25px;
 }
 
 .product {
-	width: 100vw !important;
+	width: 100%;
 	margin-top: 24px;
 	margin-bottom: 24px;
 
+	padding-top: 20px;
+
 	text-align: center;
 
-	opacity: 0.3;
-	color: var(--white);
+	opacity: 0.5;
+	color: var(--gray);
+
+	border-top: 1px solid var(--gray);
 
 	font-size: 18px;
 }
@@ -106,15 +95,31 @@
 		flex-direction: column;
 
 		margin-left: 15px;
+
+		row-gap: 30px;
 	}
 
-	.navigate {
-		margin: 14px 0;
-	}
-}
-
-@media screen and (max-width: 640px) {
 	.navigate {
 		flex-direction: column;
+		row-gap: 10px;
+	}
+
+	.navigate > span {
+		padding-bottom: 5px;
+	}
+
+	.mainLink {
+		font-size: 14px;
+	}
+
+	.addLink {
+		font-size: 14px;
+	}
+
+	.product { 
+		width: max-content;
+		margin-left: 15px;
+
+		font-size: 14px;
 	}
 }

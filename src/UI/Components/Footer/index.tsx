@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useTransition } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 import styles from './style.module.css';
-import { NAVIGATE, SOCIALS } from './Footer.constant';
+import { SOCIALS } from './Footer.constant';
 
 const Footer = () => {
     const { t } = useTranslation('header');
