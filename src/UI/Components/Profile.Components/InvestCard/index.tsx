@@ -33,9 +33,9 @@ const ProfileCard: React.FC<{
         <div className={styles.profileCard} key={key}>
             <div className={styles.currencyInfo}>
                 <Image
-                    src={`/images/networks/${
-                        networks[detectedChainId(name)].icon
-                    }`}
+                    src={`/images/alternativeAssets/${
+                        networks[detectedChainId(name)].abbr
+                    }.svg`}
                     alt=""
                     width={32}
                     height={32}

@@ -47,7 +47,7 @@
 	margin: 0 0 40px;
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 1000px) {
 	.infoContainer {
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -57,7 +57,7 @@
 	}
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 700px) {
 	.infoContainer {
 		grid-template-columns: 1fr;
 	}

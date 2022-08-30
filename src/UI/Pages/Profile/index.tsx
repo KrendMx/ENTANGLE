@@ -141,7 +141,7 @@ const Profile = () => {
                                 width={30}
                                 height={30}
                                 quality={100}
-                                src={networks[bestProfit.chain].mainIcon}
+                                src={`/images/alternativeAssets/${networks[bestProfit.chain].abbr}.svg`}
                                 alt="best coin@"
                             />
                         ),
@@ -161,7 +161,7 @@ const Profile = () => {
                                 width={30}
                                 height={30}
                                 quality={100}
-                                src={networks[worstProfit.chain].mainIcon}
+                                src={`/images/alternativeAssets/${networks[worstProfit.chain].abbr}.svg`}
                                 alt="worst coin"
                             />
                         ),
