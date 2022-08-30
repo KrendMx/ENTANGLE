@@ -8,7 +8,7 @@
 
 	width: fit-content;
 
-	margin: 3rem 0 0.5rem;
+	margin: 3rem 0 1rem;
 
 	cursor: pointer;
 }
@@ -23,7 +23,10 @@
 }
 
 .header {
-	padding-top: 30px;
+	display: flex;
+	align-items: center;
+
+	white-space: nowrap;
 
 	font-size: 35px !important;
 }
@@ -40,7 +43,6 @@
 	display: flex;
 	align-items: center;
 
-	padding-top: 30px;
 	padding-left: 15px;
 }
 
@@ -59,7 +61,7 @@
 	align-items: center;
 	justify-content: space-between;
 
-	padding-top: 50px;
+	margin-top: 20px;
 }
 
 .noMargin {
@@ -77,5 +79,17 @@
 
 	.images span:last-child {
 		left: 0;
+	}
+
+	.wrapper {
+		margin-top: 70px;
+	}
+
+	.header {
+		font-size: 25px !important;
+	}
+
+	.headerDesc {
+		font-size: 15px;
 	}
 }

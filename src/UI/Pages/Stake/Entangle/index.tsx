@@ -37,25 +37,16 @@ const StakeEntangle: React.FC = () => {
                 <InfoBlock
                     info={t('TotalENTGLStaked')}
                     value={13000000}
-                    customValueClassName={styles.customInfoValue}
-                    customWrapperClassName={styles.customInfoWrapper}
-                    customTitleClassName={styles.customInfoTitle}
                     type={InfoBlockTypes.DIVIDED_NUMBER}
                 />
                 <InfoBlock
                     info={t('ActiveValidators')}
                     value={Number('32')}
-                    customValueClassName={styles.customInfoValue}
-                    customWrapperClassName={styles.customInfoWrapper}
-                    customTitleClassName={styles.customInfoTitle}
                     type={InfoBlockTypes.SIMPLE_TEXT}
                 />
                 <InfoBlock
                     info={t('AVGUptime')}
                     value={Number('94')}
-                    customValueClassName={styles.customInfoValue}
-                    customWrapperClassName={styles.customInfoWrapper}
-                    customTitleClassName={styles.customInfoTitle}
                     type={InfoBlockTypes.SIMPLE_PERCENTAGE}
                 />
             </div>

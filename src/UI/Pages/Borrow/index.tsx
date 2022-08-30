@@ -68,7 +68,7 @@ const Borrow: React.FC = () => {
                     />
                 </div>
             </div>
-            <div>{actionType === 0 ? <BorrowTab /> : <RepayTab />}</div>
+            {actionType === 0 ? <BorrowTab /> : <RepayTab />}
         </div>
     );
 };

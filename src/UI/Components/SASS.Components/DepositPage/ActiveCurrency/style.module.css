@@ -40,4 +40,10 @@
 	color: var(--gray);
 }
 
+@media screen and (max-width: 1000px) {
+	.card {
+		font-size: 14px;
+	}
+}
+
 

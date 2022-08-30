@@ -1,9 +1,9 @@
 .upperInfo {
 	display: grid;
 
-	padding: 40px 0 30px;
+	margin: 0 0 30px;
 	grid-template-columns: repeat(calc(var(--assets) + 2), 1fr);
-	grid-column-gap: 10px;
+	gap: 20px;
 }
 
 .infoCard {
@@ -11,16 +11,24 @@
 	flex-direction: column;
 	justify-content: space-between;
 
+	width: 100%;
+
 	height: 100%;
 
-	padding-top: 5px;
+	gap: 10px;
+
+	padding: 15px;
 }
 
 .infoCardContainer {
 	display: flex;
+}
 
-	padding-top: 10px;
-	padding-left: 10px;
+.stakingTerm {
+	display: flex;
+	justify-content: space-between;
+
+	width: 100%;
 }
 
 .customWrapperInfoCard {
@@ -50,8 +58,6 @@
 .infoCard > span {
 	display: flex;
 
-	margin-bottom: 10px;
-
 	padding-bottom: 5px;
 }
 
@@ -65,22 +71,17 @@
 	font-size: 14px !important;
 }
 
-
-
 .cardMainInfoText {
 	display: flex;
 
 	color: var(--text-color);
 
-	font-size: 22px;
+	font-size: 18px;
 }
 
 .cardMainInfo > *:last-child {
 	padding-left: 10px;
 }
-
-
-
 
 .noAmount {
 	display: flex;
@@ -129,8 +130,6 @@
 	font-size: 13px
 }
 
-
-
 .assetInfo {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
@@ -152,8 +151,6 @@
 	border-radius: 18px;
 }
 
-
-
 .mainAsset > span {
 	display: flex;
 	align-items: center;
@@ -169,18 +166,11 @@
 	display: flex;
 }
 
-.projected {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-}
-
 .projected > div {
 	height: 90%;
 
 	border: 0;
 }
-
-
 
 .assetsAmount > div:first-child {
 	margin-right: 20px;
@@ -188,25 +178,22 @@
 
 .assetsAmount {
 	display: flex;
-
-	padding-bottom: 10px;
-	padding-left: 10px;
 }
 
 @media (max-width: 900px){
 	.upperInfo  {
 		grid-template-columns: 1fr;
-		grid-row-gap: 10px;
 	}
 
 	.assetInfo {
 		grid-template-columns: 1fr;
 	}
-}
 
-@media (max-width: 570px){
-	.upperInfo {
-		grid-template-columns: 1fr;
-		grid-row-gap: 10px;
+	.infoCardContainer {
+		font-size: 15px;
+	}
+
+	.cardMainInfoText {
+		font-size: 18px;
 	}
 }
