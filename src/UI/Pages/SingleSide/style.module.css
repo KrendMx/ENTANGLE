@@ -30,6 +30,12 @@
 	text-align: center !important;
 }
 
+.customInfoTitle {
+	display: block;
+
+	text-align: center;
+}
+
 .customInfoValue {
 	font-size: 18px;
 	font-weight: 400;
