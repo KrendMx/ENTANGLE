@@ -147,7 +147,7 @@ const InfoBlock: React.FC<InfoBlockProps> = React.memo(
                 <div className={styles.gradientContainer}>
                     <div className={styles.gradient} />
                 </div>
-                {customFilling ? <div>{props?.children}</div>
+                {customFilling ? props?.children
                     : (
                         <>
                             <div

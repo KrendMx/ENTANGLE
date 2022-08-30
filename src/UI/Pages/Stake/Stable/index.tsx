@@ -115,8 +115,7 @@ const StakeStable: React.FC = () => {
                     <div className={styles.soonMobile}>
                         <Image
                             src="/images/coming_mobile.png"
-                            width={956}
-                            height={680}
+                            layout="fill"
                             quality={100}
                             alt="coming-banner"
                         />

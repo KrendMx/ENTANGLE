@@ -107,7 +107,6 @@ const RepayTab: React.FC = () => {
         <>
             <div
                 className={styles.wrapperRepay}
-                style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
             >
                 <div className={classNames(styles.actionCard)}>
                     <div>

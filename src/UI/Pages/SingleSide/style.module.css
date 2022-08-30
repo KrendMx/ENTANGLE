@@ -36,7 +36,7 @@
 	line-height: 25px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
 	.infoWrapper {
 		grid-template-columns: 1fr;
 		gap: 15px;
@@ -45,5 +45,13 @@
 	.customInfoWrapper {
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.header {
+		font-size: 25px !important;
+	}
+	
+	.headerDesc {
+		font-size: 15px;
 	}
 }

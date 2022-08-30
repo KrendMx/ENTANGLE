@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import Tabs from 'UI/ui-kit/Tabs';
 import InfoBlock from 'src/UI/ui-kit/InfoBlock/InfoBlock';
 import { InfoBlockTypes } from 'src/UI/ui-kit/InfoBlock/InfoBlock.constants';
+import Typography from 'src/UI/ui-kit/Typography';
 import styles from './style.module.css';
 import BorrowTab from './Tabs/Borrow.tab';
 import type { infoReducer } from './Borrow.intefaces';
@@ -35,21 +36,30 @@ const Borrow: React.FC = () => {
                     value={infoValuesState.slpInCollateral}
                     info={`Synthetic LP ${t('balance')}`}
                     type={InfoBlockTypes.MONEY}
+                    customWrapperClassName={styles.customInfoWrapper}
+                    customTitleClassName={styles.customInfoTitle}
+                    customValueClassName={styles.customInfoValue}
                 />
                 <InfoBlock
                     value={infoValuesState.slpInCollateral}
                     info={`Synthetic LP ${t('inCollateral')}`}
                     type={InfoBlockTypes.MONEY}
+                    customWrapperClassName={styles.customInfoWrapper}
+                    customTitleClassName={styles.customInfoTitle}
+                    customValueClassName={styles.customInfoValue}
                 />
                 <InfoBlock
                     value={infoValuesState.slpInCollateral}
                     info={`EnUSD ${t('Borrowed')}`}
                     type={InfoBlockTypes.MONEY}
+                    customWrapperClassName={styles.customInfoWrapper}
+                    customTitleClassName={styles.customInfoTitle}
+                    customValueClassName={styles.customInfoValue}
                 />
             </div>
             <div className={styles.switcher}>
-                <h1>{t('GetStarted')}</h1>
-                <div>
+                <Typography type="title">{t('GetStarted')}</Typography>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Tabs
                         activeTab={actionType}
                         switchHandler={switchHandler}
@@ -58,7 +68,7 @@ const Borrow: React.FC = () => {
                     />
                 </div>
             </div>
-            <div>{actionType === 0 ? <BorrowTab /> : <RepayTab />}</div>
+            {actionType === 0 ? <BorrowTab /> : <RepayTab />}
         </div>
     );
 };

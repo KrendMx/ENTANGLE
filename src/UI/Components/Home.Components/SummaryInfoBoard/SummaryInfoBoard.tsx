@@ -3,52 +3,9 @@ import classNames from 'classnames';
 
 import { useTranslation } from 'next-i18next';
 import { ChainService } from 'src/Services';
-import type { InfoBlockProps } from './SummaryInfoBoard.interfaces';
-import { InfoBlockTypes, numberFormatter } from './SummaryInfoBoard.constants';
-
+import InfoBlock from 'src/UI/ui-kit/InfoBlock/InfoBlock';
+import { InfoBlockTypes } from 'src/UI/ui-kit/InfoBlock/InfoBlock.constants';
 import styles from './style.module.css';
-
-// TODO MIGRATE TO INFO BLOCK from UI
-const InfoBlock: React.FC<InfoBlockProps> = ({
-    value,
-    type,
-    info,
-}: InfoBlockProps) => {
-    let valueText = String(value);
-    let additionalClass = {};
-
-    if (value !== null) {
-        switch (type) {
-        case InfoBlockTypes.MONEY: {
-            valueText = `$${numberFormatter(value, 2)}`;
-            break;
-        }
-        case InfoBlockTypes.PERCENTAGE: {
-            const sign = value > 0 ? '+' : '';
-            additionalClass = {
-                [styles.blockValueGood]: value > 0,
-                [styles.blockValueBad]: value < 0,
-            };
-            valueText = `${sign}${value.toFixed(2)}%`;
-            break;
-        }
-        default: {
-            throw new Error('Unexpected block info type');
-        }
-        }
-    } else {
-        valueText = '~';
-    }
-
-    return (
-        <div className={styles.blockWrapper}>
-            <div className={styles.blockInfo}>{info}</div>
-            <div className={classNames(styles.blockValue, additionalClass)}>
-                {valueText}
-            </div>
-        </div>
-    );
-};
 
 const SummaryInfoBoard = () => {
     const [TVD, setTVD] = useState<number | null>(null);

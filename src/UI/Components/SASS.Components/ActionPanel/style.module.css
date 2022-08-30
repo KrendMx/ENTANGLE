@@ -1,5 +1,6 @@
 .wrapper {
 	display: flex;
+	align-content: space-between;
 	flex-wrap: wrap;
 	justify-content: space-between;
 
@@ -40,6 +41,17 @@
 
 @media (max-width: 800px){
 	.wrapper {
-		justify-content: space-evenly;
+		padding: 0;
+
+		gap: 15px;
+	}
+
+	.filterWrapper {
+		width: 100%;
+		max-width: unset;
+	}
+
+	.searchWrapper {
+		max-width: unset;
 	}
 }

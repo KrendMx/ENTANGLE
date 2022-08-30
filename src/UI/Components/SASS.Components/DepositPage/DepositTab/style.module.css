@@ -5,14 +5,14 @@
 .depositInfo {
 	display: grid;
 
-	margin: 30px auto;
+	margin: 0 auto 30px;
 	grid-template-columns: repeat(4, 1fr);
-	grid-column-gap: 20px;
+	gap: 20px
 }
 
 
 .infoCard {
-	padding: 18px 25px;
+	padding: 18px 20px;
 
 	border: 2px solid rgb(255 255 255 / 10%);
 
@@ -26,6 +26,9 @@
 	align-items: flex-start;
 	flex-direction: column;
 	justify-content: space-evenly;
+	gap: 5px;
+
+	padding: 15px;
 }
 
 .customTitleInfoCard {
@@ -162,6 +165,8 @@
 .shareTextValue {
 	display: flex !important;
 
+	white-space: nowrap;
+
 	color: var(--white);
 
 	font-size: 17px;
@@ -180,11 +185,19 @@
 		grid-template-columns: repeat(2, 1fr);
 		grid-row-gap: 10px;
 	}
+
+	.shareTextTitle {
+		font-size: 15px;
+	}
+
+	.shareTextValue {
+		font-size: 15px;
+	}
 }
 
 @media (max-width: 570px){
 	.depositInfo {
 		grid-template-columns: 1fr;
-		grid-row-gap: 10px;
+		grid-row-gap: 20px;
 	}
 }

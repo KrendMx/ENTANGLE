@@ -66,14 +66,14 @@ export const TokenOption: React.FC<TokenOptionProps> = React.memo(
                         }}
                     />
                 )}
-                <p
+                <div
                     className={styles.assetText}
                     data-select-value={value}
                     data-select-amount={amount}
                     data-select-abbr={props?.name}
                 >
                     {children}
-                </p>
+                </div>
             </div>
             <p
                 className={styles.amount}
@@ -181,29 +181,41 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                 >
                     <div className={styles.asset}>
                         {selected && showImage && (
-                            <Image
-                                src={`/images/alternativeAssets/${chainToNameConfig[selected]}.svg`}
-                                width={24}
-                                height={24}
-                                quality={100}
-                                alt={`${selected}-asset`}
-                            />
+                            <div>
+                                <Image
+                                    src={`/images/alternativeAssets/${chainToNameConfig[selected]}.svg`}
+                                    width={34}
+                                    height={24}
+                                    quality={100}
+                                    alt={`${selected}-asset`}
+                                />
+                            </div>
                         )}
                         {selected && showHashImage && (
-                            <Image
-                                width={24}
-                                height={24}
-                                quality={100}
-                                alt={`${selected}-asset`}
-                                src={`data:image/svg+xml;utf8,${identicon(value)}`}
+                            <div
                                 style={{
-                                    backgroundColor: `#${value
-                                        .split('0x')[1]
-                                        .replace(/[^0-9]/g, '')
-                                        .slice(0, 6)}5E`,
-                                    borderRadius: '5px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    marginRight: '5px',
                                 }}
-                            />
+                            >
+                                <Image
+                                    width={25}
+                                    height={25}
+                                    quality={100}
+                                    alt={`${selected}-asset`}
+                                    src={`data:image/svg+xml;utf8,${identicon(
+                                        value,
+                                    )}`}
+                                    style={{
+                                        backgroundColor: `#${value
+                                            .split('0x')[1]
+                                            .replace(/[^0-9]/g, '')
+                                            .slice(0, 6)}5E`,
+                                        borderRadius: '5px',
+                                    }}
+                                />
+                            </div>
                         )}
                         <label className={styles.label}>
                             {props?.customSelectedLabel
