@@ -66,14 +66,14 @@ export const TokenOption: React.FC<TokenOptionProps> = React.memo(
                         }}
                     />
                 )}
-                <p
+                <div
                     className={styles.assetText}
                     data-select-value={value}
                     data-select-amount={amount}
                     data-select-abbr={props?.name}
                 >
                     {children}
-                </p>
+                </div>
             </div>
             <p
                 className={styles.amount}
@@ -224,18 +224,16 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                                     ? networks[selected][selectedTitle]
                                     : defaultLabel}
                         </label>
-                        <div style={{ marginLeft: '1em' }}>
-                            <Image
-                                width={13}
-                                height={13}
-                                quality={100}
-                                src="/images/selectArrowIcon.svg"
-                                className={classNames(styles.icon, {
-                                    [styles.rotate]: isOpen,
-                                })}
-                                alt=""
-                            />
-                        </div>
+                        <Image
+                            width={13}
+                            height={13}
+                            quality={100}
+                            src="/images/selectArrowIcon.svg"
+                            className={classNames(styles.icon, {
+                                [styles.rotate]: isOpen,
+                            })}
+                            alt=""
+                        />
                     </div>
                     {selected && withBalance && (
                         <p>

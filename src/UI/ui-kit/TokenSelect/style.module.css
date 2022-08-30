@@ -115,13 +115,18 @@
 .asset {
 	display: flex;
 	overflow: hidden;
-	align-items: center;
+
+	white-space: nowrap;
+
+	text-overflow: ellipsis;
 }
 
 .assetText {
 	overflow: hidden;
 
 	margin-left: .4rem;
+
+	text-overflow: ellipsis;
 
 	font-size: 14px;
 	font-weight: 400;
