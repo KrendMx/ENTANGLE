@@ -83,7 +83,6 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                     </div>
                     <GradientButton
                         title={t('enter')}
-                        gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
                         onClick={checked ? handleClose : undefined}
                         wrapperClass={styles.btn}
                         disabled={!checked}
