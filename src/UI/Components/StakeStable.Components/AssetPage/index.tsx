@@ -60,16 +60,16 @@ const AssetPage: React.FC<AssetPageProps> = ({ stable }) => {
                 <div className={styles.lockWrapper}>
                     <div className={styles.header}>
                         <Typography type="title" classNameModifier={styles.headerText}>
-                            {t('lock')}
-                            {' '}
-                            USDC
+                            {t('Provider LIquidity')}
                         </Typography>
-                        <Tabs
-                            buttons={[t('lock'), t('withdraw')]}
-                            activeTab={activeTab}
-                            switchHandler={setActiveTab}
-                            isBlack
-                        />
+                        <div className={styles.tabsContainer}>
+                            <Tabs
+                                buttons={[t('lock'), t('withdraw')]}
+                                activeTab={activeTab}
+                                switchHandler={setActiveTab}
+                                isBlack
+                            />
+                        </div>
                     </div>
                     {!activeTab ? <Lock token={stable} /> : <Withdraw token={stable} />}
                 </div>

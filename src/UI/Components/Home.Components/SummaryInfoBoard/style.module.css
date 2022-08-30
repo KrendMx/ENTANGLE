@@ -65,11 +65,7 @@
 	filter: blur(50px);
 }
 
-@media screen and (max-width: 1010px){
-	.wrapper {
-		grid-template-columns: 1fr;
-	}
-	
+@media screen and (max-width: 1000px){	
 	.blockWrapper {
 		display: flex;
 		align-items: center;
@@ -77,6 +73,10 @@
 	}
 }
 @media screen and (max-width: 660px) {
+	.wrapper {
+		grid-template-columns: 1fr;
+	}
+
 	.blockValue {
 		font-size: 22px;
 		line-height: 30px;

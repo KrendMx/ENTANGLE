@@ -7,10 +7,10 @@
 
 .filterWrapper {
 	display: flex;
-	justify-content: space-between;
+	gap: 10px;
 
 	width: 100%;
-	max-width: calc(271px * 2);
+	max-width: 40%
 }
 
 .checkbox{
@@ -28,7 +28,7 @@
 
 .searchWrapper {
 	width: 100%;
-	max-width: 368px;
+	max-width: 33%;
 }
 
 .searchIcon {
@@ -43,6 +43,16 @@
 	border: 1px solid #2C2F38;
 	background-color: #101010 !important;
 
+}
+
+@media screen and (max-width: 1000px) {
+	.searchWrapper {
+		max-width: 47%;
+	}
+
+	.filterWrapper {
+		max-width: 47%;
+	}
 }
 
 @media screen and (max-width: 660px) {

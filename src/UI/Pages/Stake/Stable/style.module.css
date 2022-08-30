@@ -83,7 +83,7 @@
 
 .glow {
 	position: absolute;
-	z-index: 10;
+	z-index: -9999;
 
 	filter: blur(20px);
 }
@@ -96,6 +96,7 @@
 }
 
 .blue {
+	z-index: -25;
 	top: 50px;
 	left: -220px;
 }

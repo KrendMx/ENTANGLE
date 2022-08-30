@@ -27,15 +27,6 @@ export const ActionPanel: React.FC<IActionPanelProps> = React.memo((props) => {
     const { t: tSsas } = useTranslation('ssas');
     return (
         <div className={styles.wrapper}>
-            <div className={styles.searchWrapper}>
-                <Input
-                    wrapperCustomClassName={styles.customInput}
-                    placeholder={`${t('search')} ${tSsas('name')}`}
-                    onChange={hangleChangeSearch}
-                    value={search}
-                    type="text"
-                />
-            </div>
             <div className={styles.filterWrapper}>
                 <Select
                     onChange={setNetwork}
@@ -61,6 +52,15 @@ export const ActionPanel: React.FC<IActionPanelProps> = React.memo((props) => {
                         </Option>
                     ))}
                 </Select>
+            </div>
+            <div className={styles.searchWrapper}>
+                <Input
+                    wrapperCustomClassName={styles.customInput}
+                    placeholder={`${t('search')} ${tSsas('name')}`}
+                    onChange={hangleChangeSearch}
+                    value={search}
+                    type="text"
+                />
             </div>
         </div>
     );
