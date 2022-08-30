@@ -71,13 +71,7 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-
-	.blockWrapper * {
-		text-align: left !important;
-	}
 }
-
-
 @media screen and (max-width: 660px) {
 	.blockValue {
 		font-size: 22px;

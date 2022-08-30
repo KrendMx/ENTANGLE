@@ -183,7 +183,7 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                         {selected && showImage && (
                             <Image
                                 src={`/images/alternativeAssets/${chainToNameConfig[selected]}.svg`}
-                                width={24}
+                                width={34}
                                 height={24}
                                 quality={100}
                                 alt={`${selected}-asset`}
@@ -195,7 +195,9 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                                 height={24}
                                 quality={100}
                                 alt={`${selected}-asset`}
-                                src={`data:image/svg+xml;utf8,${identicon(value)}`}
+                                src={`data:image/svg+xml;utf8,${identicon(
+                                    value,
+                                )}`}
                                 style={{
                                     backgroundColor: `#${value
                                         .split('0x')[1]
