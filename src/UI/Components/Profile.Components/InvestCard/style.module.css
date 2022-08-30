@@ -137,6 +137,8 @@
 }
 
 .customValueGroup {
+	white-space: nowrap;
+
 	color: white;
 
 	font-size: 16px;
