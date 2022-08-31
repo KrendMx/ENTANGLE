@@ -230,3 +230,17 @@
 
 	font-size: 18px;
 }
+
+@media screen and (max-width: 400px) {
+	.sectionValue {
+		font-size: 15px;
+	}
+
+	.sectionRow {
+		min-width: unset;
+	}
+
+	.sectionTitle {
+		font-size: 15px;
+	}
+}

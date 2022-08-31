@@ -181,7 +181,12 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                 >
                     <div className={styles.asset}>
                         {selected && showImage && (
-                            <div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
                                 <Image
                                     src={`/images/alternativeAssets/${chainToNameConfig[selected]}.svg`}
                                     width={34}
@@ -236,7 +241,7 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                         />
                     </div>
                     {selected && withBalance && (
-                        <p>
+                        <p className={styles.balances}>
                             {balance}
                             {' '}
                             {currency}

@@ -44,8 +44,8 @@
 
 	content: '';
 
-	opacity: .8;
-	border-radius: 100%;
+	opacity: .6;
+	border-radius: 40%;
 
 	background: linear-gradient(90deg, #785BF865 0%, #785BF865 10%, #785BF804 20%, #785BF804 40%, #785BF865 50%, #785BF80F  60%, #785BF80F  90%, #785BF865 90%);
 
@@ -190,6 +190,6 @@
 	}
 
 	.wrapper::after {
-		background: linear-gradient(90deg, #785BF804 0%, #785BF855 20%, #785BF855 80%, #785BF804 100%);	
+		background: linear-gradient(90deg, #785BF834 0%, #785BF855 20%, #785BF855 80%, #785BF834 100%);	
 	}
 }

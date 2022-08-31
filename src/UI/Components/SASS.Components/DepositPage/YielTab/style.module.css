@@ -196,4 +196,8 @@
 	.cardMainInfoText {
 		font-size: 18px;
 	}
+
+	.mainAsset {
+		padding: 15px;
+	}
 }

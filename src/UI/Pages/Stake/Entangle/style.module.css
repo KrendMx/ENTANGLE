@@ -87,4 +87,16 @@
 	.description {
 		max-width: 90%;
 	}
+
+	.switcherContainer {
+		margin: 20px 0;
+	}
+
+	.descriptItem {
+		font-size: 15px;
+	}
+
+	.header {
+		font-size: 24px !important;
+	}
 }

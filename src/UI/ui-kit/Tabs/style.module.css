@@ -105,4 +105,8 @@
 		margin: 0 !important;
 		padding: 0;
 	}
+
+	.tab {
+		font-size: 13px;
+	}
 }
