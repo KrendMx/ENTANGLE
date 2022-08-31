@@ -84,7 +84,7 @@
 }
 
 .btn {
-	width: 80%;
+	width: 100%;
 	margin: auto;
 
 	font-weight: 700;
@@ -95,19 +95,28 @@
 	margin: 3rem 0 0;
 }
 
+.mainContent {
+	overflow: scroll;
+
+	max-height: 60%;
+}
+
 @media screen and (max-width: 1600px) {
 	.content {
 		max-width: 75%;
+	}
+
+	.mainContent {
+		max-height: 65%;
 	}
 }
 
 @media screen and (max-width: 900px) {
 	.content {
-		max-width: 98vw;
-		height: 95vh;
+		max-width: 90vw;
 		padding: 15px 30px;
 
-		font-size: 1.7vw;
+		font-size: 13px
 	}
 
 	.header {
@@ -118,7 +127,7 @@
 		display: flex;
 		flex-direction: column;
 
-		height: calc(100% - 30px);
+		max-height: calc(100% - 30px);
 	}
 
 	.extraForCheckbox {
@@ -133,11 +142,4 @@
 	.paragraph {
 		margin: 4vw auto;
 	}
-}
-
-@media screen and (max-width: 450px){
-	.content {
-		font-size: .65rem;
-	}
-
 }

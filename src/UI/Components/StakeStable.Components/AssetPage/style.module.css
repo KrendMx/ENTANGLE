@@ -22,6 +22,8 @@
 }
 
 .headerText {
+	white-space: nowrap;
+
 	color: #FFF;
 
 	font-size: 35px!important;
@@ -48,13 +50,23 @@
 	}
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 500px) {
 	.header {
+		align-items: flex-start;
 		flex-direction: column;
 	}
 
 	.headerText {
 		margin: 1rem 0;
+
+		font-size: 18px !important;
+
+		font-weight: 700 !important;
+		line-height: 25px !important;
+	}
+
+	.tabsContainer {
+		width: 100%
 	}
 
 }

@@ -51,6 +51,7 @@ export const SingleSide = () => {
                     info={t('tvl')}
                     customWrapperClassName={styles.customInfoWrapper}
                     customValueClassName={styles.customInfoValue}
+                    customTitleClassName={styles.customInfoTitle}
                     value={Number(store.tvl)}
                     type={InfoBlockTypes.MONEY}
                 />
@@ -58,6 +59,7 @@ export const SingleSide = () => {
                     info={t('volume24')}
                     customWrapperClassName={styles.customInfoWrapper}
                     customValueClassName={styles.customInfoValue}
+                    customTitleClassName={styles.customInfoTitle}
                     value={Number(store.volume)}
                     type={InfoBlockTypes.MONEY}
                 />
@@ -65,6 +67,7 @@ export const SingleSide = () => {
                     info={t('totalEarned')}
                     customWrapperClassName={styles.customInfoWrapper}
                     customValueClassName={styles.customInfoValue}
+                    customTitleClassName={styles.customInfoTitle}
                     value={Number(store.totalEarned)}
                     type={InfoBlockTypes.ABOUT_MONEY}
                 />

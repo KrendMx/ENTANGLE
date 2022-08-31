@@ -17,9 +17,7 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
             <ScrollLock>
                 <div className={styles.content}>
                     <div className={styles.header}>
-                        <h1 className={styles.headerText}>
-                            {t('disclaimer')}
-                        </h1>
+                        <h1 className={styles.headerText}>{t('disclaimer')}</h1>
                     </div>
                     <div className={styles.mainContent}>
                         <div className={styles.blockText}>
@@ -39,16 +37,12 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                 {' '}
                                 {t('secondPhrase')}
                             </p>
-                            <p className={styles.paragraph}>
-                                {t('welcomeTo')}
-                            </p>
+                            <p className={styles.paragraph}>{t('welcomeTo')}</p>
                             <p className={styles.paragraph}>
                                 {t('inTheNear')}
                                 {' '}
                                 (
-                                <span className={styles.blueText}>
-                                    enUSD
-                                </span>
+                                <span className={styles.blueText}>enUSD</span>
                                 )
                                 {' '}
                                 {t('aCrossChain')}
@@ -62,7 +56,7 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                             </p>
                             <p className={styles.paragraph}>
                                 {t('isNotAvailable')}
-                                    &nbsp;
+                                &nbsp;
                                 <span className={styles.highLight}>
                                     {t('placement')}
                                 </span>
@@ -71,22 +65,22 @@ const Disclaimer: React.FC<DisclaimerProps> = ({ handleClose }) => {
                                 {t('byUsingEntangle')}
                             </p>
                         </div>
-                        <div>
-                            <GradientCheckbox
-                                text={t('buttonText')}
-                                gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
-                                isChecked={checked}
-                                onClickHandler={() => setChecked(!checked)}
-                                additionalClass={styles.extraForCheckbox}
-                            />
-                        </div>
+                    </div>
+                    <div style={{ marginBottom: '4vh' }}>
+                        <GradientCheckbox
+                            text={t('buttonText')}
+                            gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
+                            isChecked={checked}
+                            onClickHandler={() => setChecked(!checked)}
+                            additionalClass={styles.extraForCheckbox}
+                        />
                     </div>
                     <GradientButton
                         title={t('enter')}
-                        gradient="linear-gradient(90deg, #FF5EBA 1.04%, #00F0FF 103.25%)"
                         onClick={checked ? handleClose : undefined}
                         wrapperClass={styles.btn}
                         disabled={!checked}
+                        isWhite
                     />
                 </div>
             </ScrollLock>

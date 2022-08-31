@@ -29,10 +29,10 @@
 }
 
 .label {
+	display: flex;
 	overflow: hidden;
+	align-items: center;
 
-
-	margin: .1rem 0;
 	margin-right: .3rem;
 
 	cursor: pointer;
@@ -168,4 +168,18 @@
 	transform: translateY(-50px) scale(0.95);
 
 	opacity: 0;
+}
+
+@media screen and (max-width: 768px) {
+	.title {
+		font-size: 15px;
+	}
+
+	.asset {
+		font-size: 13px;
+	}
+
+	.balances {
+		font-size: 13px;
+	}
 }

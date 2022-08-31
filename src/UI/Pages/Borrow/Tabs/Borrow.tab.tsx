@@ -287,7 +287,7 @@ const BorrowTab: React.FC = () => {
             <div className={styles.helper}>
                 <GradientButton
                     isWhite
-                    title={`${t('Mint')} EnUSD`}
+                    title={`${t('Mint')} Synth-LP`}
                     onClick={() => {}}
                 />
             </div>

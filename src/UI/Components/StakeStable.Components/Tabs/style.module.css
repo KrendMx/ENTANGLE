@@ -171,6 +171,8 @@
 }
 
 .textValue {
+	white-space: nowrap;
+
 	color: #ECECEC !important;
 
 	font-size: 16px !important;
@@ -229,9 +231,9 @@
 	}
 
 	.actionCard {
-		min-width: 95vw;
 		height: 100%;
 		margin: auto;
+		padding: 20px;
 	}
 
 	.actionCard > div {
@@ -239,6 +241,14 @@
 	}
 
 	.helper {
-		width: 70%;
+		width: 100%;
+	}
+
+	.textTitle {
+		font-size: 15px !important;
+	}
+
+	.textValue {
+		font-size: 15px !important;
 	}
 }

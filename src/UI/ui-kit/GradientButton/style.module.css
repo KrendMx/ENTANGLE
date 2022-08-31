@@ -53,9 +53,9 @@
 	position: absolute;
 	z-index: -5;
 	top: -2%;
-	left: -2%;
+	left: -2px;
 
-	width: 104%;
+	width: calc(100% + 4px);
 	height: 104%;
 
 	content: "";
