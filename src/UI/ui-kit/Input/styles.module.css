@@ -63,3 +63,13 @@
 	-webkit-text-fill-color: transparent;
 	text-fill-color: transparent;
 }
+
+@media screen and (max-width: 786px) {
+	.input::placeholder {
+		font-size: 15px;
+	}
+
+	.inputTitle {
+		font-size: 15px;
+	}
+}

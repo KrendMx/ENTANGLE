@@ -145,12 +145,15 @@
 		flex-direction: column;
 
 		width: 100%;
+		margin: 15px 0;
 
 		text-align: center;
 	}
 
 	.textHeader {
-		margin-bottom: 1rem;
+		margin-bottom: 0;
+
+		line-height: unset;
 	}
 
 
@@ -160,6 +163,8 @@
 		justify-content: center;
 
 		width: 100%;
+
+		margin: 10px 0;
 	}
 
 	.wrapper {
@@ -179,5 +184,9 @@
 	.assetWrapper {
 		grid-template-columns: repeat(1, 1fr);
 		grid-template-rows: repeat(2, 300px);
+	}
+
+	.soon {
+		font-size: 18px;
 	}
 }

@@ -48,7 +48,6 @@ const Withdraw: React.FC<{validators: string[]}> = ({ validators }) => {
     return (
         <div
             className={styles.wrapper}
-            style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
         >
             <div className={classNames(styles.actionCard)}>
                 <div>

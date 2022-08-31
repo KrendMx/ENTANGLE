@@ -36,3 +36,13 @@
 .textBody + .textBody {
 	margin-top: 35px;
 }
+
+@media screen and (max-width: 768px) {
+	.title {
+		font-size: 24px !important;
+	}
+
+	.textBody {
+		font-size: 15px;
+	}
+}

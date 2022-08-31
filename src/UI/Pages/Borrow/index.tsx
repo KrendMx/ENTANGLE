@@ -58,7 +58,7 @@ const Borrow: React.FC = () => {
                 />
             </div>
             <div className={styles.switcher}>
-                <Typography type="title">{t('GetStarted')}</Typography>
+                <Typography type="title" classNameModifier={styles.titleCustom}>{t('GetStarted')}</Typography>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Tabs
                         activeTab={actionType}
