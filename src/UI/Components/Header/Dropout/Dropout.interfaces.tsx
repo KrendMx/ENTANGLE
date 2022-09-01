@@ -11,6 +11,7 @@ type DropoutProps = {
     offset?: string;
     arrowImg?: React.ReactElement;
     children?: JSX.Element;
+    active?: boolean;
 };
 
 export type {
