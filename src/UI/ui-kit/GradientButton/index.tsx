@@ -63,13 +63,6 @@ const GradientButton: React.FC<GradientButtonProps> = React.memo(
                             [styles.whiteTitle]: isWhite,
                         })}
                     >
-                        {isSearch ? (
-                            <SearchIcon
-                                customClassName={styles.buttonIcon}
-                                color={!hover ? 'black' : 'white'}
-                                size={16}
-                            />
-                        ) : null}
                         <p>{title}</p>
                         {loader}
                     </div>

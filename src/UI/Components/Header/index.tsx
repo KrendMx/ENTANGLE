@@ -6,7 +6,11 @@ import ScrollLock from 'react-scrolllock';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useStore } from 'core/store';
-import type { walletKeyType, availableChains, languages } from 'utils/Global/Types';
+import type {
+    walletKeyType,
+    availableChains,
+    languages,
+} from 'utils/Global/Types';
 import { chainToNameConfig } from 'utils/Global/Vars';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.css';
@@ -44,7 +48,11 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        if (window.location.search && window.location.search.includes('net') && provider) {
+        if (
+            window.location.search
+            && window.location.search.includes('net')
+            && provider
+        ) {
             const searchArray = location.search.replace('&', '=').split('=');
             const chainId = searchArray[1] as availableChains;
             const card = searchArray[3];
@@ -103,7 +111,9 @@ const Header = () => {
     const { asPath, locale, pathname } = useRouter();
     const { t } = useTranslation('header');
 
-    useEffect(() => { setIsOpen(false); }, [pathname, account]);
+    useEffect(() => {
+        setIsOpen(false);
+    }, [pathname, account]);
 
     const networkBtns = (
         <div
@@ -149,7 +159,9 @@ const Header = () => {
                             </div>
                         </Link>
                         <div className={styles.linkBtn} onClick={disconnect}>
-                            <div style={{ marginRight: '5px' }}>{t('disconnect')}</div>
+                            <div style={{ marginRight: '5px' }}>
+                                {t('disconnect')}
+                            </div>
                             <Image
                                 src="/images/logout.svg"
                                 width={20}
@@ -179,11 +191,8 @@ const Header = () => {
             <>
                 {locales.map((el: languages, key: number) => (
                     <Link href={asPath} locale={el} key={key} passHref>
-                        <p>
-                            {mapLanguage(el)}
-                        </p>
+                        <p>{mapLanguage(el)}</p>
                     </Link>
-
                 ))}
             </>
         </Dropout>
@@ -223,28 +232,65 @@ const Header = () => {
                                 >
                                     <div className={styles.dropElemFirst}>
                                         <Link href="/" passHref>
-                                            <p className={styles.dropItemOne}>
+                                            <p
+                                                className={styles.dropItemOne}
+                                                style={{
+                                                    color:
+                                                        pathname === '/'
+                                                            ? 'white'
+                                                            : '',
+                                                }}
+                                            >
                                                 {t('syntheticVaults')}
                                             </p>
                                         </Link>
                                     </div>
-                                    <Dropout title="EnUSD" offset="25px">
-                                        <Link
-                                            href="/borrow"
-                                            passHref
-                                        >
-                                            <p className={styles.dropItem}>
+                                    <Dropout
+                                        title="EnUSD"
+                                        offset="25px"
+                                        active={pathname === '/borrow'}
+                                    >
+                                        <Link href="/borrow" passHref>
+                                            <p
+                                                className={styles.dropItem}
+                                                style={{
+                                                    color:
+                                                        pathname === '/borrow'
+                                                            ? 'white'
+                                                            : '',
+                                                }}
+                                            >
                                                 {t('borrow')}
                                             </p>
                                         </Link>
                                     </Dropout>
-                                    <Dropout title={t('stake')} offset="25px">
+                                    <Dropout
+                                        title={t('stake')}
+                                        offset="25px"
+                                        active={
+                                            pathname.includes(
+                                                '/stake-entangle',
+                                            )
+                                            || pathname.includes(
+                                                '/stake-stablecoin',
+                                            )
+                                            || pathname.includes('/single-side-staking')
+                                        }
+                                    >
                                         <>
                                             <Link
                                                 href="/stake-entangle"
                                                 passHref
                                             >
-                                                <p className={styles.dropItem}>
+                                                <p
+                                                    className={styles.dropItem}
+                                                    style={{
+                                                        color:
+                                                        pathname.includes('stake-entangle')
+                                                            ? 'white'
+                                                            : '',
+                                                    }}
+                                                >
                                                     Entangle
                                                 </p>
                                             </Link>
@@ -252,7 +298,15 @@ const Header = () => {
                                                 href="/stake-stablecoin"
                                                 passHref
                                             >
-                                                <p className={styles.dropItem}>
+                                                <p
+                                                    className={styles.dropItem}
+                                                    style={{
+                                                        color:
+                                                        pathname.includes('stake-stablecoin')
+                                                            ? 'white'
+                                                            : '',
+                                                    }}
+                                                >
                                                     {t('stablecoin')}
                                                 </p>
                                             </Link>
@@ -260,7 +314,15 @@ const Header = () => {
                                                 href="/single-side-staking"
                                                 passHref
                                             >
-                                                <p className={styles.dropItem}>
+                                                <p
+                                                    className={styles.dropItem}
+                                                    style={{
+                                                        color:
+                                                        pathname.includes('single')
+                                                            ? 'white'
+                                                            : '',
+                                                    }}
+                                                >
                                                     SALP
                                                 </p>
                                             </Link>

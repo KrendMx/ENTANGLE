@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './styles.module.css';
@@ -15,37 +15,34 @@ const Dropout: React.FC<DropoutProps> = ({
     offset = '0px',
     isSoon = false,
     arrowImg,
+    ...props
 }) => (
-    <div
-        className={classNames(
-            styles.wrapper,
-            wrapperClassName,
-        )}
-    >
+    <div className={classNames(styles.wrapper, wrapperClassName)}>
         <label className={styles.label}>
-            <input
-                className={styles.input}
-                type="checkbox"
-                readOnly
-            />
+            <input className={styles.input} type="checkbox" readOnly />
             <div
-                className={classNames(
-                    wrapperTextClassName,
+                className={classNames(wrapperTextClassName, {
+                    [styles.title]: !wrapperTextClassName,
+                })}
+                style={
                     {
-                        [styles.title]: !wrapperTextClassName,
-                    },
-                )}
+                        color: props?.active ? 'white' : '',
+                    } as React.CSSProperties
+                }
             >
                 <div className={classNames(textClassName)}>
-                    {title}
-                    {isSoon && (
-                        <span className={styles.soonText}>
-                            (soon)
-                        </span>
-                    )}
+                    <p>
+                        {title}
+                    </p>
+                    {isSoon && <span className={styles.soonText}>(soon)</span>}
                 </div>
                 {arrowImg || (
-                    <div className={classNames(wrapperPickerClassName, styles.arrow)}>
+                    <div
+                        className={classNames(
+                            wrapperPickerClassName,
+                            styles.arrow,
+                        )}
+                    >
                         <Image
                             width={12}
                             height={12}
@@ -56,7 +53,12 @@ const Dropout: React.FC<DropoutProps> = ({
                     </div>
                 )}
             </div>
-            <div className={classNames(wrapperListClassName, styles.list)} style={{ left: offset }}>{children}</div>
+            <div
+                className={classNames(wrapperListClassName, styles.list)}
+                style={{ left: offset }}
+            >
+                {children}
+            </div>
         </label>
     </div>
 );

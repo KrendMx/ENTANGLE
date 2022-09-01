@@ -229,6 +229,15 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                                     ? networks[selected][selectedTitle]
                                     : defaultLabel}
                         </label>
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                        {selected && withBalance && (
+                            <p className={styles.balances}>
+                                {balance}
+                                {' '}
+                                {currency}
+                            </p>
+                        )}
                         <Image
                             width={13}
                             height={13}
@@ -240,13 +249,6 @@ const TokenSelect: React.FC<TokenSelectProps> = React.memo(
                             alt=""
                         />
                     </div>
-                    {selected && withBalance && (
-                        <p className={styles.balances}>
-                            {balance}
-                            {' '}
-                            {currency}
-                        </p>
-                    )}
                     <CSSTransition
                         in={isOpen}
                         timeout={200}
