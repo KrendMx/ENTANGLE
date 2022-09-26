@@ -1,0 +1,56 @@
+stages:
+    - sonarqube
+    - container_build
+    - push
+    - clean_up
+    - deploy
+
+sonarqube-check:
+    stage: sonarqube
+    image:
+        name: sonarsource/sonar-scanner-cli:latest
+        entrypoint: [""]
+    variables:
+        SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+        GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+    cache:
+        key: "${CI_JOB_NAME}"
+        paths:
+         - .sonar/cache
+    script:
+        - sonar-scanner -Dsonar.qualitygate.wait=true
+    allow_failure: true
+    tags:
+      - docker
+
+container_build:
+    stage: container_build
+    script:
+        - docker build -t entangle-frontend-main:$CI_COMMIT_BRANCH.$CI_PIPELINE_ID .
+        - docker tag entangle-frontend-main:$CI_COMMIT_BRANCH.$CI_PIPELINE_ID 899260217834.dkr.ecr.us-east-1.amazonaws.com/entangle-frontend-main:$CI_COMMIT_BRANCH.$CI_PIPELINE_ID
+    tags:
+        - linux
+
+push_to_aws:
+    stage: push
+    script:
+        - docker push 899260217834.dkr.ecr.us-east-1.amazonaws.com/entangle-frontend-main:$CI_COMMIT_BRANCH.$CI_PIPELINE_ID
+    tags:
+        - linux
+
+clean_up_image:
+    stage: clean_up
+    script:
+        - docker rmi entangle-frontend-main:$CI_COMMIT_BRANCH.$CI_PIPELINE_ID -f
+        - docker rmi 899260217834.dkr.ecr.us-east-1.amazonaws.com/entangle-frontend-main:$CI_COMMIT_BRANCH.$CI_PIPELINE_ID -f
+    tags:
+        - linux
+
+deploy_dev:
+    stage: deploy
+    script:
+        - echo "123"
+    tags:
+        - linux
+    when: manual
+
