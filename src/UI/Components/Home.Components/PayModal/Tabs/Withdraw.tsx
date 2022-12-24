@@ -215,7 +215,7 @@ const Withdraw: React.FC<propsType> = ({
                 <br />
                 <TextGroup
                     title={t('yourSynthBalance')}
-                    value={`${synthBalance} SynthLP`}
+                    value={`${Number(synthBalance).toFixed(3)} SynthLP`}
                     customClassNameWrapper={styles.mgt2}
                     customClassNameTitle={styles.textTitle}
                     customClassNameValue={styles.textValue}

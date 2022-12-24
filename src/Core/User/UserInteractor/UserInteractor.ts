@@ -8,10 +8,7 @@ import { ChainConfig } from 'src/Services/ChainService/config';
 import { calculatePosPrice } from 'src/UI/Pages/Profile/Profile.constant';
 import { Notification } from 'src/libs/Notification';
 import QueryRequests from 'services/GraphService/queryRequests';
-import type { init } from 'utils/Global/Vars';
-import type { IProfileChartResponse } from 'core/User/UserRepository';
 import { UserRepository } from 'core/User/UserRepository';
-import type { IHttpClientResponse } from 'src/libs/HTTPClient';
 import { UserEntity } from '../UserEntity';
 
 type IBalances = { [key: string]: { [key: string]: { price: number; positions: number } } };

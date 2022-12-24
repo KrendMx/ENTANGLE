@@ -3,15 +3,11 @@ import { Contract, providers } from 'ethers';
 import { Notification } from 'src/libs/Notification';
 
 // Config
-import axios from 'axios';
-import type { availableChains, availableNames } from 'utils/Global/Types';
+import type { availableNames } from 'utils/Global/Types';
 import { ChainConfig, NETWORKS } from '../ChainService/config';
 
 // Interfaces
-import type {
-    SynthContracts,
-    ICardService,
-} from './CardSerivce.interfaces';
+import type { ICardService, SynthContracts } from './CardSerivce.interfaces';
 
 export class CardService implements ICardService {
     public readonly name: availableNames;
@@ -113,33 +109,20 @@ export class CardService implements ICardService {
     */
 
     private getRemainData = async (contracts: SynthContracts) => {
+        console.log(await contracts.DEX.rate(), 'DEX');
+        console.log(contracts.SYNTH, 'SYNTH');
         try {
             const available = (await contracts.SYNTH.balanceOf(contracts.DEX.address))
                 / 10 ** (await contracts.SYNTH.decimals());
             const totalAvailable = (await contracts.STABLE.balanceOf(contracts.DEX.address))
                 / 10 ** (await contracts.STABLE.decimals());
-            const price = 1
-                / ((await contracts.DEX.rate())
-                    / 10 ** (await contracts.DEX.rateDecimals()));
+            const price = ((await contracts.SYNTH.price())
+                   / (10 ** (await contracts.SYNTH.decimals())));
             return {
-                available,
-                totalAvailable,
-                price,
+                available: 10,
+                totalAvailable: 10,
+                price: 19,
             };
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    /*
-        A method that combines the calculation
-        of all the necessary information
-    */
-
-    public getTotalValueDeposited = async () => {
-        try {
-            const test = this.contracts;
-            return Object.values(test).map((el: any) => el.STABLESYNTCHEF);
         } catch (e) {
             console.log(e);
         }
@@ -159,12 +142,19 @@ export class CardService implements ICardService {
                 (el: any) => el.ID === id,
             );
 
-            const { currentDeposits, totalDeposits } = await this.getCurrentDeposit(
+            const {
+                currentDeposits,
+                totalDeposits,
+            } = await this.getCurrentDeposit(
                 necessaryContracts,
                 synthObj.FARMID,
             );
 
-            const { available, totalAvailable, price } = await this.getRemainData(necessaryContracts);
+            const {
+                available,
+                totalAvailable,
+                price,
+            } = await this.getRemainData(necessaryContracts);
             return {
                 apr: aprs[this.name],
                 totalDeposits,

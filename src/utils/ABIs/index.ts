@@ -20,3 +20,13 @@ export { default as convexChef } from './convexChef.json';
 export { default as convexRouter } from './convexRouter.json';
 export { default as convexPair } from './convexPair.json';
 export { default as synthAbi } from './synth.json';
+/* -------------------------- */
+export { default as EntangleDEX } from './EntangleDEX.json';
+export { default as EntangleDexOnDemand } from './EntangleDexOnDemand.json';
+export { default as EntanglePool } from './EntanglePool.json';
+export { default as EntangleRouter } from './EntangleDEX.json';
+export { default as EntangleSynth } from './EntangleSynth.json';
+export { default as EntangleSynthFactory } from './EntangleSynthFactory.json';
+
+export { default as FantomSynthChef } from './FantomSynthChef.json';
+export { default as AvalanceSynthChef } from './AvaxSynthChef.json';

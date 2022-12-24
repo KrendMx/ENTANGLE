@@ -16,6 +16,10 @@ import {
     pancakeChef,
     pancakePair,
     pancakeRouter,
+    FantomSynthChef,
+    AvalanceSynthChef,
+    EntangleRouter,
+    EntangleDexOnDemand, EntangleSynth, EntangleDEX,
 } from 'utils/ABIs';
 
 export const NETWORKS = {
@@ -49,13 +53,13 @@ export const ChainConfig = {
                 CROSSCHAIN: true,
                 CONTRACTS: {
                     SYNTH: {
-                        address: '0xf4fB65ecbc1F01ADa45617a5CcB6348Da59c03F3',
-                        abi: avaSynth,
+                        address: '0x9f354Fd8b08b6472A9Bb6A86a42EA9e44485dd65',
+                        abi: EntangleSynth,
                         chainId: 43114,
                     },
                     DEX: {
-                        address: '0xAf4EC4b3DEA223625C5B6dd6b66fde9B22Ea2Aa8',
-                        abi: avaDex,
+                        address: '0xf7B16557483Fc845041fEb88E7C358056034c986',
+                        abi: EntangleDEX,
                         chainId: 43114,
                     },
                     STABLE: {
@@ -69,8 +73,8 @@ export const ChainConfig = {
                         chainId: 43114,
                     },
                     SYNTHCHEF: {
-                        address: '0x3e1A6403F4083B13f83F2D411fBBB90cb2B6cC0c',
-                        abi: synthChef,
+                        address: '0x5908fC78691b8458b6b5aB713dF5E6225cba6153',
+                        abi: FantomSynthChef,
                         chainId: 250,
                     },
                     STABLESYNTCHEF: {
@@ -89,8 +93,8 @@ export const ChainConfig = {
                         chainId: 250,
                     },
                     ROUTER: {
-                        address: '0x16327E3FbDaCA3bcF7E38F5Af2599D2DDc33aE52',
-                        abi: spiritRouter,
+                        address: '0x832292aC0E865414BB5Ac8F70F1D511a28719bB8',
+                        abi: EntangleRouter,
                         chainId: 250,
                     },
                 },
@@ -101,13 +105,13 @@ export const ChainConfig = {
                 CROSSCHAIN: false,
                 CONTRACTS: {
                     SYNTH: {
-                        address: '0x19ffF7129dC1121d013908aECd14A70aa58bD0Ea',
-                        abi: ftmSynth,
+                        address: '0x255E606D253635e0bD2DF6a6FebEBb0173fE966a',
+                        abi: EntangleSynth,
                         chainId: 250,
                     },
                     DEX: {
-                        address: '0x1DE59d9706851442B1064f92ec78CF6c82CA85F0',
-                        abi: dexOnDemand,
+                        address: '0xB0b6e9B69941130c7E63cbBc6203EBf5E32eAB77',
+                        abi: EntangleDexOnDemand,
                         chainId: 250,
                     },
                     STABLE: {
@@ -121,8 +125,8 @@ export const ChainConfig = {
                         chainId: 250,
                     },
                     SYNTHCHEF: {
-                        address: '0x3e1A6403F4083B13f83F2D411fBBB90cb2B6cC0c',
-                        abi: synthChef,
+                        address: '0x5908fC78691b8458b6b5aB713dF5E6225cba6153',
+                        abi: FantomSynthChef,
                         chainId: 250,
                     },
                     STABLESYNTCHEF: {
@@ -141,8 +145,8 @@ export const ChainConfig = {
                         chainId: 250,
                     },
                     ROUTER: {
-                        address: '0x16327E3FbDaCA3bcF7E38F5Af2599D2DDc33aE52',
-                        abi: spiritRouter,
+                        address: '0x832292aC0E865414BB5Ac8F70F1D511a28719bB8',
+                        abi: EntangleRouter,
                         chainId: 250,
                     },
                 },
@@ -158,8 +162,8 @@ export const ChainConfig = {
                         chainId: 56,
                     },
                     DEX: {
-                        address: '0xe50230A2e27a8b8893776546bbca84473704DD6f',
-                        abi: dexOnDemand,
+                        address: '0xf7B16557483Fc845041fEb88E7C358056034c986',
+                        abi: EntangleDEX,
                         chainId: 56,
                     },
                     STABLE: {
@@ -173,8 +177,8 @@ export const ChainConfig = {
                         chainId: 56,
                     },
                     SYNTHCHEF: {
-                        address: '0x3e1A6403F4083B13f83F2D411fBBB90cb2B6cC0c',
-                        abi: synthChef,
+                        address: '0x5908fC78691b8458b6b5aB713dF5E6225cba6153',
+                        abi: FantomSynthChef,
                         chainId: 250,
                     },
                     STABLESYNTCHEF: {
@@ -193,8 +197,8 @@ export const ChainConfig = {
                         chainId: 250,
                     },
                     ROUTER: {
-                        address: '0x16327E3FbDaCA3bcF7E38F5Af2599D2DDc33aE52',
-                        abi: spiritRouter,
+                        address: '0x832292aC0E865414BB5Ac8F70F1D511a28719bB8',
+                        abi: EntangleRouter,
                         chainId: 250,
                     },
                 },
@@ -314,8 +318,8 @@ export const ChainConfig = {
                 CROSSCHAIN: true,
                 CONTRACTS: {
                     SYNTH: {
-                        address: '0x90fF5B6ADD1ABAcB1C6fF9e7772B843614655a71',
-                        abi: ftmSynth,
+                        address: '0x5628999744803ed03E31967140Ba33bAf47636E6',
+                        abi: EntangleSynth,
                         chainId: 250,
                     },
                     DEX: {
@@ -334,8 +338,8 @@ export const ChainConfig = {
                         chainId: 250,
                     },
                     SYNTHCHEF: {
-                        address: '0x04F7C1850c545788bA729fE6b7ad40Dc0D88af90',
-                        abi: synthChef,
+                        address: '0xca7c6C6cA244833e1730e379289704A1f42A6Dc5',
+                        abi: AvalanceSynthChef,
                         chainId: 43114,
                     },
                     STABLESYNTCHEF: {
@@ -354,8 +358,8 @@ export const ChainConfig = {
                         chainId: 43114,
                     },
                     ROUTER: {
-                        address: '0x60aE616a2155Ee3d9A68541Ba4544862310933d4',
-                        abi: joeRouter,
+                        address: '0xB6DDa0EB32D5D169940f43c113F93D6D550188C7',
+                        abi: EntangleRouter,
                         chainId: 43114,
                     },
                 },
@@ -366,8 +370,8 @@ export const ChainConfig = {
                 CROSSCHAIN: false,
                 CONTRACTS: {
                     SYNTH: {
-                        address: '0x998e0ffb556A114a8c22C3378775A4066b7432A7',
-                        abi: avaSynth,
+                        address: '0xaf42bfe2a3995af0339e9d1474eb5de7b76ac71d',
+                        abi: EntangleSynth,
                         chainId: 43114,
                     },
                     DEX: {
@@ -386,8 +390,8 @@ export const ChainConfig = {
                         chainId: 43114,
                     },
                     SYNTHCHEF: {
-                        address: '0x04F7C1850c545788bA729fE6b7ad40Dc0D88af90',
-                        abi: synthChef,
+                        address: '0xca7c6C6cA244833e1730e379289704A1f42A6Dc5',
+                        abi: AvalanceSynthChef,
                         chainId: 43114,
                     },
                     STABLESYNTCHEF: {
@@ -406,60 +410,8 @@ export const ChainConfig = {
                         chainId: 43114,
                     },
                     ROUTER: {
-                        address: '0x60aE616a2155Ee3d9A68541Ba4544862310933d4',
-                        abi: joeRouter,
-                        chainId: 43114,
-                    },
-                },
-            },
-            {
-                ID: '10',
-                FARMID: '8',
-                CROSSCHAIN: true,
-                CONTRACTS: {
-                    SYNTH: {
-                        address: '0x50780f5825ACf7A85d38368c2dFABE39d512cC26',
-                        abi: ftmSynth,
-                        chainId: 56,
-                    },
-                    DEX: {
-                        address: '0x9Bf5FdafCB56B2004Be6F1061Cbc4d90966FD011',
-                        abi: ftmDex,
-                        chainId: 56,
-                    },
-                    STABLE: {
-                        address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-                        abi: ftmSynth,
-                        chainId: 56,
-                    },
-                    FEE: {
-                        address: '0x9c27228B0A31BE4Ff59990Ed845F301EF765963f',
-                        abi: feeAbi,
-                        chainId: 56,
-                    },
-                    SYNTHCHEF: {
-                        address: '0x04F7C1850c545788bA729fE6b7ad40Dc0D88af90',
-                        abi: synthChef,
-                        chainId: 43114,
-                    },
-                    STABLESYNTCHEF: {
-                        address: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
-                        abi: ftmSynth,
-                        chainId: 43114,
-                    },
-                    CHEF: {
-                        address: '0x4483f0b6e2F5486D06958C20f8C39A7aBe87bf8F',
-                        abi: joeChef,
-                        chainId: 43114,
-                    },
-                    PAIR: {
-                        address: '0x2A8A315e82F85D1f0658C5D66A452Bbdd9356783',
-                        abi: joePair,
-                        chainId: 43114,
-                    },
-                    ROUTER: {
-                        address: '0x60aE616a2155Ee3d9A68541Ba4544862310933d4',
-                        abi: joeRouter,
+                        address: '0xB6DDa0EB32D5D169940f43c113F93D6D550188C7',
+                        abi: EntangleRouter,
                         chainId: 43114,
                     },
                 },
@@ -490,8 +442,8 @@ export const ChainConfig = {
                         chainId: 56,
                     },
                     SYNTHCHEF: {
-                        address: '0x3e1A6403F4083B13f83F2D411fBBB90cb2B6cC0c',
-                        abi: synthChef,
+                        address: '0x5908fC78691b8458b6b5aB713dF5E6225cba6153',
+                        abi: FantomSynthChef,
                         chainId: 250,
                     },
                     STABLESYNTCHEF: {
@@ -510,8 +462,8 @@ export const ChainConfig = {
                         chainId: 250,
                     },
                     ROUTER: {
-                        address: '0x16327E3FbDaCA3bcF7E38F5Af2599D2DDc33aE52',
-                        abi: spiritRouter,
+                        address: '0x832292aC0E865414BB5Ac8F70F1D511a28719bB8',
+                        abi: EntangleRouter,
                         chainId: 250,
                     },
                 },

@@ -8,7 +8,7 @@ import Preloader from 'UI/ui-kit/Preloader';
 import Footer from 'UI/Components/Footer';
 import Header from 'UI/Components/Header';
 
-import { CardService, GraphService } from 'services/index';
+import { CardService } from 'services/index';
 import QueryRequests from 'services/GraphService/queryRequests';
 import { namesConfig, availableChainsArray, farms } from 'utils/Global/Vars';
 import { generateEmptyObject } from 'utils/helper/generateEmptyObject';
@@ -70,8 +70,6 @@ export const Layout: React.FC<ILayoutProps> = memo(({ children }) => {
         dispatch(setIsAppLoaded(true));
         dispatch(getCardApr());
     }, []);
-
-    const Graph = useMemo(() => new GraphService(account), [account]);
 
     const cardDataConfig = ['AVAX', 'FTM', 'BSC', 'ETH', 'ELRD'];
 

@@ -63,11 +63,13 @@ export class ChainService {
 
     private static getSumValueFromContract = async (key: string): Promise<number> => {
         if (ChainService.contracts[key].SYNTHCHEF) {
+            // console.log(await ChainService.contracts[key].SYNTHCHEF, key);
             return Number(
-                (await ChainService.contracts[key].SYNTHCHEF.deposits(
-                    key,
-                    ChainService.contracts[key].farmid,
-                ))
+                // (await ChainService.contracts[key].SYNTHCHEF.deposits(
+                //     key,
+                //     ChainService.contracts[key].farmid,
+                // ))
+                50
                 / 10
                 ** Number(
                     await ChainService.contracts[
